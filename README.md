@@ -3,6 +3,57 @@
 
 ###Git Quick Reference for team members
 
+We are no longer using git's command line interface, instead we will use Eclipse's built-in git capabilities (which we shoud have been doing this whole time). Only use the git CLI if you REALLY need to. This guide will cover the entire installation process from nothing to a full Eclipse environment.
+
+#####Setting up Eclipse with FRC plugins
+
+Follow the Java instructions from this site to install Java, Eclipse, and the FRC plugins:
+https://wpilib.screenstepslive.com/s/currentCS/m/getting_started/l/599679-installing-eclipse-c-java
+
+#####Cloning the repository into your Eclipse workspace
+
+In Eclipse, use the menus to navigate File -> Import -> Git -> Projects from Git
+Select Clone URI
+In the URI field, enter https://github.com/teamursamajor/2018-Robot-Code---2849.git
+This should fill out the fields below it.
+Do not worry about the Connection block, just ensure that HTTPS is selected.
+Enter your github username and password in the username and password fields.
+When all of that information is filled, select Next.
+Click Next again.
+Change the directory where the code will be stored if you want, but that is not recommended. Click Next.
+Make sure Import existing Eclipse Projects is selected at the top, then click Next.
+Select the 2018-Robot project and click Finish.
+
+If you have any problems with this process, contact Hershal or Charlie through GroupMe or some other means.
+
+#####Pulling Changes
+
+When you start your work for the day, always be sure to Pull, which adds changes made on other computers to your project.
+Try not to make any changes before Pulling, as this will create a merge situation which can be stressful.
+
+To Pull, right-click the main project directory 2018-Robot, then Team -> Pull.
+
+If there is an issue that requires a Merge, go to the #####Merge section.
+
+#####Committing and Pushing Changes
+
+When you make an edit to a file (or add a file), a '>' will appear next to the changed files and directories. This indicates that you have an uncommitted change.
+Committing changes is essentially a hard save that also adds information about when the change was made as well as exactly what changes were made.
+To make committing changes easy, open the Git Staging view by selecting Window (at the top) -> Show View -> Other -> Git -> Git Staging.
+This will open a tab in your Eclipse window (move it around if it's way too small). The Unstaged Changes box has all of your changes that will NOT be committed. The Staged Changes box contains all changes that WILL be committed. If a change you want is in the Unstaged Files box, drag it into the Staged Changes box.
+In the Commit Message box, write a useful message that explains the changes you made. Appropriate messages would look like: "Fixed errors in Robot.java. Added Drive.java. Removed unnecessary code from Arm.java."
+After writing your message, make sure your name and email is in the Author and Committer boxes, then click Commit. Clicking Commit and Push will Commit your changes as well as Push them to the github repository.
+Commit often, push when you want others to use your work, and always Commit and Push at the end of the day.
+
+#####Merging
+
+Merging occurs when your committed changes do not match the committed changes pulled down from github. When you Pull and there is a conflict, Eclipse will alert you to the conflict and a red circle will appear on your files on the left. It's distressing.
+The files with the red circle need to have conflicts resolved. Open the file and look for the mess of >>>>>>>>>>>>>>> and various other text that Eclipse shows as errors. Keep the code you want to commit and delete the code and text that you do not want. If you are not sure if some code is necessary, ask around or use your best intuition. If you make the wrong decision, git allows us to reclaim any lost code, so don't worry too much.
+
+There are special programs called Merge Tools that will handle this process much better, but they will not be covered here. I recommend Meld if you want to try one.
+
+######################THE FOLLOWING GUIDE IS FOR GIT CLI AND SHOULD NOT BE USED UNLESS ABSOLUTELY NECESSARY. SEE ABOVE FOR UPDATED GUIDE
+
 #####Add repo to your computer
 
 In the command line, type
