@@ -23,14 +23,15 @@ public class Robot extends IterativeRobot {
 	private static final String kCustomAuto = "My Auto";
 	private String m_autoSelected;
 	private SendableChooser<String> m_chooser = new SendableChooser<>();
-
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
-		System.out.println("Not Hello World");
+		Drive.init();
+		Xbox.init(0);
 		m_chooser.addDefault("Default Auto", kDefaultAuto);
 		m_chooser.addObject("My Auto", kCustomAuto);
 		SmartDashboard.putData("Auto choices", m_chooser);
@@ -76,6 +77,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		Drive.drive(Xbox.getAxis(Xbox.AXIS_LEFTSTICK_Y), Xbox.getAxis(Xbox.AXIS_RIGHTSTICK_Y));
 	}
 
 	/**
