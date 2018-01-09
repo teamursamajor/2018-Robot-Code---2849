@@ -3,10 +3,10 @@ package org.usfirst.frc.team2849.robot;
 import edu.wpi.first.wpilibj.Joystick;
 
 /**
- * joy is shameful and dishonors my entire family for generations to come
- * @author FRC Team 2849 URSA MAJOR 2018 Season
+ * Wrapper class for Joystick that adds useful methods as well as rumble!
+ * @author FRC Team 2849 URSA MAJOR 2016 Season
  */
-public class Xbox {
+public class XboxController extends Joystick implements Runnable {
 
 	//Use these ints when referring to a Joystick axis or button for readability
 	public static final int BUTTON_A = 1;
@@ -33,10 +33,29 @@ public class Xbox {
 	public static final int POV_DOWN = 180;
 	public static final int POV_LEFT = 270;
 
-	private static Joystick joy;
+	private boolean running = true;
+	private long rumbleStopTime = 0;
 
-	public static void init(int port) {
-		joy = new Joystick(port);
+	public XboxController(int port) {
+		super(port);
+		Thread rumbleThread = new Thread(this);
+		rumbleThread.start();
+	}
+
+	/**
+	 * Starts the controller rumbling for a set amount of time
+	 * @param rumbleTime
+	 * 				time for the controller to rumble in milliseconds
+	 */
+	public void rumbleFor(int rumbleTime) {
+		rumbleStopTime = System.currentTimeMillis() + rumbleTime;
+	}
+	
+	/**
+	 * Stops the controller from rumbling
+	 */
+	public void stopRumble() {
+		rumbleStopTime = System.currentTimeMillis();
 	}
 	
 	/**
@@ -45,8 +64,8 @@ public class Xbox {
 	 * 				the button whose value is to be read
 	 * @return the button's value
 	 */
-	public static boolean getButton(int buttonNumber) {
-		return joy.getRawButton(buttonNumber);
+	public boolean getButton(int buttonNumber) {
+		return this.getRawButton(buttonNumber);
 	}
 	
 	/**
@@ -55,8 +74,8 @@ public class Xbox {
 	 * 				the axis whose value is to be read
 	 * @return the axis' value
 	 */
-	public static double getAxis(int axisNumber) {
-		return joy.getRawAxis(axisNumber);
+	public double getAxis(int axisNumber) {
+		return this.getRawAxis(axisNumber);
 	}
 	
 	/**
@@ -67,9 +86,9 @@ public class Xbox {
 	 * 				value to compare the axis to
 	 * @return true if the axis is greater than the threshold, false otherwise
 	 */
-	public static double getAxisGreaterThan(int axisNumber, double greaterThan) {
-		if(Math.abs(joy.getRawAxis(axisNumber)) > greaterThan){
-			return joy.getRawAxis(axisNumber);
+	public double getAxisGreaterThan(int axisNumber, double greaterThan) {
+		if(Math.abs(this.getRawAxis(axisNumber)) > greaterThan){
+			return this.getRawAxis(axisNumber);
 		}else{
 			return 0;
 		}
@@ -83,8 +102,8 @@ public class Xbox {
 	 * 				value to compare the axis to
 	 * @return true if the axis is less than the threshold, false otherwise
 	 */
-	public static boolean getAxisLessThan(int axisNumber, double lessThan) {
-		return joy.getRawAxis(axisNumber) < lessThan;
+	public boolean getAxisLessThan(int axisNumber, double lessThan) {
+		return this.getRawAxis(axisNumber) < lessThan;
 	}
 	
 	/**
@@ -93,8 +112,28 @@ public class Xbox {
 	 * 				the POV value to be checked
 	 * @return true if the specified POV is pressed, false otherwise
 	 */
-	public static boolean getDPad(int dPadNumber) {
-		return joy.getPOV(0) == dPadNumber;
+	public boolean getDPad(int dPadNumber) {
+		return this.getPOV(0) == dPadNumber;
+	}
+
+	/**
+	 * Started on object init, runs in background and monitors rumble
+	 */
+	public void run() {
+		while (running) {
+			if (System.currentTimeMillis() - rumbleStopTime < 0) {
+				this.setRumble(RumbleType.kLeftRumble, 1);
+				this.setRumble(RumbleType.kRightRumble, 1);
+			} else {
+				this.setRumble(RumbleType.kLeftRumble, 0);
+				this.setRumble(RumbleType.kRightRumble, 0);
+			}
+		}
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

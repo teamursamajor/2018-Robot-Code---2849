@@ -75,7 +75,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		Drive.drive(Xbox.getAxis(Xbox.AXIS_LEFTSTICK_Y), Xbox.getAxis(Xbox.AXIS_RIGHTSTICK_Y));
 	}
 
 	/**
