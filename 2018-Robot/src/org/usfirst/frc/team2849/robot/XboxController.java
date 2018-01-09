@@ -38,7 +38,7 @@ public class XboxController extends Joystick implements Runnable {
 
 	public XboxController(int port) {
 		super(port);
-		Thread rumbleThread = new Thread(this);
+		Thread rumbleThread = new Thread(this, "rumbleThread");
 		rumbleThread.start();
 	}
 
