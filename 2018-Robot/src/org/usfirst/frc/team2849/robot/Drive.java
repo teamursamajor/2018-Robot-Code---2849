@@ -4,30 +4,95 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-public class Drive {
+public class Drive implements Runnable {
 	
-	private static Spark mFrontLeft;
-	private static Spark mFrontRight;
-	private static Spark mRearLeft;
-	private static Spark mRearRight;
-	private static SpeedControllerGroup leftSide;
-	private static SpeedControllerGroup rightSide;
-	private static DifferentialDrive diffDrive;
+	private Spark mFrontLeft;
+	private Spark mFrontRight;
+	private Spark mRearLeft;
+	private Spark mRearRight;
 	
-	public static void init() {
-		mFrontLeft = new Spark(0);
-		mFrontRight = new Spark(1);
-		mRearLeft = new Spark(2);
-		mRearRight = new Spark(3);
+	private SpeedControllerGroup leftSide;
+	private SpeedControllerGroup rightSide;
+	
+	private DifferentialDrive diffDrive;
+	
+	private double leftSpeed;
+	private double rightSpeed;
+	
+	private static Boolean running = new Boolean(false);
+	
+	/**
+	 * Constructor for Drive class. Only one Drive object should be instantiated at any time.
+	 * 
+	 * @param frontLeft
+	 * 			Channel number for front left motor
+	 * @param frontRight
+	 * 			Channel number for front right motor
+	 * @param rearLeft
+	 * 			Channel number for rear left motor
+	 * @param rearRight
+	 * 			Channel number for rear right motor
+	 */
+	public Drive(int frontLeft, int frontRight, int rearLeft, int rearRight) {
+		mFrontLeft = new Spark(frontLeft);
+		mFrontRight = new Spark(frontRight);
+		mRearLeft = new Spark(rearLeft);
+		mRearRight = new Spark(rearRight);
 		
 		leftSide = new SpeedControllerGroup(mFrontLeft, mRearLeft);
 		rightSide = new SpeedControllerGroup(mFrontRight, mRearRight);
 		
 		diffDrive = new DifferentialDrive(leftSide, rightSide);
+		
+		startDrive();
 	}
 	
-	public static void drive(double leftSpeed, double rightSpeed) {
-		diffDrive.tankDrive(leftSpeed, rightSpeed, true);
+	/**
+	 * External method for controlling motor speed. Checks and corrects speed inputs to be -1 <= speed <= 1.
+	 * 
+	 * @param leftSpeed
+	 * 			Speed for left side motor controllers. Should be -1 <= leftSpeed <= 1.
+	 * @param rightSpeed
+	 * 			Speed for right side motor controllers. Should be -1 <= rightSpeed <= 1.
+	 */
+	public void drive(double leftSpeed, double rightSpeed) {
+		if (Math.abs(leftSpeed) > 1) leftSpeed = Math.signum(leftSpeed) * 1;
+		if (Math.abs(rightSpeed) > 1) rightSpeed = Math.signum(rightSpeed) * 1;
+		this.leftSpeed = leftSpeed;
+		this.rightSpeed = rightSpeed;
+	}
+	
+	/**
+	 * Starts driveThread. Made so that only one driveThread can exist at one time.
+	 */
+	private void startDrive() {
+		synchronized (running) {
+			if (running) return;
+			running = true;
+		}
+		new Thread(this, "driveThread").start();
+	}
+
+	/**
+	 * Run method for driveThread
+	 */
+	@Override
+	public void run() {
+		while (running) {
+			diffDrive.tankDrive(leftSpeed, rightSpeed, true);
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * Kill method for driveThread
+	 */
+	public void kill() {
+		running = false;
 	}
     
 }
