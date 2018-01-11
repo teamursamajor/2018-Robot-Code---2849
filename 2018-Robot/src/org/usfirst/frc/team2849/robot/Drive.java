@@ -109,6 +109,7 @@ public class Drive implements Runnable {
 		if (angle < 180) turnPoint += 180;
 		if (angle >= 180) turnPoint -= 180;
 		if (desiredAngle < turnPoint) {
+			
 			// turn clockwise
 			while (angle != desiredAngle) {
 				drive(0.5,-0.5);
