@@ -7,9 +7,7 @@
 
 package org.usfirst.frc.team2849.robot;
 
-<<<<<<< HEAD
 import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
