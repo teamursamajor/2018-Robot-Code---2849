@@ -30,7 +30,11 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+<<<<<<< HEAD
 		System.out.println("Not Hello World");
+=======
+		System.out.println("hello, world!");
+>>>>>>> 7cd016fcbf88beb01160d1ba97cf9b9f381fbc92
 		m_chooser.addDefault("Default Auto", kDefaultAuto);
 		m_chooser.addObject("My Auto", kCustomAuto);
 		SmartDashboard.putData("Auto choices", m_chooser);
