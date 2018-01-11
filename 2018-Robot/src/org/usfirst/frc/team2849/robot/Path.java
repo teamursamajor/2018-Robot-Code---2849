@@ -5,9 +5,11 @@ import java.util.ArrayList;
 public class Path {
 	
 	private ArrayList<Waypoint> path;
+	private int nextPoint;
 	
 	public Path() {
 		path = new ArrayList<Waypoint>();
+		nextPoint = 0;
 	}
 	
 	public Path(ArrayList<Waypoint> points) {
@@ -15,33 +17,31 @@ public class Path {
 		for (Waypoint point : points) {
 			path.add(point);
 		}
+		nextPoint = 0;
 	}
 	
 	public Waypoint findNextPoint(double pos) {
-		for (int i = 0; i < path.size(); i++) {
-			if (path.get(i).getPosition() > pos) return path.get(i);
+		if (path.get(nextPoint).getPosition() <= pos) nextPoint++;
+		try {
+			return path.get(nextPoint);
+		} catch (Exception e) {
+			return new Waypoint(Integer.MAX_VALUE, Integer.MAX_VALUE);
 		}
-		return null;
 	}
 	
 	public Waypoint findLastPoint(double pos) {
-		for (int i = 0; i < path.size(); i++) {
-			if (path.get(i).getPosition() < pos) return path.get(i);
+		try {
+			return path.get(nextPoint - 1);
+		} catch (Exception e) {
+			return new Waypoint(Integer.MIN_VALUE, Integer.MIN_VALUE);
 		}
-		return null;
 	}
 	
 	public Waypoint findNearestPoint(double pos) {
 		Waypoint next = findNextPoint(pos);
 		Waypoint last = findLastPoint(pos);
-		if (last != null) {
-			if (next != null) {
-				if (next.getPosition() - pos <= pos - last.getPosition()) return next;
-				else return last;
-			}
-			return null;
-		}
-		return next;
+		if (next.getPosition() - pos <= pos - last.getPosition()) return next;
+		else return last;
 	}
 	
 	public void add(Waypoint point) {
