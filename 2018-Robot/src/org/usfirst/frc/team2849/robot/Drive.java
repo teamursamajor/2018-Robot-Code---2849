@@ -21,6 +21,18 @@ public class Drive implements Runnable {
 	
 	private static Boolean running = new Boolean(false);
 	
+	/**
+	 * Constructor for Drive class. Only one Drive object should be instantiated at any time.
+	 * 
+	 * @param frontLeft
+	 * 			Channel number for front left motor
+	 * @param frontRight
+	 * 			Channel number for front right motor
+	 * @param rearLeft
+	 * 			Channel number for rear left motor
+	 * @param rearRight
+	 * 			Channel number for rear right motor
+	 */
 	public Drive(int frontLeft, int frontRight, int rearLeft, int rearRight) {
 		mFrontLeft = new Spark(frontLeft);
 		mFrontRight = new Spark(frontRight);
@@ -35,13 +47,24 @@ public class Drive implements Runnable {
 		startDrive();
 	}
 	
+	/**
+	 * External method for controlling motor speed. Checks and corrects speed inputs to be -1 <= speed <= 1.
+	 * 
+	 * @param leftSpeed
+	 * 			Speed for left side motor controllers. Should be -1 <= leftSpeed <= 1.
+	 * @param rightSpeed
+	 * 			Speed for right side motor controllers. Should be -1 <= rightSpeed <= 1.
+	 */
 	public void drive(double leftSpeed, double rightSpeed) {
-		if (Math.abs(leftSpeed) > 1) leftSpeed = 1;
-		if (Math.abs(rightSpeed) > 1) rightSpeed = 1;
+		if (Math.abs(leftSpeed) > 1) leftSpeed = Math.signum(leftSpeed) * 1;
+		if (Math.abs(rightSpeed) > 1) rightSpeed = Math.signum(rightSpeed) * 1;
 		this.leftSpeed = leftSpeed;
 		this.rightSpeed = rightSpeed;
 	}
 	
+	/**
+	 * Starts driveThread. Made so that only one driveThread can exist at one time.
+	 */
 	private void startDrive() {
 		synchronized (running) {
 			if (running) return;
@@ -50,6 +73,9 @@ public class Drive implements Runnable {
 		new Thread(this, "driveThread").start();
 	}
 
+	/**
+	 * Run method for driveThread
+	 */
 	@Override
 	public void run() {
 		while (running) {
@@ -62,6 +88,9 @@ public class Drive implements Runnable {
 		}
 	}
 	
+	/**
+	 * Kill method for driveThread
+	 */
 	public void kill() {
 		running = false;
 	}
