@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class Drive implements Runnable {
-	
+		
 	private Spark mFrontLeft;
 	private Spark mFrontRight;
 	private Spark mRearLeft;
@@ -56,10 +56,31 @@ public class Drive implements Runnable {
 	 * 			Speed for right side motor controllers. Should be -1 <= rightSpeed <= 1.
 	 */
 	public void drive(double leftSpeed, double rightSpeed) {
-		if (Math.abs(leftSpeed) > 1) leftSpeed = Math.signum(leftSpeed) * 1;
-		if (Math.abs(rightSpeed) > 1) rightSpeed = Math.signum(rightSpeed) * 1;
 		this.leftSpeed = leftSpeed;
 		this.rightSpeed = rightSpeed;
+		normalizeSpeed();
+	}
+	
+	/**
+	 * Changes the both leftSpeed and rightSpeed by some value.
+	 * Does NOT set speed, only changes speed relative to the current value.
+	 * Probably necessary for Pathfinder.
+	 * 
+	 * @param speed
+	 * 		Amount to change both speeds.
+	 */
+	public void changeSpeed(double speed) {
+		this.leftSpeed += speed;
+		this.rightSpeed += speed;
+		normalizeSpeed();
+	}
+	
+	/**
+	 * Method to check that both leftSpeed and rightSpeed are -1 < speed < 1, and sets them accordingly.
+	 */
+	public void normalizeSpeed() {
+		if (Math.abs(leftSpeed) > 1) leftSpeed = Math.signum(leftSpeed) * 1;
+		if (Math.abs(rightSpeed) > 1) rightSpeed = Math.signum(rightSpeed) * 1;
 	}
 	
 	/**
@@ -72,6 +93,8 @@ public class Drive implements Runnable {
 		}
 		new Thread(this, "driveThread").start();
 	}
+	
+	
 
 	/**
 	 * Run method for driveThread
