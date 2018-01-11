@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team2849.robot;
 
+<<<<<<< HEAD
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
@@ -60,7 +61,6 @@ public class Robot extends IterativeRobot {
                 // TODO
             }
         }).start();
-		
 		
 		drive = new Drive(0, 1, 2, 3);
 		xbox = new XboxController(0);
