@@ -3,6 +3,7 @@ package org.usfirst.frc.team2849.robot;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import com.kauailabs.navx.frc.AHRS;
 
 public class Drive implements Runnable {
 		
@@ -117,5 +118,28 @@ public class Drive implements Runnable {
 	public void kill() {
 		running = false;
 	}
-    
+	
+	/** heading code
+	 * 
+	 */
+	
+	public void getHeading(double heading,int desired){
+		double normal= heading;
+	    while(heading<0){
+	    	heading+=360;
+	    }
+	    while(heading>0){
+	    	heading-=360;
+	    }
+		if (heading>180){
+	    	normal=heading-180;
+	    }
+	    else if(heading<180){
+	    	normal=180+heading;
+	    }
+		if (desired<=normal){
+			
+		}
+	    
+	}
 }
