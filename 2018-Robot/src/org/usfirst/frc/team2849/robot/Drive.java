@@ -150,7 +150,8 @@ public class Drive implements Runnable {
 	}
 
 	/**
-	 * Method to turn to a desired angle Turns clockwise/counterclockwise
+	 * Method to turn to a desired angle 
+	 * Turns clockwise/counterclockwise
 	 * depending on which is most optimal
 	 */
 	public void turnTo(double desiredAngle) {
