@@ -158,23 +158,18 @@ public class Drive implements Runnable {
 	public void turnTo(double desiredAngle) {
 		double angle = getHeading();
 		double turnPoint = angle;
+		//powerConstant is temporary for now; will be replaced with P/PI controlling
+		double powerConstant = 0.5;
 		if (angle < 180)
 			turnPoint += 180;
 		if (angle >= 180)
 			turnPoint -= 180;
-		if (desiredAngle < turnPoint) {
-
-			// turn clockwise
-			while (angle != desiredAngle) {
-				drive(0.5, -0.5);
-			}
+		while (!inRange(angle, desiredAngle, 0.5)) {
+			drive((Math.signum(turnPoint - 180)*powerConstant),-1*(Math.signum(turnPoint - 180)*powerConstant));
 		}
-		if (desiredAngle > turnPoint) {
-			// turn counterclockwise
-			while (angle != desiredAngle) {
-				drive(-0.5, 0.5);
-			}
-		}
+	}
+	public boolean inRange(double value, double center, double range) {
+		return (value < center + range) && (value > center - range);
 	}
 	/**
 	 * method to find the angle the robot should turn by to be on track
@@ -185,5 +180,4 @@ public class Drive implements Runnable {
 	    double finalAngle= currentAngle+desiredAngle;
 	    turnTo(finalAngle);
 		}
-
 }
