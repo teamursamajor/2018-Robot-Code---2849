@@ -7,8 +7,11 @@
 
 package org.usfirst.frc.team2849.robot;
 
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
@@ -61,12 +64,12 @@ public class Robot extends IterativeRobot {
             }
         }).start();
 		
-		
 		drive = new Drive(0, 1, 2, 3);
 		xbox = new XboxController(0);
 		m_chooser.addDefault("Default Auto", kDefaultAuto);
 		m_chooser.addObject("My Auto", kCustomAuto);
 		SmartDashboard.putData("Auto choices", m_chooser);
+		new Pathfinder().init();
 	}
 	
 	/**
@@ -93,6 +96,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		Pathfinder.findposition();//this should generally always be running whenever
+		//the robot is moving and therefore changing position.
 		switch (m_autoSelected) {
 			case kCustomAuto:
 				// Put custom auto code here
@@ -109,6 +114,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		Pathfinder.findposition();//this should generally always be running whenever
+		//the robot is moving and therefore changing position.
 	}
 
 	/**
@@ -116,5 +123,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		Pathfinder.findposition();//this should generally always be running whenever
+		//the robot is moving and therefore changing position.
 	}
 }
