@@ -114,6 +114,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		Pathfinder.findposition();//this should generally always be running whenever
+		//the robot is moving and therefore changing position.
 	}
 
 	/**
@@ -121,5 +123,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		Pathfinder.findposition();//this should generally always be running whenever
+		//the robot is moving and therefore changing position.
 	}
 }
