@@ -36,6 +36,7 @@ public class PathMaker {
 			}
 		});
 		JPanel feildPanel = new JPanel() {
+			
 			public void paint(Graphics g) {
 				g.fillRect(0, 0, 100,100);
 			}
