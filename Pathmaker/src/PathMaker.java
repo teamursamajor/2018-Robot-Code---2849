@@ -1,4 +1,5 @@
 import java.awt.BasicStroke;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -8,6 +9,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JComboBox;
@@ -32,13 +34,12 @@ public class PathMaker {
 	static BufferedImage field;
 	static BufferedImage overlay;
 	
-	static int[] prev=new int[] {0,0};//for mouse motion ignore
-	static boolean once = true;//for mouse motion ignore
 	//types of things
 	//starting
 	//turning --probably not
 	//putting down box
 	//picking up a box---maybe
+	static ArrayList<PointonPath> path = new ArrayList<PointonPath>();
 	static void init() {
 		frame = new JFrame();
 		frame.setLayout(null);
@@ -76,6 +77,7 @@ public class PathMaker {
 				g2d.setStroke(new BasicStroke(5,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
 				g2d.drawLine(e.getX(), e.getY(), prev[0], prev[1]);
 				prev=new int[] {e.getX(), e.getY()};
+				path.add(new PointonPath(e.getX(), e.getY()));
 				frame.repaint();
 			}
 			public void mouseMoved(MouseEvent e) {}
@@ -89,16 +91,49 @@ public class PathMaker {
 				once=true;
 			}
 		});
-		feildPanel.setLocation(650,0);
-		feildPanel.setSize(1000-650, 900);
 		frame.add(feildPanel);
 		
 		JPanel pointpanel = new JPanel() {
 			public void paint(Graphics g) {
-				
+				g.translate(0, pointpaneltranslate);
+				for(int i=0;i<path.size();i++) {
+					g.drawRect(0,i*75,310,75);
+					g.setFont(new Font("Times New Roman",200,32));
+					g.drawString(path.get(i).xft+","+path.get(i).yft, 0+10, i*75+40);
+				}
 			}
 		};
+		pointpanel.addMouseListener(new MouseListener() {
+			public void mouseClicked(MouseEvent e) {}
+			public void mouseEntered(MouseEvent e) {}
+			public void mouseExited(MouseEvent e) {}
+			public void mousePressed(MouseEvent e) {}
+			public void mouseReleased(MouseEvent e) {
+				once2=true;
+			}
+		});
+		pointpanel.addMouseMotionListener(new MouseMotionListener() {
+			public void mouseDragged(MouseEvent e) {
+				if(once2) {
+					prevscroll=e.getY();
+					once2=false;
+				}
+				pointpaneltranslate -= -e.getY()+prevscroll;
+				prevscroll=e.getY();
+				frame.repaint();
+			}
+			public void mouseMoved(MouseEvent e) {}
+		});
+		pointpanel.setLocation(650,0);
+		pointpanel.setSize(350, 900);
 		frame.add(pointpanel);
 		frame.setVisible(true);
 	}
+	
+	static int[] prev=new int[] {0,0};//for mouse motion ignore
+	static boolean once = true;//for mouse motion ignore
+
+	static int prevscroll= 0;
+	static boolean once2=true;
+	static int pointpaneltranslate = 0;
 }
