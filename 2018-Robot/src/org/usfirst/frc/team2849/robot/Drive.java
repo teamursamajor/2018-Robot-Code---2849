@@ -150,9 +150,8 @@ public class Drive implements Runnable {
 	}
 
 	/**
-	 * Method to turn to a desired angle 
-	 * Turns clockwise/counterclockwise
-	 * depending on which is most optimal
+	 * Method to turn to a desired angle. Turns clockwise/counterclockwise depending on which is most optimal.
+	 * @param desiredAngle the angle you want to turn TO.
 	 */
 	public void turnTo(double desiredAngle) {
 		double angle = getHeading();
@@ -179,9 +178,7 @@ public class Drive implements Runnable {
 	}
 	/**
 	 * Turns the robot by the amount entered in the parameter. Ex: If you want to go from 30 to 120 degrees, enter 90.
-	 * 
 	 * @param desiredAngle the angle you want to turn BY.
-	 * 
 	 */
 	public void turnBy(double desiredAngle){
 		double currentAngle = getHeading();
