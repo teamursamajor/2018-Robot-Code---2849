@@ -8,19 +8,19 @@ import com.kauailabs.navx.frc.*;
 
 public class Drive implements Runnable {
 
-	private Spark mFrontLeft;
-	private Spark mFrontRight;
-	private Spark mRearLeft;
-	private Spark mRearRight;
+	private static Spark mFrontLeft;
+	private static Spark mFrontRight;
+	private static Spark mRearLeft;
+	private static Spark mRearRight;
 
-	private SpeedControllerGroup leftSide;
-	private SpeedControllerGroup rightSide;
+	private static SpeedControllerGroup leftSide;
+	private static SpeedControllerGroup rightSide;
 
-	private DifferentialDrive diffDrive;
+	private static DifferentialDrive diffDrive;
 
-	private double leftSpeed;
-	private double rightSpeed;
-	private AHRS ahrs;
+	private static double leftSpeed;
+	private static double rightSpeed;
+	private static AHRS ahrs;
 
 	private static Boolean running = new Boolean(false);
 
@@ -37,6 +37,7 @@ public class Drive implements Runnable {
 	 * @param rearRight
 	 *            Channel number for rear right motor
 	 */
+	
 	public Drive(int frontLeft, int frontRight, int rearLeft, int rearRight) {
 		mFrontLeft = new Spark(frontLeft);
 		mFrontRight = new Spark(frontRight);
@@ -62,9 +63,9 @@ public class Drive implements Runnable {
 	 *            Speed for right side motor controllers. Should be -1 <=
 	 *            rightSpeed <= 1.
 	 */
-	public void drive(double leftSpeed, double rightSpeed) {
-		this.leftSpeed = leftSpeed;
-		this.rightSpeed = rightSpeed;
+	public static void drive(double leftSpeed, double rightSpeed) {
+		leftSpeed = leftSpeed;
+		rightSpeed = rightSpeed;
 		normalizeSpeed();
 	}
 
@@ -76,9 +77,9 @@ public class Drive implements Runnable {
 	 * @param speed
 	 *            Amount to change both speeds.
 	 */
-	public void changeSpeed(double speed) {
-		this.leftSpeed += speed;
-		this.rightSpeed += speed;
+	public static void changeSpeed(double speed) {
+		leftSpeed += speed;
+		rightSpeed += speed;
 		normalizeSpeed();
 	}
 
@@ -86,13 +87,13 @@ public class Drive implements Runnable {
 	 * Method to check that both leftSpeed and rightSpeed are -1 < speed < 1,
 	 * and sets them accordingly.
 	 */
-	public void normalizeSpeed() {
+	public static void normalizeSpeed() {
 		if (Math.abs(leftSpeed) > 1)
 			leftSpeed = Math.signum(leftSpeed) * 1;
 		if (Math.abs(rightSpeed) > 1)
 			rightSpeed = Math.signum(rightSpeed) * 1;
 	}
-
+    
 	/**
 	 * Starts driveThread. Made so that only one driveThread can exist at one
 	 * time.
@@ -105,7 +106,6 @@ public class Drive implements Runnable {
 		}
 		new Thread(this, "driveThread").start();
 	}
-
 	/**
 	 * Run method for driveThread
 	 */
@@ -124,7 +124,7 @@ public class Drive implements Runnable {
 	/**
 	 * Kill method for driveThread
 	 */
-	public void kill() {
+	public static void kill() {
 		running = false;
 	}
 
@@ -135,7 +135,7 @@ public class Drive implements Runnable {
 	 * TODO check for efficiency 
 	 */
 
-	public double getHeading() {
+	public static double getHeading() {
 		double heading = ahrs.getAngle();
 		if (heading < 0 || heading > 180) {
 			while (heading < 0) {
@@ -153,7 +153,7 @@ public class Drive implements Runnable {
 	 * Method to turn to a desired angle. Turns clockwise/counterclockwise depending on which is most optimal.
 	 * @param desiredAngle the angle you want to turn TO.
 	 */
-	public void turnTo(double desiredAngle) {
+	public static void turnTo(double desiredAngle) {
 		double angle = getHeading();
 		//TODO powerConstant is temporary for now; will be replaced with P/PI controlling
 		double powerConstant = 0.5;
@@ -183,14 +183,14 @@ public class Drive implements Runnable {
 	 * @param range The range of acceptable values.
 	 * @return
 	 */
-	public boolean inRange(double value, double center, double range) {
+	public static boolean inRange(double value, double center, double range) {
 		return (value < center + range) && (value > center - range);
 	}
 	/**
 	 * Turns the robot by the amount entered in the parameter. Ex: If you want to go from 30 to 120 degrees, enter 90.
 	 * @param desiredAngle the angle you want to turn BY.
 	 */
-	public void turnBy(double desiredAngle){
+	public static void turnBy(double desiredAngle){
 		double currentAngle = getHeading();
 	    double finalAngle= currentAngle+desiredAngle;
 	    turnTo(finalAngle);
