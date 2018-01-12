@@ -129,11 +129,13 @@ public class Drive implements Runnable {
 	}
 
 	/**
-	 * heading code
-	 * 
+	 * Takes the angle given by the AHRS and turns it into a heading which is
+	 * always between 0 and 360 (AHRS can return negative values and values
+	 * above 360)
+	 * TODO check for efficiency 
 	 */
 
-	public void getHeading(int desired) {
+	public double getHeading() {
 		double heading = ahrs.getAngle();
 		if (heading < 0 || heading > 180) {
 			while (heading < 0) {
@@ -143,6 +145,35 @@ public class Drive implements Runnable {
 				heading -= 360;
 			}
 		}
+		return heading;
 
+	}
+
+	/**
+	 * Method to turn to a desired angle Turns clockwise/counterclockwise
+	 * depending on which is most optimal (Probably not the best because it's
+	 * designed by a new member)
+	 * TODO check for efficiency
+	 */
+	private void turnTo(int desiredAngle) {
+		double angle = getHeading();
+		double turnPoint = angle;
+		if (angle < 180)
+			turnPoint += 180;
+		if (angle >= 180)
+			turnPoint -= 180;
+		if (desiredAngle < turnPoint) {
+
+			// turn clockwise
+			while (angle != desiredAngle) {
+				drive(0.5, -0.5);
+			}
+		}
+		if (desiredAngle > turnPoint) {
+			// turn counterclockwise
+			while (angle != desiredAngle) {
+				drive(-0.5, 0.5);
+			}
+		}
 	}
 }
