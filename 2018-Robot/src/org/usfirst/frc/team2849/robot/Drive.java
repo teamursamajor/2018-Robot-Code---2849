@@ -151,14 +151,12 @@ public class Drive implements Runnable {
 
 	/**
 	 * Method to turn to a desired angle Turns clockwise/counterclockwise
-	 * depending on which is most optimal (Probably not the best because it's
-	 * designed by a new member)
-	 * TODO check for efficiency
+	 * depending on which is most optimal
 	 */
 	public void turnTo(double desiredAngle) {
 		double angle = getHeading();
 		double turnPoint = angle;
-		//powerConstant is temporary for now; will be replaced with P/PI controlling
+		//TODO powerConstant is temporary for now; will be replaced with P/PI controlling
 		double powerConstant = 0.5;
 		if (angle < 180)
 			turnPoint += 180;
