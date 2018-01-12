@@ -167,11 +167,20 @@ public class Drive implements Runnable {
 			drive((Math.signum(turnPoint - 180)*powerConstant),-1*(Math.signum(turnPoint - 180)*powerConstant));
 		}
 	}
+	/**
+	 * Checks if the value is within range of the center. Returns true if the value is within range of center.
+	 * @param value The value being checked 
+	 * @param center The center value for the range
+	 * @param range The range of acceptable values.
+	 * @return
+	 */
 	public boolean inRange(double value, double center, double range) {
 		return (value < center + range) && (value > center - range);
 	}
 	/**
-	 * method to find the angle the robot should turn by to be on track
+	 * Turns the robot by the amount entered in the parameter. Ex: If you want to go from 30 to 120 degrees, enter 90.
+	 * 
+	 * @param desiredAngle the angle you want to turn BY.
 	 * 
 	 */
 	public void turnBy(double desiredAngle){
