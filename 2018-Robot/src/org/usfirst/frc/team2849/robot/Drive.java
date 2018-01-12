@@ -155,7 +155,7 @@ public class Drive implements Runnable {
 	 * designed by a new member)
 	 * TODO check for efficiency
 	 */
-	private void turnTo(int desiredAngle) {
+	public void turnTo(double desiredAngle) {
 		double angle = getHeading();
 		double turnPoint = angle;
 		if (angle < 180)
@@ -176,4 +176,14 @@ public class Drive implements Runnable {
 			}
 		}
 	}
+	/**
+	 * method to find the angle the robot should turn by to be on track
+	 * 
+	 */
+	public void turnBy(double desiredAngle){
+		double currentAngle = getHeading();
+	    double finalAngle= currentAngle+desiredAngle;
+	    turnTo(finalAngle);
+		}
+
 }
