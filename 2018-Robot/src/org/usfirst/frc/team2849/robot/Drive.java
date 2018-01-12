@@ -155,17 +155,27 @@ public class Drive implements Runnable {
 	 */
 	public void turnTo(double desiredAngle) {
 		double angle = getHeading();
-		double turnPoint = angle;
 		//TODO powerConstant is temporary for now; will be replaced with P/PI controlling
 		double powerConstant = 0.5;
-		if (angle < 180)
-			turnPoint += 180;
-		if (angle >= 180)
-			turnPoint -= 180;
 		while (!inRange(angle, desiredAngle, 0.5)) {
-			drive((Math.signum(turnPoint - 180)*powerConstant),-1*(Math.signum(turnPoint - 180)*powerConstant));
+			drive((Math.signum(turnAmount(desiredAngle))*powerConstant),-1*(Math.signum(turnAmount(desiredAngle))*powerConstant));
 		}
 	}
+	
+	/** 
+	 * Determines what angle to turn by and which direction depending on which is most optimal.
+	 * Positive output = clockwise
+	 * Negative output = counterclockwise
+	 * @param desiredAngle the angle you want to turn TO.
+	 */
+	public double turnAmount(double desiredAngle) {
+		double angle = getHeading();
+		double turnAmount = desiredAngle - angle;
+		if (desiredAngle > (angle + 180))
+			turnAmount = (turnAmount - 360) % 360;
+		return turnAmount;
+	}
+	
 	/**
 	 * Checks if the value is within range of the center. Returns true if the value is within range of center.
 	 * @param value The value being checked 
