@@ -69,6 +69,7 @@ public class Robot extends IterativeRobot {
 		m_chooser.addDefault("Default Auto", kDefaultAuto);
 		m_chooser.addObject("My Auto", kCustomAuto);
 		SmartDashboard.putData("Auto choices", m_chooser);
+		new Pathfinder().init();
 	}
 	
 	/**
@@ -95,6 +96,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		Pathfinder.findposition();//this should generally always be running whenever
+		//the robot is moving and therefore changing position.
 		switch (m_autoSelected) {
 			case kCustomAuto:
 				// Put custom auto code here
