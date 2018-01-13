@@ -8,19 +8,20 @@ import com.kauailabs.navx.frc.*;
 
 public class Drive implements Runnable {
 
-	private Spark mFrontLeft;
-	private Spark mFrontRight;
-	private Spark mRearLeft;
-	private Spark mRearRight;
+	private static Spark mFrontLeft;
+	private static Spark mFrontRight;
+	private static Spark mRearLeft;
+	private static Spark mRearRight;
 
-	private SpeedControllerGroup leftSide;
-	private SpeedControllerGroup rightSide;
+	private static SpeedControllerGroup leftSide;
+	private static SpeedControllerGroup rightSide;
 
-	private DifferentialDrive diffDrive;
+	private static DifferentialDrive diffDrive;
 
-	private double leftSpeed;
-	private double rightSpeed;
-	private AHRS ahrs;
+	private static double leftSpeed;
+	private static double rightSpeed;
+	private static boolean square;
+	private static AHRS ahrs;
 
 	private static Boolean running = new Boolean(false);
 
@@ -37,6 +38,7 @@ public class Drive implements Runnable {
 	 * @param rearRight
 	 *            Channel number for rear right motor
 	 */
+	
 	public Drive(int frontLeft, int frontRight, int rearLeft, int rearRight) {
 		mFrontLeft = new Spark(frontLeft);
 		mFrontRight = new Spark(frontRight);
@@ -62,9 +64,10 @@ public class Drive implements Runnable {
 	 *            Speed for right side motor controllers. Should be -1 <=
 	 *            rightSpeed <= 1.
 	 */
-	public void drive(double leftSpeed, double rightSpeed) {
-		this.leftSpeed = leftSpeed;
-		this.rightSpeed = rightSpeed;
+	public static void drive(double leftSpeed, double rightSpeed, boolean square) {
+		Drive.leftSpeed = leftSpeed;
+		Drive.rightSpeed = rightSpeed;
+		Drive.square = square;
 		normalizeSpeed();
 	}
 
@@ -76,9 +79,9 @@ public class Drive implements Runnable {
 	 * @param speed
 	 *            Amount to change both speeds.
 	 */
-	public void changeSpeed(double speed) {
-		this.leftSpeed += speed;
-		this.rightSpeed += speed;
+	public static void changeSpeed(double speed) {
+		leftSpeed += speed;
+		rightSpeed += speed;
 		normalizeSpeed();
 	}
 
@@ -86,13 +89,13 @@ public class Drive implements Runnable {
 	 * Method to check that both leftSpeed and rightSpeed are -1 < speed < 1,
 	 * and sets them accordingly.
 	 */
-	public void normalizeSpeed() {
+	public static void normalizeSpeed() {
 		if (Math.abs(leftSpeed) > 1)
 			leftSpeed = Math.signum(leftSpeed) * 1;
 		if (Math.abs(rightSpeed) > 1)
 			rightSpeed = Math.signum(rightSpeed) * 1;
 	}
-
+    
 	/**
 	 * Starts driveThread. Made so that only one driveThread can exist at one
 	 * time.
@@ -105,14 +108,13 @@ public class Drive implements Runnable {
 		}
 		new Thread(this, "driveThread").start();
 	}
-
 	/**
 	 * Run method for driveThread
 	 */
 	@Override
 	public void run() {
 		while (running) {
-			diffDrive.tankDrive(leftSpeed, rightSpeed, true);
+			diffDrive.tankDrive(leftSpeed, rightSpeed, square);
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
@@ -124,7 +126,7 @@ public class Drive implements Runnable {
 	/**
 	 * Kill method for driveThread
 	 */
-	public void kill() {
+	public static void kill() {
 		running = false;
 	}
 
@@ -135,7 +137,7 @@ public class Drive implements Runnable {
 	 * TODO check for efficiency 
 	 */
 
-	public double getHeading() {
+	public static double getHeading() {
 		double heading = ahrs.getAngle();
 		if (heading < 0 || heading > 180) {
 			while (heading < 0) {
@@ -153,19 +155,29 @@ public class Drive implements Runnable {
 	 * Method to turn to a desired angle. Turns clockwise/counterclockwise depending on which is most optimal.
 	 * @param desiredAngle the angle you want to turn TO.
 	 */
-	public void turnTo(double desiredAngle) {
+	public static void turnTo(double desiredAngle) {
 		double angle = getHeading();
-		double turnPoint = angle;
 		//TODO powerConstant is temporary for now; will be replaced with P/PI controlling
 		double powerConstant = 0.5;
-		if (angle < 180)
-			turnPoint += 180;
-		if (angle >= 180)
-			turnPoint -= 180;
 		while (!inRange(angle, desiredAngle, 0.5)) {
-			drive((Math.signum(turnPoint - 180)*powerConstant),-1*(Math.signum(turnPoint - 180)*powerConstant));
+			drive((Math.signum(turnAmount(desiredAngle))*powerConstant),-1*(Math.signum(turnAmount(desiredAngle))*powerConstant), square);
 		}
 	}
+	
+	/** 
+	 * Determines what angle to turn by and which direction depending on which is most optimal.
+	 * Positive output = clockwise
+	 * Negative output = counterclockwise
+	 * @param desiredAngle the angle you want to turn TO.
+	 */
+	public static double turnAmount(double desiredAngle) {
+		double angle = getHeading();
+		double turnAmount = desiredAngle - angle;
+		if (desiredAngle > (angle + 180))
+			turnAmount = (turnAmount - 360) % 360;
+		return turnAmount;
+	}
+	
 	/**
 	 * Checks if the value is within range of the center. Returns true if the value is within range of center.
 	 * @param value The value being checked 
@@ -173,14 +185,14 @@ public class Drive implements Runnable {
 	 * @param range The range of acceptable values.
 	 * @return
 	 */
-	public boolean inRange(double value, double center, double range) {
+	public static boolean inRange(double value, double center, double range) {
 		return (value < center + range) && (value > center - range);
 	}
 	/**
 	 * Turns the robot by the amount entered in the parameter. Ex: If you want to go from 30 to 120 degrees, enter 90.
 	 * @param desiredAngle the angle you want to turn BY.
 	 */
-	public void turnBy(double desiredAngle){
+	public static void turnBy(double desiredAngle){
 		double currentAngle = getHeading();
 	    double finalAngle= currentAngle+desiredAngle;
 	    turnTo(finalAngle);
