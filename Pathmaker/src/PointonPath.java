@@ -31,7 +31,7 @@ public class PointonPath extends JPanel{
 	}
 	
 	public String toString() {
-		return "PointonPath at distance " +  position + ": " + direction;
+		return position + " " + direction + " " + xft + " " + yft;
 	}
 	//bottons to impliment{
 	// highlight segment

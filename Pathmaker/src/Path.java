@@ -66,8 +66,16 @@ public class Path {
 		return path.get(index);
 	}
 	
+	public ArrayList<PointonPath> getPoints() {
+		return path;
+	}
+	
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getName() {
+		return name;
 	}
 	
 	public int numPoints() {
