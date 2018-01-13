@@ -58,7 +58,7 @@ public class PathMaker {
 		for(int i =0;i<path.size()-1;i++) {
 			output.add(new PointonPath(Math.sqrt(Math.pow(path.get(i).xft-path.get(i+1).xft, 2)+Math.pow(path.get(i).yft-path.get(i+1).yft, 2)),negmod(Math.atan2(path.get(i).yft-path.get(i+1).yft, path.get(i).xft-path.get(i+1).xft),Math.PI*2)*(180/Math.PI),path.get(i).xft,path.get(i).xft));
 		}
-//		PathWriter.write(new Path("output",output));
+		new PathWriter(new Path[] {new Path("output",output), new Path()}, "outpath.txt");
 		System.out.println("outputed");
 	}
 	private static double negmod(double atan2,double modvalue) {
@@ -88,8 +88,8 @@ public class PathMaker {
 			}
 		});
 		try {
-			field = ImageIO.read(new File("/field2.png"));
-			overfield = ImageIO.read(new File("/Transparentoverfield.png"));
+			field = ImageIO.read(new File(System.getProperty("user.dir") + "/field2.png"));
+			overfield = ImageIO.read(new File(System.getProperty("user.dir") + "/Transparentoverfield.png"));
 		}catch(Exception E) {E.printStackTrace();}
 		JPanel feildPanel = new JPanel() {
 			public void paint(Graphics g) {
