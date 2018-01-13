@@ -29,13 +29,9 @@ public class PointonPath extends JPanel {
 	}
 
 	public String toString() {
-<<<<<<< HEAD
 		return position + " " + direction + " " + xft + " " + yft;
-=======
-		return "PointonPath at distance " + position + ": " + direction;
->>>>>>> branch 'master' of https://PunchlineUrsaMajor:boogaloo99@github.com/teamursamajor/2018-Robot-Code---2849
 	}
-	// bottons to impliment{
+	//bottons to impliment{
 	// highlight segment
 	// drop box
 	// pick up box
