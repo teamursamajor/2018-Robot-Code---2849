@@ -88,8 +88,8 @@ public class PathMaker {
 			}
 		});
 		try {
-			field = ImageIO.read(new File("/field2.png"));
-			overfield = ImageIO.read(new File("/Transparentoverfield.png"));
+			field = ImageIO.read(new File(System.getProperty("user.dir") + "/field2.png"));
+			overfield = ImageIO.read(new File(System.getProperty("user.dir") + "/Transparentoverfield.png"));
 		}catch(Exception E) {E.printStackTrace();}
 		JPanel feildPanel = new JPanel() {
 			public void paint(Graphics g) {
