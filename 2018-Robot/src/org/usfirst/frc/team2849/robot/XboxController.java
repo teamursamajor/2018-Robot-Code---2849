@@ -65,7 +65,7 @@ public class XboxController extends Joystick implements Runnable {
 	 * @return the button's value
 	 */
 	public boolean getButton(int buttonNumber) {
-		return this.getRawButton(buttonNumber);
+		return super.getRawButton(buttonNumber);
 	}
 	
 	/**
