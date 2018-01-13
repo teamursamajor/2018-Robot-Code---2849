@@ -97,7 +97,7 @@ public class PathReader {
 	
 	private PointonPath parsePointCheeze(String line) {
 		String[] splitPoint = line.trim().split("\\s+");
-		return new PointonPath(Double.parseDouble(splitPoint[0]), Double.parseDouble(splitPoint[4]));
+		return new PointonPath(Double.parseDouble(splitPoint[0]), Double.parseDouble(splitPoint[4]), -1, -1);
 	}
 	
 	public Path getLeftPath() {

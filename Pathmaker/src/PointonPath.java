@@ -40,10 +40,12 @@ public class PointonPath extends JPanel {
 	PointonPath(double pos, double dir,double x_, double y_) {
 		position = pos;
 		direction = dir;
-		x = x_;
-		y = y_;
-		xft = Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10, precision);
-		yft = Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10, precision);
+		xft = x_;
+		yft = y_;
+//		x = x_;
+//		y = y_;
+//		xft = Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10, precision);
+//		yft = Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10, precision);
 	}
 
 	PointonPath(double x_, double y_, int i_) {

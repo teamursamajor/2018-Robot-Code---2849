@@ -33,7 +33,7 @@ public class Path {
 		try {
 			return path.get(nextPoint);
 		} catch (Exception e) {
-			return new PointonPath(Integer.MAX_VALUE, Integer.MAX_VALUE);
+			return new PointonPath(Integer.MAX_VALUE, Integer.MAX_VALUE, -1, -1);
 		}
 	}
 	
@@ -41,7 +41,7 @@ public class Path {
 		try {
 			return path.get(nextPoint - 1);
 		} catch (Exception e) {
-			return new PointonPath(Integer.MIN_VALUE, Integer.MIN_VALUE);
+			return new PointonPath(Integer.MIN_VALUE, Integer.MIN_VALUE, -1, -1);
 		}
 	}
 	
