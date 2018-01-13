@@ -49,12 +49,12 @@ public class PathMaker {
 	
 	//label the points by number so you can delete specific ones
 	//be able to insert points at specific locations
-	
+	static JPanel pointpanel;
 	static ArrayList<PointonPath> path = new ArrayList<PointonPath>();
 	static void init() {
 		frame = new JFrame();
 		frame.setLayout(null);
-		frame.setSize(1000,900);
+		frame.setSize(1000,850);
 		JPanel presetpanel = new JPanel();
 		frame.add(presetpanel);
 		JComboBox preset = new JComboBox(presets);
@@ -71,8 +71,8 @@ public class PathMaker {
 		}catch(Exception E) {E.printStackTrace();}
 		JPanel feildPanel = new JPanel() {
 			public void paint(Graphics g) {
-				g.drawImage(field, 0, 0, 450, 900, null);
-				g.drawImage(overlay, 0, 0, 450, 900, null);
+				g.drawImage(field, 0, 0, 400, 800, null);
+				g.drawImage(overlay, 0, 0, 400, 800, null);
 				for(int i=0;i<path.size()-1;i++) {
 					Graphics2D g2d = (Graphics2D)g;
 					g2d.setStroke(new BasicStroke(5,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
@@ -80,8 +80,8 @@ public class PathMaker {
 				}
 			}
 		};
-		feildPanel.setSize(450, 900);
-		overlay=new BufferedImage(450,900,2);
+		feildPanel.setSize(450, 850);
+		overlay=new BufferedImage(450,850,2);
 		feildPanel.setLocation(200,0);
 		feildPanel.addMouseMotionListener(new MouseMotionListener() {
 			public void mouseDragged(MouseEvent e) {
@@ -90,10 +90,10 @@ public class PathMaker {
 					once=false;
 				}
 				if(slow%8==0) {
-					path.add(new PointonPath(e.getX(), e.getY()));
+					path.add(new PointonPath(e.getX(), e.getY(),path.size()-1));
 					frame.repaint();
 				}
-				slow++;slow%=8;
+				slow++;slow%=1;
 			}
 			public void mouseMoved(MouseEvent e) {}
 		});
@@ -104,33 +104,33 @@ public class PathMaker {
 			public void mousePressed(MouseEvent e) {}
 			public void mouseReleased(MouseEvent e) {
 				once=true;
+				frame.repaint();
 			}
 		});
 		frame.add(feildPanel);
 		
-		JPanel pointpanel = new JPanel() {
+		JPanel Scrollpanel = new JPanel() {
 			public void paint(Graphics g) {
-				g.translate(0, pointpaneltranslate);
-				for(int i=0;i<path.size();i++) {
-					g.setColor(Color.BLACK);
-					g.drawRect(0,i*75,310,75);
-					g.setFont(new Font("Times New Roman",200,32));
-					g.drawString(path.get(i).xft+","+path.get(i).yft, 0+10, i*75+40);
-					path.get(i).setLocation(0,i*75);
-					path.get(i).setSize(310,75);
-					g.setColor(Color.red);
-					g.draw3DRect(275, 10+i*75, 25, 25, true);
+				if(path.size()>0&PointonPath.h*(path.size()-800/PointonPath.h+1)!=0) {
+					int h=800/path.size()*(800/PointonPath.h);
+					g.fillRect(0, -pointpaneltranslate*600/(PointonPath.h*(path.size()-800/PointonPath.h+1)), 50, h);
 				}
 			}
 		};
-		pointpanel.addMouseListener(new MouseListener() {
-			public void mouseClicked(MouseEvent e) {
-				int y=e.getY()+10-pointpaneltranslate;
-				if(y%75>10&y%75<25) {
-					path.remove(y/75);
+		Scrollpanel.setSize(50, 800);
+		Scrollpanel.setLocation(950,50);
+		pointpanel = new JPanel() {
+			public void paint(Graphics g) {
+				g.translate(0, pointpaneltranslate);
+				g.setColor(Color.white);
+				g.fillRect(0, 0, 300, 800);
+				for(int i=0;i<path.size();i++) {
+					path.get(i).paint(g, i);
 				}
-				frame.repaint();
 			}
+		};
+		Scrollpanel.addMouseListener(new MouseListener() {
+			public void mouseClicked(MouseEvent e) {}
 			public void mouseEntered(MouseEvent e) {}
 			public void mouseExited(MouseEvent e) {}
 			public void mousePressed(MouseEvent e) {}
@@ -138,27 +138,31 @@ public class PathMaker {
 				once2=true;
 			}
 		});
-		pointpanel.addMouseMotionListener(new MouseMotionListener() {
+		Scrollpanel.addMouseMotionListener(new MouseMotionListener() {
 			public void mouseDragged(MouseEvent e) {
 				if(once2) {
 					prevscroll=e.getY();
 					once2=false;
 				}
-				pointpaneltranslate -= -e.getY()+prevscroll;
+				pointpaneltranslate += -e.getY()+prevscroll;
 				prevscroll=e.getY();
 				if(pointpaneltranslate>0) {
 					pointpaneltranslate=0;
 				}
-				if(pointpaneltranslate<-75*(path.size()-11)) {
-					pointpaneltranslate=-75*(path.size()-11);
+				if(-pointpaneltranslate>PointonPath.h*(path.size()-800/PointonPath.h+1)) {
+					if(path.size()>800/PointonPath.h+1)
+						pointpaneltranslate=-PointonPath.h*(path.size()-800/PointonPath.h+1);
+					else
+						pointpaneltranslate=0;
 				}
 				frame.repaint();
 			}
 			public void mouseMoved(MouseEvent e) {}
 		});
-		pointpanel.setLocation(650,0);
-		pointpanel.setSize(350, 900);
+		pointpanel.setLocation(650,50);
+		pointpanel.setSize(300, 800);
 		frame.add(pointpanel);
+		frame.add(Scrollpanel);
 		frame.setVisible(true);
 	}
 	static int slow=0;
