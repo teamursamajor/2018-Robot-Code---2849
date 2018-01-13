@@ -35,14 +35,6 @@ public class PathMaker {
 	static BufferedImage field;
 	static BufferedImage overlay;
 	
-	//types of things
-	//starting
-	//turning --probably not
-	//putting down box
-	//picking up a box---maybe
-	
-	//actually a scrollbar
-	
 	//writing drawn to file
 	//loading from file
 	//find format from charlie
@@ -52,7 +44,12 @@ public class PathMaker {
 	static JPanel pointpanel;
 	static ArrayList<PointonPath> path = new ArrayList<PointonPath>();
 	static void init() {
-		frame = new JFrame();
+		frame = new JFrame() {
+			public void repaint() {
+				super.repaint();
+				overlay=new BufferedImage(400,800,BufferedImage.TYPE_4BYTE_ABGR);
+			}
+		};
 		frame.setLayout(null);
 		frame.setSize(1000,850);
 		JPanel presetpanel = new JPanel();
@@ -73,15 +70,15 @@ public class PathMaker {
 			public void paint(Graphics g) {
 				g.drawImage(field, 0, 0, 400, 800, null);
 				g.drawImage(overlay, 0, 0, 400, 800, null);
-				for(int i=0;i<path.size()-1;i++) {
-					Graphics2D g2d = (Graphics2D)g;
-					g2d.setStroke(new BasicStroke(5,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
-					g2d.drawLine((int)path.get(i).x,(int)path.get(i).y,(int)path.get(i+1).x,(int)path.get(i+1).y);
-				}
+//				for(int i=0;i<path.size()-1;i++) {
+//					Graphics2D g2d = (Graphics2D)g;
+//					g2d.setStroke(new BasicStroke(5,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
+//					g2d.drawLine((int)path.get(i).x,(int)path.get(i).y,(int)path.get(i+1).x,(int)path.get(i+1).y);
+//				}
 			}
 		};
 		feildPanel.setSize(450, 850);
-		overlay=new BufferedImage(450,850,2);
+		overlay=new BufferedImage(400,800,2);
 		feildPanel.setLocation(200,0);
 		feildPanel.addMouseMotionListener(new MouseMotionListener() {
 			public void mouseDragged(MouseEvent e) {
@@ -93,7 +90,7 @@ public class PathMaker {
 					path.add(new PointonPath(e.getX(), e.getY(),path.size()-1));
 					frame.repaint();
 				}
-				slow++;slow%=1;
+				slow++;slow%=8;
 			}
 			public void mouseMoved(MouseEvent e) {}
 		});
@@ -113,7 +110,7 @@ public class PathMaker {
 			public void paint(Graphics g) {
 				if(path.size()>0&PointonPath.h*(path.size()-800/PointonPath.h+1)!=0) {
 					int h=800/path.size()*(800/PointonPath.h);
-					g.fillRect(0, -pointpaneltranslate*600/(PointonPath.h*(path.size()-800/PointonPath.h+1)), 50, h);
+					g.fillRect(0, -pointpaneltranslate*800/(PointonPath.h*path.size()), 50, h);
 				}
 			}
 		};
@@ -123,7 +120,7 @@ public class PathMaker {
 			public void paint(Graphics g) {
 				g.translate(0, pointpaneltranslate);
 				g.setColor(Color.white);
-				g.fillRect(0, 0, 300, 800);
+				g.fillRect(0, 0, 325, PointonPath.h*path.size());
 				for(int i=0;i<path.size();i++) {
 					path.get(i).paint(g, i);
 				}
@@ -159,8 +156,8 @@ public class PathMaker {
 			}
 			public void mouseMoved(MouseEvent e) {}
 		});
-		pointpanel.setLocation(650,50);
-		pointpanel.setSize(300, 800);
+		pointpanel.setLocation(625,50);
+		pointpanel.setSize(325, 800);
 		frame.add(pointpanel);
 		frame.add(Scrollpanel);
 		frame.setVisible(true);
