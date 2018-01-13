@@ -20,13 +20,29 @@ public class PointonPath extends JPanel{
 	int i;
 	String message = "";
 	static int h=50;
+	private double position;
+	private double direction;
+	public double getPosition() {
+		return position;
+	}
 	
+	public double getDirection() {
+		return direction;
+	}
+	
+	public String toString() {
+		return "PointonPath at distance " +  position + ": " + direction;
+	}
 	//bottons to impliment{
 	// highlight segment
 	// drop box
 	// pick up box
 	
 	//the ability to insert points not from the end
+	PointonPath(double pos, double dir){
+		position=pos;
+		direction=dir;
+	}
 	PointonPath(double x_,double y_,int i_){
 		x=x_;
 		y=y_;

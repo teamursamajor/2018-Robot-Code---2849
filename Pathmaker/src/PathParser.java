@@ -90,14 +90,14 @@ public class PathParser {
 		}
 	}
 	
-	private Waypoint parsePoint(String line) {
+	private PointonPath parsePoint(String line) {
 		String[] splitPoint = line.trim().split("\\s+");
-		return new Waypoint(Double.parseDouble(splitPoint[0]), Double.parseDouble(splitPoint[1]));
+		return new PointonPath(Double.parseDouble(splitPoint[0]), Double.parseDouble(splitPoint[1]));
 	}
 	
-	private Waypoint parsePointCheeze(String line) {
+	private PointonPath parsePointCheeze(String line) {
 		String[] splitPoint = line.trim().split("\\s+");
-		return new Waypoint(Double.parseDouble(splitPoint[0]), Double.parseDouble(splitPoint[4]));
+		return new PointonPath(Double.parseDouble(splitPoint[0]), Double.parseDouble(splitPoint[4]));
 	}
 	
 	public Path getLeftPath() {
