@@ -89,5 +89,24 @@ public class Path {
 		}
 		return toReturn;
 	}
+	
+	public Path[] separate(double separation) {
+		Path leftPath = new Path();
+		Path rightPath = new Path();
+		double leftX;
+		double leftY;
+		double rightX;
+		double rightY;
+		double perpHeading;
+		double cos;
+		double sin;
+		for (PointonPath point : path) {
+			perpHeading = point.getDirection() + 90 % 360;
+			cos = Math.cos(perpHeading);
+			sin = Math.sin(perpHeading);
+			
+		}
+		return new Path[] {null, null};
+	}
 
 }
