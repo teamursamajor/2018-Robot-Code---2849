@@ -1,20 +1,25 @@
 package autonomous;
 import org.usfirst.frc.team2849.robot.*;
-public class TurnTo{
+public class TurnTask implements AutoTask{
 	
-	public TurnTo(){
-		//TODO Initialize this constructor
+	enum Turntype { TURN_TO, TURN_BY };
+	private double desiredAngle;
+	private Turntype type;
+	
+	public TurnTask(Turntype type, double desiredAngle){
+		this.desiredAngle = desiredAngle;
+		this.type = type;
 	}
 	/**
 	 * Method to turn to a desired angle. Turns clockwise/counterclockwise depending on which is most optimal.
-	 * @param desiredAngle the angle you want to turn TO.
+	 * 
 	 */
 	public void turnTo(double desiredAngle) {
 		double angle = Drive.getHeading();
 		//TODO powerConstant is temporary for now; will be replaced with P/PI controlling
 		double powerConstant = 0.5;
 		while (!inRange(angle, desiredAngle, 0.5)) {
-			drive((Math.signum(turnAmount(desiredAngle))*powerConstant),-1*(Math.signum(turnAmount(desiredAngle))*powerConstant));
+			Drive.drive((Math.signum(turnAmount(desiredAngle))*powerConstant),-1*(Math.signum(turnAmount(desiredAngle))*powerConstant), true);
 		}
 	}
 	
@@ -25,7 +30,7 @@ public class TurnTo{
 	 * @param desiredAngle the angle you want to turn TO.
 	 */
 	public double turnAmount(double desiredAngle) {
-		double angle = getHeading();
+		double angle = Drive.getHeading();
 		double turnAmount = desiredAngle - angle;
 		if (desiredAngle > (angle + 180))
 			turnAmount = (turnAmount - 360) % 360;
@@ -48,10 +53,18 @@ public class TurnTo{
 	 * @param desiredAngle the angle you want to turn BY.
 	 */
 	public void turnBy(double desiredAngle){
-		double currentAngle = getHeading();
+		double currentAngle = Drive.getHeading();
 	    double finalAngle= currentAngle+desiredAngle;
 	    turnTo(finalAngle);
+	}
+	
+	public void runTask() {
+		if(type == Turntype.TURN_TO){
+			turnTo(desiredAngle);
+		} else if (type == Turntype.TURN_BY){
+			turnBy(desiredAngle);
 		}
+	}
 	
 
 

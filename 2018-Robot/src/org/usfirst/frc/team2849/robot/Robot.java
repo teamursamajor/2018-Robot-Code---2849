@@ -45,27 +45,27 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		
 		// Thread for camera server init:
-		new Thread(() -> {
-            UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-            camera.setResolution(640, 480);
-            
-            CvSink cvSink = CameraServer.getInstance().getVideo();
-            CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
-            
-            Mat source = new Mat();
-            Mat output = new Mat();
-            
-            while(!Thread.interrupted()) {
-                cvSink.grabFrame(source);
+//		new Thread(() -> {
+//            UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+//            camera.setResolution(640, 480);
+//            
+//            CvSink cvSink = CameraServer.getInstance().getVideo();
+//            CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
+//            
+//            Mat source = new Mat();
+//            Mat output = new Mat();
+//            
+//            while(!Thread.interrupted()) {
+//                cvSink.grabFrame(source);
                 // image processing to grayscale 
                 //Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-                outputStream.putFrame(output);
+//                outputStream.putFrame(output);
                 // TODO
-            }
-        }).start();
+//            }
+//        }).start();
 		
 		drive = new Drive(0, 1, 2, 3);
-		xbox = new XboxController(0);
+		xbox = new XboxController(1);
 		m_chooser.addDefault("Default Auto", kDefaultAuto);
 		m_chooser.addObject("My Auto", kCustomAuto);
 		SmartDashboard.putData("Auto choices", m_chooser);
@@ -123,7 +123,13 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		Pathfinder.findposition();//this should generally always be running whenever
+//		Pathfinder.findposition();//this should generally always be running whenever
 		//the robot is moving and therefore changing position.
+		if (xbox.getButton(XboxController.BUTTON_A)){
+			System.out.println("True");
+			Drive.drive(.35, .35, false);
+		} else {
+			Drive.drive(0, 0, false);
+		}
 	}
 }

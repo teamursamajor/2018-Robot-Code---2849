@@ -20,6 +20,7 @@ public class Drive implements Runnable {
 
 	private static double leftSpeed;
 	private static double rightSpeed;
+	private static boolean square;
 	private static AHRS ahrs;
 
 	private static Boolean running = new Boolean(false);
@@ -63,9 +64,10 @@ public class Drive implements Runnable {
 	 *            Speed for right side motor controllers. Should be -1 <=
 	 *            rightSpeed <= 1.
 	 */
-	public static void drive(double leftSpeed, double rightSpeed) {
-		leftSpeed = leftSpeed;
-		rightSpeed = rightSpeed;
+	public static void drive(double leftSpeed, double rightSpeed, boolean square) {
+		Drive.leftSpeed = leftSpeed;
+		Drive.rightSpeed = rightSpeed;
+		Drive.square = square;
 		normalizeSpeed();
 	}
 
@@ -112,7 +114,7 @@ public class Drive implements Runnable {
 	@Override
 	public void run() {
 		while (running) {
-			diffDrive.tankDrive(leftSpeed, rightSpeed, true);
+			diffDrive.tankDrive(leftSpeed, rightSpeed, square);
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
@@ -158,7 +160,7 @@ public class Drive implements Runnable {
 		//TODO powerConstant is temporary for now; will be replaced with P/PI controlling
 		double powerConstant = 0.5;
 		while (!inRange(angle, desiredAngle, 0.5)) {
-			drive((Math.signum(turnAmount(desiredAngle))*powerConstant),-1*(Math.signum(turnAmount(desiredAngle))*powerConstant));
+			drive((Math.signum(turnAmount(desiredAngle))*powerConstant),-1*(Math.signum(turnAmount(desiredAngle))*powerConstant), square);
 		}
 	}
 	
@@ -168,7 +170,7 @@ public class Drive implements Runnable {
 	 * Negative output = counterclockwise
 	 * @param desiredAngle the angle you want to turn TO.
 	 */
-	public double turnAmount(double desiredAngle) {
+	public static double turnAmount(double desiredAngle) {
 		double angle = getHeading();
 		double turnAmount = desiredAngle - angle;
 		if (desiredAngle > (angle + 180))
