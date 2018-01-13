@@ -56,9 +56,10 @@ public class PathMaker {
 	public static void output() {
 		ArrayList<PointonPath> output = new ArrayList<PointonPath>();
 		for(int i =0;i<path.size()-1;i++) {
-			output.add(new PointonPath(Math.sqrt(Math.pow(path.get(i).xft-path.get(i+1).xft, 2)+Math.pow(path.get(i).yft-path.get(i+1).yft, 2)),negmod(Math.atan2(path.get(i).yft-path.get(i+1).yft, path.get(i).xft-path.get(i+1).xft),Math.PI*2),path.get(i).xft,path.get(i).xft));
+			output.add(new PointonPath(Math.sqrt(Math.pow(path.get(i).xft-path.get(i+1).xft, 2)+Math.pow(path.get(i).yft-path.get(i+1).yft, 2)),negmod(Math.atan2(path.get(i).yft-path.get(i+1).yft, path.get(i).xft-path.get(i+1).xft),Math.PI*2)*(180/Math.PI),path.get(i).xft,path.get(i).xft));
 		}
-		PathWriter.write(new Path("output",output));
+//		PathWriter.write(new Path("output",output));
+		System.out.println("outputed");
 	}
 	private static double negmod(double atan2,double modvalue) {
 		while(atan2<0) {
@@ -87,8 +88,8 @@ public class PathMaker {
 			}
 		});
 		try {
-			field = ImageIO.read(new File("/git/2018-Robot-Code---2849/Pathmaker/field2.png"));
-			overfield = ImageIO.read(new File("/git/2018-Robot-Code---2849/Pathmaker/Transparentoverfield.png"));
+			field = ImageIO.read(new File(System.getProperty("user.dir") + "/field2.png"));
+			overfield = ImageIO.read(new File(System.getProperty("user.dir") + "/Transparentoverfield.png"));
 		}catch(Exception E) {E.printStackTrace();}
 		JPanel feildPanel = new JPanel() {
 			public void paint(Graphics g) {
@@ -196,6 +197,27 @@ public class PathMaker {
 		pointpanel.setSize(325, 800);
 		frame.add(pointpanel);
 		frame.add(Scrollpanel);
+		JPanel menupanel = new JPanel() {
+			public void paint(Graphics g) {
+				g.fillRect(0, 0, 325, 50);
+				g.setColor(Color.white);
+				g.fill3DRect(10, 10, 30, 30, true);
+			}
+		};
+		menupanel.addMouseListener(new MouseListener() {
+			public void mouseClicked(MouseEvent e) {
+				if(e.getX()>10&e.getX()<40&e.getY()>10&e.getY()<40) {
+					output();
+				}
+			}
+			public void mouseEntered(MouseEvent e) {}
+			public void mouseExited(MouseEvent e) {}
+			public void mousePressed(MouseEvent e) {}
+			public void mouseReleased(MouseEvent e) {}
+		});
+		menupanel.setSize(325,50);
+		menupanel.setLocation(625,0);
+		frame.add(menupanel);
 		frame.setVisible(true);
 	}
 	static int slow=0;
