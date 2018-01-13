@@ -98,7 +98,7 @@ public class PathMaker {
 				g.drawImage(overfield, 0, 0, 400, 800, null);
 			}
 		};
-		feildPanel.setSize(450, 850);
+		feildPanel.setSize(400, 850);
 		overlay=new BufferedImage(400,800,2);
 		feildPanel.setLocation(200,0);
 		feildPanel.addMouseMotionListener(new MouseMotionListener() {
