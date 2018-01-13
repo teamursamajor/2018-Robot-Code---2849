@@ -87,8 +87,8 @@ public class PathMaker {
 			}
 		});
 		try {
-			field = ImageIO.read(new File("Z:/git/2018-Robot-Code---2849/Pathmaker/field2.png"));
-			overfield = ImageIO.read(new File("Z:/git/2018-Robot-Code---2849/Pathmaker/Transparentoverfield.png"));
+			field = ImageIO.read(new File("/git/2018-Robot-Code---2849/Pathmaker/field2.png"));
+			overfield = ImageIO.read(new File("/git/2018-Robot-Code---2849/Pathmaker/Transparentoverfield.png"));
 		}catch(Exception E) {E.printStackTrace();}
 		JPanel feildPanel = new JPanel() {
 			public void paint(Graphics g) {
