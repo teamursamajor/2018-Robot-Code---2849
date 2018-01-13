@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -34,9 +35,16 @@ public class PointonPath extends JPanel{
 		yft=Math.floor(y*yconv*Math.pow(10, precision))/Math.pow(10, precision);
 		this.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
+				System.out.println(e.getY()+" "+(e.getY())+" "+(10)+" "+(35));
 				if(e.getX()>295&e.getX()<320&e.getY()>10&e.getY()<35) {
 					PathMaker.frame.repaint();
 					PathMaker.path.remove(i);
+					if(-PathMaker.pointpaneltranslate>PointonPath.h*(PathMaker.path.size()-800/PointonPath.h+1)) {
+						if(PathMaker.path.size()>800/PointonPath.h+1)
+							PathMaker.pointpaneltranslate=-PointonPath.h*(PathMaker.path.size()-800/PointonPath.h+1);
+						else
+							PathMaker.pointpaneltranslate=0;
+					}
 					PathMaker.frame.repaint();
 				}
 				if(e.getX()>220&e.getX()<245&e.getY()>10&e.getY()<35) {
@@ -54,12 +62,21 @@ public class PointonPath extends JPanel{
 			public void mouseReleased(MouseEvent e) {}
 		});
 		PathMaker.pointpanel.add(this);
+		colorarraay = new ArrayList<Color>();
+		int depth=15;
+		for(int i=0;i<depth;i++) {
+			colorarraay.add(new Color(255-255/depth*i,0,255/depth*i));
+		}
+		for(int i=depth-1;i>=0;i--) {
+			colorarraay.add(new Color(255-255/depth*i,0,255/depth*i));
+		}
 	}
 	boolean highlight=false;
 	boolean stupid = false;
+	private ArrayList<Color> colorarraay;
 	public void paint(Graphics g,int i_) {
 		i=i_;
-		this.setLocation(0,i*h);
+		this.setLocation(0,i*h+PathMaker.pointpaneltranslate);
 		this.setSize(335,h);
 		g.setColor(Color.BLACK);
 		g.drawRect(0,i*h,334,h);
@@ -78,23 +95,12 @@ public class PointonPath extends JPanel{
 			g.setColor(Color.green);
 			g.fillOval(170, 10+i*h, 30, 30);
 		}else {
-			if(i%5==0) 
-				g.setColor(new Color(255,0,0));
-			else if (i%5==1) g.setColor(new Color(209, 76, 15));
-			else if (i%5==2) g.setColor(new Color(171, 140, 28));
-			else if (i%5==3) g.setColor(new Color(133, 204, 41));
-			else if (i%5==4) g.setColor(new Color(102, 255, 51));
-			
+			g.setColor(colorarraay.get(i%colorarraay.size()));
 			g.fillOval(175, 15+i*h, 20, 20);
 		}
 		if(i!=PathMaker.path.size()-1) {
 			Graphics2D g2d = (Graphics2D)PathMaker.overlay.getGraphics();
-			if(i%5==0) 
-				g2d.setColor(new Color(255,0,0));
-			else if (i%5==1) g2d.setColor(new Color(209, 76, 15));
-			else if (i%5==2) g2d.setColor(new Color(171, 140, 28));
-			else if (i%5==3) g2d.setColor(new Color(133, 204, 41));
-			else if (i%5==4) g2d.setColor(new Color(102, 255, 51));
+			g2d.setColor(colorarraay.get(i%colorarraay.size()));
 			g2d.setStroke(new BasicStroke(5,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
 			g2d.drawLine((int)PathMaker.path.get(i).x,(int)PathMaker.path.get(i).y,(int)PathMaker.path.get(i+1).x,(int)PathMaker.path.get(i+1).y);
 			if(highlight) {

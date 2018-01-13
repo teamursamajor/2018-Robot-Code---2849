@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ public class PathMaker {
 	static String[] presets = new String[] {"auto1","auto2","auto3","auto4"};
 	static BufferedImage field;
 	static BufferedImage overlay;
-	
+	static BufferedImage overfield;
 	//writing drawn to file
 	//loading from file
 	//find format from charlie
@@ -65,16 +67,13 @@ public class PathMaker {
 		});
 		try {
 			field = ImageIO.read(new File("Z:/git/2018-Robot-Code---2849/Pathmaker/field2.png"));
+			overfield = ImageIO.read(new File("Z:/git/2018-Robot-Code---2849/Pathmaker/Transparentoverfield.png"));
 		}catch(Exception E) {E.printStackTrace();}
 		JPanel feildPanel = new JPanel() {
 			public void paint(Graphics g) {
 				g.drawImage(field, 0, 0, 400, 800, null);
 				g.drawImage(overlay, 0, 0, 400, 800, null);
-//				for(int i=0;i<path.size()-1;i++) {
-//					Graphics2D g2d = (Graphics2D)g;
-//					g2d.setStroke(new BasicStroke(5,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
-//					g2d.drawLine((int)path.get(i).x,(int)path.get(i).y,(int)path.get(i+1).x,(int)path.get(i+1).y);
-//				}
+				g.drawImage(overfield, 0, 0, 400, 800, null);
 			}
 		};
 		feildPanel.setSize(450, 850);
@@ -87,7 +86,7 @@ public class PathMaker {
 					once=false;
 				}
 				if(slow%8==0) {
-					path.add(new PointonPath(e.getX(), e.getY(),path.size()-1));
+					path.add(new PointonPath(e.getX(), e.getY(),path.size()));
 					frame.repaint();
 				}
 				slow++;slow%=8;
@@ -126,6 +125,22 @@ public class PathMaker {
 				}
 			}
 		};
+		frame.addMouseWheelListener(new MouseWheelListener() {
+			public void mouseWheelMoved(MouseWheelEvent e) {
+				double sig=e.getWheelRotation();
+				pointpaneltranslate -= sig*1.2*Math.PI/4*PointonPath.h;
+				if(pointpaneltranslate>0) {
+					pointpaneltranslate=0;
+				}
+				if(-pointpaneltranslate>PointonPath.h*(path.size()-800/PointonPath.h+1)) {
+					if(path.size()>800/PointonPath.h+1)
+						pointpaneltranslate=-PointonPath.h*(path.size()-800/PointonPath.h+1);
+					else
+						pointpaneltranslate=0;
+				}
+				frame.repaint();
+			}
+		});
 		Scrollpanel.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {}
 			public void mouseEntered(MouseEvent e) {}
