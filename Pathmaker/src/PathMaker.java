@@ -56,7 +56,7 @@ public class PathMaker {
 	public static void output() {
 		ArrayList<PointonPath> output = new ArrayList<PointonPath>();
 		for(int i =0;i<path.size()-1;i++) {
-			output.add(new PointonPath(Math.sqrt(Math.pow(path.get(i).xft-path.get(i+1).xft, 2)+Math.pow(path.get(i).yft-path.get(i+1).yft, 2)),negmod(Math.atan2(path.get(i).yft-path.get(i+1).yft, path.get(i).xft-path.get(i+1).xft),Math.PI*2),path.get(i).xft,path.get(i).xft));
+			output.add(new PointonPath(Math.sqrt(Math.pow(path.get(i).xft-path.get(i+1).xft, 2)+Math.pow(path.get(i).yft-path.get(i+1).yft, 2)),negmod(Math.atan2(path.get(i).yft-path.get(i+1).yft, path.get(i).xft-path.get(i+1).xft),Math.PI*2)*(180/Math.PI),path.get(i).xft,path.get(i).xft));
 		}
 		PathWriter.write(new Path("output",output));
 	}
