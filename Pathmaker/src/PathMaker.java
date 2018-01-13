@@ -29,6 +29,13 @@ public class PathMaker {
 	// options to draw line or click points to define path
 	// also sidemenu with all current points, which can be deleted with red x
 	// output to text file.
+	
+	
+	
+	//take points accumulate dist between for path length
+	//angle from arctan
+	//to get left and right, ad left and right perpendicular to heading
+	
 	public static void main(String[] argsokcharlie) {
 		PathMaker.init();
 	}
@@ -45,6 +52,20 @@ public class PathMaker {
 	//be able to insert points at specific locations
 	static JPanel pointpanel;
 	static ArrayList<PointonPath> path = new ArrayList<PointonPath>();
+	
+	public static void output() {
+		ArrayList<PointonPath> output = new ArrayList<PointonPath>();
+		for(int i =0;i<path.size()-1;i++) {
+			output.add(new PointonPath(Math.sqrt(Math.pow(path.get(i).xft-path.get(i+1).xft, 2)+Math.pow(path.get(i).yft-path.get(i+1).yft, 2)),negmod(Math.atan2(path.get(i).yft-path.get(i+1).yft, path.get(i).xft-path.get(i+1).xft),Math.PI*2),path.get(i).xft,path.get(i).xft));
+		}
+		PathWriter.write(new Path("output",output));
+	}
+	private static double negmod(double atan2,double modvalue) {
+		while(atan2<0) {
+			atan2+=modvalue;
+		}
+		return atan2%modvalue;
+	}
 	static void init() {
 		frame = new JFrame() {
 			public void repaint() {
