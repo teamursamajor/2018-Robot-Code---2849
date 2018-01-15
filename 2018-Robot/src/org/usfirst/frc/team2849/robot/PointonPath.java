@@ -1,11 +1,11 @@
+package org.usfirst.frc.team2849.robot;
 
-
-public class Waypoint {
+public class PointonPath {
 	
 	private double position;
 	private double direction;
 	
-	public Waypoint(double position, double direction) {
+	public PointonPath(double position, double direction) {
 		this.position = position;
 		this.direction = direction;
 	}
@@ -16,10 +16,6 @@ public class Waypoint {
 	
 	public double getDirection() {
 		return direction;
-	}
-	
-	public String toString() {
-		return "Waypoint at distance " +  position + ": " + direction;
 	}
 
 }
