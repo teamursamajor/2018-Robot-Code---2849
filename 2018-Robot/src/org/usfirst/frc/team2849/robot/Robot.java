@@ -7,8 +7,6 @@
 
 package org.usfirst.frc.team2849.robot;
 
-import com.kauailabs.navx.frc.AHRS;
-
 import autonomous.DriveDistance;
 import autonomous.TurnTask;
 import edu.wpi.first.wpilibj.Encoder;
