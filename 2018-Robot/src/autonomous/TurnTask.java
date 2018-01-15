@@ -2,7 +2,7 @@ package autonomous;
 import org.usfirst.frc.team2849.robot.*;
 public class TurnTask implements AutoTask{
 	
-	enum Turntype { TURN_TO, TURN_BY };
+	public enum Turntype { TURN_TO, TURN_BY };
 	private double desiredAngle;
 	private Turntype type;
 	
@@ -12,15 +12,39 @@ public class TurnTask implements AutoTask{
 	}
 	/**
 	 * Method to turn to a desired angle. Turns clockwise/counterclockwise depending on which is most optimal.
-	 * 
+	 * 15th January: Tested turnBy, works smoothly.
+	 * TODO Add proportional control
 	 */
 	public void turnTo(double desiredAngle) {
+		desiredAngle = Drive.fixHeading(desiredAngle);
+		int count = 0;
 		double angle = Drive.getHeading();
 		//TODO powerConstant is temporary for now; will be replaced with P/PI controlling
-		double powerConstant = 0.5;
-		while (!inRange(angle, desiredAngle, 0.5)) {
-			Drive.drive((Math.signum(turnAmount(desiredAngle))*powerConstant),-1*(Math.signum(turnAmount(desiredAngle))*powerConstant), true);
+		double powerConstant = 0.3;
+		System.out.println("Start Angle: " + Drive.getHeading());
+		System.out.println("Desired Angle: " + desiredAngle);
+		while (Math.abs(turnAmount(desiredAngle)) > 2) {
+			angle = Drive.getHeading();
+			if (count%10000 == 0) {
+				System.out.print("Current Angle: " + angle);
+				System.out.print("\tPower Constant: " + powerConstant);
+				System.out.println("\tDesired Angle: " + desiredAngle);
+			}
+			count++;
+/**			if (Math.abs(angle - desiredAngle) < 20) {
+				powerConstant -= Math.abs(angle - desiredAngle)/100;
+				System.out.println("Angle Difference: " + Math.abs(angle - desiredAngle));	
+			}
+*/
+			try {
+				Thread.sleep(0);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			Drive.drive(-1*(Math.signum(turnAmount(desiredAngle))*powerConstant),(Math.signum(turnAmount(desiredAngle))*powerConstant), false);
 		}
+		System.out.println("End Angle: " + Drive.getHeading());
+		Drive.drive(0, 0, true);
 	}
 	
 	/** 
@@ -35,17 +59,6 @@ public class TurnTask implements AutoTask{
 		if (desiredAngle > (angle + 180))
 			turnAmount = (turnAmount - 360) % 360;
 		return turnAmount;
-	}
-	
-	/**
-	 * Checks if the value is within range of the center. Returns true if the value is within range of center.
-	 * @param value The value being checked 
-	 * @param center The center value for the range
-	 * @param range The range of acceptable values.
-	 * @return
-	 */
-	public boolean inRange(double value, double center, double range) {
-		return (value < center + range) && (value > center - range);
 	}
 	
 	/**

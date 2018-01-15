@@ -1,10 +1,12 @@
 package org.usfirst.frc.team2849.robot;
 
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import com.kauailabs.navx.frc.AHRS;
-import com.kauailabs.navx.frc.*;
 
 public class Drive implements Runnable {
 
@@ -22,8 +24,11 @@ public class Drive implements Runnable {
 	private static double rightSpeed;
 	private static boolean square;
 	private static AHRS ahrs;
-
+	
 	private static Boolean running = new Boolean(false);
+	
+	private static Encoder encL;
+	private static Encoder encR;
 
 	/**
 	 * Constructor for Drive class. Only one Drive object should be instantiated
@@ -47,9 +52,24 @@ public class Drive implements Runnable {
 
 		leftSide = new SpeedControllerGroup(mFrontLeft, mRearLeft);
 		rightSide = new SpeedControllerGroup(mFrontRight, mRearRight);
+		
+		leftSide.setInverted(true);
+		rightSide.setInverted(true);
 
 		diffDrive = new DifferentialDrive(leftSide, rightSide);
 
+		ahrs = new AHRS(SPI.Port.kMXP);
+		
+		encL = new Encoder(2, 3);
+		encR = new Encoder(0, 1);
+		
+		double inchesPerTick = 0.011505d;
+		encL.setDistancePerPulse(inchesPerTick);
+		encR.setDistancePerPulse(inchesPerTick);
+		
+		encL.reset();
+		encR.reset();
+		
 		startDrive();
 	}
 
@@ -69,6 +89,7 @@ public class Drive implements Runnable {
 		Drive.rightSpeed = rightSpeed;
 		Drive.square = square;
 		normalizeSpeed();
+		
 	}
 
 	/**
@@ -138,7 +159,10 @@ public class Drive implements Runnable {
 	 */
 
 	public static double getHeading() {
-		double heading = ahrs.getAngle();
+		return fixHeading(ahrs.getAngle());
+	}
+
+	public static double fixHeading(double heading) {
 		if (heading < 0 || heading > 180) {
 			while (heading < 0) {
 				heading += 360;
@@ -148,53 +172,18 @@ public class Drive implements Runnable {
 			}
 		}
 		return heading;
-
-	}
-
-	/**
-	 * Method to turn to a desired angle. Turns clockwise/counterclockwise depending on which is most optimal.
-	 * @param desiredAngle the angle you want to turn TO.
-	 */
-	public static void turnTo(double desiredAngle) {
-		double angle = getHeading();
-		//TODO powerConstant is temporary for now; will be replaced with P/PI controlling
-		double powerConstant = 0.5;
-		while (!inRange(angle, desiredAngle, 0.5)) {
-			drive((Math.signum(turnAmount(desiredAngle))*powerConstant),-1*(Math.signum(turnAmount(desiredAngle))*powerConstant), square);
-		}
 	}
 	
-	/** 
-	 * Determines what angle to turn by and which direction depending on which is most optimal.
-	 * Positive output = clockwise
-	 * Negative output = counterclockwise
-	 * @param desiredAngle the angle you want to turn TO.
-	 */
-	public static double turnAmount(double desiredAngle) {
-		double angle = getHeading();
-		double turnAmount = desiredAngle - angle;
-		if (desiredAngle > (angle + 180))
-			turnAmount = (turnAmount - 360) % 360;
-		return turnAmount;
+	public static double getLeftEncoder() {
+		return encL.getDistance();
 	}
 	
-	/**
-	 * Checks if the value is within range of the center. Returns true if the value is within range of center.
-	 * @param value The value being checked 
-	 * @param center The center value for the range
-	 * @param range The range of acceptable values.
-	 * @return
-	 */
-	public static boolean inRange(double value, double center, double range) {
-		return (value < center + range) && (value > center - range);
+	public static double getRightEncoder() {
+		return encR.getDistance();
 	}
-	/**
-	 * Turns the robot by the amount entered in the parameter. Ex: If you want to go from 30 to 120 degrees, enter 90.
-	 * @param desiredAngle the angle you want to turn BY.
-	 */
-	public static void turnBy(double desiredAngle){
-		double currentAngle = getHeading();
-	    double finalAngle= currentAngle+desiredAngle;
-	    turnTo(finalAngle);
-		}
+	
+	public static void resetEncoders() {
+		encL.reset();
+		encR.reset();
+	}
 }
