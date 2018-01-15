@@ -1,3 +1,4 @@
+package com.teamursamajor.auto;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -23,13 +24,16 @@ public class PointonPath extends JPanel {
 	private double position;
 	private double direction;
 	private ArrayList<Color> colorarraay;
+	private double acceleration;
+	private double velocity;
+	private double time;
 
 	public double getDirection() {
 		return direction;
 	}
 
 	public String toString() {
-		return position + " " + direction + " " + xft + " " + yft;
+		return time + " " + position + " " + direction + " " + velocity + " " + acceleration + " " + xft + " " + yft;
 	}
 	//bottons to impliment{
 	// highlight segment
@@ -42,13 +46,29 @@ public class PointonPath extends JPanel {
 		direction = dir;
 		xft = xft_;//Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10, precision);
 		yft = yft_;//Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10, precision);
+		acceleration = 0;
+		velocity = 0;
+		time = 0;
 //		x = x_;
 //		y = y_;
 //		xft = Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10, precision);
 //		yft = Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10, precision);
 	}
+	
+	PointonPath(double pos, double dir, double xft_, double yft_, double time, double vel, double accel) {
+		position = pos;
+		direction = dir;
+		xft = xft_; //Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10, precision);
+		yft = yft_; //Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10, precision);
+		acceleration = accel;
+		velocity = vel;
+		this.time = time;
+	}
 
 	PointonPath(double x_, double y_, int i_) {
+		acceleration = 0;
+		velocity = 0;
+		time = 0;
 		x = x_;
 		y = y_;
 		i = i_;

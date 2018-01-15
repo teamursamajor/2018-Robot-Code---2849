@@ -1,3 +1,4 @@
+package com.teamursamajor.auto;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -92,7 +93,7 @@ public class PathReader {
 	
 	private PointonPath parsePoint(String line) {
 		String[] splitPoint = line.trim().split("\\s+");
-		return new PointonPath(Double.parseDouble(splitPoint[0]), Double.parseDouble(splitPoint[1]), Double.parseDouble(splitPoint[2]), Double.parseDouble(splitPoint[3]));
+		return new PointonPath(Double.parseDouble(splitPoint[1]), Double.parseDouble(splitPoint[2]), Double.parseDouble(splitPoint[5]), Double.parseDouble(splitPoint[6]), Double.parseDouble(splitPoint[0]), Double.parseDouble(splitPoint[3]), Double.parseDouble(splitPoint[4]));
 	}
 	
 	private PointonPath parsePointCheeze(String line) {
@@ -110,6 +111,13 @@ public class PathReader {
 	
 	public Path[] getPaths() {
 		return new Path[] {leftPath, rightPath};
+	}
+	
+	public static void main(String[] args) {
+		Path[] paths = new PathReader("outpath.txt", false).getPaths();
+		paths[0].mapVelocity();
+		paths[1].mapVelocity();
+		new PathWriter(paths, "mappedPath.txt");
 	}
 
 }

@@ -1,3 +1,4 @@
+package com.teamursamajor.auto;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -16,7 +17,7 @@ public class PathWriter {
 		toWrite += paths[0].numPoints() + newLine;
 		toWrite += "# Left path:" + newLine;
 		toWrite += "left" + newLine;
-		toWrite += "# DIST (ft) | HEADING (deg) | X (ft) | Y(ft)" + newLine;
+		toWrite += "# TIME (s) | DIST (ft) | HEADING (deg) | VEL (ft/s) | ACC (ft/s^2) | X (ft) | Y(ft)" + newLine;
 		for (PointonPath point : paths[0].getPoints()) {
 			toWrite += point.toString() + newLine;
 		}
