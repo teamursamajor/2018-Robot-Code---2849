@@ -1,3 +1,4 @@
+package com.teamursamajor.auto;
 
 
 //This applet implements interpolation using relaxed cubic splines
