@@ -1,8 +1,10 @@
 package autonomous;
 
+import org.usfirst.frc.team2849.autonomous.AutoTask;
+
 public class IntakeTask implements AutoTask {
 	
-	enum IntakeType{IN, OUT, RUN, STOP, UNTIL };
+	public enum IntakeType{IN, OUT, RUN, STOP, UNTIL };
 	
 	private IntakeType intake;
 	public IntakeTask(IntakeType intakeVal) {

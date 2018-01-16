@@ -1,5 +1,7 @@
 package autonomous;
 
+import org.usfirst.frc.team2849.autonomous.AutoTask;
+
 public class LiftTask implements AutoTask {
 	
 	private double liftHeight = 0;

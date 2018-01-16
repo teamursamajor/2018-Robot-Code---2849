@@ -1,5 +1,7 @@
 package autonomous;
 
+import org.usfirst.frc.team2849.autonomous.AutoTask;
+
 public class WaitTask implements AutoTask {
 	
 	private long waitTime = 0;

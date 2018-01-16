@@ -7,10 +7,14 @@
 
 package org.usfirst.frc.team2849.robot;
 
-import autonomous.DriveDistance;
+import org.usfirst.frc.team2849.autonomous.DriveDistance;
+
+import autonomous.*;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,6 +31,7 @@ public class Robot extends IterativeRobot {
 	
 	private Drive drive;
 	private XboxController xbox;
+	private Encoder enc;
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -34,33 +39,15 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		
-		// Thread for camera server init:
-//		new Thread(() -> {
-//            UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-//            camera.setResolution(640, 480);
-//            
-//            CvSink cvSink = CameraServer.getInstance().getVideo();
-//            CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
-//            
-//            Mat source = new Mat();
-//            Mat output = new Mat();
-//            
-//            while(!Thread.interrupted()) {
-//                cvSink.grabFrame(source);
-                // image processing to grayscale 
-                //Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-//                outputStream.putFrame(output);
-                // TODO
-//            }
-//        }).start();
-		
 		drive = new Drive(2, 3, 0, 1);
 		xbox = new XboxController(0);
 		m_chooser.addDefault("Default Auto", kDefaultAuto);
 		m_chooser.addObject("My Auto", kCustomAuto);
 		SmartDashboard.putData("Auto choices", m_chooser);
 //		new Pathfinder().init();
+		Logger log = new Logger();
+		log.trial();
+				
 	}
 	
 	/**
@@ -79,12 +66,11 @@ public class Robot extends IterativeRobot {
 		// temporary, set only for testing driveDistance
 		DriveDistance task = new DriveDistance(-60);
 		Thread t = new Thread(task);
-		t.start();		
-/** m_autoSelected = m_chooser.getSelected();
+		t.start();
+/* m_autoSelected = m_chooser.getSelected();
 		// autoSelected = SmartDashboard.getString("Auto Selector",
 		// defaultAuto);
-		System.out.println("Auto selected: " + m_autoSelected);
-*/
+		System.out.println("Auto selected: " + m_autoSelected); */
 	}
 
 	/**
@@ -92,7 +78,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-/**		Pathfinder.findposition();//this should generally always be running whenever
+//		Pathfinder.findposition();//this should generally always be running whenever
 		//the robot is moving and therefore changing position.
 		switch (m_autoSelected) {
 			case kCustomAuto:
@@ -103,7 +89,6 @@ public class Robot extends IterativeRobot {
 				// Put default auto code here
 				break;
 		}
-*/ 
 	}
 
 	/**
@@ -123,6 +108,10 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 //		Pathfinder.findposition();//this should generally always be running whenever
 		//the robot is moving and therefore changing position.
+		int flip = -1;
+		if (xbox.getButton(1)) flip = 1;
+		else flip = -1;
+		Drive.drive(flip * xbox.getAxis(XboxController.AXIS_LEFTTRIGGER), flip * xbox.getAxis(XboxController.AXIS_RIGHTTRIGGER), false);
 		Drive.drive(xbox.getAxis(XboxController.AXIS_LEFTSTICK_Y), xbox.getAxis(XboxController.AXIS_RIGHTSTICK_Y), true);
 		if (count++%10 == 0) {
 		System.out.println("Left Encoder: " + Drive.getLeftEncoder());

@@ -2,6 +2,8 @@ package autonomous;
 
 import java.util.ArrayList;
 
+import org.usfirst.frc.team2849.autonomous.AutoTask;
+
 public abstract class GroupTask implements AutoTask {
 	protected ArrayList<AutoTask> tasks = new ArrayList<AutoTask>();
 	public GroupTask() {}

@@ -1,12 +1,14 @@
-package autonomous;
+package org.usfirst.frc.team2849.autonomous;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.usfirst.frc.team2849.autonomous.TurnTask.Turntype;
+
+import autonomous.*;
 import autonomous.IntakeTask.IntakeType;
-import autonomous.TurnTask.Turntype;
 
 /**
  * @author Evan + Sheldon wrote this on 1/16/18
@@ -25,7 +27,6 @@ public class UrsaScript_AutoBuilder {
 	interface Token{}
 	enum LiftType{BOTTOM, VAULT, SWITCH, SCALE };
 
-	
 	public static void main(String[] args) {
 		System.out.println(new UrsaScript_AutoBuilder().buildAutoMode("C:/Users/Ursa Major/tmp/autotest1.auto").toString());
 	}
@@ -38,20 +39,21 @@ public class UrsaScript_AutoBuilder {
 			this.scriptName = scriptName.trim();
 		}
 	}
-	
+
 	class IntakeToken implements Token {
 		private IntakeType intake;
-		public IntakeToken(String intakeType){
-			intakeType = intakeType.replace(" ","");
-			if(intakeType.equalsIgnoreCase("IN")){
+
+		public IntakeToken(String intakeType) {
+			intakeType = intakeType.replace(" ", "");
+			if (intakeType.equalsIgnoreCase("IN")) {
 				intake = IntakeType.IN;
-			} else if(intakeType.equalsIgnoreCase("OUT")){
+			} else if (intakeType.equalsIgnoreCase("OUT")) {
 				intake = IntakeType.OUT;
-			} else if(intakeType.equalsIgnoreCase("RUN")){
+			} else if (intakeType.equalsIgnoreCase("RUN")) {
 				intake = IntakeType.RUN;
-			} else if(intakeType.equalsIgnoreCase("STOP")){
+			} else if (intakeType.equalsIgnoreCase("STOP")) {
 				intake = IntakeType.STOP;
-			} else{
+			} else {
 				intake = IntakeType.UNTIL;
 			}
 		}
@@ -59,6 +61,7 @@ public class UrsaScript_AutoBuilder {
 			return new IntakeTask(intake);
 		}
 	}
+	
 	//TODO check lift heights
 	class LiftToken implements Token {
 		private double lift;

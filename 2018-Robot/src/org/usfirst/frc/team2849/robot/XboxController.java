@@ -33,7 +33,7 @@ public class XboxController extends Joystick implements Runnable {
 	public static final int POV_DOWN = 180;
 	public static final int POV_LEFT = 270;
 
-	private boolean running = true;
+	private boolean running = false;
 	private long rumbleStopTime = 0;
 
 	public XboxController(int port) {

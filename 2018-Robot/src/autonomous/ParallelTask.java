@@ -2,6 +2,8 @@ package autonomous;
 
 import java.util.ArrayList;
 
+import org.usfirst.frc.team2849.autonomous.AutoTask;
+
 public class ParallelTask extends GroupTask {
 	public ParallelTask() {}
 	
