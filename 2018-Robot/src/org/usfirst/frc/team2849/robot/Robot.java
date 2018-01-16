@@ -7,20 +7,11 @@
 
 package org.usfirst.frc.team2849.robot;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.opencv.core.Mat;
-
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import org.usfirst.frc.team2849.robot.Logger;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -36,6 +27,7 @@ public class Robot extends IterativeRobot {
 	
 	private Drive drive;
 	private XboxController xbox;
+	private Encoder enc;
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -43,33 +35,15 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		
-		// Thread for camera server init:
-//		new Thread(() -> {
-//            UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-//            camera.setResolution(640, 480);
-//            
-//            CvSink cvSink = CameraServer.getInstance().getVideo();
-//            CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
-//            
-//            Mat source = new Mat();
-//            Mat output = new Mat();
-//            
-//            while(!Thread.interrupted()) {
-//                cvSink.grabFrame(source);
-                // image processing to grayscale 
-                //Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-//                outputStream.putFrame(output);
-                // TODO
-//            }
-//        }).start();
-		
 		drive = new Drive(0, 1, 2, 3);
 		xbox = new XboxController(1);
 		m_chooser.addDefault("Default Auto", kDefaultAuto);
 		m_chooser.addObject("My Auto", kCustomAuto);
 		SmartDashboard.putData("Auto choices", m_chooser);
 		new Pathfinder().init();
+		Logger log = new Logger();
+		log.trial();
+				
 	}
 	
 	/**
@@ -125,11 +99,9 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 //		Pathfinder.findposition();//this should generally always be running whenever
 		//the robot is moving and therefore changing position.
-		if (xbox.getButton(XboxController.BUTTON_A)){
-			System.out.println("True");
-			Drive.drive(.35, .35, false);
-		} else {
-			Drive.drive(0, 0, false);
-		}
+		int flip = -1;
+		if (xbox.getButton(1)) flip = 1;
+		else flip = -1;
+		Drive.drive(flip * xbox.getAxis(XboxController.AXIS_LEFTTRIGGER), flip * xbox.getAxis(XboxController.AXIS_RIGHTTRIGGER), false);
 	}
 }
