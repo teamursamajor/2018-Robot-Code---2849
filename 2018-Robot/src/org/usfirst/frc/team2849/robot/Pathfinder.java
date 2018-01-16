@@ -27,7 +27,7 @@ public class Pathfinder{
 	      } catch (RuntimeException ex ) {
 	          DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
 	      }
-		encoder.setDistancePerPulse(Math.PI*wheelradius*wheelradius);
+		encoder.setDistancePerPulse(0.011505);
 		ahrs.reset();
 	}
 	static double prevdist;

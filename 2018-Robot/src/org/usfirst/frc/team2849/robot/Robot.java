@@ -8,6 +8,9 @@
 package org.usfirst.frc.team2849.robot;
 
 import edu.wpi.first.wpilibj.Encoder;
+import autonomous.DriveDistance;
+import autonomous.TurnTask;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -35,12 +38,12 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		drive = new Drive(0, 1, 2, 3);
-		xbox = new XboxController(1);
+		drive = new Drive(2, 3, 0, 1);
+		xbox = new XboxController(0);
 		m_chooser.addDefault("Default Auto", kDefaultAuto);
 		m_chooser.addObject("My Auto", kCustomAuto);
 		SmartDashboard.putData("Auto choices", m_chooser);
-		new Pathfinder().init();
+//		new Pathfinder().init();
 		Logger log = new Logger();
 		log.trial();
 				
@@ -59,7 +62,11 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_autoSelected = m_chooser.getSelected();
+		// temporary, set only for testing driveDistance
+		DriveDistance task = new DriveDistance(-60);
+		Thread t = new Thread(task);
+		t.start();		
+/** m_autoSelected = m_chooser.getSelected();
 		// autoSelected = SmartDashboard.getString("Auto Selector",
 		// defaultAuto);
 		System.out.println("Auto selected: " + m_autoSelected);
@@ -70,7 +77,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		Pathfinder.findposition();//this should generally always be running whenever
+//		Pathfinder.findposition();//this should generally always be running whenever
 		//the robot is moving and therefore changing position.
 		switch (m_autoSelected) {
 			case kCustomAuto:
@@ -95,6 +102,7 @@ public class Robot extends IterativeRobot {
 	/**
 	 * This function is called periodically during test mode.
 	 */
+	int count = 0;
 	@Override
 	public void testPeriodic() {
 //		Pathfinder.findposition();//this should generally always be running whenever
@@ -103,5 +111,10 @@ public class Robot extends IterativeRobot {
 		if (xbox.getButton(1)) flip = 1;
 		else flip = -1;
 		Drive.drive(flip * xbox.getAxis(XboxController.AXIS_LEFTTRIGGER), flip * xbox.getAxis(XboxController.AXIS_RIGHTTRIGGER), false);
+		Drive.drive(xbox.getAxis(XboxController.AXIS_LEFTSTICK_Y), xbox.getAxis(XboxController.AXIS_RIGHTSTICK_Y), true);
+		if (count++%10 == 0) {
+		System.out.println("Left Encoder: " + Drive.getLeftEncoder());
+		System.out.println("Right Encoder: " + Drive.getRightEncoder());
+		}
 	}
 }

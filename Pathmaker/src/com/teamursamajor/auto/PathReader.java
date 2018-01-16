@@ -1,15 +1,16 @@
+package com.teamursamajor.auto;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class PathParser {
+public class PathReader {
 	
 	private Path leftPath;
 	private Path rightPath;
 	
-	public PathParser(String filename, boolean cheezy) {
+	public PathReader(String filename, boolean cheezy) {
 		leftPath = new Path();
 		rightPath = new Path();
 		if (cheezy) {
@@ -90,14 +91,14 @@ public class PathParser {
 		}
 	}
 	
-	private Waypoint parsePoint(String line) {
+	private PointonPath parsePoint(String line) {
 		String[] splitPoint = line.trim().split("\\s+");
-		return new Waypoint(Double.parseDouble(splitPoint[0]), Double.parseDouble(splitPoint[1]));
+		return new PointonPath(Double.parseDouble(splitPoint[1]), Double.parseDouble(splitPoint[2]), Double.parseDouble(splitPoint[5]), Double.parseDouble(splitPoint[6]), Double.parseDouble(splitPoint[0]), Double.parseDouble(splitPoint[3]), Double.parseDouble(splitPoint[4]));
 	}
 	
-	private Waypoint parsePointCheeze(String line) {
+	private PointonPath parsePointCheeze(String line) {
 		String[] splitPoint = line.trim().split("\\s+");
-		return new Waypoint(Double.parseDouble(splitPoint[0]), Double.parseDouble(splitPoint[4]));
+		return new PointonPath(Double.parseDouble(splitPoint[0]), Double.parseDouble(splitPoint[4]), -1, -1);
 	}
 	
 	public Path getLeftPath() {
@@ -113,10 +114,10 @@ public class PathParser {
 	}
 	
 	public static void main(String[] args) {
-		Path[] cheezyPaths = new PathParser("InsideLanePathClose.txt", true).getPaths();
-		Path[] paths = new PathParser("UrsaPath.txt", false).getPaths();
-		System.out.println(paths[0]);
-		
+		Path[] paths = new PathReader("outpath.txt", false).getPaths();
+		paths[0].mapVelocity();
+		paths[1].mapVelocity();
+		new PathWriter(paths, "mappedPath.txt");
 	}
 
 }
