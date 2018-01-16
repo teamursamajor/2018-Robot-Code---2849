@@ -8,10 +8,7 @@
 package org.usfirst.frc.team2849.robot;
 
 import autonomous.DriveDistance;
-import autonomous.TurnTask;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 

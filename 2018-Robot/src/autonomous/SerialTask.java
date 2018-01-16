@@ -1,7 +1,5 @@
 package autonomous;
 
-import java.util.ArrayList;
-
 public class SerialTask extends GroupTask {
 	public SerialTask() {}
 	
