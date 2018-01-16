@@ -5,9 +5,7 @@ import java.util.List;
 public class UrsaScript_AutoBuilder {
 	interface Token{}
 	enum IntakeType{IN, OUT, RUN, STOP, UNTIL };
-	enum LiftType{
-		
-	}
+	enum LiftType{IN, OUT, RUN, STOP, UNTIL };
 
 	class ExecuteToken implements Token {
 		private String scriptName;
@@ -39,24 +37,25 @@ public class UrsaScript_AutoBuilder {
 		public LiftToken(String liftType){
 			liftType = liftType.replace(" ","");
 			if(liftType.equalsIgnoreCase("IN")){
-				lift = liftType.IN;
+				lift = LiftType.IN;
 			} else if(liftType.equalsIgnoreCase("OUT")){
-				lift = liftType.OUT;
+				lift = LiftType.OUT;
 			} else if(liftType.equalsIgnoreCase("RUN")){
-				lift = liftType.RUN;
+				lift = LiftType.RUN;
 			} else if(liftType.equalsIgnoreCase("STOP")){
-				lift = liftType.STOP;
+				lift = LiftType.STOP;
 			} else{
-				lift = IntakeType.UNTIL;
+				lift = LiftType.UNTIL;
 			}
 		}
+	}
 	
 	
 	public static AutoTask buildAutoMode(String filename){
-			
+		return null;
 	}
 	
 	private static List<Token> tokenize(String filename){
-		
+		return null;
 	}
 }
