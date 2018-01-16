@@ -8,13 +8,12 @@
 package org.usfirst.frc.team2849.robot;
 
 import edu.wpi.first.wpilibj.Encoder;
-import autonomous.DriveDistance;
-import autonomous.TurnTask;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team2849.robot.Logger;
+
+import org.usfirst.frc.team2849.autonomous.*;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -65,11 +64,11 @@ public class Robot extends IterativeRobot {
 		// temporary, set only for testing driveDistance
 		DriveDistance task = new DriveDistance(-60);
 		Thread t = new Thread(task);
-		t.start();		
-/** m_autoSelected = m_chooser.getSelected();
+		t.start();
+/* m_autoSelected = m_chooser.getSelected();
 		// autoSelected = SmartDashboard.getString("Auto Selector",
 		// defaultAuto);
-		System.out.println("Auto selected: " + m_autoSelected);
+		System.out.println("Auto selected: " + m_autoSelected); */
 	}
 
 	/**
