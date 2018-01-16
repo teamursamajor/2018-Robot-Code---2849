@@ -25,17 +25,19 @@ public class TurnTask implements AutoTask{
 		System.out.println("Desired Angle: " + desiredAngle);
 		while (Math.abs(turnAmount(desiredAngle)) > 2) {
 			angle = Drive.getHeading();
-			if (count%10000 == 0) {
+/**			if (count%10000 == 0) {
 				System.out.print("Current Angle: " + angle);
 				System.out.print("\tPower Constant: " + powerConstant);
 				System.out.println("\tDesired Angle: " + desiredAngle);
+
 			}
 			count++;
-/**			if (Math.abs(angle - desiredAngle) < 20) {
-				powerConstant -= Math.abs(angle - desiredAngle)/100;
-				System.out.println("Angle Difference: " + Math.abs(angle - desiredAngle));	
-			}
 */
+			if (Math.abs(angle - desiredAngle) < 20) {
+				powerConstant -= Math.abs(angle - desiredAngle)/100;
+/**				System.out.println("Angle Difference: " + Math.abs(angle - desiredAngle)); */	
+			}
+
 			try {
 				Thread.sleep(0);
 			} catch (InterruptedException e) {
@@ -43,7 +45,7 @@ public class TurnTask implements AutoTask{
 			}
 			Drive.drive(-1*(Math.signum(turnAmount(desiredAngle))*powerConstant),(Math.signum(turnAmount(desiredAngle))*powerConstant), false);
 		}
-		System.out.println("End Angle: " + Drive.getHeading());
+/**		System.out.println("End Angle: " + Drive.getHeading()); */
 		Drive.drive(0, 0, true);
 	}
 	
@@ -78,7 +80,7 @@ public class TurnTask implements AutoTask{
 			turnBy(desiredAngle);
 		}
 	}
-	
-
-
+	public String toString() {
+		return "TurnAmount: " + desiredAngle + ", TurnType: " + type.name() + "\n";
+	}
 }

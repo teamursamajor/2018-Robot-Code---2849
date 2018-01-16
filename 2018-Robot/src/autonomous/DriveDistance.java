@@ -24,5 +24,7 @@ private int distance;
 		}
 		Drive.drive(0, 0, false);
 	}	
-
+	public String toString() {
+		return "DriveDistance: " + distance + "\n";
+	}
 }
