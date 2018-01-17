@@ -7,7 +7,9 @@
 
 package org.usfirst.frc.team2849.robot;
 
+import org.usfirst.frc.team2849.autonomous.AutoTask;
 import org.usfirst.frc.team2849.autonomous.DriveDistance;
+import org.usfirst.frc.team2849.autonomous.UrsaScript_AutoBuilder;
 
 import autonomous.*;
 import edu.wpi.first.wpilibj.Encoder;
@@ -45,8 +47,8 @@ public class Robot extends IterativeRobot {
 		m_chooser.addObject("My Auto", kCustomAuto);
 		SmartDashboard.putData("Auto choices", m_chooser);
 //		new Pathfinder().init();
-		Logger log = new Logger();
-		log.trial();
+		//Logger log = new Logger();
+		//log.trial();
 				
 	}
 	
@@ -64,7 +66,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		// temporary, set only for testing driveDistance
-		DriveDistance task = new DriveDistance(-60);
+		AutoTask task = new UrsaScript_AutoBuilder().buildAutoMode("/autotest.auto");
 		Thread t = new Thread(task);
 		t.start();
 /* m_autoSelected = m_chooser.getSelected();
@@ -80,15 +82,6 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 //		Pathfinder.findposition();//this should generally always be running whenever
 		//the robot is moving and therefore changing position.
-		switch (m_autoSelected) {
-			case kCustomAuto:
-				// Put custom auto code here
-				break;
-			case kDefaultAuto:
-			default:
-				// Put default auto code here
-				break;
-		}
 	}
 
 	/**

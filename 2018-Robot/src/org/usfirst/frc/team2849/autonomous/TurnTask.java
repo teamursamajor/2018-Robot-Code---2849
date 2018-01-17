@@ -13,7 +13,7 @@ public class TurnTask implements AutoTask{
 	/**
 	 * Method to turn to a desired angle. Turns clockwise/counterclockwise depending on which is most optimal.
 	 * 15th January: Tested turnBy, works smoothly.
-	 * TODO Add proportional control
+	 * TODO Add proportional control, fix turn direction!!!
 	 */
 	public void turnTo(double desiredAngle) {
 		desiredAngle = Drive.fixHeading(desiredAngle);
@@ -25,18 +25,18 @@ public class TurnTask implements AutoTask{
 		System.out.println("Desired Angle: " + desiredAngle);
 		while (Math.abs(turnAmount(desiredAngle)) > 2) {
 			angle = Drive.getHeading();
-/**			if (count%10000 == 0) {
+			if (count%10000 == 0) {
 				System.out.print("Current Angle: " + angle);
 				System.out.print("\tPower Constant: " + powerConstant);
 				System.out.println("\tDesired Angle: " + desiredAngle);
 
 			}
 			count++;
-*/
-			if (Math.abs(angle - desiredAngle) < 20) {
-				powerConstant -= Math.abs(angle - desiredAngle)/100;
+
+			//if (Math.abs(angle - desiredAngle) < 20) {
+			//	powerConstant -= Math.abs(angle - desiredAngle)/100;
 /**				System.out.println("Angle Difference: " + Math.abs(angle - desiredAngle)); */	
-			}
+			//}
 
 			try {
 				Thread.sleep(0);
