@@ -47,7 +47,8 @@ public class Robot extends IterativeRobot {
 		m_chooser.addObject("My Auto", kCustomAuto);
 		SmartDashboard.putData("Auto choices", m_chooser);
 //		new Pathfinder().init();
-		//Logger log = new Logger();
+		Logger log = new Logger();
+		log.write("test.txt", "charlie sux");
 		//log.trial();
 				
 	}
