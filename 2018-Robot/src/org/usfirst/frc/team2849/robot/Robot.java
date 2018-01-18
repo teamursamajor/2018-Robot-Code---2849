@@ -7,9 +7,16 @@
 
 package org.usfirst.frc.team2849.robot;
 
+import org.usfirst.frc.team2849.autonomous.AutoTask;
+import org.usfirst.frc.team2849.autonomous.DriveDistance;
+import org.usfirst.frc.team2849.autonomous.UrsaScript_AutoBuilder;
+
+import autonomous.*;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,17 +30,26 @@ public class Robot extends IterativeRobot {
 	private static final String kCustomAuto = "My Auto";
 	private String m_autoSelected;
 	private SendableChooser<String> m_chooser = new SendableChooser<>();
-
+	
+	private Drive drive;
+	private XboxController xbox;
+	private Encoder enc;
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
-		System.out.println("Not Hello World");
+		drive = new Drive(2, 3, 0, 1);
+		xbox = new XboxController(0);
 		m_chooser.addDefault("Default Auto", kDefaultAuto);
 		m_chooser.addObject("My Auto", kCustomAuto);
 		SmartDashboard.putData("Auto choices", m_chooser);
+//		new Pathfinder().init();
+		//Logger log = new Logger();
+		//log.trial();
+				
 	}
 	
 
@@ -50,10 +66,14 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_autoSelected = m_chooser.getSelected();
+		// temporary, set only for testing driveDistance
+		AutoTask task = new UrsaScript_AutoBuilder().buildAutoMode("/autotest.auto");
+		Thread t = new Thread(task);
+		t.start();
+/* m_autoSelected = m_chooser.getSelected();
 		// autoSelected = SmartDashboard.getString("Auto Selector",
 		// defaultAuto);
-		System.out.println("Auto selected: " + m_autoSelected);
+		System.out.println("Auto selected: " + m_autoSelected); */
 	}
 
 	/**
@@ -61,15 +81,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		switch (m_autoSelected) {
-			case kCustomAuto:
-				// Put custom auto code here
-				break;
-			case kDefaultAuto:
-			default:
-				// Put default auto code here
-				break;
-		}
+//		Pathfinder.findposition();//this should generally always be running whenever
+		//the robot is moving and therefore changing position.
 	}
 
 	/**
@@ -77,12 +90,26 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		Pathfinder.findposition();//this should generally always be running whenever
+		//the robot is moving and therefore changing position.
 	}
 
 	/**
 	 * This function is called periodically during test mode.
 	 */
+	int count = 0;
 	@Override
 	public void testPeriodic() {
+//		Pathfinder.findposition();//this should generally always be running whenever
+		//the robot is moving and therefore changing position.
+		int flip = -1;
+		if (xbox.getButton(1)) flip = 1;
+		else flip = -1;
+		Drive.drive(flip * xbox.getAxis(XboxController.AXIS_LEFTTRIGGER), flip * xbox.getAxis(XboxController.AXIS_RIGHTTRIGGER), false);
+		Drive.drive(xbox.getAxis(XboxController.AXIS_LEFTSTICK_Y), xbox.getAxis(XboxController.AXIS_RIGHTSTICK_Y), true);
+		if (count++%10 == 0) {
+		System.out.println("Left Encoder: " + Drive.getLeftEncoder());
+		System.out.println("Right Encoder: " + Drive.getRightEncoder());
+		}
 	}
 }

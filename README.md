@@ -10,6 +10,12 @@ We are no longer using git's command line interface, instead we will use Eclipse
 Follow the Java instructions from this site to install Java, Eclipse, and the FRC plugins:
 https://wpilib.screenstepslive.com/s/currentCS/m/getting_started/l/599679-installing-eclipse-c-java
 
+#####Adding navx-mxp libraries to your project
+
+We use a sensor called the NavX MXP, which requires some outside libraries.
+Download and extract this file to any folder: https://www.kauailabs.com/public_files/navx-mxp/navx-mxp.zip
+Run the setup.exe and accept all defaults.
+
 #####Cloning the repository into your Eclipse workspace
 
 In Eclipse, use the menus to navigate File -> Import -> Git -> Projects from Git
