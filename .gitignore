@@ -2,3 +2,10 @@
 /.recommenders/
 /Pathfinder/
 /2018-Robot/.classpath
+/bin/**
+/build/**
+/dist/**
+local.properties
+.classpath
+/target/**
+*.jar
