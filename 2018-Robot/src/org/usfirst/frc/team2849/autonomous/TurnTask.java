@@ -21,11 +21,13 @@ public class TurnTask implements AutoTask{
 		double angle = Drive.getHeading();
 		//TODO powerConstant is temporary for now; will be replaced with P/PI controlling
 		double powerConstant = 0.5;
+		//TODO can we try to incorporate stuff like this into a logger method?
 		System.out.println("Start Angle: " + Drive.getHeading());
 		System.out.println("Desired Angle: " + desiredAngle);
 		while (Math.abs(turnAmount(desiredAngle)) > 2) {
 			angle = Drive.getHeading();
 			if (count%10000 == 0) {
+				//and this
 				System.out.print("Current Angle: " + angle);
 				System.out.print("\tPower Constant: " + powerConstant);
 				System.out.println("\tDesired Angle: " + desiredAngle);
@@ -35,6 +37,7 @@ public class TurnTask implements AutoTask{
 
 			//if (Math.abs(angle - desiredAngle) < 20) {
 			//	powerConstant -= Math.abs(angle - desiredAngle)/100;
+//TODO why are these javadoc comments
 /**				System.out.println("Angle Difference: " + Math.abs(angle - desiredAngle)); */	
 			//}
 
@@ -46,6 +49,7 @@ public class TurnTask implements AutoTask{
 			Drive.drive(-1*(Math.signum(turnAmount(desiredAngle))*powerConstant),(Math.signum(turnAmount(desiredAngle))*powerConstant), false);
 		}
 /**		System.out.println("End Angle: " + Drive.getHeading()); */
+		//TODO should this be true?
 		Drive.drive(0, 0, true);
 	}
 	
