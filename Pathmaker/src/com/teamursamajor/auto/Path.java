@@ -2,6 +2,7 @@ package com.teamursamajor.auto;
 
 import java.util.ArrayList;
 
+import com.teamursamajor.auto.PointonPath;
 import com.teamursamajor.auto.TrapVelocityProfile.Node;
 
 public class Path {
