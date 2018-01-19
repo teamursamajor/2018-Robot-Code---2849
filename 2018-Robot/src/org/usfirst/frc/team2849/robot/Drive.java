@@ -167,9 +167,10 @@ public class Drive implements Runnable {
 		}
 		return angle;
 	}
-	
+	//TODO why do both getHeading and fixHeading exist? Why not combine them?
 	/** _well written_ */
 	public static double fixHeading(double heading) {
+		//shouldnt this be 360, not 180?
 		if (heading < 0 || heading > 180) {
 			while (heading < 0) {
 				heading += 360;
