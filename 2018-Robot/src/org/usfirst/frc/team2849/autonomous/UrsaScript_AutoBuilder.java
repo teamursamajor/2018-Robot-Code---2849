@@ -7,8 +7,7 @@ import java.util.ArrayList;
 
 import org.usfirst.frc.team2849.autonomous.TurnTask.Turntype;
 
-import autonomous.*;
-import autonomous.IntakeTask.IntakeType;
+import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
 
 /**
  * TODO Add comments

@@ -11,7 +11,6 @@ import org.usfirst.frc.team2849.autonomous.AutoTask;
 import org.usfirst.frc.team2849.autonomous.DriveDistance;
 import org.usfirst.frc.team2849.autonomous.UrsaScript_AutoBuilder;
 
-import autonomous.*;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
