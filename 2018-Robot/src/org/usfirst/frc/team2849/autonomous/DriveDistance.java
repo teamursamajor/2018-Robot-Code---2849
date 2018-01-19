@@ -14,7 +14,7 @@ private int distance;
 		double rightPowerConstant = 0.3;
 		Drive.resetEncoders();
 		while (Math.abs(Drive.getLeftEncoder()) < Math.abs(distance) && Math.abs(Drive.getRightEncoder()) < Math.abs(distance)) {
-			//TODO fix condition for negative distances
+	
 			if (Math.abs(Drive.getLeftEncoder()) > Math.abs(distance)) {
 				leftPowerConstant = 0;
 			}
