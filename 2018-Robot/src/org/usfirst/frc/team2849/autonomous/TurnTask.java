@@ -20,7 +20,7 @@ public class TurnTask implements AutoTask{
 		int count = 0;
 		double angle = Drive.getHeading();
 		//TODO powerConstant is temporary for now; will be replaced with P/PI controlling
-		double powerConstant = 0.3;
+		double powerConstant = 0.5;
 		System.out.println("Start Angle: " + Drive.getHeading());
 		System.out.println("Desired Angle: " + desiredAngle);
 		while (Math.abs(turnAmount(desiredAngle)) > 2) {
@@ -58,8 +58,8 @@ public class TurnTask implements AutoTask{
 	public double turnAmount(double desiredAngle) {
 		double angle = Drive.getHeading();
 		double turnAmount = desiredAngle - angle;
-		if (desiredAngle > (angle + 180))
-			turnAmount = (turnAmount - 360) % 360;
+		if (turnAmount > 180)
+			turnAmount = 180 - (turnAmount % 180);
 		return turnAmount;
 	}
 	

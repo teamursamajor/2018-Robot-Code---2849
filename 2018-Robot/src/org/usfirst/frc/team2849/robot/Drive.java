@@ -159,9 +159,16 @@ public class Drive implements Runnable {
 	 */
 
 	public static double getHeading() {
-		return fixHeading(ahrs.getAngle());
+		double angle = ahrs.getAngle();
+		if (angle > 360) {
+			angle %= 360;
+		} else if (angle < 0) {
+			angle = 360 - (-angle % 360);
+		}
+		return angle;
 	}
-
+	
+	/** _well written_ */
 	public static double fixHeading(double heading) {
 		if (heading < 0 || heading > 180) {
 			while (heading < 0) {

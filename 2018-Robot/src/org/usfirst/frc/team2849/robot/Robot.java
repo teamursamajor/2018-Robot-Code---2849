@@ -35,6 +35,8 @@ public class Robot extends IterativeRobot {
 	private XboxController xbox;
 	private Encoder enc;
 	
+	private Thread autoThread;
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -89,7 +91,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		Pathfinder.findposition();//this should generally always be running whenever
+//		Pathfinder.findposition();//this should generally always be running whenever
+		
+		Drive.drive(xbox.getAxis(XboxController.AXIS_LEFTSTICK_Y), xbox.getAxis(XboxController.AXIS_RIGHTSTICK_Y), true);
 		//the robot is moving and therefore changing position.
 	}
 
