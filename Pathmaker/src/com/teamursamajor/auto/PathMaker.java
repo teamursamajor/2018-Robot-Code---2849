@@ -72,7 +72,7 @@ public class PathMaker {
 		System.out.println("outputed");
 	}
 	public static void input() {
-		path = new PathReader("outpath.txt",false).getRightPath().getPoints();
+		path = new PathReader("outpath.txt",false).getLeftPath().getPoints();
 		ArrayList<PointonPath> copy = new ArrayList<PointonPath>();
 		for(PointonPath p : path) {
 			copy.add(new PointonPath(p.x,p.y,copy.size()));

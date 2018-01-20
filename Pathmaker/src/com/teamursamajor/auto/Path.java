@@ -138,7 +138,7 @@ public class Path {
 		rightAcc = path.get(0).getAccel();
 		leftPath.add(new PointonPath(leftDist, path.get(0).getDirection(), leftX, leftY, time, leftVel, leftAcc));
 		rightPath.add(new PointonPath(rightDist, path.get(0).getDirection(), rightX, rightY, time, rightVel, rightAcc));
-		for (int i = 1; i < path.size(); i++) {
+		for (int i = 1; i < path.size() - 1; i++) {
 			time = path.get(i).getTime();
 			perpHeading = Math.toRadians((path.get(i).getDirection() + 90) % 360);
 			cos = Math.cos(perpHeading);
@@ -155,8 +155,23 @@ public class Path {
 			leftAcc = (leftVel - leftPath.get(i - 1).getVelocity()) / (time - leftPath.get(i - 1).getTime());
 			leftPath.add(new PointonPath(leftDist, path.get(i).getDirection(), leftX, leftY, time, leftVel, leftAcc));
 			rightPath.add(new PointonPath(rightDist, path.get(i).getDirection(), rightX, rightY, time, rightVel, rightAcc));
-
 		}
+		time = path.get(path.size() - 1).getTime();
+		perpHeading = Math.toRadians((path.get(path.size() - 1).getDirection() + 90) % 360);
+		cos = Math.cos(perpHeading);
+		sin = Math.sin(perpHeading);
+		rightX = path.get(path.size() - 1).xft + (cos * (separation / 2));
+		rightY = path.get(path.size() - 1).yft + (sin * (separation / 2));
+		leftX = path.get(path.size() - 1).xft - (cos * (separation / 2));
+		leftY = path.get(path.size() - 1).yft - (sin * (separation / 2));
+		rightDist += Math.sqrt(Math.pow(rightX - rightPath.get(path.size() - 2).xft, 2) + Math.pow(rightY - rightPath.get(path.size() - 2).yft, 2));
+		leftDist += Math.sqrt(Math.pow(leftX - leftPath.get(path.size() - 2).xft, 2) + Math.pow(leftY - leftPath.get(path.size() - 2).yft, 2));
+		rightVel = (rightDist - rightPath.get(path.size() - 2).getPosition()) / (time - rightPath.get(path.size() - 2).getTime()); 
+		leftVel = (leftDist - leftPath.get(path.size() - 2).getPosition()) / (time - leftPath.get(path.size() - 2).getTime());
+		rightAcc = (rightVel - rightPath.get(path.size() - 2).getVelocity()) / (time - rightPath.get(path.size() - 2).getTime());
+		leftAcc = (leftVel - leftPath.get(path.size() - 2).getVelocity()) / (time - leftPath.get(path.size() - 2).getTime());
+		leftPath.add(new PointonPath(leftDist, path.get(path.size() - 1).getDirection(), leftX, leftY, time, 0, 0));
+		rightPath.add(new PointonPath(rightDist, path.get(path.size() - 1).getDirection(), rightX, rightY, time, 0, 0));
 		return new Path[] { leftPath, rightPath };
 	}
 
