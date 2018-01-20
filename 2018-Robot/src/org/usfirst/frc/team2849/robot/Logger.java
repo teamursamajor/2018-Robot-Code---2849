@@ -5,11 +5,37 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import java.io.*;
 import java.text.*;
 import java.util.*;
-
+/*
+ * DESIGN:
+ * 	private String path;
+ * 	1. LOGGER:
+ * 			LOGGER(string path): takes in path and writes to that file
+ * 
+ *  2. void log(string info, Level level) -- MM/DD/YYYY HH:MM:SS [LEVEL] - <info>
+ *  	- logs a new line of information with the above format by appending to the log file specified
+ *  	  in the class
+ *  	-   example: 01/19/2018 18:55:03 [ERROR] - the robot has crashed into a wall :( 
+ *  
+ *  3. void initLogFile()
+ *  3b. void initLogFile(string logStartStuff)
+ */
 
 public class Logger {
-	private static String path;
-	public Logger(String path){
+	
+	private static String path; //the path in which the logger writes to
+	private BufferedWriter bw;
+	private FileWriter fileWrite;
+	
+	public Logger(String p){
+		path = p; //sets the path variable to the parameter
+		try {
+			fileWrite = new FileWriter(path);
+			bw = new BufferedWriter(fileWrite);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public Logger() {
 		
 	}
 	
