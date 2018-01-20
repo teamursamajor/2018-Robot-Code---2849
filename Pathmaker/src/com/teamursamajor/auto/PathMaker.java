@@ -22,36 +22,33 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class PathMaker {
-	// frame
-	// menu
-	// 2d map of field
-	// drop down menu of preset autos
-	// options to draw line or click points to define path
-	// also sidemenu with all current points, which can be deleted with red x
-	// output to text file.
-
 	// take points accumulate dist between for path length
 	// angle from arctan
-	// to get left and right, ad left and right perpendicular to heading
+	// to get left and right, add left and right perpendicular to heading
+	// be able to insert points at specific locations
+	
+	//load a path to display
 
 	public static void main(String[] argsokcharlie) {
 		PathMaker.init();
 	}
-
 	static JFrame frame;
 	static String[] presets = new String[] { "auto1", "auto2", "auto3", "auto4" };
-	static BufferedImage field;
-	static BufferedImage overlay;
-	static BufferedImage overfield;
-	// writing drawn to file
-	// loading from file
-	// find format from charlie
-
-	// label the points by number so you can delete specific ones
-	// be able to insert points at specific locations
+	static BufferedImage field;//picture of field
+	static BufferedImage overfield;//picture of obstacles
+	static BufferedImage overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);//image drawn on to make path
+	
 	static JPanel pointpanel;
 	static ArrayList<PointonPath> path = new ArrayList<PointonPath>();
 
+	static int slow = 0;
+	
+	static int[] prev = new int[] { 0, 0 };// for mouse motion ignore
+	static boolean once = true;// for mouse motion ignore
+	static boolean once2 = true;// for mouse motion ignore
+	static int prevscroll = 0;
+	static int pointpaneltranslate = 0;
+	
 	public static void output() {
 		double totalDist = 0;
 		ArrayList<PointonPath> output = new ArrayList<PointonPath>();
@@ -67,109 +64,31 @@ public class PathMaker {
 		new PathWriter(new Path[] { new Path("outputLeft", output), new Path("outputRight", output) }, "outpath.txt");
 		System.out.println("outputed");
 	}
-
-	private static double negmod(double atan2, double modvalue) {
-		while (atan2 < 0) {
-			atan2 += modvalue;
+	public static void input() {
+		path = new PathReader("outpath.txt",false).getLeftPath().getPoints();
+		ArrayList<PointonPath> copy = new ArrayList<PointonPath>();
+		for(PointonPath p : path) {
+			copy.add(new PointonPath(p.x,p.y,copy.size()));
 		}
-		return atan2 % modvalue;
+		path=copy;
+		PathMaker.overlay=new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+		pointpaneltranslate = 0;
+		frame.repaint();
+		frame.dispatchEvent(new MouseWheelEvent (frame,0,0,0,0,0,0,false, 3,1,0));
 	}
 
 	static void init() {
-		frame = new JFrame() {
-			public void repaint() {
-				super.repaint();
-				overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
-			}
-		};
+		frame = new JFrame() ;
 		frame.setLayout(null);
 		frame.setSize(1000, 850);
-		JPanel presetpanel = new JPanel();
-		frame.add(presetpanel);
-		JComboBox preset = new JComboBox(presets);
-		presetpanel.add(preset);
-		presetpanel.setSize(200, 50);
-		presetpanel.setLocation(0, 50);
-		preset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println(preset.getSelectedItem());
-			}
-		});
-		try {
-			field = ImageIO.read(new File(System.getProperty("user.dir") + "/field2.png"));
-			overfield = ImageIO.read(new File(System.getProperty("user.dir") + "/Transparentoverfield.png"));
-		} catch (Exception E) {
-			E.printStackTrace();
-		}
-		JPanel feildPanel = new JPanel() {
-			public void paint(Graphics g) {
-				g.drawImage(field, 0, 0, 400, 800, null);
-				g.drawImage(overlay, 0, 0, 400, 800, null);
-				g.drawImage(overfield, 0, 0, 400, 800, null);
-			}
-		};
-		feildPanel.setSize(400, 850);
-		overlay = new BufferedImage(400, 800, 2);
-		feildPanel.setLocation(200, 0);
-		feildPanel.addMouseMotionListener(new MouseMotionListener() {
-			public void mouseDragged(MouseEvent e) {
-				if (once) {
-					prev = new int[] { e.getX(), e.getY() };
-					once = false;
-				}
-				if (slow % 8 == 0) {
-					path.add(new PointonPath(e.getX(), e.getY(), path.size()));
-					frame.repaint();
-				}
-				slow++;
-				slow %= 8;
-			}
-
-			public void mouseMoved(MouseEvent e) {
-			}
-		});
-		feildPanel.addMouseListener(new MouseListener() {
-			public void mouseClicked(MouseEvent e) {
-			}
-
-			public void mouseEntered(MouseEvent e) {
-			}
-
-			public void mouseExited(MouseEvent e) {
-			}
-
-			public void mousePressed(MouseEvent e) {
-			}
-
-			public void mouseReleased(MouseEvent e) {
-				once = true;
-				frame.repaint();
-			}
-		});
-		frame.add(feildPanel);
-
-		JPanel Scrollpanel = new JPanel() {
-			public void paint(Graphics g) {
-				if (path.size() > 0 & PointonPath.h * (path.size() - 800 / PointonPath.h + 1) != 0) {
-					int h = 800 / path.size() * (800 / PointonPath.h);
-					g.fillRect(0, -pointpaneltranslate * 800 / (PointonPath.h * path.size()), 50, h);
-				}
-			}
-		};
-		Scrollpanel.setSize(50, 800);
-		Scrollpanel.setLocation(950, 50);
-		pointpanel = new JPanel() {
-			public void paint(Graphics g) {
-				g.translate(0, pointpaneltranslate);
-				g.setColor(Color.white);
-				g.fillRect(0, 0, 325, PointonPath.h * path.size());
-				for (int i = 0; i < path.size(); i++) {
-					path.get(i).paint(g, i);
-				}
-			}
-		};
+		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 		frame.addMouseWheelListener(new MouseWheelListener() {
 			public void mouseWheelMoved(MouseWheelEvent e) {
+				System.out.println(e.getModifiers());
+				System.out.println(e.getClickCount());
+				System.out.println(e.getScrollType());
+				System.out.println(e.getScrollAmount());
+				System.out.println(e.getWheelRotation());
 				double sig = e.getWheelRotation();
 				pointpaneltranslate -= sig * 1.2 * Math.PI / 4 * PointonPath.h;
 				if (pointpaneltranslate > 0) {
@@ -184,19 +103,73 @@ public class PathMaker {
 				frame.repaint();
 			}
 		});
+		
+		importimages();
+		
+		JPanel presetpanel = new JPanel();
+		frame.add(presetpanel);
+		JComboBox preset = new JComboBox(presets);
+		presetpanel.add(preset);
+		presetpanel.setSize(200, 50);
+		presetpanel.setLocation(0, 50);
+		preset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(preset.getSelectedItem());
+			}
+		});
+		
+		JPanel feildPanel = new JPanel() {
+			public void paint(Graphics g) {
+				g.drawImage(field, 0, 0, 400, 800, null);
+				g.drawImage(overlay, 0, 0, 400, 800, null);
+				g.drawImage(overfield, 0, 0, 400, 800, null);
+			}
+		};
+		frame.add(feildPanel);
+		feildPanel.setSize(400, 850);
+		feildPanel.setLocation(200, 0);
+		feildPanel.addMouseMotionListener(new MouseMotionListener() {
+			public void mouseDragged(MouseEvent e) {
+				if (once) {
+					prev = new int[] { e.getX(), e.getY() };
+					once = false;
+				}
+				if (slow % 8 == 0) {
+					path.add(new PointonPath(e.getX(), e.getY(), path.size()));
+					frame.repaint();
+				}
+				slow++;
+				slow %= 8;
+			}
+			public void mouseMoved(MouseEvent e) {}
+		});
+		feildPanel.addMouseListener(new MouseListener() {
+			public void mouseClicked(MouseEvent e) {}
+			public void mouseEntered(MouseEvent e) {}
+			public void mouseExited(MouseEvent e) {}
+			public void mousePressed(MouseEvent e) {}
+			public void mouseReleased(MouseEvent e) {
+				once = true;
+				frame.repaint();
+			}
+		});
+		
+		JPanel Scrollpanel = new JPanel() {
+			public void paint(Graphics g) {
+				if (path.size() > 0 & PointonPath.h * (path.size() - 800 / PointonPath.h + 1) != 0) {
+					int h = 800 / path.size() * (800 / PointonPath.h);
+					g.fillRect(0, -pointpaneltranslate * 800 / (PointonPath.h * path.size()), 50, h);
+				}
+			}
+		};
+		frame.add(Scrollpanel);
+		Scrollpanel.setSize(50, 800);
+		Scrollpanel.setLocation(950, 50);
 		Scrollpanel.addMouseListener(new MouseListener() {
-			public void mouseClicked(MouseEvent e) {
-			}
-
-			public void mouseEntered(MouseEvent e) {
-			}
-
-			public void mouseExited(MouseEvent e) {
-			}
-
-			public void mousePressed(MouseEvent e) {
-			}
-
+			public void mouseClicked(MouseEvent e) {}
+			public void mouseEntered(MouseEvent e) {}
+			public void mouseExited(MouseEvent e) {}
+			public void mousePressed(MouseEvent e) {}
 			public void mouseReleased(MouseEvent e) {
 				once2 = true;
 			}
@@ -220,51 +193,71 @@ public class PathMaker {
 				}
 				frame.repaint();
 			}
-
-			public void mouseMoved(MouseEvent e) {
-			}
+			public void mouseMoved(MouseEvent e) {}
 		});
+		
+		pointpanel = new JPanel() {
+			public void paint(Graphics g) {
+				g.translate(0, pointpaneltranslate);
+				g.setColor(Color.white);
+				g.fillRect(0, 0, 325, PointonPath.h * path.size());
+				for (int i = 0; i < path.size(); i++) {
+					path.get(i).paint(g, i);
+				}
+			}
+		};
+		frame.add(pointpanel);
 		pointpanel.setLocation(625, 50);
 		pointpanel.setSize(325, 800);
-		frame.add(pointpanel);
-		frame.add(Scrollpanel);
+		
+		
 		JPanel menupanel = new JPanel() {
 			public void paint(Graphics g) {
 				g.fillRect(0, 0, 325, 50);
+				
 				g.setColor(Color.white);
-				g.fill3DRect(10, 10, 30, 30, true);
+				g.fill3DRect(10, 10, 50, 30, true);
+				g.setColor(Color.black);
+				g.drawString("Output",15,30);
+				
+				g.setColor(Color.white);
+				g.fill3DRect(70, 10, 50, 30, true);
+				g.setColor(Color.black);
+				g.drawString("Read",75,30);
 			}
 		};
-		menupanel.addMouseListener(new MouseListener() {
-			public void mouseClicked(MouseEvent e) {
-				if (e.getX() > 10 & e.getX() < 40 & e.getY() > 10 & e.getY() < 40) {
-					output();
-				}
-			}
-
-			public void mouseEntered(MouseEvent e) {
-			}
-
-			public void mouseExited(MouseEvent e) {
-			}
-
-			public void mousePressed(MouseEvent e) {
-			}
-
-			public void mouseReleased(MouseEvent e) {
-			}
-		});
+		frame.add(menupanel);
 		menupanel.setSize(325, 50);
 		menupanel.setLocation(625, 0);
-		frame.add(menupanel);
+		menupanel.addMouseListener(new MouseListener() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getX() > 10 & e.getX() < 60 & e.getY() > 10 & e.getY() < 40) {
+					output();
+				}
+				if (e.getX() > 70 & e.getX() < 70+50 & e.getY() > 10 & e.getY() < 40) {
+					input();
+				}
+			}
+			public void mouseEntered(MouseEvent e) {}
+			public void mouseExited(MouseEvent e) {}
+			public void mousePressed(MouseEvent e) {}
+			public void mouseReleased(MouseEvent e) {}
+		});
+		
 		frame.setVisible(true);
 	}
-
-	static int slow = 0;
-	static int[] prev = new int[] { 0, 0 };// for mouse motion ignore
-	static boolean once = true;// for mouse motion ignore
-
-	static int prevscroll = 0;
-	static boolean once2 = true;
-	static int pointpaneltranslate = 0;
+	private static double negmod(double atan2, double modvalue) {
+		while (atan2 < 0) {
+			atan2 += modvalue;
+		}
+		return atan2 % modvalue;
+	}
+	private static void importimages() {
+		try {
+			field = ImageIO.read(new File(System.getProperty("user.dir") + "/field2.png"));
+			overfield = ImageIO.read(new File(System.getProperty("user.dir") + "/Transparentoverfield.png"));
+		} catch (Exception E) {
+			E.printStackTrace();
+		}
+	}
 }
