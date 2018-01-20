@@ -10,6 +10,7 @@ package org.usfirst.frc.team2849.robot;
 import org.usfirst.frc.team2849.autonomous.AutoTask;
 import org.usfirst.frc.team2849.autonomous.DriveDistance;
 import org.usfirst.frc.team2849.autonomous.UrsaScript_AutoBuilder;
+import org.usfirst.frc.team2849.robot.Logger.Level;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -48,8 +49,10 @@ public class Robot extends IterativeRobot {
 		m_chooser.addObject("My Auto", kCustomAuto);
 		SmartDashboard.putData("Auto choices", m_chooser);
 //		new Pathfinder().init();
-		Logger log = new Logger();
-		log.write("test.txt", "charlie sux");
+		Logger log = new Logger("testFile.txt");
+		//log.log("FIrst test file", Level.INFO);
+		log.write("Test");
+		//System.out.println(log.isNull());
 		//log.trial();
 				
 	}

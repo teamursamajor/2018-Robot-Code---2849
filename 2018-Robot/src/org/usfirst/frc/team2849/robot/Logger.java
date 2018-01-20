@@ -23,30 +23,19 @@ import java.util.*;
 public class Logger {
 	
 	private static String path; //the path in which the logger writes to
-	private BufferedWriter bw;
-	private FileWriter fileWrite;
 	
 	public Logger(String p){
 		path = p; //sets the path variable to the parameter
-		try {
-			fileWrite = new FileWriter(path);
-			bw = new BufferedWriter(fileWrite);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
 	}
 	public Logger() {
 		
 	}
 	
 	//-- MM/DD/YYYY HH:MM:SS [LEVEL]- <info>
-	static void log(String info, Level l) {
+	 void log(String info, Level l) {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
 		String level = "";
-		
-		for(Level check : Level.values()) {
-		}
 		if(l == Level.DEBUG) {
 			level = "DEBUG";
 		}else if (l == Level.ERROR) {
@@ -57,8 +46,7 @@ public class Logger {
 		String prelog = dateFormat.format(date)+" ["+level+"]";
 		
 		String output = prelog + " " + info;
-		write(path,output);
-		
+		//write(output);
 	}
 	//
 	void initLogFile() {
@@ -88,28 +76,29 @@ public class Logger {
 		ERROR
 	}
 	
-	static void write(String filename, String aString){
-		BufferedWriter bw = null;
-		FileWriter fileWrite = null;
-		try {
 
-			fileWrite= new FileWriter(filename);
-			bw = new BufferedWriter(fileWrite);
-			bw.write(aString);
+	void write(String data) {
+		File file = new File(path);
+		FileWriter fileWrite = null;
+		BufferedWriter buffWrite = null;
+		
+		try {
+			fileWrite = new FileWriter(file);
+			buffWrite = new BufferedWriter(fileWrite);
+			buffWrite.write(data);
 		}catch(IOException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} finally {
 			try {
-				if(bw!= null)
-					bw.close();
-				if(fileWrite!=null) {
-					fileWrite.close();
-				}
-			}catch(IOException e) {
-				System.out.println(e.getMessage());
+				fileWrite.close();
+				buffWrite.close();
+			} catch (IOException e2) {
+				e2.printStackTrace();
 			}
 		}
 	}
+	
+
 
 	
 	public static void main(String[] args) {
