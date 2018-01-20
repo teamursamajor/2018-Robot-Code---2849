@@ -52,16 +52,23 @@ public class PathMaker {
 	public static void output() {
 		double totalDist = 0;
 		ArrayList<PointonPath> output = new ArrayList<PointonPath>();
-		for (int i = 0; i < path.size() - 1; i++) {
-			totalDist += Math.sqrt(Math.pow(path.get(i).xft - path.get(i + 1).xft, 2)
-					+ Math.pow(path.get(i).yft - path.get(i + 1).yft, 2));
+		output.add(
+				new PointonPath(totalDist,
+						negmod(Math.atan2(path.get(1).yft - path.get(0).yft,
+								path.get(1).xft - path.get(0).xft), Math.PI * 2) * (180 / Math.PI),
+						path.get(0).xft, path.get(0).yft));
+		for (int i = 1; i < path.size(); i++) {
+			totalDist += Math.sqrt(Math.pow(path.get(i).xft - path.get(i - 1).xft, 2)
+					+ Math.pow(path.get(i).yft - path.get(i - 1).yft, 2));
 			output.add(
 					new PointonPath(totalDist,
-							negmod(Math.atan2(path.get(i).yft - path.get(i + 1).yft,
-									path.get(i).xft - path.get(i + 1).xft), Math.PI * 2) * (180 / Math.PI),
+							negmod(Math.atan2(path.get(i).yft - path.get(i - 1).yft,
+									path.get(i).xft - path.get(i - 1).xft), Math.PI * 2) * (180 / Math.PI),
 							path.get(i).xft, path.get(i).yft));
 		}
-		new PathWriter(new Path[] { new Path("outputLeft", output), new Path("outputRight", output) }, "outpath.txt");
+		Path mapped = new Path("output", output);
+		mapped.mapVelocity();
+		new PathWriter(mapped.separate(1.167), "outpath.txt");
 		System.out.println("outputed");
 	}
 	public static void input() {

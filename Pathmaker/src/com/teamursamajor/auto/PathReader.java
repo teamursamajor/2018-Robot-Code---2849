@@ -93,7 +93,7 @@ public class PathReader {
 	
 	private PointonPath parsePoint(String line) {
 		String[] splitPoint = line.trim().split("\\s+");
-		return new PointonPath(Double.parseDouble(splitPoint[1]), Double.parseDouble(splitPoint[2]), Double.parseDouble(splitPoint[5]), Double.parseDouble(splitPoint[6]), Double.parseDouble(splitPoint[0]), Double.parseDouble(splitPoint[3]), Double.parseDouble(splitPoint[4]));
+		return new PointonPath(Double.parseDouble(splitPoint[1].trim()), Double.parseDouble(splitPoint[2].trim()), Double.parseDouble(splitPoint[5].trim()), Double.parseDouble(splitPoint[6].trim()), Double.parseDouble(splitPoint[0].trim()), Double.parseDouble(splitPoint[3].trim()), Double.parseDouble(splitPoint[4].trim()));
 	}
 	
 	private PointonPath parsePointCheeze(String line) {
@@ -111,13 +111,6 @@ public class PathReader {
 	
 	public Path[] getPaths() {
 		return new Path[] {leftPath, rightPath};
-	}
-	
-	public static void main(String[] args) {
-		Path[] paths = new PathReader("outpath.txt", false).getPaths();
-		paths[0].mapVelocity();
-		paths[1].mapVelocity();
-		new PathWriter(paths, "mappedPath.txt");
 	}
 
 }
