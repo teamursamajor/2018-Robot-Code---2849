@@ -88,6 +88,7 @@ public class Logger {
 			buffWrite.write(data);
 		}catch(IOException e) {
 			e.printStackTrace();
+			
 		} finally {
 			try {
 				fileWrite.close();
