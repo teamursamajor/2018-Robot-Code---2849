@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -46,6 +47,8 @@ public class PointonPath extends JPanel {
 		direction = dir;
 		xft = xft_;//Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10, precision);
 		yft = yft_;//Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10, precision);
+		x = xft/(Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10, precision));
+		y = yft/(Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10, precision));
 		acceleration = 0;
 		velocity = 0;
 		time = 0;
@@ -60,6 +63,8 @@ public class PointonPath extends JPanel {
 		direction = dir;
 		xft = xft_; //Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10, precision);
 		yft = yft_; //Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10, precision);
+		x = xft/xconv;
+		y = yft/yconv;
 		acceleration = accel;
 		velocity = vel;
 		this.time = time;
@@ -76,10 +81,11 @@ public class PointonPath extends JPanel {
 		yft = Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10, precision);
 		this.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
-				System.out.println(e.getY() + " " + (e.getY()) + " " + (10) + " " + (35));
+//				System.out.println(e.getY() + " " + (e.getY()) + " " + (10) + " " + (35));
 				if (e.getX() > 295 & e.getX() < 320 & e.getY() > 10 & e.getY() < 35) {
 					PathMaker.frame.repaint();
 					PathMaker.path.remove(i);
+					PathMaker.overlay=new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
 					if (-PathMaker.pointpaneltranslate > PointonPath.h
 							* (PathMaker.path.size() - 800 / PointonPath.h + 1)) {
 						if (PathMaker.path.size() > 800 / PointonPath.h + 1)
@@ -94,7 +100,7 @@ public class PointonPath extends JPanel {
 					highlight = !highlight;
 					PathMaker.frame.repaint();
 				}
-				System.out.println("horray" + i);
+//				System.out.println("horray" + i);
 			}
 
 			public void mouseEntered(MouseEvent e) {

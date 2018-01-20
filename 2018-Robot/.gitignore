@@ -7,5 +7,10 @@
 /dist/**
 local.properties
 .classpath
+<<<<<<< HEAD
 /target/**
 /bin/
+=======
+.project
+/target/**
+>>>>>>> branch 'master' of https://github.com/teamursamajor/2018-Robot-Code---2849
