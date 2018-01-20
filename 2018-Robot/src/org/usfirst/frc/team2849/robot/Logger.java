@@ -60,7 +60,7 @@ public class Logger {
 		write(path,output);
 		
 	}
-	
+	//
 	void initLogFile() {
 		
 	}
