@@ -23,30 +23,22 @@ import java.util.*;
 public class Logger {
 	
 	private static String path; //the path in which the logger writes to
-	private BufferedWriter bw;
-	private FileWriter fileWrite;
 	
 	public Logger(String p){
-		path = p; //sets the path variable to the parameter
-		try {
-			fileWrite = new FileWriter(path);
-			bw = new BufferedWriter(fileWrite);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+		path = "/home/lvuser/" + p; //sets the path variable to the parameter
 	}
 	public Logger() {
-		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH-mm-ss");
+		Date date = new Date();
+		path = "/home/lvuser" +dateFormat.format(date);
+		write("");
 	}
 	
 	//-- MM/DD/YYYY HH:MM:SS [LEVEL]- <info>
-	static void log(String info, Level l) {
+	 void log(String info, Level l) {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
 		String level = "";
-		
-		for(Level check : Level.values()) {
-		}
 		if(l == Level.DEBUG) {
 			level = "DEBUG";
 		}else if (l == Level.ERROR) {
@@ -57,8 +49,7 @@ public class Logger {
 		String prelog = dateFormat.format(date)+" ["+level+"]";
 		
 		String output = prelog + " " + info;
-		write(path,output);
-		
+		write(output);
 	}
 	//
 	void initLogFile() {
@@ -73,13 +64,13 @@ public class Logger {
 	public void trial(){
 		PowerDistributionPanel pdp = new PowerDistributionPanel();
 		for (int i=0;i<16;i++){
-			System.out.println("Channel"+i+" "+pdp.getCurrent(i));
+			log("Channel "+i+" "+pdp.getCurrent(i) + ":", Level.INFO);
 		}
-		System.out.println("Temperature "+pdp.getTemperature());
-		System.out.println("Total current "+pdp.getTotalCurrent());
-		System.out.println("Total Energy "+pdp.getTotalEnergy());
-		System.out.println("Total Power "+pdp.getTotalPower());
-		System.out.println("Voltage "+pdp.getVoltage());
+		log("Temperature : "+pdp.getTemperature(),Level.INFO);
+		log("Total current : "+pdp.getTotalCurrent(), Level.INFO);
+		log("Total Energy : "+pdp.getTotalEnergy(), Level.INFO);
+		log("Total Power : "+pdp.getTotalPower(), Level.INFO);
+		log("Voltage : "+pdp.getVoltage(), Level.INFO);
 	}
 	
 	enum Level{
@@ -88,28 +79,31 @@ public class Logger {
 		ERROR
 	}
 	
-	static void write(String filename, String aString){
-		BufferedWriter bw = null;
-		FileWriter fileWrite = null;
-		try {
 
-			fileWrite= new FileWriter(filename);
-			bw = new BufferedWriter(fileWrite);
-			bw.write(aString);
+	void write(String data) {
+		File file = new File(path);
+		FileWriter fileWrite = null;
+		BufferedWriter buffWrite = null;
+		
+		try {
+			fileWrite = new FileWriter(file,true);
+			buffWrite = new BufferedWriter(fileWrite);
+			buffWrite.write(data);
+			buffWrite.append('\n');
 		}catch(IOException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
+			
 		} finally {
-			try {
-				if(bw!= null)
-					bw.close();
-				if(fileWrite!=null) {
-					fileWrite.close();
-				}
-			}catch(IOException e) {
-				System.out.println(e.getMessage());
+			try {				
+				buffWrite.close();
+				fileWrite.close();
+			} catch (IOException e2) {
+				e2.printStackTrace();
 			}
 		}
 	}
+	
+
 
 	
 	public static void main(String[] args) {

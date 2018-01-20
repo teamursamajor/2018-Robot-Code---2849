@@ -102,9 +102,4 @@ public class TrapVelocityProfile {
 		return profile;
 	}
 	
-	public static void main(String[] args) {
-		TrapVelocityProfile profile = new TrapVelocityProfile(1, 5, .2, 30);
-		System.out.println(profile);
-	}
-	
 }
