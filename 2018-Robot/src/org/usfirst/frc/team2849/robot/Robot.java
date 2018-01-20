@@ -50,8 +50,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Auto choices", m_chooser);
 //		new Pathfinder().init();
 		Logger log = new Logger("testFile.txt");
+		log.log("Wow, maybe this works, good job ayo", Level.INFO);
 		//log.log("FIrst test file", Level.INFO);
 		log.write("Test");
+		log.trial();
+		Logger log0 = new Logger();
 		//System.out.println(log.isNull());
 		//log.trial();
 				

@@ -25,10 +25,13 @@ public class Logger {
 	private static String path; //the path in which the logger writes to
 	
 	public Logger(String p){
-		path = p; //sets the path variable to the parameter
+		path = "/home/lvuser/" + p; //sets the path variable to the parameter
 	}
 	public Logger() {
-		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH-mm-ss");
+		Date date = new Date();
+		path = "/home/lvuser" +dateFormat.format(date);
+		write("");
 	}
 	
 	//-- MM/DD/YYYY HH:MM:SS [LEVEL]- <info>
@@ -46,7 +49,7 @@ public class Logger {
 		String prelog = dateFormat.format(date)+" ["+level+"]";
 		
 		String output = prelog + " " + info;
-		//write(output);
+		write(output);
 	}
 	//
 	void initLogFile() {
@@ -61,13 +64,13 @@ public class Logger {
 	public void trial(){
 		PowerDistributionPanel pdp = new PowerDistributionPanel();
 		for (int i=0;i<16;i++){
-			System.out.println("Channel"+i+" "+pdp.getCurrent(i));
+			log("Channel "+i+" "+pdp.getCurrent(i) + ":", Level.INFO);
 		}
-		System.out.println("Temperature "+pdp.getTemperature());
-		System.out.println("Total current "+pdp.getTotalCurrent());
-		System.out.println("Total Energy "+pdp.getTotalEnergy());
-		System.out.println("Total Power "+pdp.getTotalPower());
-		System.out.println("Voltage "+pdp.getVoltage());
+		log("Temperature : "+pdp.getTemperature(),Level.INFO);
+		log("Total current : "+pdp.getTotalCurrent(), Level.INFO);
+		log("Total Energy : "+pdp.getTotalEnergy(), Level.INFO);
+		log("Total Power : "+pdp.getTotalPower(), Level.INFO);
+		log("Voltage : "+pdp.getVoltage(), Level.INFO);
 	}
 	
 	enum Level{
@@ -83,16 +86,17 @@ public class Logger {
 		BufferedWriter buffWrite = null;
 		
 		try {
-			fileWrite = new FileWriter(file);
+			fileWrite = new FileWriter(file,true);
 			buffWrite = new BufferedWriter(fileWrite);
 			buffWrite.write(data);
+			buffWrite.append('\n');
 		}catch(IOException e) {
 			e.printStackTrace();
 			
 		} finally {
-			try {
-				fileWrite.close();
+			try {				
 				buffWrite.close();
+				fileWrite.close();
 			} catch (IOException e2) {
 				e2.printStackTrace();
 			}
