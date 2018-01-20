@@ -1,0 +1,13 @@
+#SIDE_<SWITCHSIDE><SCALESIDE>_AUTONAME.auto
+
+bundle {
+   serial {
+      intake deploy
+      #lift code
+   }
+   serial {
+      #drive code
+   }
+}
+
+#intake code

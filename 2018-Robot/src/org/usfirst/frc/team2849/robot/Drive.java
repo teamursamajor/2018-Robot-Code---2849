@@ -24,9 +24,9 @@ public class Drive implements Runnable {
 	private static double rightSpeed;
 	private static boolean square;
 	private static AHRS ahrs;
-	
+
 	private static Boolean running = new Boolean(false);
-	
+
 	private static Encoder encL;
 	private static Encoder encR;
 
@@ -43,7 +43,7 @@ public class Drive implements Runnable {
 	 * @param rearRight
 	 *            Channel number for rear right motor
 	 */
-	
+
 	public Drive(int frontLeft, int frontRight, int rearLeft, int rearRight) {
 		mFrontLeft = new Spark(frontLeft);
 		mFrontRight = new Spark(frontRight);
@@ -52,24 +52,24 @@ public class Drive implements Runnable {
 
 		leftSide = new SpeedControllerGroup(mFrontLeft, mRearLeft);
 		rightSide = new SpeedControllerGroup(mFrontRight, mRearRight);
-		
+
 		leftSide.setInverted(true);
 		rightSide.setInverted(true);
 
 		diffDrive = new DifferentialDrive(leftSide, rightSide);
 
 		ahrs = new AHRS(SPI.Port.kMXP);
-		
+
 		encL = new Encoder(2, 3);
 		encR = new Encoder(0, 1);
-		
+
 		double inchesPerTick = 0.011505d;
 		encL.setDistancePerPulse(inchesPerTick);
 		encR.setDistancePerPulse(inchesPerTick);
-		
+
 		encL.reset();
 		encR.reset();
-		
+
 		startDrive();
 	}
 
@@ -89,7 +89,7 @@ public class Drive implements Runnable {
 		Drive.rightSpeed = rightSpeed;
 		Drive.square = square;
 		normalizeSpeed();
-		
+
 	}
 
 	/**
@@ -116,7 +116,7 @@ public class Drive implements Runnable {
 		if (Math.abs(rightSpeed) > 1)
 			rightSpeed = Math.signum(rightSpeed) * 1;
 	}
-    
+
 	/**
 	 * Starts driveThread. Made so that only one driveThread can exist at one
 	 * time.
@@ -129,6 +129,7 @@ public class Drive implements Runnable {
 		}
 		new Thread(this, "driveThread").start();
 	}
+
 	/**
 	 * Run method for driveThread
 	 */
@@ -154,44 +155,43 @@ public class Drive implements Runnable {
 	/**
 	 * Takes the angle given by the AHRS and turns it into a heading which is
 	 * always between 0 and 360 (AHRS can return negative values and values
-	 * above 360)
-	 * TODO check for efficiency 
+	 * above 360) TODO check for efficiency
 	 */
 
 	public static double getHeading() {
 		double angle = ahrs.getAngle();
-		if (angle > 360) {
-			angle %= 360;
-		} else if (angle < 0) {
-			angle = 360 - (-angle % 360);
-		}
+		angle = fixHeading(angle);
 		return angle;
 	}
-	//TODO why do both getHeading and fixHeading exist? Why not combine them?
-	/** _well written_ */
+
 	public static double fixHeading(double heading) {
-		//shouldnt this be 360, not 180?
-		if (heading < 0 || heading > 180) {
-			while (heading < 0) {
-				heading += 360;
-			}
-			while (heading > 0) {
-				heading -= 360;
-			}
-		}
+		heading %= 360;
+		if (heading < 0)
+			heading += 360;
 		return heading;
 	}
-	
+
 	public static double getLeftEncoder() {
 		return encL.getDistance();
 	}
-	
+
 	public static double getRightEncoder() {
 		return encR.getDistance();
 	}
-	
+
 	public static void resetEncoders() {
 		encL.reset();
 		encR.reset();
+	}
+
+	public static void resetNavx() {
+		ahrs.reset();
+	}
+	
+	public static void stop(){
+		mFrontLeft.stopMotor();
+		mFrontRight.stopMotor();
+		mRearLeft.stopMotor();
+		mRearRight.stopMotor();
 	}
 }

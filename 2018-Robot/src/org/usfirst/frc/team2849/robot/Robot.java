@@ -8,7 +8,7 @@
 package org.usfirst.frc.team2849.robot;
 
 import org.usfirst.frc.team2849.autonomous.AutoTask;
-import org.usfirst.frc.team2849.autonomous.DriveDistance;
+import org.usfirst.frc.team2849.autonomous.DriveTask;
 import org.usfirst.frc.team2849.autonomous.UrsaScript_AutoBuilder;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -68,8 +68,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		Drive.resetNavx();
 		// temporary, set only for testing driveDistance
-		AutoTask task = new UrsaScript_AutoBuilder().buildAutoMode("/autotest.auto");
+		AutoTask task = new UrsaScript_AutoBuilder().buildAutoMode("/AutoModes/RR_R0_switch.auto");
 		Thread t = new Thread(task);
 		t.start();
 /* m_autoSelected = m_chooser.getSelected();

@@ -1,0 +1,21 @@
+# M_L*_switch.auto
+# robot is 32 wide, 28 long
+# center of the robot is 16 inch right from center
+# frame is on the center line, 12 inch from edge of vault ramp to the frame
+
+bundle {
+   serial {
+      intake deploy
+      lift switch
+   }
+   serial {
+      drive 58
+      turn TO -90
+      drive 70
+      turn TO 0
+      drive 58
+   }
+}
+
+intake out
+
