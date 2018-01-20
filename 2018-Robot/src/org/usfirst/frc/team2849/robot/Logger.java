@@ -1,13 +1,48 @@
 package org.usfirst.frc.team2849.robot;
 
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+
 import java.io.*;
+import java.text.*;
+import java.util.*;
 
 
 public class Logger {
-	public Logger(){
+	private static String path;
+	public Logger(String path){
 		
 	}
+	
+	//-- MM/DD/YYYY HH:MM:SS [LEVEL]- <info>
+	static void log(String info, Level l) {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
+		String level = "";
+		
+		for(Level check : Level.values()) {
+		}
+		if(l == Level.DEBUG) {
+			level = "DEBUG";
+		}else if (l == Level.ERROR) {
+			level = "ERROR";
+		}else if (l == Level.INFO) {
+			level = "INFO";
+		}
+		String prelog = dateFormat.format(date)+" ["+level+"]";
+		
+		String output = prelog + " " + info;
+		write(path,output);
+		
+	}
+	
+	void initLogFile() {
+		
+	}
+	
+	void initLogFile(String start) {
+		
+	}
+	
 	
 	public void trial(){
 		PowerDistributionPanel pdp = new PowerDistributionPanel();
@@ -27,7 +62,7 @@ public class Logger {
 		ERROR
 	}
 	
-	void write(String filename, String aString){
+	static void write(String filename, String aString){
 		BufferedWriter bw = null;
 		FileWriter fileWrite = null;
 		try {
@@ -51,6 +86,7 @@ public class Logger {
 	}
 
 	
-	
+	public static void main(String[] args) {
+	}
 	
 }
