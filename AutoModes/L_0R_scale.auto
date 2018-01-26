@@ -1,0 +1,23 @@
+#L_*R_scale.auto
+#left bumper is on corner with vault
+bundle {
+   serial {
+      #brings the intake down and lifts elevator to switch height
+      #change if necessary
+      intake deploy
+      lift scale
+   }
+   serial {
+      #put code here
+      drive 200
+      turn TO 90
+      
+      #this drive distance is an estimate
+      drive 150
+
+      turn TO 0
+      drive 100
+   }
+}
+
+intake out

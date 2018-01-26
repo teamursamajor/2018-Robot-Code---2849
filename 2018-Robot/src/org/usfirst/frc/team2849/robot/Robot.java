@@ -49,12 +49,12 @@ public class Robot extends IterativeRobot {
 		m_chooser.addObject("My Auto", kCustomAuto);
 		SmartDashboard.putData("Auto choices", m_chooser);
 //		new Pathfinder().init();
-		Logger log = new Logger("testFile.txt");
-		log.log("Wow, maybe this works, good job ayo", Level.INFO);
-		//log.log("FIrst test file", Level.INFO);
-		log.write("Test");
-		log.trial();
-		Logger log0 = new Logger();
+//		Logger log = new Logger("testFile.txt");
+//		log.log("Wow, maybe this works, good job ayo", Level.INFO);
+//		//log.log("FIrst test file", Level.INFO);
+//		log.write("Test");
+//		log.trial();
+//		Logger log0 = new Logger();
 		//System.out.println(log.isNull());
 		//log.trial();
 				
@@ -113,14 +113,9 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 //		Pathfinder.findposition();//this should generally always be running whenever
 		//the robot is moving and therefore changing position.
-		int flip = -1;
-		if (xbox.getButton(1)) flip = 1;
-		else flip = -1;
+		int flip = 1;
+		if (xbox.getButton(1)) flip = -1;
+		else flip = 1;
 		Drive.drive(flip * xbox.getAxis(XboxController.AXIS_LEFTTRIGGER), flip * xbox.getAxis(XboxController.AXIS_RIGHTTRIGGER), false);
-		Drive.drive(xbox.getAxis(XboxController.AXIS_LEFTSTICK_Y), xbox.getAxis(XboxController.AXIS_RIGHTSTICK_Y), true);
-		if (count++%10 == 0) {
-		System.out.println("Left Encoder: " + Drive.getLeftEncoder());
-		System.out.println("Right Encoder: " + Drive.getRightEncoder());
-		}
 	}
 }

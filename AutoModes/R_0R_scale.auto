@@ -1,15 +1,18 @@
-#<start position>_<switch side><scale side>_<name>.auto
-#<robot reference point> is <number> inches from <field reference point>
+#R_*R_scale.auto
+#right bumper is corner with vault
 bundle {
    serial {
       #brings the intake down and lifts elevator to switch height
       #change if necessary
       intake deploy
-      lift switch
+      lift scale
    }
    serial {
       #put code here
+      drive 320
+      turn TO -90
+      drive 25
    }
 }
 
-#intake code
+intake out

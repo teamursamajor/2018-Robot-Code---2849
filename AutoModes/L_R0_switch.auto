@@ -1,4 +1,4 @@
-# L_L*_switch.auto
+#L_R*_switch.auto
 #left bumper is on corner with vault
 bundle {
    serial {
@@ -6,9 +6,14 @@ bundle {
       lift switch
    }
    serial {
-      drive 156
+      drive 58
       turn TO 90
-      drive 30
+
+      #this drive distance is an estimate
+      drive 150
+
+      turn TO 0
+      drive 38
    }
 }
 

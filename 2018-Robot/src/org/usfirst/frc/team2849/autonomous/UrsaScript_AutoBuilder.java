@@ -41,6 +41,25 @@ public class UrsaScript_AutoBuilder {
 			this.scriptName = scriptName.trim();
 		}
 	}
+	
+	/* PrintToken:
+	 *     A token that prints all arguments passed to it
+	 * 
+	 * @param str  String that you want to print
+	 */
+	class PrintToken implements Token {
+		private String str; // String to be printed
+		
+		//Instantiate PrintToken class
+		public PrintToken(String str){
+			this.str = str; // Set variable str to argument string
+		}
+		
+		//Creates a new instance of PrintTask class
+		public PrintTask makeTask() {
+			return new PrintTask(str);
+		}
+	}
 
 	class IntakeToken implements Token {
 		private IntakeType intake;
@@ -185,6 +204,11 @@ public class UrsaScript_AutoBuilder {
 			else if(line.contains("intake")) {
 				String current = line.substring(line.indexOf("intake") + "intake".length());
 				ret.add(new IntakeToken(current));
+			}
+			
+			else if(line.contains("print")) { //If the line is a print token
+				String current = line.substring(line.indexOf("print") + "print".length()); //The data that should be printed is everything that comes after the token "print"
+				ret.add(new PrintToken(current)); //Adds new Print Token to the ArrayList of all tokens
 			}
 			else if(line.contains("bundle")) {
 				ret.add(new BundleToken());
