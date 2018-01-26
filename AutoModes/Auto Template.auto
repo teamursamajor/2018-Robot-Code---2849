@@ -1,0 +1,14 @@
+#L_R*_switch.auto
+
+bundle {
+   serial {
+      intake deploy
+      lift switch
+   }
+   serial {
+      drive 58
+      
+   }
+}
+
+#intake code

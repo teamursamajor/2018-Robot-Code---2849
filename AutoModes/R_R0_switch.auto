@@ -1,0 +1,15 @@
+#R_R*_switch.auto
+
+bundle {
+   serial {
+      intake deploy
+      lift switch
+   }
+   serial {
+      drive 156
+      turn TO -90
+      drive 10
+   }
+}
+
+intake out
