@@ -1,12 +1,13 @@
-#SIDE_<SWITCHSIDE><SCALESIDE>_AUTONAME.auto
+#L_R*_switch.auto
 
 bundle {
    serial {
       intake deploy
-      #lift code
+      lift switch
    }
    serial {
-      #drive code
+      drive 58
+      
    }
 }
 
