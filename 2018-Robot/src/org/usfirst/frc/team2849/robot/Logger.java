@@ -97,7 +97,7 @@ public class Logger {
 			try {				
 				buffWrite.close();
 				fileWrite.close();
-			} catch (IOException e2) {
+			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
 		}
