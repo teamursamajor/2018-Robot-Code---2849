@@ -13,9 +13,7 @@ bundle {
       drive 150
 
       turn TO 0
-      drive 58
-      turn TO 90
-      drive 10
+      drive 38
    }
 }
 
