@@ -1,5 +1,5 @@
 # L_L*_switch.auto
-
+#left bumper is on corner with vault
 bundle {
    serial {
       intake deploy
@@ -8,7 +8,7 @@ bundle {
    serial {
       drive 156
       turn TO 90
-      drive 40
+      drive 30
    }
 }
 
