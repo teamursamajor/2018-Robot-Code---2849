@@ -1,0 +1,36 @@
+#L_*L_2xscale(inside).auto
+#left bumper is on corner with vault
+bundle {
+   serial {
+      #brings the intake down and lifts elevator to switch height
+      #change if necessary
+      intake deploy
+      lift scale
+   }
+   serial {
+      #deliver to scale
+      drive 210
+      turn to 90
+      drive 30
+      turn to 0
+      drive 90
+      intake out
+      wait 1
+      intake stop
+
+      #picking up another cube
+      drive -90
+      turn to 90
+      intake in
+      wait 1.5
+      intake stop
+
+      #delivering another cube
+      turn to 0
+      drive 90
+      intake out
+      
+   }
+}
+
+#intake code

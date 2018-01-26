@@ -5,7 +5,7 @@ bundle {
       #brings the intake down and lifts elevator to switch height
       #change if necessary
       intake deploy
-      lift switch
+      lift scale
    }
    serial {
       #put code here
