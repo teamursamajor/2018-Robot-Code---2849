@@ -67,12 +67,14 @@ public class PathMaker {
 							path.get(i).xft, path.get(i).yft));
 		}
 		Path mapped = new Path("output", output);
+		new PathWriter(new Path[] {mapped, mapped}, "outpath.txt");
 		mapped.mapVelocity();
-		new PathWriter(mapped.separate(1.167), "outpath.txt");
+		new PathWriter(new Path[] {mapped, mapped}, "outmapped.txt");
+		new PathWriter(mapped.separate(1.067), "outsepped.txt");
 		System.out.println("outputed");
 	}
 	public static void input() {
-		path = new PathReader("outpath.txt",false).getLeftPath().getPoints();
+		path = new PathReader("outmapped.txt",false).getLeftPath().getPoints();
 		ArrayList<PointonPath> copy = new ArrayList<PointonPath>();
 		for(PointonPath p : path) {
 			copy.add(new PointonPath(p.x,p.y,copy.size()));
