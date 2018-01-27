@@ -1,16 +1,15 @@
 package org.usfirst.frc.team2849.autonomous;
 
-import org.usfirst.frc.team2849.controls.AutoControl;
+import org.usfirst.frc.team2849.controls.ControlLayout;
 import org.usfirst.frc.team2849.robot.Drive;
 
 public class DriveTask extends AutoTask {
 	private int distance;
 	
-	private AutoControl cont;
+	private ControlLayout cont;
 	
-	public DriveTask(AutoControl cont, int distance) {
+	public DriveTask(ControlLayout cont, int distance) {
 		super(cont);
-		this.cont = cont;
 		this.distance = -distance;
 	}
 
