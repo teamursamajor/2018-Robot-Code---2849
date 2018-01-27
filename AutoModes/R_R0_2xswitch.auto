@@ -1,0 +1,35 @@
+#<start position>_<switch side><scale side>_<name>.auto
+#<robot reference point> is <number> inches from <field reference point>
+#robot is 32 wide, 28 long
+#center of the robot is 16 inch right from center
+bundle {
+   serial {
+      #brings the intake down and lifts elevator to switch height
+      #change if necessary
+      intake deploy
+      lift <height>
+   }
+   serial {
+      #delivering first cube
+      drive 168
+      turn -90
+      drive 40
+      intake out
+
+      #picking up another cube
+      drive -5
+      turn BY -90
+      drive 28
+      turn BY 90
+      drive 70
+      intake run
+
+      #delivering the second cube
+      drive -30
+      turn BY 90
+      drive 30
+      intake out      
+   }
+}
+
+#intake code
