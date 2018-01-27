@@ -11,7 +11,7 @@ public class AutoControl implements ControlLayout {
 	
 	private double leftPower;
 	private double rightPower;
-	
+	private double intakePower;
 	public AutoControl() {
 		leftPower = 0;
 		rightPower = 0;
@@ -53,7 +53,14 @@ public class AutoControl implements ControlLayout {
 	@Override
 	public double runIntake() {
 		// TODO Auto-generated method stub
-		return 0;
+		return intakePower;
+		
+	}
+
+	@Override
+	public void setIntakeValue(double intakeValue) {
+		// TODO Auto-generated method stub
+		intakePower=intakeValue;
 	}
 
 }

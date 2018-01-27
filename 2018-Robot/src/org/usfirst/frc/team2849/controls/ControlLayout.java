@@ -18,5 +18,5 @@ public interface ControlLayout {
 	
 	public boolean runningElevatorUp();
 	public boolean runningElevatorDown();
-
+    public void setIntakeValue( double intakeValue);
 }

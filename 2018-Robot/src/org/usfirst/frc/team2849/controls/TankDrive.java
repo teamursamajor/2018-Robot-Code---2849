@@ -7,8 +7,9 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-public class TankDrive extends XboxController implements ControlLayout {
 
+public class TankDrive extends XboxController implements ControlLayout {
+ public double intakePower;
 	public TankDrive(int port) {
 		super(port);
 	}
@@ -43,15 +44,16 @@ public class TankDrive extends XboxController implements ControlLayout {
 
 	@Override
 	public double runIntake() {
-		if(super.getAxisGreaterThan(AXIS_LEFTTRIGGER, 0.25)){
-			return 0.5;
-		} else if(super.getAxisGreaterThan(AXIS_RIGHTTRIGGER, 0.25)){
-			return -0.5;
-		}
-		return 0;
+	return intakePower;
 	}
 
 	@Override
 	public void setPower(double leftPower, double rightPower) {}
+
+	@Override
+	public void setIntakeValue( double intakeValue) {
+		// TODO Auto-generated method stub
+		intakePower=intakeValue;
+	}
 
 }
