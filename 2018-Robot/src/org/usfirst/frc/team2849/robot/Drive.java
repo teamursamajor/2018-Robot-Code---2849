@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.drive.RobotDriveBase;
 
 public class Drive implements Runnable {
 
@@ -18,7 +19,7 @@ public class Drive implements Runnable {
 	private static SpeedControllerGroup leftSide;
 	private static SpeedControllerGroup rightSide;
 
-	private static DifferentialDrive diffDrive;
+	private static DriveControl drive;
 
 	private static double leftSpeed;
 	private static double rightSpeed;
@@ -26,6 +27,7 @@ public class Drive implements Runnable {
 	private static AHRS ahrs;
 
 	private static Boolean running = new Boolean(false);
+	private static boolean humanControl = false;
 
 	private static Encoder encL;
 	private static Encoder encR;
@@ -44,19 +46,19 @@ public class Drive implements Runnable {
 	 *            Channel number for rear right motor
 	 */
 
-	public Drive(int frontLeft, int frontRight, int rearLeft, int rearRight) {
+	public Drive(int frontLeft, int frontRight, int rearLeft, int rearRight, ControlLayout contScheme) {
 		mFrontLeft = new Spark(frontLeft);
 		mFrontRight = new Spark(frontRight);
 		mRearLeft = new Spark(rearLeft);
 		mRearRight = new Spark(rearRight);
 
-		leftSide = new SpeedControllerGroup(mFrontLeft, mRearLeft);
-		rightSide = new SpeedControllerGroup(mFrontRight, mRearRight);
+//		leftSide = new SpeedControllerGroup(mFrontLeft, mRearLeft);
+//		rightSide = new SpeedControllerGroup(mFrontRight, mRearRight);
+//
+//		leftSide.setInverted(true);
+//		rightSide.setInverted(true);
 
-		leftSide.setInverted(true);
-		rightSide.setInverted(true);
-
-		diffDrive = new DifferentialDrive(leftSide, rightSide);
+		drive = contScheme.getDrive(mFrontLeft, mFrontRight, mRearLeft, mRearRight);
 
 		ahrs = new AHRS(SPI.Port.kMXP);
 
@@ -89,7 +91,6 @@ public class Drive implements Runnable {
 		Drive.rightSpeed = rightSpeed;
 		Drive.square = square;
 		normalizeSpeed();
-
 	}
 
 	/**
@@ -136,7 +137,7 @@ public class Drive implements Runnable {
 	@Override
 	public void run() {
 		while (running) {
-			diffDrive.tankDrive(leftSpeed, rightSpeed, square);
+			drive.drive();
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
@@ -193,5 +194,19 @@ public class Drive implements Runnable {
 		mFrontRight.stopMotor();
 		mRearLeft.stopMotor();
 		mRearRight.stopMotor();
+	}
+	
+	public static boolean isHumanControl() {
+		return humanControl;
+	}
+	
+	public static void setHumanControl(boolean isHumanControl) {
+		humanControl = isHumanControl;
+	}
+	
+	public interface DriveControl {
+		
+		public void drive();
+		
 	}
 }

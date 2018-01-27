@@ -8,9 +8,7 @@
 package org.usfirst.frc.team2849.robot;
 
 import org.usfirst.frc.team2849.autonomous.AutoTask;
-import org.usfirst.frc.team2849.autonomous.DriveTask;
 import org.usfirst.frc.team2849.autonomous.UrsaScript_AutoBuilder;
-import org.usfirst.frc.team2849.robot.Logger.Level;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -32,8 +30,9 @@ public class Robot extends IterativeRobot {
 	private String m_autoSelected;
 	private SendableChooser<String> m_chooser = new SendableChooser<>();
 	
-	private Drive drive;
-	private XboxController xbox;
+	ControlLayout cont = new TankDrive(1);
+	Drive drive;
+	
 	private Encoder enc;
 	
 	private Thread autoThread;
@@ -44,11 +43,11 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		drive = new Drive(2, 3, 0, 1);
-		xbox = new XboxController(0);
+		drive = new Drive(2, 3, 0, 1, cont);
 		m_chooser.addDefault("Default Auto", kDefaultAuto);
 		m_chooser.addObject("My Auto", kCustomAuto);
 		SmartDashboard.putData("Auto choices", m_chooser);
+		Drive.setHumanControl(false);
 //		new Pathfinder().init();
 //		Logger log = new Logger("testFile.txt");
 //		log.log("Wow, maybe this works, good job ayo", Level.INFO);
@@ -76,6 +75,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		Drive.resetNavx();
+		Drive.setHumanControl(false);
 		// temporary, set only for testing driveDistance
 		AutoTask task = new UrsaScript_AutoBuilder().buildAutoMode("/AutoModes/RR_R0_switch.auto");
 		Thread t = new Thread(task);
@@ -94,6 +94,10 @@ public class Robot extends IterativeRobot {
 //		Pathfinder.findposition();//this should generally always be running whenever
 		//the robot is moving and therefore changing position.
 	}
+	
+	public void teleopInit() {
+		Drive.setHumanControl(true);
+	}
 
 
 	/**
@@ -111,8 +115,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 //		Pathfinder.findposition();//this should generally always be running whenever
-		
-		Drive.drive(xbox.getAxis(XboxController.AXIS_LEFTSTICK_Y), xbox.getAxis(XboxController.AXIS_RIGHTSTICK_Y), true);
 		//the robot is moving and therefore changing position.
 		if(System.currentTimeMillis()-100 > lighttime){
 			if(xbox.getButton(XboxController.BUTTON_B) == true){
@@ -163,6 +165,10 @@ public class Robot extends IterativeRobot {
 			}
 		}
 	}
+	
+	public void testInit() {
+		Drive.setHumanControl(true);
+	}
 
 	/**
 	 * This function is called periodically during test mode.
@@ -174,9 +180,13 @@ public class Robot extends IterativeRobot {
 		
 //		Pathfinder.findposition();//this should generally always be running whenever
 		//the robot is moving and therefore changing position.
-		int flip = 1;
-		if (xbox.getButton(1)) flip = -1;
-		else flip = 1;
-		Drive.drive(flip * xbox.getAxis(XboxController.AXIS_LEFTTRIGGER), flip * xbox.getAxis(XboxController.AXIS_RIGHTTRIGGER), false);
+//		int flip = 1;
+//		if (xbox.getButton(1)) flip = -1;
+//		else flip = 1;
+//		Drive.drive(flip * xbox.getAxis(XboxController.AXIS_LEFTTRIGGER), flip * xbox.getAxis(XboxController.AXIS_RIGHTTRIGGER), false);
+	}
+	
+	public void disabledInit() {
+		Drive.setHumanControl(false);
 	}
 }
