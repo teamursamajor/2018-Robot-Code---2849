@@ -169,7 +169,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-
+		//because every function needs a line of code
 	}
 	
 	public void disabledInit() {
