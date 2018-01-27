@@ -16,7 +16,17 @@ public interface ControlLayout {
 	
 	public double runIntake();
 	
-	public boolean runningElevatorUp();
-	public boolean runningElevatorDown();
     public void setIntakeValue( double intakeValue);
+    
+    public void setLiftPower(double liftPower);
+    
+    public double getLiftPower();
+    
+    public void setLiftHeight(double liftHeight);
+    
+    /**
+     * 
+     * @return lift height in inches
+     */
+    public double getLiftHeight();
 }

@@ -12,6 +12,9 @@ public class AutoControl implements ControlLayout {
 	private double leftPower;
 	private double rightPower;
 	private double intakePower;
+	private double liftHeight;
+	private double liftPower;
+	
 	public AutoControl() {
 		leftPower = 0;
 		rightPower = 0;
@@ -41,16 +44,6 @@ public class AutoControl implements ControlLayout {
 	}
 
 	@Override
-	public boolean runningElevatorUp() {
-		return false;
-	}
-
-	@Override
-	public boolean runningElevatorDown() {
-		return false;
-	}
-
-	@Override
 	public double runIntake() {
 		// TODO Auto-generated method stub
 		return intakePower;
@@ -61,6 +54,26 @@ public class AutoControl implements ControlLayout {
 	public void setIntakeValue(double intakeValue) {
 		// TODO Auto-generated method stub
 		intakePower=intakeValue;
+	}
+
+	@Override
+	public void setLiftHeight(double liftHeight) {
+		this.liftHeight = liftHeight;
+	}
+
+	@Override
+	public double getLiftHeight() {
+		return liftHeight;
+	}
+
+	@Override
+	public void setLiftPower(double liftPower) {
+		this.liftPower = liftPower;		
+	}
+
+	@Override
+	public double getLiftPower() {
+		return liftPower;
 	}
 
 }

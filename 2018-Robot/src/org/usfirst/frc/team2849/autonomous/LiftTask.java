@@ -17,7 +17,6 @@ public class LiftTask extends AutoTask {
 	public LiftTask(AutoControl cont, double height) {
 		super(cont);
 		liftHeight = height;
-
 		enMotor = new Encoder(5, 4);
 		enMotor.setDistancePerPulse(inchesPerTick);
 	}
@@ -28,8 +27,7 @@ public class LiftTask extends AutoTask {
 		double error = 0.1;
 		while (tempHeight + error > calcHeight() && tempHeight - error < calcHeight()) {
 			double powerConstant = 0.3d;
-			//TODO uncomment this
-//			cont.setLiftPower(powerConstant);
+			cont.setLiftPower(powerConstant);
 			if (limitSwitch.get()) {
 				enMotor.reset();
 			}

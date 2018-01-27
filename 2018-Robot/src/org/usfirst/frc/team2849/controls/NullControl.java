@@ -23,20 +23,40 @@ public class NullControl implements ControlLayout {
 	}
 
 	@Override
-	public boolean runningElevatorUp() {
-		return false;
-	}
-
-	@Override
-	public boolean runningElevatorDown() {
-		return false;
-	}
-
-	@Override
 	public void setPower(double leftPower, double rightPower) {}
 
 	@Override
 	public double runIntake() {
+		return 0;
+	}
+
+	@Override
+	public void setIntakeValue(double intakeValue) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setLiftHeight(double liftHeight) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public double getLiftHeight() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setLiftPower(double liftPower) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public double getLiftPower() {
+		// TODO Auto-generated method stub
 		return 0;
 	}
 

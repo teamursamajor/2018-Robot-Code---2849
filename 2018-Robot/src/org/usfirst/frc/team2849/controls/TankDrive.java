@@ -7,9 +7,11 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-
 public class TankDrive extends XboxController implements ControlLayout {
- public double intakePower;
+	private double intakePower;
+	private double liftHeight;
+	private double liftPower;
+
 	public TankDrive(int port) {
 		super(port);
 	}
@@ -29,31 +31,44 @@ public class TankDrive extends XboxController implements ControlLayout {
 		SpeedControllerGroup leftSide = new SpeedControllerGroup(frontLeft, rearLeft);
 		SpeedControllerGroup rightSide = new SpeedControllerGroup(frontRight, rearRight);
 		DifferentialDrive drive = new DifferentialDrive(leftSide, rightSide);
-		return () -> { drive.tankDrive(getLeftPower(), getRightPower(), true); };
-	}
-
-	@Override
-	public boolean runningElevatorUp() {
-		return super.getDPad(POV_UP);
-	}
-
-	@Override
-	public boolean runningElevatorDown() {
-		return super.getDPad(POV_DOWN);
+		return () -> {
+			drive.tankDrive(getLeftPower(), getRightPower(), true);
+		};
 	}
 
 	@Override
 	public double runIntake() {
-	return intakePower;
+		return intakePower;
 	}
 
 	@Override
-	public void setPower(double leftPower, double rightPower) {}
+	public void setPower(double leftPower, double rightPower) {
+	}
 
 	@Override
-	public void setIntakeValue( double intakeValue) {
+	public void setIntakeValue(double intakeValue) {
 		// TODO Auto-generated method stub
-		intakePower=intakeValue;
+		intakePower = intakeValue;
+	}
+
+	@Override
+	public void setLiftHeight(double liftHeight) {
+		this.liftHeight = liftHeight;
+	}
+
+	@Override
+	public double getLiftHeight() {
+		return liftHeight;
+	}
+
+	@Override
+	public void setLiftPower(double liftPower) {
+		this.liftPower = liftPower;
+	}
+
+	@Override
+	public double getLiftPower() {
+		return liftPower;
 	}
 
 }
