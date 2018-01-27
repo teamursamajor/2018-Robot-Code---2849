@@ -10,10 +10,11 @@ public interface ControlLayout {
 	public double getLeftPower();
 	public double getRightPower();
 	
+	public void setPower(double leftPower, double rightPower);
+	
 	public DriveControl getDrive(Spark frontLeft, Spark frontRight, Spark rearLeft, Spark rearRight);
 	
-	public boolean runningIntakeIn();
-	public boolean runningIntakeOut();
+	public double runIntake();
 	
 	public boolean runningElevatorUp();
 	public boolean runningElevatorDown();

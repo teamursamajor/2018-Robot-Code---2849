@@ -1,7 +1,8 @@
 package org.usfirst.frc.team2849.autonomous;
 
 import org.usfirst.frc.team2849.controls.AutoControl;
-import org.usfirst.frc.team2849.robot.*;
+import org.usfirst.frc.team2849.controls.ControlLayout;
+import org.usfirst.frc.team2849.robot.Drive;
 
 public class TurnTask extends AutoTask {
 
@@ -11,8 +12,8 @@ public class TurnTask extends AutoTask {
 
 	private double desiredAngle;
 	private Turntype type;
-
-	public TurnTask(AutoControl cont, Turntype type, double desiredAngle) {
+	
+	public TurnTask(ControlLayout cont, Turntype type, double desiredAngle) {
 		super(cont);
 		this.desiredAngle = desiredAngle;
 		this.type = type;

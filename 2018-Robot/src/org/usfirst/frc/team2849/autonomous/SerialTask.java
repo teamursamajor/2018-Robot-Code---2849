@@ -1,9 +1,9 @@
 package org.usfirst.frc.team2849.autonomous;
 
-import org.usfirst.frc.team2849.controls.AutoControl;
+import org.usfirst.frc.team2849.controls.ControlLayout;
 
 public class SerialTask extends GroupTask {
-	public SerialTask(AutoControl cont) {
+	public SerialTask(ControlLayout cont) {
 		super(cont);
 	}
 

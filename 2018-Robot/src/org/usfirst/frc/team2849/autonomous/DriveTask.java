@@ -6,9 +6,11 @@ import org.usfirst.frc.team2849.robot.Drive;
 public class DriveTask extends AutoTask {
 	private int distance;
 	
-
+	private AutoControl cont;
+	
 	public DriveTask(AutoControl cont, int distance) {
 		super(cont);
+		this.cont = cont;
 		this.distance = -distance;
 	}
 

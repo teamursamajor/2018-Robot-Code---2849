@@ -32,16 +32,6 @@ public class TankDrive extends XboxController implements ControlLayout {
 	}
 
 	@Override
-	public boolean runningIntakeIn() {
-		return super.getAxisGreaterThan(AXIS_RIGHTTRIGGER, .25);
-	}
-
-	@Override
-	public boolean runningIntakeOut() {
-		return super.getAxisGreaterThan(AXIS_LEFTTRIGGER, .25);
-	}
-
-	@Override
 	public boolean runningElevatorUp() {
 		return super.getDPad(POV_UP);
 	}
@@ -50,5 +40,18 @@ public class TankDrive extends XboxController implements ControlLayout {
 	public boolean runningElevatorDown() {
 		return super.getDPad(POV_DOWN);
 	}
+
+	@Override
+	public double runIntake() {
+		if(super.getAxisGreaterThan(AXIS_LEFTTRIGGER, 0.25)){
+			return 0.5;
+		} else if(super.getAxisGreaterThan(AXIS_RIGHTTRIGGER, 0.25)){
+			return -0.5;
+		}
+		return 0;
+	}
+
+	@Override
+	public void setPower(double leftPower, double rightPower) {}
 
 }

@@ -11,15 +11,12 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.RobotDriveBase;
 
-public class Drive implements Runnable {
+public class Drive implements Runnable, UrsaRobot{
 
 	private static Spark mFrontLeft;
 	private static Spark mFrontRight;
 	private static Spark mRearLeft;
 	private static Spark mRearRight;
-
-	private static SpeedControllerGroup leftSide;
-	private static SpeedControllerGroup rightSide;
 
 	private static DriveControl drive;
 

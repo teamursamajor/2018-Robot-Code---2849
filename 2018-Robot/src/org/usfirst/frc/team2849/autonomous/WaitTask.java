@@ -1,11 +1,11 @@
 package org.usfirst.frc.team2849.autonomous;
 
-import org.usfirst.frc.team2849.controls.AutoControl;
+import org.usfirst.frc.team2849.controls.ControlLayout;
 
 public class WaitTask extends AutoTask {
 	
 	private long waitTime = 0;
-	public WaitTask(AutoControl cont, long time) {
+	public WaitTask(ControlLayout cont, long time) {
 		super(cont);
 		waitTime = time;
 	}

@@ -23,16 +23,6 @@ public class NullControl implements ControlLayout {
 	}
 
 	@Override
-	public boolean runningIntakeIn() {
-		return false;
-	}
-
-	@Override
-	public boolean runningIntakeOut() {
-		return false;
-	}
-
-	@Override
 	public boolean runningElevatorUp() {
 		return false;
 	}
@@ -40,6 +30,14 @@ public class NullControl implements ControlLayout {
 	@Override
 	public boolean runningElevatorDown() {
 		return false;
+	}
+
+	@Override
+	public void setPower(double leftPower, double rightPower) {}
+
+	@Override
+	public double runIntake() {
+		return 0;
 	}
 
 }
