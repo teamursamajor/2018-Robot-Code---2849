@@ -10,6 +10,8 @@ import org.usfirst.frc.team2849.autonomous.TurnTask.Turntype;
 import org.usfirst.frc.team2849.controls.AutoControl;
 import org.usfirst.frc.team2849.controls.ControlLayout;
 
+import edu.wpi.first.wpilibj.*;
+
 /**
  * TODO Add comments
  * @author Evan + Sheldon wrote this on 1/16/18
@@ -271,4 +273,14 @@ public class AutoBuilder {
 		
 		return ret;
 	}
+	
+	private String pickAutoMode(String robotPosition, ArrayList<String> modeList){
+		String sides = DriverStation.getInstance().getGameSpecificMessage();
+		char switchSide = sides.charAt(0);
+		char scaleSide = sides.charAt(1);
+		char oppSwitchSide = sides.charAt(2);
+	    
+		return "";
+	}
 }
+	

@@ -72,7 +72,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		Drive.resetNavx();
-		// temporary, set only for testing driveDistance
 		Drive.setControlScheme(autoCont);
 		AutoTask task = new AutoBuilder(autoCont).buildAutoMode("/AutoModes/RR_R0_switch.auto");
 		task.start();
