@@ -86,12 +86,8 @@ public class XboxController extends Joystick implements Runnable {
 	 * 				value to compare the axis to
 	 * @return true if the axis is greater than the threshold, false otherwise
 	 */
-	public double getAxisGreaterThan(int axisNumber, double greaterThan) {
-		if(Math.abs(this.getRawAxis(axisNumber)) > greaterThan){
-			return this.getRawAxis(axisNumber);
-		}else{
-			return 0;
-		}
+	public boolean getAxisGreaterThan(int axisNumber, double greaterThan) {
+		return this.getRawAxis(axisNumber) > greaterThan;
 	}
 	
 	/**
