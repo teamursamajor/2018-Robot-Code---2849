@@ -35,14 +35,12 @@ public class Robot extends IterativeRobot {
 	private String m_autoSelected;
 	private SendableChooser<String> m_chooser = new SendableChooser<>();
 	
-	ControlLayout driveCont = new TankDrive(1);
-	AutoControl autoCont = new AutoControl();
+	ControlLayout driveCont;
+	AutoControl autoCont;
 	Drive drive;
 	XboxController xbox;
 	
 	private Encoder enc;
-	
-	private Thread autoThread;
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -50,21 +48,13 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		driveCont = new TankDrive(0);
+		autoCont = new AutoControl();
 		drive = new Drive(2, 3, 0, 1, driveCont);
 		m_chooser.addDefault("Default Auto", kDefaultAuto);
 		m_chooser.addObject("My Auto", kCustomAuto);
 		SmartDashboard.putData("Auto choices", m_chooser);
-		xbox = new XboxController(0);
-//		new Pathfinder().init();
-//		Logger log = new Logger("testFile.txt");
-//		log.log("Wow, maybe this works, good job ayo", Level.INFO);
-//		//log.log("FIrst test file", Level.INFO);
-//		log.write("Test");
-//		log.trial();
-//		Logger log0 = new Logger();
-		//System.out.println(log.isNull());
-		//log.trial();
-				
+		xbox = new XboxController(0);				
 	}
 	
 
@@ -85,12 +75,7 @@ public class Robot extends IterativeRobot {
 		// temporary, set only for testing driveDistance
 		Drive.setControlScheme(autoCont);
 		AutoTask task = new AutoBuilder(autoCont).buildAutoMode("/AutoModes/RR_R0_switch.auto");
-		Thread t = new Thread(task);
-		t.start();
-/* m_autoSelected = m_chooser.getSelected();
-		// autoSelected = SmartDashboard.getString("Auto Selector",
-		// defaultAuto);
-		System.out.println("Auto selected: " + m_autoSelected); */
+		task.start();
 	}
 
 	/**
@@ -98,8 +83,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-//		Pathfinder.findposition();//this should generally always be running whenever
-		//the robot is moving and therefore changing position.
+
 	}
 	
 	public void teleopInit() {
