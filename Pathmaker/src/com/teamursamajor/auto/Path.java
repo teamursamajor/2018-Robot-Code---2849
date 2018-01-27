@@ -174,6 +174,13 @@ public class Path {
 		rightPath.add(new PointonPath(rightDist, path.get(path.size() - 1).getDirection(), rightX, rightY, time, 0, 0));
 		return new Path[] { leftPath, rightPath };
 	}
+	
+	public double getSmallestAngleBetween(double angle1, double angle2) {
+		double diff = Math.abs(angle2 - angle1);
+		return diff > 180 ? 360 - diff : diff;
+		// if (diff > 180) return (360 - diff);
+		// else return diff;
+	}
 
 	// RTFM @ charlie
 	public PointonPath pointAt(double dist) {
@@ -181,7 +188,7 @@ public class Path {
 		System.out.println(dist);
 		System.out.println(neighbors[0]);
 		System.out.println(neighbors[1]);
-		double dir = neighbors[0].getDirection() + ((neighbors[0].getDirection() - neighbors[1].getDirection()) / (neighbors[0].getPosition() - neighbors[1].getPosition()));
+		double dir = neighbors[0].getDirection() + (getSmallestAngleBetween(neighbors[0].getDirection(), neighbors[1].getDirection()) / (neighbors[0].getPosition() - neighbors[1].getPosition()));
 		double radDir = Math.toRadians(dir);
 		double xft = neighbors[0].xft + (Math.abs(dist - neighbors[0].getPosition()) * Math.cos(radDir));
 		double yft = neighbors[0].yft + (Math.abs(dist - neighbors[0].getPosition()) * Math.sin(radDir));
