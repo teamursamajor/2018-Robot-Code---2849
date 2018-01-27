@@ -14,6 +14,7 @@ import org.usfirst.frc.team2849.controls.NullControl;
 import org.usfirst.frc.team2849.controls.TankDrive;
 import org.usfirst.frc.team2849.controls.XboxController;
 import org.usfirst.frc.team2849.autonomous.AutoBuilder;
+import org.usfirst.frc.team2849.autonomous.AutoSelector;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -32,13 +33,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 	private static final String kDefaultAuto = "Default";
 	private static final String kCustomAuto = "My Auto";
-	private String m_autoSelected;
-	private SendableChooser<String> m_chooser = new SendableChooser<>();
+	private String autoSelected;
+	private SendableChooser<String> autoChooser = new SendableChooser<>();
 	
 	ControlLayout driveCont;
 	AutoControl autoCont;
 	Drive drive;
 	XboxController xbox;
+	AutoSelector autoSelect;
 	
 	private Encoder enc;
 	
@@ -48,13 +50,14 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		autoSelect = new AutoSelector(5);
 		driveCont = new TankDrive(0);
 		autoCont = new AutoControl();
 		drive = new Drive(2, 3, 0, 1, driveCont);
-		m_chooser.addDefault("Default Auto", kDefaultAuto);
-		m_chooser.addObject("My Auto", kCustomAuto);
-		SmartDashboard.putData("Auto choices", m_chooser);
-		xbox = new XboxController(0);				
+//		autoChooser.addDefault("Default Auto", kDefaultAuto);
+//		autoChooser.addObject("My Auto", kCustomAuto);
+//		SmartDashboard.putData("Auto choices", autoChooser);
+		xbox = new XboxController(0);
 	}
 	
 
@@ -158,6 +161,7 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void testInit() {
+		SmartDashboard.updateValues();
 		Drive.setControlScheme(driveCont);
 	}
 
