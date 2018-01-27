@@ -1,6 +1,6 @@
 #R_0R_2xscale.auto
 #right bumper is on corner with exchange
-#INCOMPLETE
+
 bundle {
    serial {
       #brings the intake down and lifts elevator to switch height
@@ -11,7 +11,7 @@ bundle {
    serial {
       
       #deliver to scale
-      drive 305
+      drive 324
       turn to -90
       drive 40
       intake out
@@ -20,12 +20,17 @@ bundle {
 
       #picking up another cube
       drive -40
-      turn by -90
-      drive 100   
-      turn by 90
+      turn to 180
+      drive 180   
+      turn to -90
       drive 25
       intake in 
       wait 1.5
       intake stop
+
+      #delivering the second cube
+      turn to 0
+      drive 100      
    }
 }
+intake out
