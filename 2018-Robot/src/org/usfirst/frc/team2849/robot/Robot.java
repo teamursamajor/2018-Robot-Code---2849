@@ -8,7 +8,12 @@
 package org.usfirst.frc.team2849.robot;
 
 import org.usfirst.frc.team2849.autonomous.AutoTask;
-import org.usfirst.frc.team2849.autonomous.UrsaScript_AutoBuilder;
+import org.usfirst.frc.team2849.controls.AutoControl;
+import org.usfirst.frc.team2849.controls.ControlLayout;
+import org.usfirst.frc.team2849.controls.NullControl;
+import org.usfirst.frc.team2849.controls.TankDrive;
+import org.usfirst.frc.team2849.controls.XboxController;
+import org.usfirst.frc.team2849.autonomous.AutoBuilder;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -30,8 +35,10 @@ public class Robot extends IterativeRobot {
 	private String m_autoSelected;
 	private SendableChooser<String> m_chooser = new SendableChooser<>();
 	
-	ControlLayout cont = new TankDrive(1);
+	ControlLayout driveCont = new TankDrive(1);
+	AutoControl autoCont = new AutoControl();
 	Drive drive;
+	XboxController xbox;
 	
 	private Encoder enc;
 	
@@ -43,11 +50,11 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		drive = new Drive(2, 3, 0, 1, cont);
+		drive = new Drive(2, 3, 0, 1, driveCont);
 		m_chooser.addDefault("Default Auto", kDefaultAuto);
 		m_chooser.addObject("My Auto", kCustomAuto);
 		SmartDashboard.putData("Auto choices", m_chooser);
-		Drive.setHumanControl(false);
+		xbox = new XboxController(0);
 //		new Pathfinder().init();
 //		Logger log = new Logger("testFile.txt");
 //		log.log("Wow, maybe this works, good job ayo", Level.INFO);
@@ -75,9 +82,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		Drive.resetNavx();
-		Drive.setHumanControl(false);
 		// temporary, set only for testing driveDistance
-		AutoTask task = new UrsaScript_AutoBuilder().buildAutoMode("/AutoModes/RR_R0_switch.auto");
+		Drive.setControlScheme(autoCont);
+		AutoTask task = new AutoBuilder(autoCont).buildAutoMode("/AutoModes/RR_R0_switch.auto");
 		Thread t = new Thread(task);
 		t.start();
 /* m_autoSelected = m_chooser.getSelected();
@@ -96,7 +103,7 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void teleopInit() {
-		Drive.setHumanControl(true);
+		Drive.setControlScheme(driveCont);
 	}
 
 
@@ -167,26 +174,18 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void testInit() {
-		Drive.setHumanControl(true);
+		Drive.setControlScheme(driveCont);
 	}
 
 	/**
 	 * This function is called periodically during test mode.
 	 */
-	int count = 0;
 	@Override
 	public void testPeriodic() {
 
-		
-//		Pathfinder.findposition();//this should generally always be running whenever
-		//the robot is moving and therefore changing position.
-//		int flip = 1;
-//		if (xbox.getButton(1)) flip = -1;
-//		else flip = 1;
-//		Drive.drive(flip * xbox.getAxis(XboxController.AXIS_LEFTTRIGGER), flip * xbox.getAxis(XboxController.AXIS_RIGHTTRIGGER), false);
 	}
 	
 	public void disabledInit() {
-		Drive.setHumanControl(false);
+		Drive.setControlScheme(new NullControl());
 	}
 }

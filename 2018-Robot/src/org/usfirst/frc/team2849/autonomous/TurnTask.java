@@ -1,8 +1,9 @@
 package org.usfirst.frc.team2849.autonomous;
 
+import org.usfirst.frc.team2849.controls.AutoControl;
 import org.usfirst.frc.team2849.robot.*;
 
-public class TurnTask implements AutoTask {
+public class TurnTask extends AutoTask {
 
 	public enum Turntype {
 		TURN_TO, TURN_BY
@@ -11,7 +12,8 @@ public class TurnTask implements AutoTask {
 	private double desiredAngle;
 	private Turntype type;
 
-	public TurnTask(Turntype type, double desiredAngle) {
+	public TurnTask(AutoControl cont, Turntype type, double desiredAngle) {
+		super(cont);
 		this.desiredAngle = desiredAngle;
 		this.type = type;
 	}
@@ -46,11 +48,11 @@ public class TurnTask implements AutoTask {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			Drive.drive(-1 * (Math.signum(turnAmount(desiredAngle)) * powerConstant),
-					(Math.signum(turnAmount(desiredAngle)) * powerConstant), false);
+			cont.setPower(-1 * (Math.signum(turnAmount(desiredAngle)) * powerConstant),
+					(Math.signum(turnAmount(desiredAngle)) * powerConstant));
 		}
 		/** System.out.println("End Angle: " + Drive.getHeading()); */
-		Drive.drive(0, 0, false);
+		cont.setPower(0, 0);
 	}
 
 	private double getPower(double turnAmount) {
@@ -89,7 +91,7 @@ public class TurnTask implements AutoTask {
 		turnTo(finalAngle);
 	}
 
-	public void runTask() {
+	public void run() {
 		if (type == Turntype.TURN_TO) {
 			turnTo(desiredAngle);
 		} else if (type == Turntype.TURN_BY) {

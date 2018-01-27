@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2849.robot;
 
+import org.usfirst.frc.team2849.controls.ControlLayout;
+
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -27,7 +29,6 @@ public class Drive implements Runnable {
 	private static AHRS ahrs;
 
 	private static Boolean running = new Boolean(false);
-	private static boolean humanControl = false;
 
 	private static Encoder encL;
 	private static Encoder encR;
@@ -51,12 +52,6 @@ public class Drive implements Runnable {
 		mFrontRight = new Spark(frontRight);
 		mRearLeft = new Spark(rearLeft);
 		mRearRight = new Spark(rearRight);
-
-//		leftSide = new SpeedControllerGroup(mFrontLeft, mRearLeft);
-//		rightSide = new SpeedControllerGroup(mFrontRight, mRearRight);
-//
-//		leftSide.setInverted(true);
-//		rightSide.setInverted(true);
 
 		drive = contScheme.getDrive(mFrontLeft, mFrontRight, mRearLeft, mRearRight);
 
@@ -196,12 +191,8 @@ public class Drive implements Runnable {
 		mRearRight.stopMotor();
 	}
 	
-	public static boolean isHumanControl() {
-		return humanControl;
-	}
-	
-	public static void setHumanControl(boolean isHumanControl) {
-		humanControl = isHumanControl;
+	public static void setControlScheme(ControlLayout layout) {
+		drive = layout.getDrive(mFrontLeft, mFrontRight, mRearLeft, mRearRight);
 	}
 	
 	public interface DriveControl {

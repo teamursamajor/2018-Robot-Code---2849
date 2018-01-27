@@ -1,19 +1,19 @@
 package org.usfirst.frc.team2849.autonomous;
 
-import org.usfirst.frc.team2849.autonomous.AutoTask;
+import org.usfirst.frc.team2849.controls.AutoControl;
 
-public class IntakeTask implements AutoTask {
+public class IntakeTask extends AutoTask {
 	
 	public enum IntakeType{IN, OUT, RUN, STOP, UNTIL, DEPLOY};
 	
 	private IntakeType intake;
-	public IntakeTask(IntakeType intakeVal) {
+	public IntakeTask(AutoControl cont, IntakeType intakeVal) {
+		super(cont);
 		intake = intakeVal;
 	}
-
-	@Override
-	public void runTask() {
-		//TODO write this code
+	
+	public void run() {
+		
 	}
 	
 	public String toString() {

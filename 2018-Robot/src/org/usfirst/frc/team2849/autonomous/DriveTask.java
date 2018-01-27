@@ -1,16 +1,19 @@
 package org.usfirst.frc.team2849.autonomous;
 
+import org.usfirst.frc.team2849.controls.AutoControl;
 import org.usfirst.frc.team2849.robot.Drive;
 
-public class DriveTask implements AutoTask {
+public class DriveTask extends AutoTask {
 	private int distance;
+	
 
-	public DriveTask(int distance) {
+	public DriveTask(AutoControl cont, int distance) {
+		super(cont);
 		this.distance = -distance;
 	}
 
 	/** overshoots 3 in */
-	public void runTask() {
+	public void run() {
 		double leftPowerConstant = 0;
 		double rightPowerConstant = 0;
 		Drive.resetEncoders();
@@ -24,10 +27,10 @@ public class DriveTask implements AutoTask {
 			if (Math.abs(Drive.getRightEncoder()) > Math.abs(distance)) {
 				rightPowerConstant = 0;
 			}
-			Drive.drive(leftPowerConstant * Math.signum(distance), rightPowerConstant * Math.signum(distance), false);
+			cont.setPower(leftPowerConstant * Math.signum(distance), rightPowerConstant * Math.signum(distance));
 		}
-		Drive.drive(0, 0, false);
-		Drive.stop();
+		cont.setPower(0, 0);
+		// Drive.stop();
 	}
 
 	public String toString() {

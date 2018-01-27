@@ -5,9 +5,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.usfirst.frc.team2849.autonomous.TurnTask.Turntype;
-
 import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
+import org.usfirst.frc.team2849.autonomous.TurnTask.Turntype;
+import org.usfirst.frc.team2849.controls.AutoControl;
+import org.usfirst.frc.team2849.controls.ControlLayout;
 
 /**
  * TODO Add comments
@@ -26,15 +27,14 @@ import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
  * bundle {...} - runs parallel tasks
  * serial {...} - runs tasks sequentially
  */
-public class UrsaScript_AutoBuilder {
+public class AutoBuilder {
 	interface Token{}
 	enum LiftType{BOTTOM, VAULT, SWITCH, SCALE };
-
-	public static void main(String[] args) {
-		System.out.println(new UrsaScript_AutoBuilder().buildAutoMode("C:/Users/Ursa Major/tmp/autotest1.auto").toString());
+	AutoControl cont;
+	
+	public AutoBuilder(AutoControl cont) {
+		this.cont = cont;
 	}
-	
-	
 	
 	class ExecuteToken implements Token {
 		private String scriptName;
@@ -57,8 +57,8 @@ public class UrsaScript_AutoBuilder {
 		}
 		
 		//Creates a new instance of PrintTask class
-		public PrintTask makeTask() {
-			return new PrintTask(str);
+		public PrintTask makeTask(AutoControl cont) {
+			return new PrintTask(cont, str);
 		}
 	}
 
@@ -81,8 +81,8 @@ public class UrsaScript_AutoBuilder {
 				intake = IntakeType.UNTIL;
 			}
 		}
-		public IntakeTask makeTask() {
-			return new IntakeTask(intake);
+		public IntakeTask makeTask(AutoControl cont) {
+			return new IntakeTask(cont, intake);
 		}
 	}
 	
@@ -103,8 +103,8 @@ public class UrsaScript_AutoBuilder {
 				lift = Double.parseDouble(liftType);
 			}
 		}
-		public LiftTask makeTask() {
-			return new LiftTask(lift);
+		public LiftTask makeTask(AutoControl cont) {
+			return new LiftTask(cont, lift);
 		}
 	}
 	
@@ -116,8 +116,8 @@ public class UrsaScript_AutoBuilder {
 				wait = Double.parseDouble(waitTime);
 			}
 		}
-		public WaitTask makeTask() {
-			return new WaitTask((long) (wait*1000.0d));
+		public WaitTask makeTask(AutoControl cont) {
+			return new WaitTask(cont, (long) (wait*1000.0d));
 		}
 	}
 	
@@ -146,8 +146,8 @@ public class UrsaScript_AutoBuilder {
 				turnAmount = Double.valueOf(turn.substring(turn.indexOf("BY") + "BY".length()));
 			}
 		}
-		public TurnTask makeTask() {
-			return new TurnTask(turnType, turnAmount);
+		public TurnTask makeTask(AutoControl cont) {
+			return new TurnTask(cont, turnType, turnAmount);
 		}
 	}
 	
@@ -159,14 +159,14 @@ public class UrsaScript_AutoBuilder {
 				dist = Double.parseDouble(distance);
 			}
 		}
-		public DriveTask makeTask() {
-			return new DriveTask((int) dist);
+		public DriveTask makeTask(AutoControl cont) {
+			return new DriveTask(cont, (int) dist);
 		}
 	}
 	
 	public AutoTask buildAutoMode(String filename){
 		try {
-			return parseAuto(tokenize(filename), new SerialTask());
+			return parseAuto(tokenize(filename), new SerialTask(cont));
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
@@ -227,7 +227,7 @@ public class UrsaScript_AutoBuilder {
 	
 	private AutoTask parseAuto(ArrayList<Token> toks, GroupTask ret) {
 		if(toks.size() == 0) {
-			return new WaitTask(0);
+			return new WaitTask(cont, 0);
 		}
 		
 		while(toks.size() > 0) {
@@ -237,27 +237,27 @@ public class UrsaScript_AutoBuilder {
 				ret.addTask(otherMode);
 			}
 			else if(t instanceof WaitToken) {
-				ret.addTask(((WaitToken) t).makeTask());
+				ret.addTask(((WaitToken) t).makeTask(cont));
 			}
 			else if(t instanceof DriveToken) {
-				ret.addTask(((DriveToken) t).makeTask());
+				ret.addTask(((DriveToken) t).makeTask(cont));
 			}
 			else if(t instanceof TurnToken) {
-				ret.addTask(((TurnToken) t).makeTask());
+				ret.addTask(((TurnToken) t).makeTask(cont));
 			}
 			else if(t instanceof IntakeToken) {
-				ret.addTask(((IntakeToken) t).makeTask());
+				ret.addTask(((IntakeToken) t).makeTask(cont));
 			}
 			else if(t instanceof LiftToken) {
-				ret.addTask(((LiftToken) t).makeTask());
+				ret.addTask(((LiftToken) t).makeTask(cont));
 			}
 			else if(t instanceof BundleToken) {
-				ParallelTask p = new ParallelTask();
+				ParallelTask p = new ParallelTask(cont);
 				parseAuto(toks, p);
 				ret.addTask(p);
 			}
 			else if(t instanceof SerialToken) {
-				SerialTask p = new SerialTask();
+				SerialTask p = new SerialTask(cont);
 				parseAuto(toks, p);
 				ret.addTask(p);
 			}
@@ -265,7 +265,7 @@ public class UrsaScript_AutoBuilder {
 				return ret;
 			}
 			else if(t instanceof PrintToken){
-				return ret;
+				ret.addTask(((PrintToken) t).makeTask(cont));
 			}
 		}
 		

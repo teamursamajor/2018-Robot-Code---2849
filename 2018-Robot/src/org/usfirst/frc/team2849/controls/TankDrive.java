@@ -1,5 +1,6 @@
-package org.usfirst.frc.team2849.robot;
+package org.usfirst.frc.team2849.controls;
 
+import org.usfirst.frc.team2849.robot.Drive;
 import org.usfirst.frc.team2849.robot.Drive.DriveControl;
 
 import edu.wpi.first.wpilibj.Spark;
@@ -27,7 +28,7 @@ public class TankDrive extends XboxController implements ControlLayout {
 		SpeedControllerGroup leftSide = new SpeedControllerGroup(frontLeft, rearLeft);
 		SpeedControllerGroup rightSide = new SpeedControllerGroup(frontRight, rearRight);
 		DifferentialDrive drive = new DifferentialDrive(leftSide, rightSide);
-		return () -> { if (Drive.isHumanControl()) drive.tankDrive(getLeftPower(), getRightPower(), true); };
+		return () -> { drive.tankDrive(getLeftPower(), getRightPower(), true); };
 	}
 
 	@Override

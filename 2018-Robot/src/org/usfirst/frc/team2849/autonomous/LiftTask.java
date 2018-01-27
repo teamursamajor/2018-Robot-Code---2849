@@ -1,16 +1,17 @@
 package org.usfirst.frc.team2849.autonomous;
 
-import org.usfirst.frc.team2849.autonomous.AutoTask;
+import org.usfirst.frc.team2849.controls.AutoControl;
 
-public class LiftTask implements AutoTask {
+public class LiftTask extends AutoTask {
 	
 	private double liftHeight = 0;
-	public LiftTask(double height) {
+	public LiftTask(AutoControl cont, double height) {
+		super(cont);
 		liftHeight = height;
 	}
 
 	@Override
-	public void runTask() {
+	public void run() {
 		//TODO write this code
 	}
 	

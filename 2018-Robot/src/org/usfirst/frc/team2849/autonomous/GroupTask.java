@@ -2,11 +2,13 @@ package org.usfirst.frc.team2849.autonomous;
 
 import java.util.ArrayList;
 
-import org.usfirst.frc.team2849.autonomous.AutoTask;
+import org.usfirst.frc.team2849.controls.AutoControl;
 
-public abstract class GroupTask implements AutoTask {
+public abstract class GroupTask extends AutoTask {
 	protected ArrayList<AutoTask> tasks = new ArrayList<AutoTask>();
-	public GroupTask() {}
+	public GroupTask(AutoControl cont) {
+		super(cont);
+	}
 	
 	public void addTask(AutoTask t) {
 		tasks.add(t);

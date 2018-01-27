@@ -1,21 +1,18 @@
 package org.usfirst.frc.team2849.autonomous;
 
-import java.util.ArrayList;
-
-import org.usfirst.frc.team2849.autonomous.AutoTask;
+import org.usfirst.frc.team2849.controls.AutoControl;
 
 public class ParallelTask extends GroupTask {
-	public ParallelTask() {}
+	public ParallelTask(AutoControl cont) {
+		super(cont);
+	}
 	
 	@Override
-	public void runTask() {
-		ArrayList<Thread> threads = new ArrayList<Thread>();
+	public void run() {
 		for(AutoTask t:tasks) {
-			Thread taskThread = new Thread(t);
-			taskThread.start();
-			threads.add(taskThread);
+			t.start();
 		}
-		for(Thread t:threads) {
+		for(AutoTask t:tasks) {
 			try {
 				t.join();
 			} catch (InterruptedException e) {

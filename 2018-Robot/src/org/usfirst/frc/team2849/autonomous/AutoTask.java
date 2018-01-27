@@ -1,10 +1,14 @@
 package org.usfirst.frc.team2849.autonomous;
 
-public interface AutoTask extends Runnable{
+import org.usfirst.frc.team2849.controls.AutoControl;
+
+public abstract class AutoTask extends Thread {
 	
-	public default void run(){
-		runTask();
+	protected AutoControl cont;
+	
+	public AutoTask(AutoControl cont) {
+		this.cont = cont;
 	}
 	
-	public void runTask();
+	public abstract void run();
 }

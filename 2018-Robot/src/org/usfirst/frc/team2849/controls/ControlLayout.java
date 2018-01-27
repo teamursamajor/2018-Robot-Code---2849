@@ -1,5 +1,6 @@
-package org.usfirst.frc.team2849.robot;
+package org.usfirst.frc.team2849.controls;
 
+import org.usfirst.frc.team2849.robot.Drive;
 import org.usfirst.frc.team2849.robot.Drive.DriveControl;
 
 import edu.wpi.first.wpilibj.Spark;
