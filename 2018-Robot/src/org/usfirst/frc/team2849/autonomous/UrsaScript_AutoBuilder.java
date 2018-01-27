@@ -22,6 +22,7 @@ import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
  * drive <amount in inches>
  * turn <TO||BY> <amount in degrees> 
  * intake <IN||OUT||RUN||STOP||DEPLOY>
+ * print <STRING>
  * bundle {...} - runs parallel tasks
  * serial {...} - runs tasks sequentially
  */
@@ -261,6 +262,9 @@ public class UrsaScript_AutoBuilder {
 				ret.addTask(p);
 			}
 			else if(t instanceof RightBraceToken) {
+				return ret;
+			}
+			else if(t instanceof PrintToken){
 				return ret;
 			}
 		}

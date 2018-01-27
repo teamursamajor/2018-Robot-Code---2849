@@ -14,6 +14,7 @@ import org.usfirst.frc.team2849.robot.Logger.Level;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -94,15 +95,73 @@ public class Robot extends IterativeRobot {
 		//the robot is moving and therefore changing position.
 	}
 
+
 	/**
 	 * This function is called periodically during operator control.
 	 */
+
+	Solenoid green = new Solenoid(5);
+	Solenoid red = new Solenoid(6);
+	Solenoid blue = new Solenoid(7);
+	boolean R = false;
+	boolean G = false;
+	boolean B = false;
+	boolean W = false;
+	long lighttime = 0;
 	@Override
 	public void teleopPeriodic() {
 //		Pathfinder.findposition();//this should generally always be running whenever
 		
 		Drive.drive(xbox.getAxis(XboxController.AXIS_LEFTSTICK_Y), xbox.getAxis(XboxController.AXIS_RIGHTSTICK_Y), true);
 		//the robot is moving and therefore changing position.
+		if(System.currentTimeMillis()-100 > lighttime){
+			if(xbox.getButton(XboxController.BUTTON_B) == true){
+				R = !R;
+				red.set(R);
+				lighttime = System.currentTimeMillis();
+			}
+			if(xbox.getButton(XboxController.BUTTON_A) == true){
+				G = !G;
+				green.set(G);
+				lighttime = System.currentTimeMillis();
+			}
+			if(xbox.getButton(XboxController.BUTTON_X) == true){
+				B = !B;
+				blue.set(B);
+				lighttime = System.currentTimeMillis();
+			}
+			if(xbox.getButton(XboxController.BUTTON_Y) == true){
+				W= !W;
+				red.set(true);
+				green.set(false);
+				blue.set(false);
+				if(W == true){
+					try {
+						Thread.sleep(1000);
+						green.set(true);
+						Thread.sleep(1000);
+						red.set(false);
+						Thread.sleep(1000);
+						blue.set(true);
+						Thread.sleep(1000);
+						green.set(false);
+						Thread.sleep(1000);
+						red.set(true);
+						Thread.sleep(1000);
+						blue.set(false);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else{
+					red.set(true);
+					green.set(true);
+					blue.set(true);
+				}
+				lighttime = System.currentTimeMillis();
+			}
+		}
 	}
 
 	/**
@@ -111,6 +170,8 @@ public class Robot extends IterativeRobot {
 	int count = 0;
 	@Override
 	public void testPeriodic() {
+
+		
 //		Pathfinder.findposition();//this should generally always be running whenever
 		//the robot is moving and therefore changing position.
 		int flip = 1;
