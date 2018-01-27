@@ -127,32 +127,32 @@ public class PathMaker {
 			}
 		});
 		
-		JPanel feildPanel = new JPanel() {
+		JPanel fieldPanel = new JPanel() {
 			public void paint(Graphics g) {
 				g.drawImage(field, 0, 0, 400, 800, null);
 				g.drawImage(overlay, 0, 0, 400, 800, null);
 				g.drawImage(overfield, 0, 0, 400, 800, null);
 			}
 		};
-		frame.add(feildPanel);
-		feildPanel.setSize(400, 850);
-		feildPanel.setLocation(200, 0);
-		feildPanel.addMouseMotionListener(new MouseMotionListener() {
+		frame.add(fieldPanel);
+		fieldPanel.setSize(400, 850);
+		fieldPanel.setLocation(200, 0);
+		fieldPanel.addMouseMotionListener(new MouseMotionListener() {
 			public void mouseDragged(MouseEvent e) {
 				if (once) {
 					prev = new int[] { e.getX(), e.getY() };
 					once = false;
 				}
-				if (slow % 8 == 0) {
+				if (slow % 2 == 0) {
 					path.add(new PointonPath(e.getX(), e.getY(), path.size()));
 					frame.repaint();
 				}
 				slow++;
-				slow %= 8;
+				slow %= 2;
 			}
 			public void mouseMoved(MouseEvent e) {}
 		});
-		feildPanel.addMouseListener(new MouseListener() {
+		fieldPanel.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {}
 			public void mouseEntered(MouseEvent e) {}
 			public void mouseExited(MouseEvent e) {}

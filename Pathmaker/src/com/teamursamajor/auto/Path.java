@@ -201,7 +201,7 @@ public class Path {
 		System.out.println(path.get(0));
 		PointonPath approxPoint;
 		ArrayList<PointonPath> mappedPath = new ArrayList<PointonPath>();
-		TrapVelocityProfile trap = new TrapVelocityProfile(1, 10, .2, path.get(path.size() - 1).getPosition());
+		TrapVelocityProfile trap = new TrapVelocityProfile(1, 10, .1, path.get(path.size() - 1).getPosition());
 		for (Node point : trap.getNodes()) {
 			approxPoint = pointAt(point.getDist());
 			mappedPath.add(new PointonPath(point.getDist(), approxPoint.getDirection(), approxPoint.xft, approxPoint.yft, point.getTime(), point.getVel(), point.getAcc()));
