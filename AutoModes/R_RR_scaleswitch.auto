@@ -1,0 +1,44 @@
+#<start position>_<switch side><scale side>_<name>.auto
+#<robot reference point> is <number> inches from <field reference point>
+bundle {
+   serial {
+      #brings the intake down and lifts elevator to switch height
+      #change if necessary
+      intake deploy
+      lift scale
+   }
+   serial {      
+      #dropping off first box at scale
+      drive 315
+      turn to -90
+      drive 30
+   }
+}
+intake out
+
+#taking second box
+bundle {
+   serial {
+      lift bottom
+      intake run
+   }
+
+   serial {
+      drive -30
+      turn by -90
+      drive 119
+      turn to -90
+      drive 10
+   }
+}
+      
+#dropping off second box
+bundle {
+   lift switch
+   serial {
+      drive -10
+      turn to -180
+      drive 10
+   }
+}
+intake out 
