@@ -1,28 +1,24 @@
-#<start position>_<switch side><scale side>_<name>.auto
-#<robot reference point> is <number> inches from <field reference point>
+#R_RR_scaleswitch.auto
+#right bumper is on corner with exchange
+#deliver first cube to scale
 bundle {
    serial {
-      #brings the intake down and lifts elevator to switch height
-      #change if necessary
       intake deploy
       lift scale
    }
-   serial {      
-      #dropping off first box at scale
-      drive 315
+   serial {
+      drive 324
       turn to -90
       drive 30
    }
 }
 intake out
-
-#taking second box
+#picking up second cube
 bundle {
    serial {
       lift bottom
-      intake run
+      intake in
    }
-
    serial {
       drive -30
       turn by -90
@@ -31,8 +27,7 @@ bundle {
       drive 10
    }
 }
-      
-#dropping off second box
+#delivering second cube
 bundle {
    lift switch
    serial {
@@ -41,4 +36,4 @@ bundle {
       drive 10
    }
 }
-intake out 
+intake out
