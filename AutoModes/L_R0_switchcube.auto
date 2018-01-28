@@ -1,30 +1,28 @@
-#<start position>_<switch side><scale side>_<name>.auto
-#<robot reference point> is <number> inches from <field reference point>
+#L_R*_switchcube.auto
+#left bumper is on corner with exchange
 bundle {
    serial {
       intake deploy
       lift switch
    }
    serial {
-	drive 130
-	turn by 90
-	drive 168
-	turn to 0
-	drive 10     
+      drive 100
+      turn by 90
+      drive 168
+      turn to 0
+      drive 40
    }
 }
 intake out
 
 bundle {
-   serial{
-	lift bottom
-	intake run
-	 }
-   serial{
-	drive -10
-	turn by -90
-	drive 20
+   serial {
+      lift bottom
+      intake in
+   }
+   serial {
+      drive -10
+      turn by -90
+      drive 20
    }
 }
-
-
