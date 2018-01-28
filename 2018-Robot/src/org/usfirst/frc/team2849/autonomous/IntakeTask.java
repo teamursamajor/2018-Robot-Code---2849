@@ -26,9 +26,11 @@ public class IntakeTask extends AutoTask {
 			cont.setIntakeValue(0);
 			break;
 		case RUN:
-			while (shootBeam.get()==1){
-				
+			while (intakeBeam.equals(0)){
+				cont.setIntakeValue(0.5);
 			}
+			break;
+		
 		}
 			
 	}
