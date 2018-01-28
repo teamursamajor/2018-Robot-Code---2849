@@ -1,34 +1,39 @@
-#<start position>_<switch side><scale side>_<name>.auto
-#<robot reference point> is <number> inches from <field reference point>
+#R_L*_2xswitch.auto
+#right bumper is on corner with exchange
+#delivering first cube
 bundle {
    serial {
-      #brings the intake down and lifts elevator to switch height
-      #change if necessary
       intake deploy
-      lift <height>
+      lift switch
    }
    serial {
-      #put code here
-
-#dropping first box
       drive 70
       turn by -90
       drive 175
       turn to 0
       drive 70
-      intake out
-
-#picking up second box
+   }
+}
+intake out
+#picking up second cube
+bundle {
+   serial {
+      lift bottom
+      intake in
+   }
+   serial {
       drive -10
       turn by 90
       drive 15
-      intake run
-#dropping second box
+   )
+)
+#delivering second cube
+bundle {
+   lift switch
+   serial {
       drive -10
       turn to 0
       drive 10
-      intake out
    }
 }
-
-#intake code
+intake out
