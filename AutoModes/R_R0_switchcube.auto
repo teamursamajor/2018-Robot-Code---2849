@@ -15,12 +15,12 @@ bundle {
    }
 }
 intake out
-
+#pick up second cube
 bundle {
    serial {
       lift bottom
-      intake run
-	 }
+      intake in
+   }
    serial {
       drive -10
       turn by -90
