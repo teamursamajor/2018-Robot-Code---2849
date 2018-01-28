@@ -1,0 +1,40 @@
+#R_LR_switchscale.auto
+#right bumper is on corner with exchange
+#delivering cube to switch
+bundle {
+   serial {
+      intake deploy
+      lift switch
+   }
+   serial {  
+      drive 164
+      turn to -90
+      drive 30 
+   }
+}
+intake out
+#picking up second cube
+bundle {
+   serial {
+      lift bottom
+      intake in
+   }
+   serial {
+      drive -30
+      turn to 0
+      drive 90
+      turn to -90
+      drive 170
+      turn to 180
+      drive 30
+   }
+}
+bundle {
+   lift scale
+   serial {
+      drive -5
+      turn to 0
+      drive 60
+   }
+}
+intake out
