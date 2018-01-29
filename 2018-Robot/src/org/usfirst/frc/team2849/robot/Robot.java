@@ -31,7 +31,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * creating this project, you must also update the build.properties file in the
  * project.
  */
-public class Robot extends IterativeRobot {
+public class Robot extends IterativeRobot implements UrsaRobot {
 	private static final String kDefaultAuto = "Default";
 	private static final String kCustomAuto = "My Auto";
 	private String autoSelected;
@@ -55,15 +55,15 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		autoSelect = new AutoSelector(5);
-		tankDriveCont = new TankDrive(0);
-		testCont = new TestControl(0);
+		tankDriveCont = new TankDrive(CONTROLLER_PORT);
+		testCont = new TestControl(CONTROLLER_PORT);
 		autoCont = new AutoControl();
-		intake = new Intake(4, 5, tankDriveCont);
-		drive = new Drive(2, 3, 0, 1, tankDriveCont);
+		intake = new Intake(INTAKE_LEFT, INTAKE_RIGHT, tankDriveCont);
+		drive = new Drive(DRIVE_FRONT_LEFT, DRIVE_FRONT_RIGHT, DRIVE_REAR_LEFT, DRIVE_REAR_RIGHT, tankDriveCont);
 //		autoChooser.addDefault("Default Auto", kDefaultAuto);
 //		autoChooser.addObject("My Auto", kCustomAuto);
 //		SmartDashboard.putData("Auto choices", autoChooser);
-		xbox = new XboxController(0);
+		xbox = new XboxController(CONTROLLER_PORT);
 	}
 	
 
@@ -177,7 +177,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testPeriodic() {
 		testCont.runIntake();
-		//because every function needs a line of code
 	}
 	
 	public void disabledInit() {
