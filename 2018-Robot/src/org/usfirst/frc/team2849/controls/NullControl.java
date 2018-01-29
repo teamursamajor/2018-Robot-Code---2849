@@ -1,7 +1,9 @@
 package org.usfirst.frc.team2849.controls;
 
+import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
 import org.usfirst.frc.team2849.robot.Drive;
 import org.usfirst.frc.team2849.robot.Drive.DriveControl;
+import org.usfirst.frc.team2849.robot.Intake.IntakeControl;
 
 import edu.wpi.first.wpilibj.Spark;
 
@@ -24,11 +26,6 @@ public class NullControl implements ControlLayout {
 
 	@Override
 	public void setPower(double leftPower, double rightPower) {}
-
-	@Override
-	public double runIntake() {
-		return 0;
-	}
 
 	@Override
 	public void setIntakeValue(double intakeValue) {
@@ -56,6 +53,22 @@ public class NullControl implements ControlLayout {
 
 	@Override
 	public double getLiftPower() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public IntakeControl getIntake(Spark left, Spark right) {
+		return () -> {};
+	}
+
+	@Override
+	public void runIntake() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public double getIntakeValue() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

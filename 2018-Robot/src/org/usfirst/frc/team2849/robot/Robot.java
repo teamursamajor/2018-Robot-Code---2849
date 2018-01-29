@@ -7,14 +7,15 @@
 
 package org.usfirst.frc.team2849.robot;
 
+import org.usfirst.frc.team2849.autonomous.AutoBuilder;
+import org.usfirst.frc.team2849.autonomous.AutoSelector;
 import org.usfirst.frc.team2849.autonomous.AutoTask;
 import org.usfirst.frc.team2849.controls.AutoControl;
 import org.usfirst.frc.team2849.controls.ControlLayout;
 import org.usfirst.frc.team2849.controls.NullControl;
 import org.usfirst.frc.team2849.controls.TankDrive;
+import org.usfirst.frc.team2849.controls.TestControl;
 import org.usfirst.frc.team2849.controls.XboxController;
-import org.usfirst.frc.team2849.autonomous.AutoBuilder;
-import org.usfirst.frc.team2849.autonomous.AutoSelector;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -36,11 +37,14 @@ public class Robot extends IterativeRobot {
 	private String autoSelected;
 	private SendableChooser<String> autoChooser = new SendableChooser<>();
 	
-	ControlLayout driveCont;
+	ControlLayout tankDriveCont;
+	ControlLayout testCont;
 	AutoControl autoCont;
 	Drive drive;
 	XboxController xbox;
 	AutoSelector autoSelect;
+	
+	private Intake intake;
 	
 	private Encoder enc;
 	
@@ -51,9 +55,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		autoSelect = new AutoSelector(5);
-		driveCont = new TankDrive(0);
+		tankDriveCont = new TankDrive(0);
+		testCont = new TestControl(0);
 		autoCont = new AutoControl();
-		drive = new Drive(2, 3, 0, 1, driveCont);
+		intake = new Intake(4, 5, tankDriveCont);
+		drive = new Drive(2, 3, 0, 1, tankDriveCont);
 //		autoChooser.addDefault("Default Auto", kDefaultAuto);
 //		autoChooser.addObject("My Auto", kCustomAuto);
 //		SmartDashboard.putData("Auto choices", autoChooser);
@@ -89,7 +95,7 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void teleopInit() {
-		Drive.setControlScheme(driveCont);
+		Drive.setControlScheme(tankDriveCont);
 	}
 
 
@@ -161,7 +167,8 @@ public class Robot extends IterativeRobot {
 	
 	public void testInit() {
 		SmartDashboard.updateValues();
-		Drive.setControlScheme(driveCont);
+		Drive.setControlScheme(tankDriveCont);
+		Intake.setControlScheme(testCont);
 	}
 
 	/**
@@ -169,6 +176,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		testCont.runIntake();
 		//because every function needs a line of code
 	}
 	

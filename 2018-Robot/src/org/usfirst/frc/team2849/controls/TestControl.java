@@ -2,7 +2,6 @@ package org.usfirst.frc.team2849.controls;
 
 import org.usfirst.frc.team2849.autonomous.IntakeTask;
 import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
-import org.usfirst.frc.team2849.robot.Drive;
 import org.usfirst.frc.team2849.robot.Drive.DriveControl;
 import org.usfirst.frc.team2849.robot.Intake.IntakeControl;
 
@@ -10,13 +9,11 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-public class TankDrive extends XboxController implements ControlLayout {
-	
-	private double intakeValue;
-	private double liftHeight;
-	private double liftPower;
+public class TestControl extends XboxController implements ControlLayout {
 
-	public TankDrive(int port) {
+	private double intakeValue;
+	
+	public TestControl(int port) {
 		super(port);
 	}
 
@@ -31,6 +28,11 @@ public class TankDrive extends XboxController implements ControlLayout {
 	}
 
 	@Override
+	public void setPower(double leftPower, double rightPower) {
+		
+	}
+
+	@Override
 	public DriveControl getDrive(Spark frontLeft, Spark frontRight, Spark rearLeft, Spark rearRight) {
 		SpeedControllerGroup leftSide = new SpeedControllerGroup(frontLeft, rearLeft);
 		SpeedControllerGroup rightSide = new SpeedControllerGroup(frontRight, rearRight);
@@ -39,6 +41,8 @@ public class TankDrive extends XboxController implements ControlLayout {
 			drive.tankDrive(getLeftPower(), getRightPower(), true);
 		};
 	}
+	
+	
 
 	@Override
 	public void runIntake() {
@@ -48,32 +52,32 @@ public class TankDrive extends XboxController implements ControlLayout {
 	}
 
 	@Override
-	public void setPower(double leftPower, double rightPower) {
-	}
-
-	@Override
 	public void setIntakeValue(double intakeValue) {
 		this.intakeValue = intakeValue;
 	}
 
 	@Override
-	public void setLiftHeight(double liftHeight) {
-		this.liftHeight = liftHeight;
-	}
-
-	@Override
-	public double getLiftHeight() {
-		return liftHeight;
-	}
-
-	@Override
 	public void setLiftPower(double liftPower) {
-		this.liftPower = liftPower;
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public double getLiftPower() {
-		return liftPower;
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setLiftHeight(double liftHeight) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public double getLiftHeight() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
@@ -84,7 +88,7 @@ public class TankDrive extends XboxController implements ControlLayout {
 
 	@Override
 	public double getIntakeValue() {
-		return intakeValue;
+		return intakeValue;		
 	}
 
 }

@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2849.autonomous;
 
-import org.usfirst.frc.team2849.controls.AutoControl;
+import org.usfirst.frc.team2849.controls.ControlLayout;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -14,7 +14,7 @@ public class LiftTask extends AutoTask {
 	//TODO change this value
 	double inchesPerTick = 0.011505d;
 
-	public LiftTask(AutoControl cont, double height) {
+	public LiftTask(ControlLayout cont, double height) {
 		super(cont);
 		liftHeight = height;
 		enMotor = new Encoder(5, 4);

@@ -1,7 +1,8 @@
 package org.usfirst.frc.team2849.controls;
 
-import org.usfirst.frc.team2849.robot.Drive;
+import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
 import org.usfirst.frc.team2849.robot.Drive.DriveControl;
+import org.usfirst.frc.team2849.robot.Intake.IntakeControl;
 
 import edu.wpi.first.wpilibj.Spark;
 
@@ -14,9 +15,13 @@ public interface ControlLayout {
 	
 	public DriveControl getDrive(Spark frontLeft, Spark frontRight, Spark rearLeft, Spark rearRight);
 	
-	public double runIntake();
+	public IntakeControl getIntake(Spark left, Spark right);
+	
+	public void runIntake();
 	
     public void setIntakeValue( double intakeValue);
+    
+    public double getIntakeValue();
     
     public void setLiftPower(double liftPower);
     
