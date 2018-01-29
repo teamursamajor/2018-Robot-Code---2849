@@ -10,13 +10,13 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-public class TankDrive extends XboxController implements ControlLayout {
+public class TankDriveControl extends XboxController implements ControlLayout {
 	
 	private double intakeValue;
 	private double liftHeight;
 	private double liftPower;
 
-	public TankDrive(int port) {
+	public TankDriveControl(int port) {
 		super(port);
 	}
 

@@ -13,7 +13,7 @@ import org.usfirst.frc.team2849.autonomous.AutoTask;
 import org.usfirst.frc.team2849.controls.AutoControl;
 import org.usfirst.frc.team2849.controls.ControlLayout;
 import org.usfirst.frc.team2849.controls.NullControl;
-import org.usfirst.frc.team2849.controls.TankDrive;
+import org.usfirst.frc.team2849.controls.TankDriveControl;
 import org.usfirst.frc.team2849.controls.TestControl;
 import org.usfirst.frc.team2849.controls.XboxController;
 
@@ -55,7 +55,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	@Override
 	public void robotInit() {
 		autoSelect = new AutoSelector(5);
-		tankDriveCont = new TankDrive(CONTROLLER_PORT);
+		tankDriveCont = new TankDriveControl(CONTROLLER_PORT);
 		testCont = new TestControl(CONTROLLER_PORT);
 		autoCont = new AutoControl();
 		intake = new Intake(INTAKE_LEFT, INTAKE_RIGHT, tankDriveCont);
