@@ -1,12 +1,13 @@
 package org.usfirst.frc.team2849.autonomous;
 
+import org.usfirst.frc.team2849.controls.AutoControl;
 import org.usfirst.frc.team2849.controls.ControlLayout;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public class IntakeTask extends AutoTask {
 
 	public enum IntakeType {
-		IN, OUT, RUN, STOP, UNTIL, DEPLOY
+		IN, OUT, RUN, STOP, DEPLOY
 	};
 
 	private IntakeType intake;
@@ -18,21 +19,36 @@ public class IntakeTask extends AutoTask {
 
 	public void run() {
 		DigitalInput intakeBeam = new DigitalInput(0);
-		DigitalInput shootBeam = new DigitalInput(1);
 		switch (intake) {
-		case IN:
+		// Does not use Break Beam Sensor
+		case RUN:
 			cont.setIntakeValue(0.5);
 			break;
+		// Ejects box
 		case OUT:
-			cont.setIntakeValue(-0.5);
+			while (!intakeBeam.get()) {
+				cont.setIntakeValue(-0.5);
+			}
+			cont.setIntakeValue(0);
 			break;
+		// Stops all functions
 		case STOP:
 			cont.setIntakeValue(0);
 			break;
-		case RUN:
-			while (shootBeam.get()) {
-
+		// Uses Break Beam
+		case IN:
+			while (intakeBeam.get()) {
+				cont.setIntakeValue(0.5);
 			}
+			cont.setIntakeValue(0);
+			break;
+		case DEPLOY:
+			LiftTask lift = new LiftTask(cont, 4.0);
+			break;
+		default:
+			cont.setIntakeValue(0);
+			break;
+
 		}
 
 	}

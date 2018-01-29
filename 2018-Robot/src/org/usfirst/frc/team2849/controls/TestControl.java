@@ -2,7 +2,6 @@ package org.usfirst.frc.team2849.controls;
 
 import org.usfirst.frc.team2849.autonomous.IntakeTask;
 import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
-import org.usfirst.frc.team2849.robot.Drive;
 import org.usfirst.frc.team2849.robot.Drive.DriveControl;
 import org.usfirst.frc.team2849.robot.Intake.IntakeControl;
 
@@ -10,32 +9,27 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-public class AutoControl implements ControlLayout {
-	
-	private double leftPower;
-	private double rightPower;
+public class TestControl extends XboxController implements ControlLayout {
+
 	private double intakeValue;
-	private double liftHeight;
-	private double liftPower;
 	
-	public AutoControl() {
-		leftPower = 0;
-		rightPower = 0;
+	public TestControl(int port) {
+		super(port);
 	}
 
 	@Override
 	public double getLeftPower() {
-		return leftPower;
-	}
-	
-	public void setPower(double leftPower, double rightPower) {
-		this.leftPower = leftPower;
-		this.rightPower = rightPower;
+		return super.getAxis(AXIS_LEFTSTICK_Y);
 	}
 
 	@Override
 	public double getRightPower() {
-		return rightPower;
+		return super.getAxis(AXIS_RIGHTSTICK_Y);
+	}
+
+	@Override
+	public void setPower(double leftPower, double rightPower) {
+		
 	}
 
 	@Override
@@ -43,33 +37,47 @@ public class AutoControl implements ControlLayout {
 		SpeedControllerGroup leftSide = new SpeedControllerGroup(frontLeft, rearLeft);
 		SpeedControllerGroup rightSide = new SpeedControllerGroup(frontRight, rearRight);
 		DifferentialDrive drive = new DifferentialDrive(leftSide, rightSide);
-		return () -> { drive.tankDrive(getLeftPower(), getRightPower(), false); };
+		return () -> {
+			drive.tankDrive(getLeftPower(), getRightPower(), true);
+		};
+	}
+	
+	
+
+	@Override
+	public void runIntake() {
+		if (super.getButton(BUTTON_A)) new IntakeTask(this, IntakeType.IN);
+		else if (super.getButton(BUTTON_B)) new IntakeTask(this, IntakeType.OUT);
+		else new IntakeTask(this, IntakeType.STOP);
 	}
 
 	@Override
 	public void setIntakeValue(double intakeValue) {
-		// TODO Auto-generated method stub
-		this.intakeValue=intakeValue;
-	}
-
-	@Override
-	public void setLiftHeight(double liftHeight) {
-		this.liftHeight = liftHeight;
-	}
-
-	@Override
-	public double getLiftHeight() {
-		return liftHeight;
+		this.intakeValue = intakeValue;
 	}
 
 	@Override
 	public void setLiftPower(double liftPower) {
-		this.liftPower = liftPower;		
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public double getLiftPower() {
-		return liftPower;
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setLiftHeight(double liftHeight) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public double getLiftHeight() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
@@ -79,13 +87,8 @@ public class AutoControl implements ControlLayout {
 	}
 
 	@Override
-	public void runIntake() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
 	public double getIntakeValue() {
-		return intakeValue;
+		return intakeValue;		
 	}
 
 }

@@ -7,14 +7,15 @@
 
 package org.usfirst.frc.team2849.robot;
 
+import org.usfirst.frc.team2849.autonomous.AutoBuilder;
+import org.usfirst.frc.team2849.autonomous.AutoSelector;
 import org.usfirst.frc.team2849.autonomous.AutoTask;
 import org.usfirst.frc.team2849.controls.AutoControl;
 import org.usfirst.frc.team2849.controls.ControlLayout;
 import org.usfirst.frc.team2849.controls.NullControl;
-import org.usfirst.frc.team2849.controls.TankDrive;
+import org.usfirst.frc.team2849.controls.TankDriveControl;
+import org.usfirst.frc.team2849.controls.TestControl;
 import org.usfirst.frc.team2849.controls.XboxController;
-import org.usfirst.frc.team2849.autonomous.AutoBuilder;
-import org.usfirst.frc.team2849.autonomous.AutoSelector;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -30,17 +31,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * creating this project, you must also update the build.properties file in the
  * project.
  */
-public class Robot extends IterativeRobot {
+public class Robot extends IterativeRobot implements UrsaRobot {
 	private static final String kDefaultAuto = "Default";
 	private static final String kCustomAuto = "My Auto";
 	private String autoSelected;
 	private SendableChooser<String> autoChooser = new SendableChooser<>();
 	
-	ControlLayout driveCont;
+	ControlLayout tankDriveCont;
+	ControlLayout testCont;
 	AutoControl autoCont;
 	Drive drive;
 	XboxController xbox;
 	AutoSelector autoSelect;
+	
+	private Intake intake;
 	
 	private Encoder enc;
 	
@@ -51,13 +55,15 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		autoSelect = new AutoSelector(5);
-		driveCont = new TankDrive(0);
+		tankDriveCont = new TankDriveControl(CONTROLLER_PORT);
+		testCont = new TestControl(CONTROLLER_PORT);
 		autoCont = new AutoControl();
-		drive = new Drive(2, 3, 0, 1, driveCont);
+		intake = new Intake(INTAKE_LEFT, INTAKE_RIGHT, tankDriveCont);
+		drive = new Drive(DRIVE_FRONT_LEFT, DRIVE_FRONT_RIGHT, DRIVE_REAR_LEFT, DRIVE_REAR_RIGHT, tankDriveCont);
 //		autoChooser.addDefault("Default Auto", kDefaultAuto);
 //		autoChooser.addObject("My Auto", kCustomAuto);
 //		SmartDashboard.putData("Auto choices", autoChooser);
-		xbox = new XboxController(0);
+		xbox = new XboxController(CONTROLLER_PORT);
 	}
 	
 
@@ -89,7 +95,7 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void teleopInit() {
-		Drive.setControlScheme(driveCont);
+		Drive.setControlScheme(tankDriveCont);
 	}
 
 
@@ -161,7 +167,8 @@ public class Robot extends IterativeRobot {
 	
 	public void testInit() {
 		SmartDashboard.updateValues();
-		Drive.setControlScheme(driveCont);
+		Drive.setControlScheme(tankDriveCont);
+		Intake.setControlScheme(testCont);
 	}
 
 	/**
@@ -169,7 +176,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		//because every function needs a line of code
+		testCont.runIntake();
 	}
 	
 	public void disabledInit() {
