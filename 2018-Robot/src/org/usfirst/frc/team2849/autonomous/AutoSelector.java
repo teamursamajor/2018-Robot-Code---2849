@@ -10,8 +10,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class AutoSelector {
 
 	private ArrayList<SendableChooser<String>> autoList = new ArrayList<SendableChooser<String>>();
-
+	private SendableChooser<String> startingPosition = new SendableChooser<String>();
+	
 	public AutoSelector(int numChoosers) {
+		startingPosition.addDefault("Select starting position...", "");
+		startingPosition.addObject("Left", "L");
+		startingPosition.addObject("Middle", "M");
+		startingPosition.addObject("Right", "R");
 		for (int i = 0; i < numChoosers; i++) autoList.add(new SendableChooser<String>());
 		sendAutoModes(findAutoModes());
 	}
@@ -61,6 +66,10 @@ public class AutoSelector {
 	
 	public String getAutoPref(int num) {
 		return autoList.get(num).getSelected();
+	}
+	
+	public String getStartingPosition() {
+		return startingPosition.getSelected();
 	}
 
 }
