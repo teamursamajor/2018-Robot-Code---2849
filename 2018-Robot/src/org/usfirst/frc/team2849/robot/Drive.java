@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.RobotDriveBase;
 
-public class Drive implements Runnable {
+public class Drive implements Runnable, UrsaRobot{
 
 	private static Spark mFrontLeft;
 	private static Spark mFrontRight;
@@ -57,8 +57,8 @@ public class Drive implements Runnable {
 
 		ahrs = new AHRS(SPI.Port.kMXP);
 
-		encL = new Encoder(2, 3);
-		encR = new Encoder(0, 1);
+		encL = new Encoder(LEFT_ENCODER_CHANNEL_A, LEFT_ENCODER_CHANNEL_B);
+		encR = new Encoder(RIGHT_ENCODER_CHANNEL_A, RIGHT_ENCODER_CHANNEL_B);
 
 		double inchesPerTick = 0.011505d;
 		encL.setDistancePerPulse(inchesPerTick);

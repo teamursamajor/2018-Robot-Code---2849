@@ -6,8 +6,7 @@ public class Lift extends Thread {
 		this.start();
 	}
 
-	public void run() {
-		
+	public void run() {		
 	}
 	
 	public interface LiftControl {

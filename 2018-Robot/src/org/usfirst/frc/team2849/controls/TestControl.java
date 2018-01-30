@@ -36,6 +36,8 @@ public class TestControl extends XboxController implements ControlLayout {
 	public DriveControl getDrive(Spark frontLeft, Spark frontRight, Spark rearLeft, Spark rearRight) {
 		SpeedControllerGroup leftSide = new SpeedControllerGroup(frontLeft, rearLeft);
 		SpeedControllerGroup rightSide = new SpeedControllerGroup(frontRight, rearRight);
+		leftSide.setInverted(true);
+		rightSide.setInverted(true);
 		DifferentialDrive drive = new DifferentialDrive(leftSide, rightSide);
 		return () -> {
 			drive.tankDrive(getLeftPower(), getRightPower(), true);

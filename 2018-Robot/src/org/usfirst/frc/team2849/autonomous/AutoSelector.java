@@ -4,14 +4,22 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.usfirst.frc.team2849.autonomous.*;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoSelector {
 
 	private ArrayList<SendableChooser<String>> autoList = new ArrayList<SendableChooser<String>>();
-
+	private SendableChooser<Character> startingPosition = new SendableChooser<Character>();
+	
 	public AutoSelector(int numChoosers) {
+		startingPosition.addDefault("Select starting position...", ' ');
+		startingPosition.addObject("Left", 'L');
+		startingPosition.addObject("Middle", 'M');
+		startingPosition.addObject("Right", 'R');
 		for (int i = 0; i < numChoosers; i++) autoList.add(new SendableChooser<String>());
 		sendAutoModes(findAutoModes());
 	}
@@ -62,5 +70,24 @@ public class AutoSelector {
 	public String getAutoPref(int num) {
 		return autoList.get(num).getSelected();
 	}
+	
+	public char getStartingPosition() {
+		return startingPosition.getSelected();
+	}
 
+	public String pickAutoMode(char robotPosition, String[] autoPrefs){
+		String sides = DriverStation.getInstance().getGameSpecificMessage();
+		char switchSide = sides.charAt(0);
+		char scaleSide = sides.charAt(1);
+		String compatibleAuto = "0_00_drive.auto";
+	    
+//		for(String autoPreference : autoPrefs){
+//			TODO fix this
+//			if(buildAutoMode(robotPosition + "_" + switchSide + scaleSide + "_" + autoPreference + ".auto") != null){
+//				compatibleAuto = robotPosition + "_" + switchSide + scaleSide + "_" + autoPreference + ".auto";
+//				break;
+//			}
+//		}
+		return compatibleAuto;
+	}
 }

@@ -11,7 +11,6 @@ import org.usfirst.frc.team2849.controls.AutoControl;
 import org.usfirst.frc.team2849.controls.ControlLayout;
 
 import edu.wpi.first.wpilibj.*;
-
 /**
  * TODO Add comments
  * @author Evan + Sheldon wrote this on 1/16/18
@@ -21,11 +20,11 @@ import edu.wpi.first.wpilibj.*;
  * indentation is three spaces
  * wait <amount in seconds, type double>
  * execute <file directory>
- * lift <amount in inches>||<BOTTOM||VAULT||SWITCH||SCALE>
+ * lift <amount in inches>||<BOTTOM||VAULT||SWITCH||SCALE)>
  * drive <amount in inches>
  * turn <TO||BY> <amount in degrees> 
  * intake <IN||OUT||RUN||STOP||DEPLOY>
- * print <string>
+ * print <STRING>
  * bundle {...} - runs parallel tasks
  * serial {...} - runs tasks sequentially
  */
@@ -273,14 +272,6 @@ public class AutoBuilder {
 		
 		return ret;
 	}
-	
-	private String pickAutoMode(String robotPosition, ArrayList<String> modeList){
-		String sides = DriverStation.getInstance().getGameSpecificMessage();
-		char switchSide = sides.charAt(0);
-		char scaleSide = sides.charAt(1);
-		char oppSwitchSide = sides.charAt(2);
-	    
-		return "";
-	}
+
 }
 	
