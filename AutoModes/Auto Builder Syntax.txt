@@ -1,13 +1,16 @@
-Parser/scripting language for auto functions
+Parser/Scripting language for auto functions
 Syntax:
 comments start with # --> on their own line!!!!!!!!!!!!!!!!!!!!!
 indentation is three spaces
 wait <amount in seconds, type double>
+
+EXECUTE IS BROKEN; DO NOT USE
 execute <file directory>
-lift <amount in inches>||<BOTTOM||VAULT||SWITCH||SCALE)>
+
+lift <amount in inches>||<BOTTOM||VAULT||SWITCH||SCALE>
 drive <amount in inches>
 turn <TO||BY> <amount in degrees> 
 intake <IN||OUT||RUN||STOP||DEPLOY>
-print <STRING>
+print <string>
 bundle {...} - runs parallel tasks
 serial {...} - runs tasks sequentially
