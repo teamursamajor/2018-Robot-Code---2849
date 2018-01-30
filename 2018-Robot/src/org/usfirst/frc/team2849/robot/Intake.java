@@ -18,10 +18,11 @@ public class Intake extends Thread {
 	}
 	
 	public void run() {
+		//TODO ugh
 		while (true) {
 			intake.runIntake();
 			try {
-				Thread.sleep(20);
+				Thread.sleep(20); //because we all need breaks
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

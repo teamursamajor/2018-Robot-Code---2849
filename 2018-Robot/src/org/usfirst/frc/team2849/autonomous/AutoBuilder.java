@@ -11,7 +11,6 @@ import org.usfirst.frc.team2849.controls.AutoControl;
 import org.usfirst.frc.team2849.controls.ControlLayout;
 
 import edu.wpi.first.wpilibj.*;
-
 /**
  * TODO Add comments
  * @author Evan + Sheldon wrote this on 1/16/18
