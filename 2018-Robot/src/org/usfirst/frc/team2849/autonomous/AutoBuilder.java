@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.*;
  * @author Evan + Sheldon wrote this on 1/16/18
  * Parser/scripting language for auto functions
  * Syntax:
- * comments start with # --> on their own line!!!!!!!!!!!!!!!!!!!!!
+ * comments start with # (on their own line!!!!!!!!!!!!!!!!!!!!!)
  * indentation is three spaces
  * wait <amount in seconds, type double>
  * execute <file directory>
