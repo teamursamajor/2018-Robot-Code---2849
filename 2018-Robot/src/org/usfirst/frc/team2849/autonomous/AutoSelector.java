@@ -4,6 +4,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.usfirst.frc.team2849.autonomous.*;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -72,4 +75,19 @@ public class AutoSelector {
 		return startingPosition.getSelected();
 	}
 
+	public String pickAutoMode(char robotPosition, String[] autoPrefs){
+		String sides = DriverStation.getInstance().getGameSpecificMessage();
+		char switchSide = sides.charAt(0);
+		char scaleSide = sides.charAt(1);
+		String compatibleAuto = "0_00_drive.auto";
+	    
+//		for(String autoPreference : autoPrefs){
+//			TODO fix this
+//			if(buildAutoMode(robotPosition + "_" + switchSide + scaleSide + "_" + autoPreference + ".auto") != null){
+//				compatibleAuto = robotPosition + "_" + switchSide + scaleSide + "_" + autoPreference + ".auto";
+//				break;
+//			}
+//		}
+		return compatibleAuto;
+	}
 }
