@@ -80,7 +80,7 @@ public class AutoBuilder {
 			} else if (intakeType.equalsIgnoreCase("DEPLOY")) {
 				intake = IntakeType.DEPLOY;
 			} else {
-				intake = IntakeType.UNTIL;
+				intake = IntakeType.STOP;
 			}
 		}
 		public IntakeTask makeTask(AutoControl cont) {
