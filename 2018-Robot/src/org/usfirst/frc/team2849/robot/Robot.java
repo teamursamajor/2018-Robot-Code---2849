@@ -32,11 +32,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends IterativeRobot implements UrsaRobot {
-	private static final String kDefaultAuto = "Default";
-	private static final String kCustomAuto = "My Auto";
-	private String autoSelected;
-	private SendableChooser<String> autoChooser = new SendableChooser<>();
-	
 	ControlLayout tankDriveCont;
 	ControlLayout testCont;
 	AutoControl autoCont;
@@ -82,6 +77,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	public void autonomousInit() {
 		Drive.resetNavx();
 		Drive.setControlScheme(autoCont);
+		//TODO call the pickAut
 		AutoTask task = new AutoBuilder(autoCont).buildAutoMode("/AutoModes/RR_R0_switch.auto");
 		task.start();
 	}
@@ -103,71 +99,71 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	 * This function is called periodically during operator control.
 	 */
 
-	Solenoid green = new Solenoid(5);
-	Solenoid red = new Solenoid(6);
-	Solenoid blue = new Solenoid(7);
-	boolean R = false;
-	boolean G = false;
-	boolean B = false;
-	boolean W = false;
-	long lighttime = 0;
-	@Override
+//	Solenoid green = new Solenoid(5);
+//	Solenoid red = new Solenoid(6);
+//	Solenoid blue = new Solenoid(7);
+//	boolean R = false;
+//	boolean G = false;
+//	boolean B = false;
+//	boolean W = false;
+//	long lighttime = 0;
+//	@Override
 	public void teleopPeriodic() {
-//		Pathfinder.findposition();//this should generally always be running whenever
-		//the robot is moving and therefore changing position.
-		if(System.currentTimeMillis()-100 > lighttime){
-			if(xbox.getButton(XboxController.BUTTON_B) == true){
-				R = !R;
-				red.set(R);
-				lighttime = System.currentTimeMillis();
-			}
-			if(xbox.getButton(XboxController.BUTTON_A) == true){
-				G = !G;
-				green.set(G);
-				lighttime = System.currentTimeMillis();
-			}
-			if(xbox.getButton(XboxController.BUTTON_X) == true){
-				B = !B;
-				blue.set(B);
-				lighttime = System.currentTimeMillis();
-			}
-			if(xbox.getButton(XboxController.BUTTON_Y) == true){
-				W= !W;
-				red.set(true);
-				green.set(false);
-				blue.set(false);
-				if(W == true){
-					try {
-						Thread.sleep(1000);
-						green.set(true);
-						Thread.sleep(1000);
-						red.set(false);
-						Thread.sleep(1000);
-						blue.set(true);
-						Thread.sleep(1000);
-						green.set(false);
-						Thread.sleep(1000);
-						red.set(true);
-						Thread.sleep(1000);
-						blue.set(false);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				else{
-					red.set(true);
-					green.set(true);
-					blue.set(true);
-				}
-				lighttime = System.currentTimeMillis();
-			}
-		}
+////		Pathfinder.findposition();//this should generally always be running whenever
+//		//the robot is moving and therefore changing position.
+//		if(System.currentTimeMillis()-100 > lighttime){
+//			if(xbox.getButton(XboxController.BUTTON_B) == true){
+//				R = !R;
+//				red.set(R);
+//				lighttime = System.currentTimeMillis();
+//			}
+//			if(xbox.getButton(XboxController.BUTTON_A) == true){
+//				G = !G;
+//				green.set(G);
+//				lighttime = System.currentTimeMillis();
+//			}
+//			if(xbox.getButton(XboxController.BUTTON_X) == true){
+//				B = !B;
+//				blue.set(B);
+//				lighttime = System.currentTimeMillis();
+//			}
+//			if(xbox.getButton(XboxController.BUTTON_Y) == true){
+//				W= !W;
+//				red.set(true);
+//				green.set(false);
+//				blue.set(false);
+//				if(W == true){
+//					try {
+//						Thread.sleep(1000);
+//						green.set(true);
+//						Thread.sleep(1000);
+//						red.set(false);
+//						Thread.sleep(1000);
+//						blue.set(true);
+//						Thread.sleep(1000);
+//						green.set(false);
+//						Thread.sleep(1000);
+//						red.set(true);
+//						Thread.sleep(1000);
+//						blue.set(false);
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//				}
+//				else{
+//					red.set(true);
+//					green.set(true);
+//					blue.set(true);
+//				}
+//				lighttime = System.currentTimeMillis();
+//			}
+//		}
 	}
 	
 	public void testInit() {
 		SmartDashboard.updateValues();
-		Drive.setControlScheme(tankDriveCont);
+		Drive.setControlScheme(testCont);
 		Intake.setControlScheme(testCont);
 	}
 

@@ -274,13 +274,19 @@ public class AutoBuilder {
 		return ret;
 	}
 	
-	private String pickAutoMode(String robotPosition, ArrayList<String> modeList){
+	private String pickAutoMode(char robotPosition, String[] autoPrefs){
 		String sides = DriverStation.getInstance().getGameSpecificMessage();
 		char switchSide = sides.charAt(0);
 		char scaleSide = sides.charAt(1);
-		char oppSwitchSide = sides.charAt(2);
+		String compatibleAuto = "0_00_drive.auto";
 	    
-		return "";
+		for(String autoPreference : autoPrefs){
+			if(buildAutoMode(robotPosition + "_" + switchSide + scaleSide + "_" + autoPreference + ".auto") != null){
+				compatibleAuto = robotPosition + "_" + switchSide + scaleSide + "_" + autoPreference + ".auto";
+				break;
+			}
+		}
+		return compatibleAuto;
 	}
 }
 	
