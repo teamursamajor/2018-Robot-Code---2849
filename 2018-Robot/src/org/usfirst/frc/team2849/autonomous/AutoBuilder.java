@@ -20,11 +20,11 @@ import edu.wpi.first.wpilibj.*;
  * indentation is three spaces
  * wait <amount in seconds, type double>
  * execute <file directory>
- * lift <amount in inches>||<BOTTOM||VAULT||SWITCH||SCALE)>
+ * lift <amount in inches>||<BOTTOM||VAULT||SWITCH||SCALE>
  * drive <amount in inches>
  * turn <TO||BY> <amount in degrees> 
  * intake <IN||OUT||RUN||STOP||DEPLOY>
- * print <STRING>
+ * print <string>
  * bundle {...} - runs parallel tasks
  * serial {...} - runs tasks sequentially
  */
