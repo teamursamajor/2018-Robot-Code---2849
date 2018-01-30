@@ -8,9 +8,10 @@ import java.util.ArrayList;
 import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
 import org.usfirst.frc.team2849.autonomous.TurnTask.Turntype;
 import org.usfirst.frc.team2849.controls.AutoControl;
-import org.usfirst.frc.team2849.controls.ControlLayout;
+import org.usfirst.frc.team2849.path.Path;
+import org.usfirst.frc.team2849.path.PathReader;
 
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.DriverStation;
 
 /**
  * TODO Add comments
@@ -71,6 +72,19 @@ public class AutoBuilder {
 		// Creates a new instance of PrintTask class
 		public PrintTask makeTask(AutoControl cont) {
 			return new PrintTask(cont, str);
+		}
+	}
+	
+	class PathToken implements Token {
+		private Path[] paths;
+		
+		public PathToken(String filename) {
+			filename = filename.replace(" ", "");
+			paths = new PathReader(filename, false).getPaths();
+		}
+		
+		public PathTask makeTask(AutoControl cont) {
+			return new PathTask(cont, paths);
 		}
 	}
 
@@ -210,7 +224,12 @@ public class AutoBuilder {
 			} else if (line.contains("lift")) {
 				String current = line.substring(line.indexOf("lift") + "lift".length());
 				ret.add(new LiftToken(current));
-			} else if (line.contains("intake")) {
+			} 
+			else if(line.contains("follow")) {
+				String current = line.substring(line.indexOf("follow") + "follow".length());
+				ret.add(new PathToken(current));
+			}
+			else if(line.contains("intake")) {
 				String current = line.substring(line.indexOf("intake") + "intake".length());
 				ret.add(new IntakeToken(current));
 			}
@@ -260,7 +279,11 @@ public class AutoBuilder {
 				ret.addTask(((DriveToken) t).makeTask(cont));
 			} else if (t instanceof TurnToken) {
 				ret.addTask(((TurnToken) t).makeTask(cont));
-			} else if (t instanceof IntakeToken) {
+			}
+			else if(t instanceof PathToken) {
+				ret.addTask(((PathToken) t).makeTask(cont));
+			}
+			else if(t instanceof IntakeToken) {
 				ret.addTask(((IntakeToken) t).makeTask(cont));
 			} else if (t instanceof LiftToken) {
 				ret.addTask(((LiftToken) t).makeTask(cont));
