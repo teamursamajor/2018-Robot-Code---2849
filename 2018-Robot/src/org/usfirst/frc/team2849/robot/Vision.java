@@ -1,31 +1,38 @@
 package org.usfirst.frc.team2849.robot;
 
 import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.IterativeRobot;
 
-public class Vision extends IterativeRobot {
-	public void robotInit() {
-		new Thread(() -> {
-			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-			camera.setResolution(640, 480);
+public class Vision implements Runnable {
+	private static CvSink cvSink;
+	private static CvSource outputStream;
+	private static UsbCamera intakeCam;
+	private static Mat image = new Mat();
+	private static Thread visionRun = null;
+	
+	public Vision() {
+		intakeCam = new UsbCamera("Intake Camera", 0);
+		
+		CameraServer.getInstance().addCamera(intakeCam);
+		intakeCam.setResolution(160, 120);
 
-			CvSink cvSink = CameraServer.getInstance().getVideo();
-			CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
-
-			Mat source = new Mat();
-			Mat output = new Mat();
-
-			while (!Thread.interrupted()) {
-				cvSink.grabFrame(source);
-				Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-				outputStream.putFrame(output);
-			}
-		}).start();
+		cvSink = CameraServer.getInstance().getVideo(intakeCam);
+		outputStream = CameraServer.getInstance().putVideo("Intake Camera", 160, 120);
+	}
+	
+	public static void visionInit() {
+		visionRun = new Thread(new Vision(), "visionThread");
+		visionRun.start();
+	}
+	
+	public void run() {
+		while (true) {
+			cvSink.grabFrame(image);
+			outputStream.putFrame(image);
+		}
 	}
 }
