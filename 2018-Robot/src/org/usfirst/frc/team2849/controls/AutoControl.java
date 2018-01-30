@@ -1,7 +1,10 @@
 package org.usfirst.frc.team2849.controls;
 
+import org.usfirst.frc.team2849.autonomous.IntakeTask;
+import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
 import org.usfirst.frc.team2849.robot.Drive;
 import org.usfirst.frc.team2849.robot.Drive.DriveControl;
+import org.usfirst.frc.team2849.robot.Intake.IntakeControl;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -11,7 +14,7 @@ public class AutoControl implements ControlLayout {
 	
 	private double leftPower;
 	private double rightPower;
-	private double intakePower;
+	private double intakeValue;
 	private double liftHeight;
 	private double liftPower;
 	
@@ -44,16 +47,9 @@ public class AutoControl implements ControlLayout {
 	}
 
 	@Override
-	public double runIntake() {
-		// TODO Auto-generated method stub
-		return intakePower;
-		
-	}
-
-	@Override
 	public void setIntakeValue(double intakeValue) {
 		// TODO Auto-generated method stub
-		intakePower=intakeValue;
+		this.intakeValue=intakeValue;
 	}
 
 	@Override
@@ -74,6 +70,22 @@ public class AutoControl implements ControlLayout {
 	@Override
 	public double getLiftPower() {
 		return liftPower;
+	}
+
+	@Override
+	public IntakeControl getIntake(Spark left, Spark right) {
+		left.setInverted(true);
+		return () -> { left.set(getIntakeValue()); right.set(getIntakeValue()); }; 
+	}
+
+	@Override
+	public void runIntake() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public double getIntakeValue() {
+		return intakeValue;
 	}
 
 }
