@@ -47,7 +47,6 @@ public class AutoBuilder {
 		this.cont = cont;
 	}
 
-	//TODO unused/broken, delete later
 	class ExecuteToken implements Token {
 		private String scriptName;
 
@@ -235,22 +234,9 @@ public class AutoBuilder {
 			}
 
 			else if (line.contains("print")) { // If the line is a print token
-				String current = line.substring(line.indexOf("print") + "print".length()); // The
-																							// data
-																							// that
-																							// should
-																							// be
-																							// printed
-																							// is
-																							// everything
-																							// that
-																							// comes
-																							// after
-																							// the
-																							// token
-																							// "print"
-				ret.add(new PrintToken(current)); // Adds new Print Token to the
-													// ArrayList of all tokens
+				String current = line.substring(line.indexOf("print") + "print".length()); 
+				// The data that should be printed is everything that comes after the token "print"
+				ret.add(new PrintToken(current)); // Adds new Print Token to the ArrayList of all tokens
 			} else if (line.contains("bundle")) {
 				ret.add(new BundleToken());
 			} else if (line.contains("serial")) {
@@ -271,8 +257,8 @@ public class AutoBuilder {
 		while (toks.size() > 0) {
 			Token t = toks.remove(0);
 			if (t instanceof ExecuteToken) {
-//				AutoTask otherMode = buildAutoMode(((ExecuteToken) t).scriptName);
-//				ret.addTask(otherMode);
+				AutoTask otherMode = buildAutoMode(((ExecuteToken) t).scriptName);
+				ret.addTask(otherMode);
 			} else if (t instanceof WaitToken) {
 				ret.addTask(((WaitToken) t).makeTask(cont));
 			} else if (t instanceof DriveToken) {
@@ -305,9 +291,9 @@ public class AutoBuilder {
 		return ret;
 	}
 
-	public AutoTask buildAutoMode() {
+	public AutoTask buildAutoMode(String filename) {
 		try {
-			return parseAuto(tokenize(pickAutoMode(AutoSelector.robotPosition, AutoSelector.autoPrefs)),
+			return parseAuto(tokenize(filename),
 					new SerialTask(cont));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -315,6 +301,7 @@ public class AutoBuilder {
 		}
 	}
 
+	//TODO maybe delete
 	public boolean isAutoMode(String filename) {
 		try {
 			parseAuto(tokenize(filename), new SerialTask(cont));
@@ -325,6 +312,7 @@ public class AutoBuilder {
 		return true;
 	}
 
+	//TODO fix this
 	public String pickAutoMode(char robotPosition, String[] autoPrefs) {
 		String sides = DriverStation.getInstance().getGameSpecificMessage();
 		char switchSide = sides.charAt(0);

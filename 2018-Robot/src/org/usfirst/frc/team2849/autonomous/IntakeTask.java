@@ -6,9 +6,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 
 public class IntakeTask extends AutoTask {
 
-	public enum IntakeType {
-		IN, OUT, RUN, STOP, DEPLOY
-	};
+	public enum IntakeType {IN, OUT, RUN, STOP, DEPLOY}
 
 	private IntakeType intake;
 
