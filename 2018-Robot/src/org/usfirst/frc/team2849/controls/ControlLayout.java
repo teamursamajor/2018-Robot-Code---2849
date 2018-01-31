@@ -15,23 +15,21 @@ public interface ControlLayout {
 	
 	public DriveControl getDrive(Spark frontLeft, Spark frontRight, Spark rearLeft, Spark rearRight);
 	
+	//Intake methods
 	public IntakeControl getIntake(Spark left, Spark right);
 	
 	public void runIntake();
 	
-    public void setIntakeValue( double intakeValue);
+    public void setIntakeValue(double intakeValue);
     
     public double getIntakeValue();
     
+    //Lift Methods    
     public void setLiftPower(double liftPower);
     
     public double getLiftPower();
     
     public void setLiftHeight(double liftHeight);
-    
-    /**
-     * 
-     * @return lift height in inches
-     */
+ 
     public double getLiftHeight();
 }
