@@ -1,3 +1,4 @@
+
 package org.usfirst.frc.team2849.controls;
 
 import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
@@ -34,4 +35,6 @@ public interface ControlLayout {
      * @return lift height in inches
      */
     public double getLiftHeight();
+    
+    public void runLift();
 }
