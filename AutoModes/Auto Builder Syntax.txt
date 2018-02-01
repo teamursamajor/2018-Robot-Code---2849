@@ -3,11 +3,8 @@ Syntax:
 comments start with # --> on their own line!!!!!!!!!!!!!!!!!!!!!
 indentation is three spaces
 wait <amount in seconds, type double>
-
-EXECUTE IS BROKEN; DO NOT USE
 execute <file directory>
-
-lift <amount in inches>||<BOTTOM||VAULT||SWITCH||SCALE>
+lift <BOTTOM||VAULT||SWITCH||SCALE>
 drive <amount in inches>
 turn <TO||BY> <amount in degrees> 
 intake <IN||OUT||RUN||STOP||DEPLOY>
