@@ -1,8 +1,8 @@
 package org.usfirst.frc.team2849.autonomous;
 
 import org.usfirst.frc.team2849.autonomous.LiftTask.LiftType;
+import org.usfirst.frc.team2849.autonomous.LiftTask.LiftType;
 import org.usfirst.frc.team2849.controls.ControlLayout;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public class IntakeTask extends AutoTask {

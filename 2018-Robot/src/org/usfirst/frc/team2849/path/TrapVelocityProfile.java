@@ -98,6 +98,10 @@ public class TrapVelocityProfile {
 		return toPrint;
 	}
 	
+	public double getDt() {
+		return dt;
+	}
+	
 	public ArrayList<Node> getNodes() {
 		return profile;
 	}
