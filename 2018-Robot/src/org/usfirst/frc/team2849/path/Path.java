@@ -3,12 +3,14 @@ package org.usfirst.frc.team2849.path;
 import java.util.ArrayList;
 
 import org.usfirst.frc.team2849.path.TrapVelocityProfile.Node;
+import org.usfirst.frc.team2849.util.AngleHelper;
 
 public class Path {
 
 	private ArrayList<PointonPath> path;
 	private int nextPoint;
 	private String name;
+	private double dt;
 
 	public Path() {
 		path = new ArrayList<PointonPath>();
@@ -96,6 +98,10 @@ public class Path {
 	public String getName() {
 		return name;
 	}
+	
+	public double getDt() {
+		return dt;
+	}
 
 	public int numPoints() {
 		return path.size();
@@ -177,18 +183,6 @@ public class Path {
 		rightPath.add(new PointonPath(rightDist, path.get(path.size() - 1).getDirection(), rightX, rightY, time, 0, 0));
 		return new Path[] { leftPath, rightPath };
 	}
-	
-	public double getSmallestAngleBetween(double angle1, double angle2) {
-		double diff = Math.abs(angle2 - angle1);
-		
-		if (diff > 180) {
-			return Math.signum(angle2 - angle1) * (360 - diff);
-		} else  {
-			return Math.signum(angle2 - angle1) * diff;
-		}
-		// if (diff > 180) return (360 - diff);
-		// else return diff;
-	}
 
 	// RTFM @ charlie
 	public PointonPath pointAt(double dist) {
@@ -196,7 +190,7 @@ public class Path {
 		System.out.println(dist);
 		System.out.println(neighbors[0]);
 		System.out.println(neighbors[1]);
-		double dir = neighbors[0].getDirection() + (dist - neighbors[0].getPosition()) * (getSmallestAngleBetween(neighbors[0].getDirection(), neighbors[1].getDirection()) / (neighbors[1].getPosition() - neighbors[0].getPosition()));
+		double dir = neighbors[0].getDirection() + (dist - neighbors[0].getPosition()) * (AngleHelper.getSmallestAngleBetween(neighbors[0].getDirection(), neighbors[1].getDirection()) / (neighbors[1].getPosition() - neighbors[0].getPosition()));
 		double radDir = Math.toRadians(dir);
 		double xft = neighbors[0].xft + (Math.abs(dist - neighbors[0].getPosition()) * Math.cos(radDir));
 		double yft = neighbors[0].yft + (Math.abs(dist - neighbors[0].getPosition()) * Math.sin(radDir));
@@ -210,6 +204,7 @@ public class Path {
 		PointonPath approxPoint;
 		ArrayList<PointonPath> mappedPath = new ArrayList<PointonPath>();
 		TrapVelocityProfile trap = new TrapVelocityProfile(1, 10, .1, path.get(path.size() - 1).getPosition());
+		dt = trap.getDt();
 		for (Node point : trap.getNodes()) {
 			approxPoint = pointAt(point.getDist());
 			mappedPath.add(new PointonPath(point.getDist(), approxPoint.getDirection(), approxPoint.xft, approxPoint.yft, point.getTime(), point.getVel(), point.getAcc()));
