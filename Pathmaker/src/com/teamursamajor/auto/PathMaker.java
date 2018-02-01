@@ -1,9 +1,6 @@
 package com.teamursamajor.auto;
-import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -17,7 +14,6 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -73,11 +69,17 @@ public class PathMaker {
 		new PathWriter(mapped.separate(1.067), "outsepped.txt");
 		System.out.println("outputed");
 	}
+	static ArrayList<PointonPath> pathl = new ArrayList<PointonPath>();
+	static ArrayList<PointonPath> pathr = new ArrayList<PointonPath>();
 	public static void input() {
-		path = new PathReader("outsepped.txt",false).getLeftPath().getPoints();
+		pathl = new PathReader("outsepped.txt",false).getLeftPath().getPoints();
+		pathr = new PathReader("outsepped.txt",false).getRightPath().getPoints();
+		//path is average
+		//pathl and pathr are sides
+		//button and boolean to switch
 		ArrayList<PointonPath> copy = new ArrayList<PointonPath>();
-		for(PointonPath p : path) {
-			copy.add(new PointonPath(p.x,p.y,copy.size()));
+		for(int i=0;i<pathl.size();i++) {
+			copy.add(new PointonPath((pathl.get(i).x+pathr.get(i).x)/2,(pathl.get(i).y+pathr.get(i).y)/2,copy.size()));
 		}
 		path=copy;
 		PathMaker.overlay=new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
@@ -85,7 +87,7 @@ public class PathMaker {
 		frame.repaint();
 		frame.dispatchEvent(new MouseWheelEvent (frame,0,0,0,0,0,0,false, 3,1,0));
 	}
-
+	
 	static void init() {
 		frame = new JFrame() ;
 		frame.setLayout(null);
