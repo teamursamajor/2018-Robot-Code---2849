@@ -15,9 +15,5 @@ public class AngleHelper {
 		// if (diff > 180) return (360 - diff);
 		// else return diff;
 	}
-	
-	public static void main(String[] args) {
-		System.out.println(getSmallestAngleBetween(355, 5));
-	}
 
 }
