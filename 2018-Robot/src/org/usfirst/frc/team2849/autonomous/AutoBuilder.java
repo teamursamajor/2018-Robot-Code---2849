@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2849.autonomous;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,22 +15,12 @@ import org.usfirst.frc.team2849.path.PathReader;
 
 import edu.wpi.first.wpilibj.DriverStation;
 
+//TODO add comments
 /**
- * TODO Add comments
+ * Check the AutoModes folder for a file named Auto Builder Syntax.txt It
+ * contains all the syntax
  * 
- * @author Evan + Sheldon wrote this on 1/16/18 
- * Parser/scripting language for auto functions 
- * Syntax: comments start with # (on their own line!!!!!!!!!!!!!!!!!!!!!)
- * indentation is three spaces 
- * wait <amount in seconds, type double> 
- * execute <file directory> 
- * lift <amount in inches>||<BOTTOM||VAULT||SWITCH||SCALE>
- * drive <amount in inches>
- * turn <TO||BY> <amount in degrees>
- * intake <IN||OUT||RUN||STOP||DEPLOY>
- * print <string>
- * bundle {...} - runs parallel tasks
- * serial {...} - runs tasks sequentially
+ * @author Evan + Sheldon wrote this on 1/16/18
  */
 public class AutoBuilder {
 	interface Token {
@@ -67,15 +58,15 @@ public class AutoBuilder {
 			return new PrintTask(cont, str);
 		}
 	}
-	
+
 	class PathToken implements Token {
 		private Path[] paths;
-		
+
 		public PathToken(String filename) {
 			filename = filename.replace(" ", "");
 			paths = new PathReader(filename, false).getPaths();
 		}
-		
+
 		public PathTask makeTask(AutoControl cont) {
 			return new PathTask(cont, paths);
 		}
@@ -111,7 +102,7 @@ public class AutoBuilder {
 
 		public LiftToken(String liftType) {
 			liftType = liftType.replace(" ", "");
-			
+
 			if (liftType.equalsIgnoreCase("BOTTOM")) {
 				lift = LiftType.BOTTOM;
 			} else if (liftType.equalsIgnoreCase("VAULT")) {
@@ -217,20 +208,18 @@ public class AutoBuilder {
 			} else if (line.contains("lift")) {
 				String current = line.substring(line.indexOf("lift") + "lift".length());
 				ret.add(new LiftToken(current));
-			} 
-			else if(line.contains("follow")) {
+			} else if (line.contains("follow")) {
 				String current = line.substring(line.indexOf("follow") + "follow".length());
 				ret.add(new PathToken(current));
-			}
-			else if(line.contains("intake")) {
+			} else if (line.contains("intake")) {
 				String current = line.substring(line.indexOf("intake") + "intake".length());
 				ret.add(new IntakeToken(current));
-			}
-
-			else if (line.contains("print")) { // If the line is a print token
-				String current = line.substring(line.indexOf("print") + "print".length()); 
-				// The data that should be printed is everything that comes after the token "print"
-				ret.add(new PrintToken(current)); // Adds new Print Token to the ArrayList of all tokens
+			} else if (line.contains("print")) { // If the line is a print token
+				String current = line.substring(line.indexOf("print") + "print".length());
+				// The data that should be printed is everything that comes
+				// after the token "print"
+				ret.add(new PrintToken(current)); // Adds new Print Token to the
+													// ArrayList of all tokens
 			} else if (line.contains("bundle")) {
 				ret.add(new BundleToken());
 			} else if (line.contains("serial")) {
@@ -259,11 +248,9 @@ public class AutoBuilder {
 				ret.addTask(((DriveToken) t).makeTask(cont));
 			} else if (t instanceof TurnToken) {
 				ret.addTask(((TurnToken) t).makeTask(cont));
-			}
-			else if(t instanceof PathToken) {
+			} else if (t instanceof PathToken) {
 				ret.addTask(((PathToken) t).makeTask(cont));
-			}
-			else if(t instanceof IntakeToken) {
+			} else if (t instanceof IntakeToken) {
 				ret.addTask(((IntakeToken) t).makeTask(cont));
 			} else if (t instanceof LiftToken) {
 				ret.addTask(((LiftToken) t).makeTask(cont));
@@ -287,26 +274,14 @@ public class AutoBuilder {
 
 	public AutoTask buildAutoMode(String filename) {
 		try {
-			return parseAuto(tokenize(filename),
-					new SerialTask(cont));
+			return parseAuto(tokenize(filename), new SerialTask(cont));
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 
-	//TODO maybe delete
-	public boolean isAutoMode(String filename) {
-		try {
-			parseAuto(tokenize(filename), new SerialTask(cont));
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-	}
-
-	//TODO fix this
+	// TODO fix this
 	public String pickAutoMode(char robotPosition, String[] autoPrefs) {
 		String sides = DriverStation.getInstance().getGameSpecificMessage();
 		char switchSide = sides.charAt(0);
@@ -314,7 +289,9 @@ public class AutoBuilder {
 		String compatibleAuto = "0_00_drive.auto";
 
 		for (String autoPreference : autoPrefs) {
-			if (isAutoMode(robotPosition + "_" + switchSide + scaleSide + "_" + autoPreference + ".auto") == true) {
+
+			if (new File("/home/lvuser/AutoModes/" + robotPosition + "_" + switchSide + scaleSide + "_" + autoPreference
+					+ ".auto").exists()) {
 				compatibleAuto = robotPosition + "_" + switchSide + scaleSide + "_" + autoPreference + ".auto";
 				break;
 			}
