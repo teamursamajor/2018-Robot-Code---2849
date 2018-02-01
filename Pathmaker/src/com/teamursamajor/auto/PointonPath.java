@@ -162,14 +162,12 @@ public class PointonPath extends JPanel {
 		if (i != PathMaker.path.size() - 1) {
 			Graphics2D g2d = (Graphics2D) PathMaker.overlay.getGraphics();
 			g2d.setColor(colorarraay.get(i % colorarraay.size()));
-			g2d.setStroke(new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-			g2d.drawLine((int) PathMaker.path.get(i).x, (int) PathMaker.path.get(i).y,
-					(int) PathMaker.path.get(i + 1).x, (int) PathMaker.path.get(i + 1).y);
+			g2d.setStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+			g2d.drawLine((int) PathMaker.path.get(i).x, (int) PathMaker.path.get(i).y,(int) PathMaker.path.get(i + 1).x, (int) PathMaker.path.get(i + 1).y);
 			if (highlight) {
 				g2d.setColor(Color.green);
-				g2d.setStroke(new BasicStroke(7, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-				g2d.drawLine((int) PathMaker.path.get(i).x, (int) PathMaker.path.get(i).y,
-						(int) PathMaker.path.get(i + 1).x, (int) PathMaker.path.get(i + 1).y);
+				g2d.setStroke(new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+				g2d.drawLine((int) PathMaker.path.get(i).x, (int) PathMaker.path.get(i).y,(int) PathMaker.path.get(i + 1).x, (int) PathMaker.path.get(i + 1).y);
 			}
 		}
 
