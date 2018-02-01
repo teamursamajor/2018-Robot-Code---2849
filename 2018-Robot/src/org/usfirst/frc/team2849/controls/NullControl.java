@@ -73,4 +73,10 @@ public class NullControl implements ControlLayout {
 		return 0;
 	}
 
+	@Override
+	public void runLift() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

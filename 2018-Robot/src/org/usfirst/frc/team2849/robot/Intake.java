@@ -18,7 +18,7 @@ public class Intake extends Thread {
 	}
 	
 	public void run() {
-		//TODO ugh
+		
 		while (true) {
 			intake.runIntake();
 			try {

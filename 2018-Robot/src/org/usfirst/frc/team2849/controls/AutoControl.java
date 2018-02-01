@@ -88,4 +88,10 @@ public class AutoControl implements ControlLayout {
 		return intakeValue;
 	}
 
+	@Override
+	public void runLift() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
