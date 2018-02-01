@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
+import org.usfirst.frc.team2849.autonomous.LiftTask.LiftType;
 import org.usfirst.frc.team2849.autonomous.TurnTask.Turntype;
 import org.usfirst.frc.team2849.controls.AutoControl;
 import org.usfirst.frc.team2849.path.Path;
@@ -21,10 +22,7 @@ import edu.wpi.first.wpilibj.DriverStation;
  * Syntax: comments start with # (on their own line!!!!!!!!!!!!!!!!!!!!!)
  * indentation is three spaces 
  * wait <amount in seconds, type double> 
- * 
- * EXECUTE IS BROKEN; DO NOT USE IT
  * execute <file directory> 
- * 
  * lift <amount in inches>||<BOTTOM||VAULT||SWITCH||SCALE>
  * drive <amount in inches>
  * turn <TO||BY> <amount in degrees>
@@ -36,10 +34,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 public class AutoBuilder {
 	interface Token {
 	}
-
-	enum LiftType {
-		BOTTOM, VAULT, SWITCH, SCALE
-	};
 
 	AutoControl cont;
 
@@ -112,27 +106,27 @@ public class AutoBuilder {
 		}
 	}
 
-	// TODO check lift heights
 	class LiftToken implements Token {
-		private double lift;
+		private LiftType lift;
 
 		public LiftToken(String liftType) {
 			liftType = liftType.replace(" ", "");
+			
 			if (liftType.equalsIgnoreCase("BOTTOM")) {
-				lift = 0;
+				lift = LiftType.BOTTOM;
 			} else if (liftType.equalsIgnoreCase("VAULT")) {
-				lift = 5;
+				lift = LiftType.VAULT;
 			} else if (liftType.equalsIgnoreCase("SWITCH")) {
-				lift = 20;
+				lift = LiftType.SWITCH;
 			} else if (liftType.equalsIgnoreCase("SCALE")) {
-				lift = 80;
-			} else if (Double.parseDouble(liftType) >= 0) {
-				lift = Double.parseDouble(liftType);
+				lift = LiftType.SCALE;
+			} else {
+				lift = LiftType.BOTTOM;
 			}
 		}
 
 		public LiftTask makeTask(AutoControl cont) {
-			return new LiftTask(cont, lift);
+			return new LiftTask(cont, 0, lift);
 		}
 	}
 

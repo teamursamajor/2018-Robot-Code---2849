@@ -7,15 +7,20 @@ import edu.wpi.first.wpilibj.Encoder;
 
 public class LiftTask extends AutoTask {
 
+	public enum LiftType {
+		BOTTOM, VAULT, SWITCH, SCALE
+	}
+
 	private double liftHeight = 0;
 	private Encoder enMotor;
 	private DigitalInput limitSwitch = new DigitalInput(1);
-	
-	//TODO change this value
+	private LiftType lift;
+	// TODO change this value
 	double inchesPerTick = 0.011505d;
 
-	public LiftTask(ControlLayout cont, double height) {
+	public LiftTask(ControlLayout cont, double height, LiftType lift) {
 		super(cont);
+		this.lift = lift;
 		liftHeight = height;
 		enMotor = new Encoder(5, 4);
 		enMotor.setDistancePerPulse(inchesPerTick);
@@ -23,6 +28,19 @@ public class LiftTask extends AutoTask {
 
 	@Override
 	public void run() {
+		switch(lift){
+		case BOTTOM:
+			
+			break;
+		case VAULT:
+			break;
+		case SWITCH:
+			break;
+		case SCALE:
+			break;
+		default:
+			break;			
+		}
 		int tempHeight = 0;
 		double error = 0.1;
 		while (tempHeight + error > calcHeight() && tempHeight - error < calcHeight()) {

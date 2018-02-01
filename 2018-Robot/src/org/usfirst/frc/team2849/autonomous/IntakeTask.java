@@ -1,7 +1,8 @@
 package org.usfirst.frc.team2849.autonomous;
 
-import org.usfirst.frc.team2849.controls.AutoControl;
+import org.usfirst.frc.team2849.autonomous.LiftTask.LiftType;
 import org.usfirst.frc.team2849.controls.ControlLayout;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public class IntakeTask extends AutoTask {
@@ -41,7 +42,7 @@ public class IntakeTask extends AutoTask {
 			cont.setIntakeValue(0);
 			break;
 		case DEPLOY:
-			LiftTask lift = new LiftTask(cont, 4.0);
+			LiftTask lift = new LiftTask(cont, 4.0, LiftType.VAULT);
 			break;
 		default:
 			cont.setIntakeValue(0);
