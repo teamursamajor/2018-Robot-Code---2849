@@ -11,10 +11,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoSelector {
-
-	public static char robotPosition;
-	public static String[] autoPrefs;
-
 	private ArrayList<SendableChooser<String>> autoList = new ArrayList<SendableChooser<String>>();
 	private SendableChooser<Character> startingPosition = new SendableChooser<Character>();
 	
@@ -67,8 +63,7 @@ public class AutoSelector {
 		for (SendableChooser<String> chooser : autoList) {
 			prefs[i++] = chooser.getSelected();
 		}
-		autoPrefs = prefs;
-		return autoPrefs;
+		return prefs;
 	}
 	
 	public String getAutoPref(int num) {
@@ -76,8 +71,7 @@ public class AutoSelector {
 	}
 	
 	public char getStartingPosition() {
-		robotPosition = startingPosition.getSelected();
-		return robotPosition;
+		return startingPosition.getSelected();
 	}
 
 }

@@ -30,6 +30,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	Drive drive;
 	XboxController xbox;
 	AutoSelector autoSelect;
+	AutoBuilder autoBuilder;
 
 	private Intake intake;
 
@@ -45,6 +46,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		tankDriveCont = new TankDriveControl(CONTROLLER_PORT);
 		testCont = new TestControl(CONTROLLER_PORT);
 		autoCont = new AutoControl();
+		autoBuilder = new AutoBuilder(autoCont);
 		intake = new Intake(INTAKE_LEFT, INTAKE_RIGHT, tankDriveCont);
 		drive = new Drive(DRIVE_FRONT_LEFT, DRIVE_FRONT_RIGHT, DRIVE_REAR_LEFT, DRIVE_REAR_RIGHT, tankDriveCont);
 		// autoChooser.addDefault("Default Auto", kDefaultAuto);
@@ -69,7 +71,8 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	public void autonomousInit() {
 		Drive.resetNavx();
 		Drive.setControlScheme(autoCont);
-		AutoTask task = new AutoBuilder(autoCont).buildAutoMode();
+		AutoTask task = autoBuilder
+				.buildAutoMode(autoBuilder.pickAutoMode(autoSelect.getStartingPosition(), autoSelect.getAutoPrefs()));
 		task.start();
 	}
 
