@@ -29,6 +29,10 @@ public class Path {
 		nextPoint = 0;
 		this.name = name;
 	}
+	
+	public boolean isFinished() {
+		return nextPoint >= path.size();
+	}
 
 	public PointonPath findNextPoint(double pos) {
 		if (path.get(nextPoint).getPosition() <= pos)
