@@ -49,6 +49,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		autoBuilder = new AutoBuilder(autoCont);
 		intake = new Intake(INTAKE_LEFT, INTAKE_RIGHT, tankDriveCont);
 		drive = new Drive(DRIVE_FRONT_LEFT, DRIVE_FRONT_RIGHT, DRIVE_REAR_LEFT, DRIVE_REAR_RIGHT, tankDriveCont);
+		//TODO delete?
 		// autoChooser.addDefault("Default Auto", kDefaultAuto);
 		// autoChooser.addObject("My Auto", kCustomAuto);
 		// SmartDashboard.putData("Auto choices", autoChooser);
@@ -102,9 +103,8 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	// long lighttime = 0;
 	// @Override
 	public void teleopPeriodic() {
-		//// Pathfinder.findposition();//this should generally always be running
-		//// whenever
-		// //the robot is moving and therefore changing position.
+		//// Pathfinder.findposition();
+		//this should generally always be running whenever the robot is moving and therefore changing position.
 		// if(System.currentTimeMillis()-100 > lighttime){
 		// if(xbox.getButton(XboxController.BUTTON_B) == true){
 		// R = !R;
