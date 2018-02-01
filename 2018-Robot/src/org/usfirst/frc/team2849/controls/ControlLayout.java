@@ -24,7 +24,9 @@ public interface ControlLayout {
     
     public double getIntakeValue();
     
-    //Lift Methods    
+    //Lift Methods   
+    public void runLift();
+    
     public void setLiftPower(double liftPower);
     
     public double getLiftPower();
