@@ -3,6 +3,7 @@ package org.usfirst.frc.team2849.controls;
 import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
 import org.usfirst.frc.team2849.robot.Drive.DriveControl;
 import org.usfirst.frc.team2849.robot.Intake.IntakeControl;
+import org.usfirst.frc.team2849.robot.Lift.LiftControl;
 
 import edu.wpi.first.wpilibj.Spark;
 
@@ -25,6 +26,8 @@ public interface ControlLayout {
     public double getIntakeValue();
     
     //Lift Methods   
+    public LiftControl getLift(Spark left, Spark right);
+    
     public void runLift();
     
     public void setLiftPower(double liftPower);

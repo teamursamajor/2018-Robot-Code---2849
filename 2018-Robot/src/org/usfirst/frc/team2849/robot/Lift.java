@@ -12,11 +12,23 @@ public class Lift extends Thread {
 	public Lift(int channel1, int channel2, ControlLayout control){
 		motor1 = new Spark(channel1);
 		motor2 = new Spark(channel2);
-		//liftcont = control.getl
+		liftcont = control.getLift(motor1, motor2);
 		this.start();
 	}
 
-	public void run() {		
+	public void run() {	
+		while(true) {
+			liftcont.runLift();
+			try {
+				Thread.sleep(20);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static void setControlScheme(ControlLayout cont) {
+		liftcont = cont.getLift(motor1, motor2);
 	}
 	
 	public interface LiftControl {

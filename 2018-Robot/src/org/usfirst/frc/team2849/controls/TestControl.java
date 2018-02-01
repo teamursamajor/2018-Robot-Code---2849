@@ -4,6 +4,7 @@ import org.usfirst.frc.team2849.autonomous.IntakeTask;
 import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
 import org.usfirst.frc.team2849.robot.Drive.DriveControl;
 import org.usfirst.frc.team2849.robot.Intake.IntakeControl;
+import org.usfirst.frc.team2849.robot.Lift.LiftControl;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -97,6 +98,12 @@ public class TestControl extends XboxController implements ControlLayout {
 	public void runLift() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public LiftControl getLift(Spark left, Spark right) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
