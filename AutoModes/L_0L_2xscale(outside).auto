@@ -3,36 +3,36 @@
 
 #deliver cube to scale
 bundle {
-   serial {
-      intake deploy
-      lift scale
-   }
+   intake deploy
    serial {
       drive 310
       turn to 90
-      drive 25
    }
+}
+bundle {
+   lift scale
+   drive 25
 }
 intake out
+
 #pick up a second cube (outside path)
 bundle {
-   serial {
-      lift bottom
-      intake in
-   }
-   serial {
-      drive -5   
-      turn to 180
-      drive 120
-      turn to 90
-      drive 20
-   }
+   lift bottom
+   drive -5
 }
+turn to 180
+drive 120
+turn to 90
+bundle {
+   intake in
+   drive 20
+}
+
+
 #deliver second cube
 bundle {
    lift scale
-   serial {
-      turn to 0
-      drive 100
-   }
+   turn to 0
+}
+drive 100
 intake out

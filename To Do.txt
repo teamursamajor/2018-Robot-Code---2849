@@ -21,6 +21,7 @@ meld (visual merge tool)
 password recovery software (windows 10 compatible)
 limelight
 hackerman
+update eclipse
 
 Future Plans:
 First Comp      | Auto Modes Booklet (Google Doc and QR Code)
