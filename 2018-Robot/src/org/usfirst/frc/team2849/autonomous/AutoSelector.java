@@ -4,9 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.usfirst.frc.team2849.autonomous.*;
-
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -22,14 +19,24 @@ public class AutoSelector {
 		for (int i = 0; i < numChoosers; i++) autoList.add(new SendableChooser<String>());
 		sendAutoModes(findAutoModes());
 	}
-
-	public String[] findAutoModes() {
+	
+	public static File[] findAutoFiles() {
+		File[] autoFiles;
 		File autoDirectory = new File("/home/lvuser/AutoModes/");
-		String[] names;
 		if (autoDirectory.isDirectory()) {
-			File[] autoFiles = autoDirectory.listFiles((File dir, String name) -> {
+			autoFiles = autoDirectory.listFiles((File dir, String name) -> {
 				return name.matches(".*auto");
 			});
+		} else {
+			autoFiles = null;
+		}
+		return autoFiles;
+	}
+
+	public String[] findAutoModes() {
+		String[] names;
+		File[] autoFiles = findAutoFiles();
+		if (autoFiles != null) {
 			names = new String[autoFiles.length];
 			for (int i = 0; i < autoFiles.length; i++) {
 				names[i] = autoFiles[i].getName().substring(5, autoFiles[i].getName().length() - 5);
