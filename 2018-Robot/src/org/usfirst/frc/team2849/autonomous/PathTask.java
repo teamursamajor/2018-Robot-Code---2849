@@ -15,7 +15,7 @@ public class PathTask extends AutoTask {
 		super(cont);
 		leftPath = paths[0];
 		rightPath = paths[1];
-		follower = new Pathfollower(0, 0, 0, 0, 0, 0);
+		follower = new Pathfollower(1.5, 0, 0, 1.0/paths[0].getMaxVel(), 1.0/34, 3.0/80);
 	}
 
 	@Override
@@ -30,6 +30,11 @@ public class PathTask extends AutoTask {
 			steer = follower.getSteering(leftPath.findNextPoint(Drive.getLeftEncoder()), Drive.getHeading());
 			
 			cont.setPower(leftPower + steer, rightPower - steer);
+			try {
+				Thread.sleep((long) (leftPath.getDt() * 100));
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

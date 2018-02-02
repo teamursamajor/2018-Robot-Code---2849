@@ -30,6 +30,7 @@ public class AutoSelector {
 		} else {
 			autoFiles = null;
 		}
+		"hi".replaceAll("0", ".");
 		return autoFiles;
 	}
 

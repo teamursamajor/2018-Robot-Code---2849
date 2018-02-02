@@ -11,6 +11,7 @@ public class Path {
 	private int nextPoint;
 	private String name;
 	private double dt;
+	private double maxVel;
 
 	public Path() {
 		path = new ArrayList<PointonPath>();
@@ -101,6 +102,10 @@ public class Path {
 	
 	public double getDt() {
 		return dt;
+	}
+	
+	public double getMaxVel() {
+		return maxVel;
 	}
 
 	public int numPoints() {
@@ -204,6 +209,7 @@ public class Path {
 		PointonPath approxPoint;
 		ArrayList<PointonPath> mappedPath = new ArrayList<PointonPath>();
 		TrapVelocityProfile trap = new TrapVelocityProfile(1, 10, .1, path.get(path.size() - 1).getPosition());
+		maxVel = trap.getMaxVel();
 		dt = trap.getDt();
 		for (Node point : trap.getNodes()) {
 			approxPoint = pointAt(point.getDist());
