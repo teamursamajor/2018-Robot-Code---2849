@@ -1,0 +1,30 @@
+Priorities:
+Fix Auto Modes
+Mount Camera / Get USB Extenders
+Place Logger Calls
+Diagonal Autos
+Controller layouts -> make test and arcade, complete tankDrive methods
+Test Picking Auto Modes/Auto Modes/Logging/Vision/AutoChooser/Pathfinder
+Finish Auto Modes + Make More
+Comment Code
+
+Lift Heights:
+Bottom - 0
+Vault - 1.75
+Switch - 20
+Scale - 75
+
+Ongoing:
+dropbox with the jars/gitbash?
+sourcetree
+meld (visual merge tool)
+password recovery software (windows 10 compatible)
+limelight
+hackerman
+
+Future Plans:
+First Comp      | Auto Modes Booklet (Google Doc and QR Code)
+First Comp      | Programming Pamphlet
+First Comp      | LEDs
+District Champs | Image Processing the Cube
+District Champs | Display Auto Modes on Overlay
