@@ -12,8 +12,11 @@ bundle {
 }
 
 bundle {
-   lift switch
    drive 40
+   serial {
+      wait 1
+      lift switch
+   }
 }
 intake out
 
