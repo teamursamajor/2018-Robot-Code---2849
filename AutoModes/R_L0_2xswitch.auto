@@ -12,8 +12,11 @@ bundle {
 
 #dropping first box
 bundle {
+   drive 70
+   serial {
+      wait 1
       lift switch
-      drive 70
+   }
 }
 intake out
 bundle {
