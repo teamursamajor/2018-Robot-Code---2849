@@ -25,10 +25,10 @@ public class IntakeTask extends AutoTask {
 			break;
 		// Ejects box
 		case OUT:
-			while (!intakeBeam.get()) {
+//			while (!intakeBeam.get()) {
 				cont.setIntakeValue(-0.5);
-			}
-			cont.setIntakeValue(0);
+//			}
+//			cont.setIntakeValue(0);
 			break;
 		// Stops all functions
 		case STOP:
@@ -36,10 +36,10 @@ public class IntakeTask extends AutoTask {
 			break;
 		// Uses Break Beam
 		case IN:
-			while (intakeBeam.get()) {
+//			while (intakeBeam.get()) {
 				cont.setIntakeValue(0.5);
-			}
-			cont.setIntakeValue(0);
+//			}
+//			cont.setIntakeValue(0);
 			break;
 		case DEPLOY:
 			LiftTask lift = new LiftTask(cont, 4.0, LiftType.VAULT);
