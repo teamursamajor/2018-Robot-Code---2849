@@ -4,38 +4,37 @@
 #center of the robot is 16 inch right from center
 #deliver first cube
 bundle {
-   serial {
-      intake deploy
-      lift switch
-   }
+   intake deploy
    serial {
       drive 168
       turn -90
-      drive 40
    }
+}
+
+bundle {
+   lift switch
+   drive 40
 }
 intake out
+
 #pick up another cube
 bundle {
-   serial {
-      lift bottom
-      intake in
-   }
-   serial {
-      drive -5
-      turn BY -90
-      drive 28
-      turn BY 90
-      drive 70
-   }
+   lift bottom
+   drive -5
 }
+turn BY -90
+drive 28
+turn BY 90
+bundle {
+   intake in
+   drive 70
+}
+
 #deliver second cube
 bundle {
    lift scale
-   serial {
-      drive -30
-      turn BY 90
-      drive 30    
-   }
+   drive -30
 }
+turn BY 90
+drive 30    
 intake out
