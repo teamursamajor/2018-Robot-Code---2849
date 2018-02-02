@@ -15,13 +15,13 @@ bundle {
       drive 12
       turn TO 180
       drive 5
-
+   }
+bundle {
+    serial {
       #delivering cube
       intake out
       wait 1
       intake stop
    }
 }
-
-#intake code
 intake out

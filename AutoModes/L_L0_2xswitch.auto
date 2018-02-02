@@ -6,13 +6,12 @@ bundle {
       lift switch
    }
    serial {
-#dropping first box
-      drive 70
-      turn by -90
-      drive 175
+      drive 100
+      turn to 90 
+      drive 85
       turn to 0
-      drive 70
-    }
+      drive 40
+	}
 intake out
 bundle {
    serial {
@@ -20,20 +19,19 @@ bundle {
       intake in
    }
    serial {
-#picking up second box
+      #picking up a cube
       drive -10
-      turn by 90
-      drive 15
+      turn to 90
+      drive 30
    }
 }
 bundle {
    lift switch
-   serial {     
-#dropping second box
-      drive -10
+   serial {
+      #delivering to switch
+      drive -30
       turn to 0
       drive 10
-   }
+    }
 }
 intake out
-
