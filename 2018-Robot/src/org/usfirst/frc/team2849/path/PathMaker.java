@@ -74,10 +74,11 @@ public class PathMaker {
 		System.out.println("outputed");
 	}
 	public static void input() {
-		path = new PathReader("outsepped.txt",false).getLeftPath().getPoints();
+		ArrayList<PointonPath> pathl = new PathReader("outsepped.txt",false).getLeftPath().getPoints();
+		ArrayList<PointonPath> pathr = new PathReader("outsepped.txt",false).getLeftPath().getPoints();
 		ArrayList<PointonPath> copy = new ArrayList<PointonPath>();
-		for(PointonPath p : path) {
-			copy.add(new PointonPath(p.x,p.y,copy.size()));
+		for(int i=0;i<pathl.size();i++) {
+			copy.add(new PointonPath((pathl.get(i).x+pathr.get(i).x)/2,(pathl.get(i).y+pathr.get(i).y)/2,copy.size()));
 		}
 		path=copy;
 		PathMaker.overlay=new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
