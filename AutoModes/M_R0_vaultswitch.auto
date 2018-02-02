@@ -1,50 +1,41 @@
 #M_R*_vaultswitch.auto
 #frame is 12 inches from right vault tape
 #center of robot is on center line
-bundle {
-   serial {
-      #brings the intake down and lifts elevator to switch height
-      #change if necessary
-      intake deploy
-      lift switch
-   }
-   serial {
-      #moving to vault
-      drive 5
-      turn to -90
-      drive 12
-      turn to 180
-      drive 5
-    }
-bundle {
-   serial {
-      #delivering cube
-      intake out
-      wait 1
-      intake stop
-   }
-   serial {
-      #picking up another cube
-      drive -5
-      turn to 0
-      drive 58
-      turn to 90
-      drive 120
-      turn to 0
-      drive 80
-      turn to -90
-      drive 30
-      intake in
-      wait 1.5
-      intake stop
-    }
-bundle {
-   serial {
-      #delivering cube
-      drive -13
-      turn TO 0
-      drive 13      
-   }
+bundle{
+   intake deploy
+   #moving to vault
+   drive 5
 }
+turn to -90
+drive 12
+turn to 180
+bundle{
+   drive 5
+   lift vault
+}
+intake out
 
+#delivering cube
+bundle {
+   lift bottom
+   drive -5
+}
+turn to 0
+drive 58
+turn to 90
+drive 120
+turn to 0
+drive 80
+turn to -90
+bundle{
+drive 30
+intake in
+}
+#delivering cube
+drive -13
+turn TO 0
+bundle{
+   drive 13
+   lift switch
+}
 intake out
