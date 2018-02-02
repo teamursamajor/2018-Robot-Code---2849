@@ -1,37 +1,35 @@
 #<start position>_<switch side><scale side>_<name>.auto
 #<robot reference point> is <number> inches from <field reference point>
 bundle {
-   serial {
-      intake deploy
-      lift switch
-   }
+   intake deploy
    serial {
       drive 80
       turn to 90
       drive 170
       turn to 0
-      drive 60
-   }
-intake out
-bundle {
-   serial {
-      lift bottom
-      intake in
-   }
-   serial {
-      #picking up a cube
-      drive -10
-      turn to -90
-      drive 30
    }
 }
 bundle {
    lift switch
-   serial {
-      #delivering to switch
-      drive -30
-      turn to 0
-      drive 10
-    }
+   drive 60
 }
+intake out
+bundle {
+   lift bottom
+   drive -10
+}
+turn to -90
+bundle {
+   intake in
+   #picking up a cube
+   drive 30
+}
+
+#delivering to switch
+bundle {
+   lift switch
+   drive -30
+}
+turn to 0
+drive 10
 intake out
