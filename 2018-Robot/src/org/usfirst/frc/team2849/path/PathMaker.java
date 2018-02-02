@@ -33,7 +33,7 @@ public class PathMaker {
 		PathMaker.init();
 	}
 	static JFrame frame;
-	static String[] presets = new String[] { "auto1", "auto2", "auto3", "auto4" };
+	static String[] presets = new String[] { "auto1", "auto2", "auto3", "auto4" };//later some function to look at names of files
 	static BufferedImage field;//picture of field
 	static BufferedImage overfield;//picture of obstacles
 	static BufferedImage overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);//image drawn on to make path
@@ -74,10 +74,11 @@ public class PathMaker {
 		System.out.println("outputed");
 	}
 	public static void input() {
-		path = new PathReader("outsepped.txt",false).getLeftPath().getPoints();
+		ArrayList<PointonPath> pathl = new PathReader("outsepped.txt",false).getLeftPath().getPoints();
+		ArrayList<PointonPath> pathr = new PathReader("outsepped.txt",false).getLeftPath().getPoints();
 		ArrayList<PointonPath> copy = new ArrayList<PointonPath>();
-		for(PointonPath p : path) {
-			copy.add(new PointonPath(p.x,p.y,copy.size()));
+		for(int i=0;i<pathl.size();i++) {
+			copy.add(new PointonPath((pathl.get(i).x+pathr.get(i).x)/2,(pathl.get(i).y+pathr.get(i).y)/2,copy.size()));
 		}
 		path=copy;
 		PathMaker.overlay=new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
@@ -85,7 +86,9 @@ public class PathMaker {
 		frame.repaint();
 		frame.dispatchEvent(new MouseWheelEvent (frame,0,0,0,0,0,0,false, 3,1,0));
 	}
-
+	//starting point set, set te startin point by text eild with distance from left wall
+	//clear button
+	//also get around to loading specific ones
 	static void init() {
 		frame = new JFrame() ;
 		frame.setLayout(null);
@@ -153,7 +156,10 @@ public class PathMaker {
 			public void mouseMoved(MouseEvent e) {}
 		});
 		fieldPanel.addMouseListener(new MouseListener() {
-			public void mouseClicked(MouseEvent e) {}
+			public void mouseClicked(MouseEvent e) {
+				path.add(new PointonPath(e.getX(), e.getY(), path.size()));
+				frame.repaint();
+			}
 			public void mouseEntered(MouseEvent e) {}
 			public void mouseExited(MouseEvent e) {}
 			public void mousePressed(MouseEvent e) {}
@@ -233,6 +239,11 @@ public class PathMaker {
 				g.fill3DRect(70, 10, 50, 30, true);
 				g.setColor(Color.black);
 				g.drawString("Read",75,30);
+				
+				g.setColor(Color.white);
+				g.fill3DRect(130, 10, 50, 30, true);
+				g.setColor(Color.black);
+				g.drawString("Clear",135,30);
 			}
 		};
 		frame.add(menupanel);
@@ -240,11 +251,14 @@ public class PathMaker {
 		menupanel.setLocation(625, 0);
 		menupanel.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
-				if (e.getX() > 10 & e.getX() < 60 & e.getY() > 10 & e.getY() < 40) {
+				if (e.getX() > 10 & e.getX() < 10+50 & e.getY() > 10 & e.getY() < 40) {
 					output();
 				}
 				if (e.getX() > 70 & e.getX() < 70+50 & e.getY() > 10 & e.getY() < 40) {
 					input();
+				}
+				if (e.getX() > 130 & e.getX() < 130+50 & e.getY() > 10 & e.getY() < 40) {
+					clearpath();
 				}
 			}
 			public void mouseEntered(MouseEvent e) {}
@@ -254,6 +268,22 @@ public class PathMaker {
 		});
 		
 		frame.setVisible(true);
+	}
+	public static void clearpath() {
+		for(int i=0;i<path.size();) {
+			PathMaker.frame.repaint();
+			PathMaker.path.remove(i);
+			PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+			if (-PathMaker.pointpaneltranslate > PointonPath.h
+					* (PathMaker.path.size() - 800 / PointonPath.h + 1)) {
+				if (PathMaker.path.size() > 800 / PointonPath.h + 1)
+					PathMaker.pointpaneltranslate = -PointonPath.h
+							* (PathMaker.path.size() - 800 / PointonPath.h + 1);
+				else
+					PathMaker.pointpaneltranslate = 0;
+			}
+		}
+		frame.repaint();
 	}
 	private static double negmod(double atan2, double modvalue) {
 		while (atan2 < 0) {

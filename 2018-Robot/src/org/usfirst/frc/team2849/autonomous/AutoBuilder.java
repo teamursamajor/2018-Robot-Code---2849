@@ -281,19 +281,42 @@ public class AutoBuilder {
 		}
 	}
 
-	// TODO fix this
-	public String pickAutoMode(char robotPosition, String[] autoPrefs) {
+	/**
+	 * Gets the switch/scale side from the FMS, and finds an Auto Mode file
+	 * which finds robot's position and switch/scale ownership and performs the
+	 * highest task in the ranked list of tasks from the SmartDashboard that
+	 * matches the current setup.
+	 * 
+	 * @param robotPosition
+	 *            The side our robot starts on. L, M, or R.
+	 * @param autoPrefs
+	 *            String array of ranked Auto Modes
+	 * @param autoFiles
+	 *            File array of all files in the AutoModes folder
+	 * @return String name of the auto file to run
+	 */
+	public String pickAutoMode(char robotPosition, String[] autoPrefs, File[] autoFiles) {
+		// Gets the ownership information from the FMS
 		String sides = DriverStation.getInstance().getGameSpecificMessage();
 		char switchSide = sides.charAt(0);
 		char scaleSide = sides.charAt(1);
-		String compatibleAuto = "0_00_drive.auto";
+		String compatibleAuto = "/home/lvuser/AutoModes/0_00_drive.auto";
+		String desiredAuto = "/home/lvuser/AutoModes/0_00_drive.auto";
+		String fileName = "";
 
+		// Checks each autoPreference (ex: 2xscale) in the String[] of
+		// preferences for one which matches our current setup
 		for (String autoPreference : autoPrefs) {
-
-			if (new File("/home/lvuser/AutoModes/" + robotPosition + "_" + switchSide + scaleSide + "_" + autoPreference
-					+ ".auto").exists()) {
-				compatibleAuto = robotPosition + "_" + switchSide + scaleSide + "_" + autoPreference + ".auto";
-				break;
+			desiredAuto = "/home/lvuser/AutoModes/" + robotPosition + "_" + switchSide + scaleSide + "_"
+					+ autoPreference + ".auto";
+			// Checks each file in our AutoModes folder for one which has a name
+			// indicating compatibility with our current situation
+			for (File autoFile : autoFiles) {
+				//Replaces all the 0s in the file name with a . so that the RegEx can detect it
+				fileName = autoFile.getName().replaceAll("0", ".");
+				if (desiredAuto.matches(fileName)) {
+					compatibleAuto = autoFile.getName();
+				}
 			}
 		}
 

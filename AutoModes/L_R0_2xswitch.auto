@@ -3,16 +3,14 @@
 bundle {
    intake deploy
    serial {
-      drive 70
-      turn by -90
-      drive 175
+      drive 80
+      turn to 90
+      drive 170
       turn to 0
-    }
+   }
 }
-
-#dropping first box
 bundle {
-   drive 70
+   drive 60
    serial {
       wait 1
       lift switch
@@ -23,16 +21,17 @@ bundle {
    lift bottom
    drive -10
 }
-turn by 90
+turn to -90
 bundle {
    intake in
-#picking up second box
-   drive 15
+   #picking up a cube
+   drive 30
 }
+
+#delivering to switch
 bundle {
-   lift switch   
-#dropping second box
-   drive -10
+   lift switch
+   drive -30
 }
 turn to 0
 drive 10

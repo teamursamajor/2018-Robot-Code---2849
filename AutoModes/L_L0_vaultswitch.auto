@@ -2,20 +2,19 @@
 #left bumper is on the corner wall
 #delivering cube to vault
 bundle {
-   serial {
-      intake deploy
-      lift vault
-   }
-   serial {
-      drive 10
-      turn by 90
-      #needs refining, just estimation
-      drive 60
-      turn by 90
-      drive 10
-   }
+   intake deploy
+   drive 10
+}
+ turn by 90
+ #needs refining, just estimation
+ drive 60
+ turn by 90
+ bundle {
+    lift vault
+    drive 10
 }
 intake out
+
 #picking up second cube
 bundle {
    serial {
@@ -31,14 +30,12 @@ bundle {
    }
 }
 #drop off cube at switch
+drive -10
+turn by 180
+drive 20
+turn by 90
 bundle {
+   drive 30
    lift switch
-   serial {
-      drive -10
-      turn by 180
-      drive 20
-      turn by 90
-      drive 30
-   }
 }
 intake out
