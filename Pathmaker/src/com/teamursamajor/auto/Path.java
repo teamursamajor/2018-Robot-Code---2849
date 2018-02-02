@@ -177,7 +177,12 @@ public class Path {
 	
 	public double getSmallestAngleBetween(double angle1, double angle2) {
 		double diff = Math.abs(angle2 - angle1);
-		return diff > 180 ? 360 - diff : diff;
+		
+		if (diff > 180) {
+			return Math.signum(angle2 - angle1) * (360 - diff);
+		} else  {
+			return Math.signum(angle2 - angle1) * diff;
+		}
 		// if (diff > 180) return (360 - diff);
 		// else return diff;
 	}
@@ -188,7 +193,7 @@ public class Path {
 		System.out.println(dist);
 		System.out.println(neighbors[0]);
 		System.out.println(neighbors[1]);
-		double dir = neighbors[0].getDirection() + (getSmallestAngleBetween(neighbors[0].getDirection(), neighbors[1].getDirection()) / (neighbors[0].getPosition() - neighbors[1].getPosition()));
+		double dir = neighbors[0].getDirection() + (dist - neighbors[0].getPosition()) * (getSmallestAngleBetween(neighbors[0].getDirection(), neighbors[1].getDirection()) / (neighbors[1].getPosition() - neighbors[0].getPosition()));
 		double radDir = Math.toRadians(dir);
 		double xft = neighbors[0].xft + (Math.abs(dist - neighbors[0].getPosition()) * Math.cos(radDir));
 		double yft = neighbors[0].yft + (Math.abs(dist - neighbors[0].getPosition()) * Math.sin(radDir));

@@ -3,10 +3,8 @@
 #center of robot is on center line
 bundle {
    serial {
-      #brings the intake down and lifts elevator to switch height
-      #change if necessary
       intake deploy
-      lift switch
+      lift vault
    }
    serial {
       #moving to vault
@@ -15,28 +13,30 @@ bundle {
       drive 12
       turn TO 180
       drive 5
-
-      #delivering cube
-      intake out
-      wait 1
-      intake stop
-
+   }
+}
+intake out
+bundle {
+   serial {
+      lift bottom
+      intake in
+   }
+   serial {
       #picking up another cube
       drive -5
       turn TO 0
       drive 125
       turn to 90
       drive 3
-      intake in
-      wait 1.5
-      intake stop
-
+   }
+}
+bundle {
+   lift switch
+   serial {
       #delivering cube
       drive -13
       turn TO 0
-      drive 13      
+      drive 13
    }
 }
-
-#intake code
 intake out

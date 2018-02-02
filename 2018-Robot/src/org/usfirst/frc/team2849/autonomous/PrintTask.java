@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2849.autonomous;
 
-import org.usfirst.frc.team2849.controls.AutoControl;
+import org.usfirst.frc.team2849.controls.ControlLayout;
 
 /* PrintTask
  *     Prints the arguments sent to it
@@ -12,7 +12,7 @@ public class PrintTask extends AutoTask {
 	private String str; //The string that you want to print
 	
 	//Instantiate the class by setting variable str to the argument passed to the class
-	public PrintTask(AutoControl cont, String str) {
+	public PrintTask(ControlLayout cont, String str) {
 		super(cont);
 		this.str = str;
 	}

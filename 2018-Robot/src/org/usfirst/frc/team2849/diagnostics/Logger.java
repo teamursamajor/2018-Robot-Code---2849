@@ -51,7 +51,7 @@ public class Logger {
 		String output = prelog + " " + info;
 		write(output);
 	}
-	//
+	//TODO why are these empty -20XX
 	void initLogFile() {
 		
 	}
@@ -102,10 +102,8 @@ public class Logger {
 			}
 		}
 	}
-	
 
-
-	
+	//TODO why exist this does
 	public static void main(String[] args) {
 	}
 	

@@ -1,14 +1,11 @@
 #L_*R_scale.auto
-#left bumper is on corner with vault
+#left bumper is on corner with exchange
 bundle {
    serial {
-      #brings the intake down and lifts elevator to switch height
-      #change if necessary
       intake deploy
       lift scale
    }
    serial {
-      #put code here
       drive 200
       turn TO 90
       
@@ -19,5 +16,4 @@ bundle {
       drive 100
    }
 }
-
 intake out

@@ -1,7 +1,11 @@
 package org.usfirst.frc.team2849.controls;
 
+import org.usfirst.frc.team2849.autonomous.IntakeTask;
+import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
 import org.usfirst.frc.team2849.robot.Drive;
 import org.usfirst.frc.team2849.robot.Drive.DriveControl;
+import org.usfirst.frc.team2849.robot.Intake.IntakeControl;
+import org.usfirst.frc.team2849.robot.Lift.LiftControl;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -11,6 +15,9 @@ public class AutoControl implements ControlLayout {
 	
 	private double leftPower;
 	private double rightPower;
+	private double intakeValue;
+	private double liftHeight;
+	private double liftPower;
 	
 	public AutoControl() {
 		leftPower = 0;
@@ -41,23 +48,57 @@ public class AutoControl implements ControlLayout {
 	}
 
 	@Override
-	public boolean runningIntakeIn() {
-		return false;
+	public void setIntakeValue(double intakeValue) {
+		// TODO Auto-generated method stub
+		this.intakeValue=intakeValue;
 	}
 
 	@Override
-	public boolean runningIntakeOut() {
-		return false;
+	public void setLiftHeight(double liftHeight) {
+		this.liftHeight = liftHeight;
 	}
 
 	@Override
-	public boolean runningElevatorUp() {
-		return false;
+	public double getLiftHeight() {
+		return liftHeight;
 	}
 
 	@Override
-	public boolean runningElevatorDown() {
-		return false;
+	public void setLiftPower(double liftPower) {
+		this.liftPower = liftPower;		
+	}
+
+	@Override
+	public double getLiftPower() {
+		return liftPower;
+	}
+
+	@Override
+	public IntakeControl getIntake(Spark left, Spark right) {
+		left.setInverted(true);
+		return () -> { left.set(getIntakeValue()); right.set(getIntakeValue()); }; 
+	}
+
+	@Override
+	public void runIntake() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public double getIntakeValue() {
+		return intakeValue;
+	}
+
+	@Override
+	public void runLift() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public LiftControl getLift(Spark left, Spark right) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

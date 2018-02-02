@@ -1,5 +1,5 @@
 #L_*L_2xscale(inside).auto
-#left bumper is on corner with vault
+#left bumper is on corner with exchange
 bundle {
    serial {
       intake deploy
@@ -12,25 +12,24 @@ bundle {
       drive 30
       turn to 0
       drive 90
-      }
- }
- intake run
+   }
+}
+intake out
 bundle {
-    serial {
-    lift bottom
-    intake run
-    }
-    serial{
-    drive -90
-    turn to 90
-	
+   serial {
+      lift bottom
+      intake in
+   }
+   serial{
+      drive -90
+      turn to 90
    }
 }
 bundle {
-    lift scale
-    serial {
-    turn to 0
-    drive 90
-    }    
-   }
+   lift scale
+   serial {
+   turn to 0
+   drive 90
+   }    
+}
 intake out

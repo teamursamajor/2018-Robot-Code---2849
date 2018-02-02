@@ -1,36 +1,39 @@
-#<start position>_<switch side><scale side>_<name>.auto
-#<robot reference point> is <number> inches from <field reference point>
+#R_*L_2xscale.auto
+#right bumper is on corner with exchange
+#deliver first cube to scale
 bundle {
    serial {
       intake deploy
       lift scale
    }
    serial {
-      #deliver to scale
       drive 250
       turn to -90
       drive 130
       turn to 0
       drive 75
-      intake out 
    }
 }
+intake out
+#pick up another cube
 bundle {
    serial {
       lift bottom
-      intake run
+      intake in
    }
-
    serial {
-      drive -104
+      drive -100
       turn to 90
+      drive 3
    }
 }
+#deliver second cube
 bundle {
    lift scale
    serial {
-   turn to 0
-   drive to 104
+      drive -3
+      turn to 0
+      drive to 104
    }
 }
 intake out

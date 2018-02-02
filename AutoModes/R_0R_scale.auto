@@ -2,17 +2,13 @@
 #right bumper is corner with vault
 bundle {
    serial {
-      #brings the intake down and lifts elevator to switch height
-      #change if necessary
       intake deploy
       lift scale
    }
    serial {
-      #put code here
       drive 320
       turn TO -90
       drive 25
    }
 }
-
 intake out
