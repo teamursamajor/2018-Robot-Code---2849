@@ -20,9 +20,10 @@ bundle {
 turn to 180
 drive 180   
 turn to -90
-drive 25
-intake in
-
+bundle {
+   drive 25
+   intake in
+}
 #delivering the second cube
 drive -7
 turn to 0
@@ -31,5 +32,4 @@ bundle {
    lift scale
    drive 20
 }
-
 intake out

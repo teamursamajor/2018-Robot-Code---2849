@@ -28,11 +28,11 @@ bundle {
    drive 20
 }
 
-
 #deliver second cube
+turn to 0
+drive 90
 bundle {
+   drive 10
    lift scale
-   turn to 0
 }
-drive 100
 intake out
