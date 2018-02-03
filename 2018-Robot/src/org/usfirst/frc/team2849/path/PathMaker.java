@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2849.path;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Event;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -16,10 +17,16 @@ import java.io.File;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+
+import org.usfirst.frc.team2849.robot.UrsaRobot;
 
 public class PathMaker {
 	// take points accumulate dist between for path length
@@ -96,11 +103,11 @@ public class PathMaker {
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 		frame.addMouseWheelListener(new MouseWheelListener() {
 			public void mouseWheelMoved(MouseWheelEvent e) {
-				System.out.println(e.getModifiers());
-				System.out.println(e.getClickCount());
-				System.out.println(e.getScrollType());
-				System.out.println(e.getScrollAmount());
-				System.out.println(e.getWheelRotation());
+//				System.out.println(e.getModifiers());
+//				System.out.println(e.getClickCount());
+//				System.out.println(e.getScrollType());
+//				System.out.println(e.getScrollAmount());
+//				System.out.println(e.getWheelRotation());
 				double sig = e.getWheelRotation();
 				pointpaneltranslate -= sig * 1.2 * Math.PI / 4 * PointonPath.h;
 				if (pointpaneltranslate > 0) {
@@ -117,18 +124,6 @@ public class PathMaker {
 		});
 		
 		importimages();
-		
-		JPanel presetpanel = new JPanel();
-		frame.add(presetpanel);
-		JComboBox preset = new JComboBox(presets);
-		presetpanel.add(preset);
-		presetpanel.setSize(200, 50);
-		presetpanel.setLocation(0, 50);
-		preset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println(preset.getSelectedItem());
-			}
-		});
 		
 		JPanel fieldPanel = new JPanel() {
 			public void paint(Graphics g) {
@@ -267,10 +262,57 @@ public class PathMaker {
 			public void mouseReleased(MouseEvent e) {}
 		});
 		
+		
+		JPanel presetpanel = new JPanel();
+		presetpanel.setLayout(null);
+		frame.add(presetpanel);
+		presetpanel.setSize(200, 500);
+		presetpanel.setLocation(0, 0);
+		
+		JTextField distfromwall = new JTextField();
+		presetpanel.add(distfromwall);
+		distfromwall.setBounds(20,130,160,25);
+		distfromwall.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					int dist = Integer.parseInt(distfromwall.getText());
+					path.set(0,new PointonPath((leftornot?dist:27-dist)/PointonPath.xconv,UrsaRobot.Robotdepth/2/PointonPath.yconv,0));
+					PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+					PathMaker.frame.repaint();
+				}catch(Exception E) {}
+			}
+		});
+		
+		JLabel distfromwallstring = new JLabel("Distance from left wall:");
+		presetpanel.add(distfromwallstring);
+		distfromwallstring.setBounds(20,100,160,35);
+		JButton swapbutton = new JButton("Swap side");
+		swapbutton.setBounds(50,165,100,15);
+		presetpanel.add(swapbutton);
+		swapbutton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				leftornot=!leftornot;
+				distfromwallstring.setText("Distance from "+(leftornot?"left":"right")+" wall:");
+			}
+		});
+		
+		JRadioButton leftorright = new JRadioButton();
+		presetpanel.add(leftorright);
+		
+		JComboBox preset = new JComboBox(presets);
+		presetpanel.add(preset);
+		preset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		path.add(new PointonPath(27d/2/PointonPath.xconv,UrsaRobot.Robotdepth/2/PointonPath.yconv,0));
+		
 		frame.setVisible(true);
 	}
+	static boolean leftornot = true;
 	public static void clearpath() {
-		for(int i=0;i<path.size();) {
+		for(int i=1;i<path.size();) {
 			PathMaker.frame.repaint();
 			PathMaker.path.remove(i);
 			PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
