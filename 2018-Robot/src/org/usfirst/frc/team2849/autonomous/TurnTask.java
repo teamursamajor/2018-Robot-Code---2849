@@ -48,11 +48,11 @@ public class TurnTask extends AutoTask {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			cont.setPower(1 * (Math.signum(turnAmount(desiredAngle)) * powerConstant),
+			cont.setSpeed(1 * (Math.signum(turnAmount(desiredAngle)) * powerConstant),
 					-1 * (Math.signum(turnAmount(desiredAngle)) * powerConstant));
 		}
 //		Logger.log("End Angle: " + Drive.getHeading(), LogLevel.DEBUG)
-		cont.setPower(0, 0);
+		cont.setSpeed(0, 0);
 	}
 
 	private double getPower(double turnAmount) {

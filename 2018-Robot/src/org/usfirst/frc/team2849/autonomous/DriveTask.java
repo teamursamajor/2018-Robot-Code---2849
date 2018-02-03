@@ -13,11 +13,6 @@ public class DriveTask extends AutoTask {
 		this.distance = distance;
 	}
 
-	// double rightAdjust = 0.0628d;
-	// double rightAdjust = 3 * -0.062d;
-	double rightAdjust = 0;
-
-	/** overshoots 3 in */
 	public void run() {
 		int count = 0;
 
@@ -26,11 +21,13 @@ public class DriveTask extends AutoTask {
 		Drive.resetEncoders();
 		Logger.log("Current Distance: " + distance, LogLevel.DEBUG);
 		while (Math.abs(Drive.getLeftEncoder()) < Math.abs(distance)
-				&& Math.abs(Drive.getRightEncoder()) < Math.abs(distance)) {
+				|| Math.abs(Drive.getRightEncoder()) < Math.abs(distance)) {
+			
 			leftPowerConstant = getPower(Drive.getLeftEncoder(), distance);
 			rightPowerConstant = getPower(Drive.getRightEncoder(), distance);
 
-			if (count % 10 == 0 || distance == -20) {
+			//Prints twice every second
+			if (count % 25 == 0) {
 				Logger.log("Left Power Constant: " + leftPowerConstant + "\tLeft Encoder: " + Drive.getLeftEncoder(),
 						LogLevel.DEBUG);
 				Logger.log(
@@ -43,18 +40,16 @@ public class DriveTask extends AutoTask {
 			if (Math.abs(Drive.getRightEncoder()) > Math.abs(distance)) {
 				rightPowerConstant = 0;
 			}
-			cont.setPower((leftPowerConstant - rightAdjust * Math.signum(distance)) * -Math.signum(distance),
+			cont.setSpeed(leftPowerConstant * -Math.signum(distance),
 					(rightPowerConstant * -Math.signum(distance)));
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		Logger.log("Drive loop ended", LogLevel.DEBUG);
-		cont.setPower(0, 0);
-		// Drive.stop();
+		cont.setSpeed(0, 0);
 	}
 
 	public String toString() {

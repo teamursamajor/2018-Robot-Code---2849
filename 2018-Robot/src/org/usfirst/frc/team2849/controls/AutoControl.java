@@ -1,11 +1,6 @@
 package org.usfirst.frc.team2849.controls;
 
 import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
-import org.usfirst.frc.team2849.robot.Drive.DriveControl;
-
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class AutoControl implements ControlLayout {
 	
@@ -25,28 +20,20 @@ public class AutoControl implements ControlLayout {
 	}
 
 	@Override
-	public double getLeftPower() {
+	public double getLeftSpeed() {
 		return leftPower;
 	}
 	
-	public void setPower(double leftPower, double rightPower) {
+	public void setSpeed(double leftPower, double rightPower) {
 		this.leftPower = leftPower;
 		this.rightPower = rightPower;
 	}
 
 	@Override
-	public double getRightPower() {
+	public double getRightSpeed() {
 		return rightPower;
 	}
 
-	@Override
-	public DriveControl getDrive(Spark frontLeft, Spark frontRight, Spark rearLeft, Spark rearRight) {
-		SpeedControllerGroup leftSide = new SpeedControllerGroup(frontLeft, rearLeft);
-		SpeedControllerGroup rightSide = new SpeedControllerGroup(frontRight, rearRight);
-		DifferentialDrive drive = new DifferentialDrive(leftSide, rightSide);
-		return () -> { drive.tankDrive(getLeftPower(), getRightPower(), false); };
-	}
-	
 	@Override
 	public void setIntakeType(IntakeType type) {
 		intakeType = type;
@@ -86,5 +73,4 @@ public class AutoControl implements ControlLayout {
 	public double getCurrentHeight() {
 		return currentLiftHeight;
 	}
-
 }

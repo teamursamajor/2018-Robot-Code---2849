@@ -1,11 +1,6 @@
 package org.usfirst.frc.team2849.controls;
 
 import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
-import org.usfirst.frc.team2849.robot.Drive.DriveControl;
-
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class TestControl extends XboxController implements ControlLayout {
 
@@ -17,30 +12,18 @@ public class TestControl extends XboxController implements ControlLayout {
 	}
 
 	@Override
-	public double getLeftPower() {
+	public double getLeftSpeed() {
 		return super.getAxis(AXIS_LEFTSTICK_Y);
 	}
 
 	@Override
-	public double getRightPower() {
+	public double getRightSpeed() {
 		return super.getAxis(AXIS_RIGHTSTICK_Y);
 	}
 
 	@Override
-	public void setPower(double leftPower, double rightPower) {
+	public void setSpeed(double leftPower, double rightPower) {
 
-	}
-
-	@Override
-	public DriveControl getDrive(Spark frontLeft, Spark frontRight, Spark rearLeft, Spark rearRight) {
-		SpeedControllerGroup leftSide = new SpeedControllerGroup(frontLeft, rearLeft);
-		SpeedControllerGroup rightSide = new SpeedControllerGroup(frontRight, rearRight);
-		leftSide.setInverted(true);
-		rightSide.setInverted(true);
-		DifferentialDrive drive = new DifferentialDrive(leftSide, rightSide);
-		return () -> {
-			drive.tankDrive(getLeftPower(), getRightPower(), true);
-		};
 	}
 
 	@Override

@@ -1,50 +1,32 @@
 package org.usfirst.frc.team2849.controls;
 
 import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
-import org.usfirst.frc.team2849.robot.Drive.DriveControl;
-
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class TankDriveControl extends XboxController implements ControlLayout {
 
 	private double currentLiftHeight;
 	private double desiredLiftHeight;
 	private boolean hasBox;
-	
 
 	public TankDriveControl(int port) {
 		super(port);
 	}
 
 	@Override
-	public double getLeftPower() {
+	public double getLeftSpeed() {
 		return super.getAxis(AXIS_LEFTSTICK_Y);
 	}
 
 	@Override
-	public double getRightPower() {
+	public double getRightSpeed() {
 		return super.getAxis(AXIS_RIGHTSTICK_Y);
 	}
 
 	@Override
-	public DriveControl getDrive(Spark frontLeft, Spark frontRight, Spark rearLeft, Spark rearRight) {
-		SpeedControllerGroup leftSide = new SpeedControllerGroup(frontLeft, rearLeft);
-		SpeedControllerGroup rightSide = new SpeedControllerGroup(frontRight, rearRight);
-		DifferentialDrive drive = new DifferentialDrive(leftSide, rightSide);
-		return () -> {
-			drive.tankDrive(getLeftPower(), getRightPower(), true);
-		};
-	}
+	public void setSpeed(double leftPower, double rightPower) {}
 
 	@Override
-	public void setPower(double leftPower, double rightPower) {
-	}
-
-	@Override
-	public void setIntakeType(IntakeType type) {
-	}
+	public void setIntakeType(IntakeType type) {}
 
 	@Override
 	public IntakeType getIntakeType() {
@@ -74,7 +56,7 @@ public class TankDriveControl extends XboxController implements ControlLayout {
 	@Override
 	public void setDesiredHeight(double liftHeight) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

@@ -41,7 +41,7 @@ public class PathTask extends AutoTask {
 			Logger.log("R: " + rightPower, LogLevel.DEBUG);
 			steer = follower.getSteering(leftPath.findNextPoint(relTime / 1000.0), Drive.getHeading());
 			Logger.log("Steer: " + steer, LogLevel.DEBUG);
-			cont.setPower(-leftPower + steer, -rightPower - steer);
+			cont.setSpeed(-leftPower + steer, -rightPower - steer);
 			try {
 				Thread.sleep((long) (leftPath.getDt() * 1000));
 			} catch (InterruptedException e) {
@@ -51,7 +51,7 @@ public class PathTask extends AutoTask {
 		Logger.log("End", LogLevel.DEBUG);
 		Logger.log("Left Finished: " + leftPath.isFinished(), LogLevel.DEBUG);
 		Logger.log("Right Finished: " + rightPath.isFinished(), LogLevel.DEBUG);
-		cont.setPower(0, 0);
+		cont.setSpeed(0, 0);
 	}
 
 }

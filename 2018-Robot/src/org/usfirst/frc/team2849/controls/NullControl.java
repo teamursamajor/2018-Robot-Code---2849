@@ -1,29 +1,21 @@
 package org.usfirst.frc.team2849.controls;
 
 import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
-import org.usfirst.frc.team2849.robot.Drive.DriveControl;
-
-import edu.wpi.first.wpilibj.Spark;
 
 public class NullControl implements ControlLayout {
 
 	@Override
-	public double getLeftPower() {
+	public double getLeftSpeed() {
 		return 0;
 	}
 
 	@Override
-	public double getRightPower() {
+	public double getRightSpeed() {
 		return 0;
 	}
 
 	@Override
-	public DriveControl getDrive(Spark frontLeft, Spark frontRight, Spark rearLeft, Spark rearRight) {
-		return () -> {};
-	}
-
-	@Override
-	public void setPower(double leftPower, double rightPower) {}
+	public void setSpeed(double leftPower, double rightPower) {}
 
 	@Override
 	public void setIntakeType(IntakeType type) {}
