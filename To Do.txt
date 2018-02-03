@@ -1,16 +1,13 @@
 Priorities:
-Fix Joystick assignment
-Intake in when driving back
-FFIX SIDES ISSUEOIGJFOIHIOGJAPOKix sides issue
-Fix Auto Modes
+Intake in at .25 always
+Intake -> (Intake in, lift, intake in, drop, hold)
+Test sides issue
 Mount Camera / Get USB Extenders
 Encoders automatically changing speed
-Place Logger Calls
 PID closed loop control for all subsystems
-Diagonal Autos
-Controller layouts -> make test and arcade, complete tankDrive methods
+Controller layouts -> make arcade(fps), driver specific
 Test Picking Auto Modes/Auto Modes/Logging/Vision/AutoChooser/Pathfinder
-Finish Auto Modes + Make More
+Finish Auto Modes + Make More (Diagonal Autos)
 Comment Code
 
 Lift Heights:
