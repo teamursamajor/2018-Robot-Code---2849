@@ -2,14 +2,15 @@
 #left bumper is on corner with exchange
 bundle {
    serial {
-      #intake deploy
+      intake deploy
       lift switch
    }
    serial {
-      drive 139
+      drive 130
       turn TO 90
-      drive 20
+      drive 25
    }
    intake hold
 }
+wait 0.5
 intake out
