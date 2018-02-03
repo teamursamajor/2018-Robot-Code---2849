@@ -1,10 +1,7 @@
 package org.usfirst.frc.team2849.controls;
 
-import org.usfirst.frc.team2849.autonomous.IntakeTask;
 import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
-import org.usfirst.frc.team2849.robot.Drive;
 import org.usfirst.frc.team2849.robot.Drive.DriveControl;
-import org.usfirst.frc.team2849.robot.Intake.IntakeControl;
 import org.usfirst.frc.team2849.robot.Lift.LiftControl;
 
 import edu.wpi.first.wpilibj.Spark;
@@ -15,7 +12,8 @@ public class AutoControl implements ControlLayout {
 	
 	private double leftPower;
 	private double rightPower;
-	private double intakeValue;
+	private IntakeType intakeType;
+	private boolean hasBox;
 	private double liftHeight;
 	private double liftPower;
 	
@@ -48,12 +46,6 @@ public class AutoControl implements ControlLayout {
 	}
 
 	@Override
-	public void setIntakeValue(double intakeValue) {
-		// TODO Auto-generated method stub
-		this.intakeValue=intakeValue;
-	}
-
-	@Override
 	public void setLiftHeight(double liftHeight) {
 		this.liftHeight = liftHeight;
 	}
@@ -74,22 +66,6 @@ public class AutoControl implements ControlLayout {
 	}
 
 	@Override
-	public IntakeControl getIntake(Spark left, Spark right) {
-		left.setInverted(true);
-		return () -> { left.set(getIntakeValue()); right.set(getIntakeValue()); }; 
-	}
-
-	@Override
-	public void runIntake() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public double getIntakeValue() {
-		return intakeValue;
-	}
-
-	@Override
 	public void runLift() {
 		// TODO Auto-generated method stub
 		
@@ -99,6 +75,26 @@ public class AutoControl implements ControlLayout {
 	public LiftControl getLift(Spark left, Spark right) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void setIntakeType(IntakeType type) {
+		intakeType = type;
+	}
+
+	@Override
+	public IntakeType getIntakeType() {
+		return intakeType;
+	}
+
+	@Override
+	public void setHasBox(boolean hasBox) {
+		this.hasBox = hasBox;
+	}
+
+	@Override
+	public boolean hasBox() {
+		return hasBox;
 	}
 
 }

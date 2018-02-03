@@ -1,13 +1,14 @@
 package org.usfirst.frc.team2849.autonomous;
 
-import org.usfirst.frc.team2849.autonomous.LiftTask.LiftType;
-import org.usfirst.frc.team2849.autonomous.LiftTask.LiftType;
 import org.usfirst.frc.team2849.controls.ControlLayout;
-import edu.wpi.first.wpilibj.DigitalInput;
 
 public class IntakeTask extends AutoTask {
 
-	public enum IntakeType {IN, OUT, RUN, STOP, DEPLOY}
+	private long timeout = 2;
+	private long startTime;
+	public enum IntakeType {
+		IN, OUT, RUN, STOP, DEPLOY
+	}
 
 	private IntakeType intake;
 
@@ -17,37 +18,34 @@ public class IntakeTask extends AutoTask {
 	}
 
 	public void run() {
-		DigitalInput intakeBeam = new DigitalInput(0);
+		cont.setIntakeType(intake);
+		//Run just keeps running, In/Out use the sensor
 		switch (intake) {
-		// Does not use Break Beam Sensor
-		case RUN:
-			cont.setIntakeValue(0.5);
-			break;
-		// Ejects box
-		case OUT:
-			while (!intakeBeam.get()) {
-				cont.setIntakeValue(-0.5);
-			}
-			cont.setIntakeValue(0);
-			break;
-		// Stops all functions
-		case STOP:
-			cont.setIntakeValue(0);
-			break;
-		// Uses Break Beam
 		case IN:
-			while (intakeBeam.get()) {
-				cont.setIntakeValue(0.5);
+		    startTime = System.currentTimeMillis();
+			while(!cont.hasBox() || System.currentTimeMillis() - startTime < timeout){
+				try {
+					Thread.sleep(20);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
-			cont.setIntakeValue(0);
+			cont.setIntakeType(IntakeType.STOP);
 			break;
-		case DEPLOY:
-			LiftTask lift = new LiftTask(cont, 4.0, LiftType.VAULT);
+		case OUT:
+			startTime = System.currentTimeMillis();
+			while(cont.hasBox() || System.currentTimeMillis() - startTime < timeout){
+				try {
+					Thread.sleep(20);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			cont.setIntakeType(IntakeType.STOP);
 			break;
 		default:
-			cont.setIntakeValue(0);
+			System.out.println("Not In/Out Case :^)");
 			break;
-
 		}
 
 	}

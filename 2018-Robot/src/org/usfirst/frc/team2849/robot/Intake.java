@@ -1,26 +1,56 @@
 package org.usfirst.frc.team2849.robot;
 
+import org.usfirst.frc.team2849.autonomous.LiftTask;
+import org.usfirst.frc.team2849.autonomous.LiftTask.LiftType;
 import org.usfirst.frc.team2849.controls.ControlLayout;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
 
 public class Intake extends Thread {
 	
-	private static IntakeControl intake;
-	private static Spark left;
-	private static Spark right;
+	private ControlLayout cont;
+	private Spark left;
+	private Spark right;
+	private DigitalInput limitSwitch;
 	
 	public Intake(int channelLeft, int channelRight, ControlLayout cont) {
 		left = new Spark(channelLeft);
 		right = new Spark(channelRight);
-		intake = cont.getIntake(left, right);
+		this.cont = cont;
 		this.start();
 	}
 	
 	public void run() {
-		
 		while (true) {
-			intake.runIntake();
+			cont.setHasBox(hasBox());
+			//Run just keeps running, In/Out use the sensor
+			switch (cont.getIntakeType()) {
+			case RUN:
+				setIntakePower(.5);
+				break;
+			case OUT:
+				if (hasBox()) {
+					setIntakePower(-0.5);
+				} else {
+					setIntakePower(0);
+				}
+				break;
+			case STOP:
+				setIntakePower(0);
+				break;
+			case IN:
+				if(!hasBox()){
+					setIntakePower(0.5);
+				} else {
+					setIntakePower(0);
+				}
+				break;
+			default:
+				setIntakePower(0);
+				break;
+
+			}
 			try {
 				Thread.sleep(20); //because we all need breaks
 			} catch (InterruptedException e) {
@@ -29,14 +59,17 @@ public class Intake extends Thread {
 		}
 	}
 	
-	public static void setControlScheme(ControlLayout cont) {
-		intake = cont.getIntake(left, right);
-	}
-	
-	public interface IntakeControl {
-		
-		public void runIntake();
-		
+	public void setControlScheme(ControlLayout controller) {
+		cont = controller;
 	}
 
+	public void setIntakePower(double powerLevel){ 
+		//positive configuration
+		left.set(powerLevel);
+		right.set(-powerLevel);
+	}
+	//TODO add sensor
+	public boolean hasBox(){
+		return true;
+	}
 }

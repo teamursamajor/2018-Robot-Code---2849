@@ -1,10 +1,7 @@
 package org.usfirst.frc.team2849.controls;
 
-import org.usfirst.frc.team2849.autonomous.IntakeTask;
 import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
-import org.usfirst.frc.team2849.robot.Drive;
 import org.usfirst.frc.team2849.robot.Drive.DriveControl;
-import org.usfirst.frc.team2849.robot.Intake.IntakeControl;
 import org.usfirst.frc.team2849.robot.Lift.LiftControl;
 
 import edu.wpi.first.wpilibj.Spark;
@@ -13,9 +10,9 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class TankDriveControl extends XboxController implements ControlLayout {
 	
-	private double intakeValue;
 	private double liftHeight;
 	private double liftPower;
+	private boolean hasBox;
 
 	public TankDriveControl(int port) {
 		super(port);
@@ -42,19 +39,7 @@ public class TankDriveControl extends XboxController implements ControlLayout {
 	}
 
 	@Override
-	public void runIntake() {
-		if (super.getButton(BUTTON_A)) new IntakeTask(this, IntakeType.IN);
-		else if (super.getButton(BUTTON_B)) new IntakeTask(this, IntakeType.OUT);
-		else new IntakeTask(this, IntakeType.STOP);
-	}
-
-	@Override
 	public void setPower(double leftPower, double rightPower) {
-	}
-
-	@Override
-	public void setIntakeValue(double intakeValue) {
-		this.intakeValue = intakeValue;
 	}
 
 	@Override
@@ -78,17 +63,6 @@ public class TankDriveControl extends XboxController implements ControlLayout {
 	}
 
 	@Override
-	public IntakeControl getIntake(Spark left, Spark right) {
-		left.setInverted(true);
-		return () -> { left.set(getIntakeValue()); right.set(getIntakeValue()); }; 
-	}
-
-	@Override
-	public double getIntakeValue() {
-		return intakeValue;
-	}
-
-	@Override
 	public void runLift() {
 		// TODO Auto-generated method stub
 		
@@ -98,6 +72,30 @@ public class TankDriveControl extends XboxController implements ControlLayout {
 	public LiftControl getLift(Spark left, Spark right) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void setIntakeType(IntakeType type) {}
+
+	@Override
+	public IntakeType getIntakeType() {
+		if(super.getButton(BUTTON_A)){
+			return IntakeType.IN;
+		}
+		else if(super.getButton(BUTTON_B)){
+			return IntakeType.OUT;
+		}
+		return IntakeType.STOP;
+	}
+
+	@Override
+	public void setHasBox(boolean hasBox) {
+		this.hasBox = hasBox;
+	}
+
+	@Override
+	public boolean hasBox() {
+		return hasBox;
 	}
 
 }

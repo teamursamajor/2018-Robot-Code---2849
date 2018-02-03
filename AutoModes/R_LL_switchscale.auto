@@ -1,19 +1,21 @@
 #R_LL_switchscale.auto
-#<robot reference point> is <number> inches from <field reference point>
-#deliver cube to switch
+
+#depositing first cube on switch
 bundle {
+   intake deploy
+   drive 70
+}
+turn to -90
+drive 140
+turn by 90
+bundle {
+   drive 85
    serial {
-      intake deploy
+      wait 4
       lift switch
    }
-   serial {
-      drive 70
-      turn to -90
-      drive 140
-      turn by 90
-      drive 85
-   }
 }
+
 #drop off cube
 bundle {
    serial {
@@ -28,7 +30,7 @@ bundle {
 #pick up a cube
 bundle {
    serial {
-      lift vault
+      lift bottom
       intake in
    }
    serial {

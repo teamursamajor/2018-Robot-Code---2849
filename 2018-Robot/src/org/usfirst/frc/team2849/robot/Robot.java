@@ -71,7 +71,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	@Override
 	public void autonomousInit() {
 		Drive.resetNavx();
-		Drive.setControlScheme(autoCont);
+		setControlScheme(autoCont);
 		AutoTask task = autoBuilder
 				.buildAutoMode(autoBuilder.pickAutoMode(autoSelect.getStartingPosition(), autoSelect.getAutoPrefs(),AutoSelector.findAutoFiles()));
 		task.start();
@@ -86,7 +86,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	}
 
 	public void teleopInit() {
-		Drive.setControlScheme(tankDriveCont);
+		setControlScheme(tankDriveCont);
 	}
 
 	/**
@@ -157,8 +157,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 
 	public void testInit() {
 		SmartDashboard.updateValues();
-		Drive.setControlScheme(testCont);
-		Intake.setControlScheme(testCont);
+		setControlScheme(testCont);
 	}
 
 	/**
@@ -166,10 +165,21 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		testCont.runIntake();
 	}
 
 	public void disabledInit() {
 		Drive.setControlScheme(new NullControl());
+	}
+	/**
+	 * Sets the control scheme for all subsystems to the scheme parameter
+	 * @param scheme Desired control scheme
+	 */
+	public void setControlScheme(ControlLayout scheme){
+		//TODO check for any other control schemes
+		Drive.setControlScheme(scheme);
+		intake.setControlScheme(scheme);
+		Lift.setControlScheme(scheme);
+		
+		
 	}
 }

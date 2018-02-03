@@ -26,5 +26,6 @@ Future Plans:
 First Comp      | Auto Modes Booklet (Google Doc and QR Code)
 First Comp      | Programming Pamphlet
 First Comp      | LEDs
+Second Comp     | M E T A Auto Modes
 District Champs | Image Processing the Cube
 District Champs | Display Auto Modes on Overlay

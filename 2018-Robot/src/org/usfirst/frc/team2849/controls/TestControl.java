@@ -1,9 +1,7 @@
 package org.usfirst.frc.team2849.controls;
 
-import org.usfirst.frc.team2849.autonomous.IntakeTask;
 import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
 import org.usfirst.frc.team2849.robot.Drive.DriveControl;
-import org.usfirst.frc.team2849.robot.Intake.IntakeControl;
 import org.usfirst.frc.team2849.robot.Lift.LiftControl;
 
 import edu.wpi.first.wpilibj.Spark;
@@ -12,8 +10,9 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class TestControl extends XboxController implements ControlLayout {
 
-	private double intakeValue;
-	
+	private IntakeType intakeType;
+	private boolean hasBox;
+
 	public TestControl(int port) {
 		super(port);
 	}
@@ -30,7 +29,7 @@ public class TestControl extends XboxController implements ControlLayout {
 
 	@Override
 	public void setPower(double leftPower, double rightPower) {
-		
+
 	}
 
 	@Override
@@ -44,25 +43,11 @@ public class TestControl extends XboxController implements ControlLayout {
 			drive.tankDrive(getLeftPower(), getRightPower(), true);
 		};
 	}
-	
-	
-
-	@Override
-	public void runIntake() {
-		if (super.getButton(BUTTON_A)) new IntakeTask(this, IntakeType.IN);
-		else if (super.getButton(BUTTON_B)) new IntakeTask(this, IntakeType.OUT);
-		else new IntakeTask(this, IntakeType.STOP);
-	}
-
-	@Override
-	public void setIntakeValue(double intakeValue) {
-		this.intakeValue = intakeValue;
-	}
 
 	@Override
 	public void setLiftPower(double liftPower) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -74,7 +59,7 @@ public class TestControl extends XboxController implements ControlLayout {
 	@Override
 	public void setLiftHeight(double liftHeight) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -84,26 +69,35 @@ public class TestControl extends XboxController implements ControlLayout {
 	}
 
 	@Override
-	public IntakeControl getIntake(Spark left, Spark right) {
-		left.setInverted(true);
-		return () -> { left.set(getIntakeValue()); right.set(getIntakeValue()); }; 
-	}
-
-	@Override
-	public double getIntakeValue() {
-		return intakeValue;		
-	}
-
-	@Override
 	public void runLift() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public LiftControl getLift(Spark left, Spark right) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void setIntakeType(IntakeType type) {
+		intakeType = type;
+	}
+
+	@Override
+	public IntakeType getIntakeType() {
+		return intakeType;
+	}
+
+	@Override
+	public void setHasBox(boolean hasBox) {
+		this.hasBox = hasBox;
+	}
+
+	@Override
+	public boolean hasBox() {
+		return hasBox;
 	}
 
 }
