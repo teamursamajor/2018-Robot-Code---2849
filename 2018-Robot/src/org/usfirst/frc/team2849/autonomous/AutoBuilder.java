@@ -64,7 +64,6 @@ public class AutoBuilder {
 
 		public PathToken(String filename) {
 			filename = filename.replace(" ", "");
-			System.out.println("In token");
 			paths = new PathReader(filename, false).getPaths();
 		}
 
@@ -88,6 +87,8 @@ public class AutoBuilder {
 				intake = IntakeType.STOP;
 			} else if (intakeType.equalsIgnoreCase("DEPLOY")) {
 				intake = IntakeType.DEPLOY;
+			} else if (intakeType.equalsIgnoreCase("HOLD")) {
+				intake = IntakeType.HOLD;
 			} else {
 				intake = IntakeType.STOP;
 			}
@@ -157,12 +158,13 @@ public class AutoBuilder {
 		private Turntype turnType;
 
 		public TurnToken(String turn) {
-			if (turn.contains("TO")) {
+			turn = turn.toLowerCase();
+			if (turn.contains("to")) {
 				turnType = Turntype.TURN_TO;
-				turnAmount = Double.valueOf(turn.substring(turn.indexOf("TO") + "TO".length()));
+				turnAmount = Double.valueOf(turn.substring(turn.indexOf("to") + "TO".length()));
 			} else {
 				turnType = Turntype.TURN_BY;
-				turnAmount = Double.valueOf(turn.substring(turn.indexOf("BY") + "BY".length()));
+				turnAmount = Double.valueOf(turn.substring(turn.indexOf("by") + "BY".length()));
 			}
 		}
 
@@ -176,7 +178,7 @@ public class AutoBuilder {
 
 		public DriveToken(String distance) {
 			distance = distance.replace(" ", "");
-			if (Double.parseDouble(distance) >= 0) {
+			if (Math.abs(Double.parseDouble(distance)) >= 0) {
 				dist = Double.parseDouble(distance);
 			}
 		}

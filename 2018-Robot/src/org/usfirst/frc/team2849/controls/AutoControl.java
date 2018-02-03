@@ -12,8 +12,9 @@ public class AutoControl implements ControlLayout {
 	
 	private double leftPower;
 	private double rightPower;
-	private IntakeType intakeType;
-	private boolean hasBox;
+	private IntakeType intakeType = IntakeType.STOP;
+	//TODO hotfix
+	private boolean hasBox = true;
 	private double liftHeight;
 	private double liftPower;
 	

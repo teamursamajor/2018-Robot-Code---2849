@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class TankDriveControl extends XboxController implements ControlLayout {
-	
+
 	private double liftHeight;
 	private double liftPower;
 	private boolean hasBox;
@@ -65,7 +65,7 @@ public class TankDriveControl extends XboxController implements ControlLayout {
 	@Override
 	public void runLift() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -75,14 +75,14 @@ public class TankDriveControl extends XboxController implements ControlLayout {
 	}
 
 	@Override
-	public void setIntakeType(IntakeType type) {}
+	public void setIntakeType(IntakeType type) {
+	}
 
 	@Override
 	public IntakeType getIntakeType() {
-		if(super.getButton(BUTTON_A)){
+		if (super.getButton(BUTTON_A)) {
 			return IntakeType.IN;
-		}
-		else if(super.getButton(BUTTON_B)){
+		} else if (super.getButton(BUTTON_B)) {
 			return IntakeType.OUT;
 		}
 		return IntakeType.STOP;
@@ -95,7 +95,12 @@ public class TankDriveControl extends XboxController implements ControlLayout {
 
 	@Override
 	public boolean hasBox() {
-		return hasBox;
+		if (super.getButton(BUTTON_A)) {
+			return false;
+		} else if (super.getButton(BUTTON_B)) {
+			return true;
+		}
+		return false;
 	}
 
 }

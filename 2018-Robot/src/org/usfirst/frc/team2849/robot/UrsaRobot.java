@@ -7,8 +7,8 @@ public interface UrsaRobot {
 	public static final int DRIVE_REAR_LEFT = 4;
 	public static final int DRIVE_REAR_RIGHT = 0;
 	
-	public static final int INTAKE_LEFT = 8;
-	public static final int INTAKE_RIGHT = 9;
+	public static final int INTAKE_LEFT = 1;
+	public static final int INTAKE_RIGHT = 6;
 	
 	public static final int CONTROLLER_PORT = 0;
 	
