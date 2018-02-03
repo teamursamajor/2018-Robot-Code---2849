@@ -10,6 +10,7 @@ import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
 import org.usfirst.frc.team2849.autonomous.LiftTask.LiftType;
 import org.usfirst.frc.team2849.autonomous.TurnTask.Turntype;
 import org.usfirst.frc.team2849.controls.AutoControl;
+import org.usfirst.frc.team2849.controls.ControlLayout;
 import org.usfirst.frc.team2849.path.Path;
 import org.usfirst.frc.team2849.path.PathReader;
 
@@ -26,9 +27,9 @@ public class AutoBuilder {
 	interface Token {
 	}
 
-	AutoControl cont;
+	ControlLayout cont;
 
-	public AutoBuilder(AutoControl cont) {
+	public AutoBuilder(ControlLayout cont) {
 		this.cont = cont;
 	}
 
@@ -54,7 +55,7 @@ public class AutoBuilder {
 		}
 
 		// Creates a new instance of PrintTask class
-		public PrintTask makeTask(AutoControl cont) {
+		public PrintTask makeTask(ControlLayout cont) {
 			return new PrintTask(cont, str);
 		}
 	}
@@ -67,7 +68,7 @@ public class AutoBuilder {
 			paths = new PathReader(filename, false).getPaths();
 		}
 
-		public PathTask makeTask(AutoControl cont) {
+		public PathTask makeTask(ControlLayout cont) {
 			return new PathTask(cont, paths);
 		}
 	}
@@ -94,7 +95,7 @@ public class AutoBuilder {
 			}
 		}
 
-		public IntakeTask makeTask(AutoControl cont) {
+		public IntakeTask makeTask(ControlLayout cont) {
 			return new IntakeTask(cont, intake);
 		}
 	}
@@ -118,7 +119,7 @@ public class AutoBuilder {
 			}
 		}
 
-		public LiftTask makeTask(AutoControl cont) {
+		public LiftTask makeTask(ControlLayout cont) {
 			return new LiftTask(cont, 0, lift);
 		}
 	}
@@ -133,7 +134,7 @@ public class AutoBuilder {
 			}
 		}
 
-		public WaitTask makeTask(AutoControl cont) {
+		public WaitTask makeTask(ControlLayout cont) {
 			return new WaitTask(cont, (long) (wait * 1000.0d));
 		}
 	}
@@ -168,7 +169,7 @@ public class AutoBuilder {
 			}
 		}
 
-		public TurnTask makeTask(AutoControl cont) {
+		public TurnTask makeTask(ControlLayout cont) {
 			return new TurnTask(cont, turnType, turnAmount);
 		}
 	}
@@ -183,7 +184,7 @@ public class AutoBuilder {
 			}
 		}
 
-		public DriveTask makeTask(AutoControl cont) {
+		public DriveTask makeTask(ControlLayout cont) {
 			return new DriveTask(cont, (int) dist);
 		}
 	}

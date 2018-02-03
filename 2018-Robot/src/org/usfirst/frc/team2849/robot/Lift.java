@@ -6,33 +6,29 @@ import edu.wpi.first.wpilibj.Spark;
 
 public class Lift extends Thread implements UrsaRobot {
 
-	private static ControlLayout liftcont;
+	private static ControlLayout cont;
 	private static Spark motor = new Spark(LIFT);
 
 	public Lift(ControlLayout control) {
-		liftcont = control;
+		cont = control;
 		this.start();
 	}
 
 	public void run() {
+		double displacement = 0;
 		while (true) {
-			//put code here
-			liftcont.setCurrentHeight(getLiftHeight());
-			if (liftcont.getDesiredHeight() != liftcont.getCurrentHeight()) {
-				if (liftcont.getDesiredHeight() > liftcont.getCurrentHeight()) {
+			cont.setCurrentHeight(getLiftHeight());
+			displacement = cont.getDesiredHeight() - cont.getCurrentHeight();
+			if (cont.getDesiredHeight() != cont.getCurrentHeight()) {
+				if (cont.getDesiredHeight() > cont.getCurrentHeight()) {
 					motor.set(1);
-
 				}
-				if (liftcont.getDesiredHeight() < liftcont.getCurrentHeight())
-
-				{
+				if (cont.getDesiredHeight() < cont.getCurrentHeight()){
 					motor.set(-1);
-
 				}
-
 			}
 
-			if (liftcont.getDesiredHeight() == liftcont.getCurrentHeight()) {
+			if (cont.getDesiredHeight() == cont.getCurrentHeight()) {
 				motor.set(0);
 			}
 			try {
@@ -43,12 +39,12 @@ public class Lift extends Thread implements UrsaRobot {
 		}
 	}
 
-	public static void setControlScheme(ControlLayout cont) {
-		liftcont = cont;
+	public void setControlScheme(ControlLayout cont) {
+		this.cont = cont;
 	}
 
 	private double getLiftHeight() {
-		//TODO add encoder
+		// TODO add encoder
 		return 0;
 	}
 

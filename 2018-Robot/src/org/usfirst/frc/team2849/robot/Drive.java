@@ -101,7 +101,7 @@ public class Drive implements Runnable, UrsaRobot{
 			}
 		}
 	}
-
+	//TODO make all methods non static
 	/**
 	 * Kill method for driveThread
 	 */
@@ -152,7 +152,7 @@ public class Drive implements Runnable, UrsaRobot{
 		mRearRight.stopMotor();
 	}
 	
-	public static void setControlScheme(ControlLayout layout) {
+	public void setControlScheme(ControlLayout layout) {
 		cont = layout;
 	}
 

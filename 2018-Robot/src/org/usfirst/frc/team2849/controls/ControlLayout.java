@@ -27,4 +27,6 @@ public interface ControlLayout {
     public void setCurrentHeight(double liftHeight);
     
     public double getCurrentHeight();
+    
+    //LED Methods
 }
