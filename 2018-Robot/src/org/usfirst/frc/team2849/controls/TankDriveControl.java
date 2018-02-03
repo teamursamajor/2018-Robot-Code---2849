@@ -15,13 +15,13 @@ public class TankDriveControl extends XboxController implements ControlLayout {
 	@Override
 	public double getLeftSpeed() {
 		double val = super.getAxis(AXIS_LEFTSTICK_Y);
-		return val * val;
+		return val * Math.abs(val);
 	}
 
 	@Override
 	public double getRightSpeed() {
 		double val = super.getAxis(AXIS_RIGHTSTICK_Y);
-		return val * val;
+		return val * Math.abs(val);
 	}
 
 	@Override
