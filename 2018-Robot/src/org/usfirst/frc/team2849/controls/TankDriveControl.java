@@ -82,4 +82,19 @@ public class TankDriveControl extends XboxController implements ControlLayout {
 		return currentLiftHeight;
 	}
 
+	@Override
+	public boolean getR() {
+		return getRightSpeed() >= .2;
+	}
+
+	@Override
+	public boolean getG() {
+		return getLeftSpeed() >= .2;
+	}
+
+	@Override
+	public boolean getB() {
+		return hasBox();
+	}
+
 }

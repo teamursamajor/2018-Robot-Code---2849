@@ -49,4 +49,22 @@ public class NullControl implements ControlLayout {
 		return 0;
 	}
 
+	@Override
+	public boolean getR() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean getG() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean getB() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

@@ -29,4 +29,9 @@ public interface ControlLayout {
     public double getCurrentHeight();
     
     //LED Methods
+    public boolean getR();
+    public boolean getG();
+    public boolean getB();
+    
+    
 }
