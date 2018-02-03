@@ -1,0 +1,13 @@
+#L_00_vaultcube.auto
+#
+
+ 
+turn to 90
+drive 100
+turn to 180
+intake out
+turn to 0
+drive 100
+intake in
+  
+  
