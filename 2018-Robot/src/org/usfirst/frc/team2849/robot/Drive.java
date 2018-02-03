@@ -67,6 +67,7 @@ public class Drive implements Runnable, UrsaRobot{
 		double inchesPerTick = 0.011505d;
 		encL.setDistancePerPulse(inchesPerTick);
 		encR.setDistancePerPulse(inchesPerTick);
+		encL.setReverseDirection(true);
 
 		encL.reset();
 		encR.reset();

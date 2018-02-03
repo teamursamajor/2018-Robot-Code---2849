@@ -76,7 +76,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 //				autoBuilder.pickAutoMode(autoSelect.getStartingPosition(), 
 //											autoSelect.getAutoPrefs(),
 //											AutoSelector.findAutoFiles()));
-		AutoTask task = autoBuilder.buildAutoMode("/AutoModes/L_L0_switch.auto");
+		AutoTask task = autoBuilder.buildAutoMode("/AutoModes/0_00_path.auto");
 		task.start();
 	}
 

@@ -64,6 +64,7 @@ public class AutoBuilder {
 
 		public PathToken(String filename) {
 			filename = filename.replace(" ", "");
+			System.out.println("In token");
 			paths = new PathReader(filename, false).getPaths();
 		}
 

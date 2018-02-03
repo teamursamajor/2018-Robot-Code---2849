@@ -12,6 +12,7 @@ public class Path {
 	private String name;
 	private double dt;
 	private double maxVel;
+	private TrapVelocityProfile trap;
 
 	public Path() {
 		path = new ArrayList<PointonPath>();
@@ -31,14 +32,21 @@ public class Path {
 		}
 		nextPoint = 0;
 		this.name = name;
+		createVelProfile(10, 1, .1);
+	}
+	
+	public void createVelProfile(double maxVel, double maxAccel, double dt) {
+		trap = new TrapVelocityProfile(maxAccel, maxVel, dt, path.get(path.size() - 1).getPosition());
+		this.maxVel = maxVel;
+		this.dt = dt;
 	}
 	
 	public boolean isFinished() {
 		return nextPoint >= path.size();
 	}
 
-	public PointonPath findNextPoint(double pos) {
-		if (path.get(nextPoint).getPosition() <= pos)
+	public PointonPath findNextPoint(double time) {
+		if (path.get(nextPoint).getTime() <= time)
 			nextPoint++;
 		try {
 			return path.get(nextPoint);
@@ -101,6 +109,7 @@ public class Path {
 	}
 	
 	public double getDt() {
+		System.out.println("dt: " + dt);
 		return dt;
 	}
 	
@@ -208,9 +217,6 @@ public class Path {
 		System.out.println(path.get(0));
 		PointonPath approxPoint;
 		ArrayList<PointonPath> mappedPath = new ArrayList<PointonPath>();
-		TrapVelocityProfile trap = new TrapVelocityProfile(1, 10, .1, path.get(path.size() - 1).getPosition());
-		maxVel = trap.getMaxVel();
-		dt = trap.getDt();
 		for (Node point : trap.getNodes()) {
 			approxPoint = pointAt(point.getDist());
 			mappedPath.add(new PointonPath(point.getDist(), approxPoint.getDirection(), approxPoint.xft, approxPoint.yft, point.getTime(), point.getVel(), point.getAcc()));
