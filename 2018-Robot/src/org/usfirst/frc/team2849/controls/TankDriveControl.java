@@ -2,7 +2,6 @@ package org.usfirst.frc.team2849.controls;
 
 import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
 import org.usfirst.frc.team2849.robot.Drive.DriveControl;
-import org.usfirst.frc.team2849.robot.Lift.LiftControl;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -10,9 +9,10 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class TankDriveControl extends XboxController implements ControlLayout {
 
-	private double liftHeight;
-	private double liftPower;
+	private double currentLiftHeight;
+	private double desiredLiftHeight;
 	private boolean hasBox;
+	
 
 	public TankDriveControl(int port) {
 		super(port);
@@ -43,38 +43,6 @@ public class TankDriveControl extends XboxController implements ControlLayout {
 	}
 
 	@Override
-	public void setLiftHeight(double liftHeight) {
-		this.liftHeight = liftHeight;
-	}
-
-	@Override
-	public double getLiftHeight() {
-		return liftHeight;
-	}
-
-	@Override
-	public void setLiftPower(double liftPower) {
-		this.liftPower = liftPower;
-	}
-
-	@Override
-	public double getLiftPower() {
-		return liftPower;
-	}
-
-	@Override
-	public void runLift() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public LiftControl getLift(Spark left, Spark right) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void setIntakeType(IntakeType type) {
 	}
 
@@ -101,6 +69,28 @@ public class TankDriveControl extends XboxController implements ControlLayout {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void setDesiredHeight(double liftHeight) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public double getDesiredHeight() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setCurrentHeight(double liftHeight) {
+		currentLiftHeight = liftHeight;
+	}
+
+	@Override
+	public double getCurrentHeight() {
+		return currentLiftHeight;
 	}
 
 }

@@ -2,7 +2,6 @@ package org.usfirst.frc.team2849.controls;
 
 import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
 import org.usfirst.frc.team2849.robot.Drive.DriveControl;
-import org.usfirst.frc.team2849.robot.Lift.LiftControl;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -13,10 +12,12 @@ public class AutoControl implements ControlLayout {
 	private double leftPower;
 	private double rightPower;
 	private IntakeType intakeType = IntakeType.STOP;
+	
 	//TODO hotfix
 	private boolean hasBox = true;
-	private double liftHeight;
-	private double liftPower;
+	
+	private double currentLiftHeight;
+	private double desiredLiftHeight;
 	
 	public AutoControl() {
 		leftPower = 0;
@@ -45,39 +46,7 @@ public class AutoControl implements ControlLayout {
 		DifferentialDrive drive = new DifferentialDrive(leftSide, rightSide);
 		return () -> { drive.tankDrive(getLeftPower(), getRightPower(), false); };
 	}
-
-	@Override
-	public void setLiftHeight(double liftHeight) {
-		this.liftHeight = liftHeight;
-	}
-
-	@Override
-	public double getLiftHeight() {
-		return liftHeight;
-	}
-
-	@Override
-	public void setLiftPower(double liftPower) {
-		this.liftPower = liftPower;		
-	}
-
-	@Override
-	public double getLiftPower() {
-		return liftPower;
-	}
-
-	@Override
-	public void runLift() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public LiftControl getLift(Spark left, Spark right) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public void setIntakeType(IntakeType type) {
 		intakeType = type;
@@ -96,6 +65,26 @@ public class AutoControl implements ControlLayout {
 	@Override
 	public boolean hasBox() {
 		return hasBox;
+	}
+
+	@Override
+	public void setDesiredHeight(double liftHeight) {
+		this.desiredLiftHeight = liftHeight;
+	}
+
+	@Override
+	public double getDesiredHeight() {
+		return desiredLiftHeight;
+	}
+
+	@Override
+	public void setCurrentHeight(double liftHeight) {
+		this.currentLiftHeight = liftHeight;
+	}
+
+	@Override
+	public double getCurrentHeight() {
+		return currentLiftHeight;
 	}
 
 }

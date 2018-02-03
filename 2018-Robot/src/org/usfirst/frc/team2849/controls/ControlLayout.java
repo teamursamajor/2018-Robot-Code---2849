@@ -2,7 +2,6 @@ package org.usfirst.frc.team2849.controls;
 
 import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
 import org.usfirst.frc.team2849.robot.Drive.DriveControl;
-import org.usfirst.frc.team2849.robot.Lift.LiftControl;
 
 import edu.wpi.first.wpilibj.Spark;
 
@@ -15,7 +14,7 @@ public interface ControlLayout {
 	
 	public DriveControl getDrive(Spark frontLeft, Spark frontRight, Spark rearLeft, Spark rearRight);
 	
-	//Intake methods	
+	//Intake methods
     public void setIntakeType(IntakeType type);
     
     public IntakeType getIntakeType();
@@ -24,17 +23,12 @@ public interface ControlLayout {
 	
 	public boolean hasBox();
     
-    //Lift Methods   
-    public LiftControl getLift(Spark left, Spark right);
-    
-    public void runLift();
-    
-    public void setLiftPower(double liftPower);
-    
-    public double getLiftPower();
-    
-    public void setLiftHeight(double liftHeight);
+    //Lift Methods
+    public void setDesiredHeight(double liftHeight);
  
-    public double getLiftHeight();
+    public double getDesiredHeight();
     
+    public void setCurrentHeight(double liftHeight);
+    
+    public double getCurrentHeight();
 }

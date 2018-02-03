@@ -2,7 +2,6 @@ package org.usfirst.frc.team2849.controls;
 
 import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
 import org.usfirst.frc.team2849.robot.Drive.DriveControl;
-import org.usfirst.frc.team2849.robot.Lift.LiftControl;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -45,42 +44,6 @@ public class TestControl extends XboxController implements ControlLayout {
 	}
 
 	@Override
-	public void setLiftPower(double liftPower) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public double getLiftPower() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setLiftHeight(double liftHeight) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public double getLiftHeight() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void runLift() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public LiftControl getLift(Spark left, Spark right) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void setIntakeType(IntakeType type) {
 		intakeType = type;
 	}
@@ -98,6 +61,30 @@ public class TestControl extends XboxController implements ControlLayout {
 	@Override
 	public boolean hasBox() {
 		return hasBox;
+	}
+
+	@Override
+	public void setDesiredHeight(double liftHeight) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public double getDesiredHeight() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setCurrentHeight(double liftHeight) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public double getCurrentHeight() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

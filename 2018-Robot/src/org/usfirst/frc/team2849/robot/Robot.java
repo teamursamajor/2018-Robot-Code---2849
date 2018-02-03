@@ -150,7 +150,6 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		// Thread.sleep(1000);
 		// blue.set(false);
 		// } catch (InterruptedException e) {
-		// // TODO Auto-generated catch block
 		// e.printStackTrace();
 		// }
 		// }
