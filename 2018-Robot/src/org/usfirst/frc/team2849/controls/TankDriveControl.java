@@ -72,17 +72,22 @@ public class TankDriveControl extends XboxController implements ControlLayout {
 	}
 
 	@Override
-	public void setDesiredHeight(double liftHeight) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void setDesiredHeight(double liftHeight) {}
 
 	@Override
 	public double getDesiredHeight() {
-		// TODO Auto-generated method stub
+		if (super.getButton(BUTTON_X))
+		{	
+		return -1;
+		}	
+		if (super.getButton(BUTTON_Y))
+		{
+		return 1;	
+		}
 		return 0;
+	
 	}
-
+		
 	@Override
 	public void setCurrentHeight(double liftHeight) {
 		currentLiftHeight = liftHeight;
