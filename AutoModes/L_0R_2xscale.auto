@@ -1,35 +1,36 @@
 #L_*R_2xscale.auto
 #left bumper is on the corner wall
+#deliver first cube to scale
 bundle {
-   serial {
-      intake deploy
-      lift scale
-   }
-   serial {
-      #deliver to scale
-      drive 210
-      turn to 90
-      drive 130
-      turn to 0
-      drive 90
-   }
+   intake deploy
+   drive 210
+}
+turn to 90
+drive 130
+turn to 0
+drive 80
+bundle {
+   drive 10
+   lift scale
 }
 intake out
+
+#pick up second cube
 bundle {
-   serial {
-      lift bottom
-      intake in
-   }
-   serial{
-      drive -90
-      turn to -90
-   }
+   lift bottom
+   drive -10
 }
+drive -80
+bundle {
+   turn to -90
+   intake in
+}
+
+#deliver second cube
+turn to 0
+drive 80
 bundle {
    lift scale
-   serial {
-   turn to 0
-   drive 90
-   }    
+   drive 10
 }
 intake out

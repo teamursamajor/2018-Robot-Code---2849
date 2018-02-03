@@ -32,6 +32,8 @@ public class Drive implements Runnable, UrsaRobot{
 
 	private static Encoder encL;
 	private static Encoder encR;
+	
+	private static ControlLayout cont;
 
 	/**
 	 * Constructor for Drive class. Only one Drive object should be instantiated
@@ -53,7 +55,9 @@ public class Drive implements Runnable, UrsaRobot{
 		mRearLeft = new Spark(rearLeft);
 		mRearRight = new Spark(rearRight);
 
-		drive = contScheme.getDrive(mFrontLeft, mFrontRight, mRearLeft, mRearRight);
+		cont = contScheme;
+		
+//		drive = contScheme.getDrive(mFrontLeft, mFrontRight, mRearLeft, mRearRight);
 
 		ahrs = new AHRS(SPI.Port.kMXP);
 
@@ -63,6 +67,7 @@ public class Drive implements Runnable, UrsaRobot{
 		double inchesPerTick = 0.011505d;
 		encL.setDistancePerPulse(inchesPerTick);
 		encR.setDistancePerPulse(inchesPerTick);
+		encL.setReverseDirection(true);
 
 		encL.reset();
 		encR.reset();
@@ -132,7 +137,10 @@ public class Drive implements Runnable, UrsaRobot{
 	@Override
 	public void run() {
 		while (running) {
-			drive.drive();
+			mFrontLeft.set(cont.getLeftPower());
+			mFrontRight.set(-cont.getRightPower());
+			mRearLeft.set(cont.getLeftPower());
+			mRearRight.set(-cont.getRightPower());
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
@@ -192,7 +200,8 @@ public class Drive implements Runnable, UrsaRobot{
 	}
 	
 	public static void setControlScheme(ControlLayout layout) {
-		drive = layout.getDrive(mFrontLeft, mFrontRight, mRearLeft, mRearRight);
+		cont = layout;
+//		drive = layout.getDrive(mFrontLeft, mFrontRight, mRearLeft, mRearRight);
 	}
 	
 	public interface DriveControl {

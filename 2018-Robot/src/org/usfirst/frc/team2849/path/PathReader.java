@@ -18,11 +18,14 @@ public class PathReader {
 		} else  {
 			parse(filename);
 		}
+		leftPath.createVelProfile(10, 1, .1);
+		rightPath.createVelProfile(10, 1, .1);
 	}
 	
 	private void parse(String filename) {
 		try {
-			List<String> lines = Files.readAllLines(Paths.get(System.getProperty("user.dir") + "\\" + filename), Charset.defaultCharset());
+			System.out.println(filename);
+			List<String> lines = Files.readAllLines(Paths.get(filename), Charset.defaultCharset());
 			String state = "name";
 			for (String line : lines) {
 				if (line.equals("") || line.charAt(0) == '#') continue;

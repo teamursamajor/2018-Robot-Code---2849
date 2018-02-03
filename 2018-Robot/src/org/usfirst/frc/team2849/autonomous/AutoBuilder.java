@@ -64,6 +64,7 @@ public class AutoBuilder {
 
 		public PathToken(String filename) {
 			filename = filename.replace(" ", "");
+			System.out.println("In token");
 			paths = new PathReader(filename, false).getPaths();
 		}
 
@@ -300,14 +301,14 @@ public class AutoBuilder {
 		String sides = DriverStation.getInstance().getGameSpecificMessage();
 		char switchSide = sides.charAt(0);
 		char scaleSide = sides.charAt(1);
-		String compatibleAuto = "/home/lvuser/AutoModes/0_00_drive.auto";
-		String desiredAuto = "/home/lvuser/AutoModes/0_00_drive.auto";
+		String compatibleAuto = "/AutoModes/0_00_drive.auto";
+		String desiredAuto = "/AutoModes/0_00_drive.auto";
 		String fileName = "";
 
 		// Checks each autoPreference (ex: 2xscale) in the String[] of
 		// preferences for one which matches our current setup
 		for (String autoPreference : autoPrefs) {
-			desiredAuto = "/home/lvuser/AutoModes/" + robotPosition + "_" + switchSide + scaleSide + "_"
+			desiredAuto = "/AutoModes/" + robotPosition + "_" + switchSide + scaleSide + "_"
 					+ autoPreference + ".auto";
 			// Checks each file in our AutoModes folder for one which has a name
 			// indicating compatibility with our current situation

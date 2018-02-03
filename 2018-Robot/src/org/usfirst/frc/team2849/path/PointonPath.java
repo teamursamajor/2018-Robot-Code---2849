@@ -17,8 +17,8 @@ public class PointonPath extends JPanel {
 	protected double y;
 	protected double xft;// convert pixels to feet, look up conversion , field is 54/27ft.
 	protected double yft;
-	double xconv = 27d/* ft */ / 400/* pixels */;
-	double yconv = 54d/* ft */ / 800/* pixels */;
+	static final double xconv = 27d/* ft */ / 400/* pixels */;
+	static final double yconv = 54d/* ft */ / 800/* pixels */;
 	int precision = 2;
 	int i;
 	String message = "";
@@ -89,7 +89,7 @@ public class PointonPath extends JPanel {
 		this.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
 				// System.out.println(e.getY() + " " + (e.getY()) + " " + (10) + " " + (35));
-				if (e.getX() > 295 & e.getX() < 320 & e.getY() > 10 & e.getY() < 35) {
+				if (e.getX() > 295 & e.getX() < 320 & e.getY() > 10 & e.getY() < 35&i!=0) {
 					PathMaker.frame.repaint();
 					PathMaker.path.remove(i);
 					PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
