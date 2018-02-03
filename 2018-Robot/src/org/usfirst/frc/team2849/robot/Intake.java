@@ -23,7 +23,9 @@ public class Intake extends Thread {
 		while (true) {
 //			cont.setHasBox(hasBox());
 			//Run just keeps running, In/Out use the sensor
-			//System.out.println(cont.getIntakeType());
+//			System.out.println(cont.getIntakeType());
+//			System.out.println(cont.hasBox());
+//			System.out.println("----");
 			switch (cont.getIntakeType()) {
 			case RUN:
 				setIntakePower(.5);

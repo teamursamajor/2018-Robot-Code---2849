@@ -78,7 +78,7 @@ public class TurnTask extends AutoTask {
 			turnAmount = -180 + (turnAmount % 180);
 		else if (turnAmount < -180)
 			turnAmount = 360 + (turnAmount % 360);
-		return turnAmount;
+		return -turnAmount;
 	}
 
 	/**

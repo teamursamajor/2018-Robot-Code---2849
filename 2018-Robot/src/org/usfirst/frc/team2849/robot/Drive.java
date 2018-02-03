@@ -90,10 +90,10 @@ public class Drive implements Runnable, UrsaRobot{
 	//TODO PID
 	public void run() {
 		while (running) {
-			mFrontLeft.set(cont.getLeftSpeed());
-			mFrontRight.set(-cont.getRightSpeed());
-			mRearLeft.set(cont.getLeftSpeed());
-			mRearRight.set(-cont.getRightSpeed());
+			mFrontLeft.set(-cont.getLeftSpeed());
+			mFrontRight.set(cont.getRightSpeed());
+			mRearLeft.set(-cont.getLeftSpeed());
+			mRearRight.set(cont.getRightSpeed());
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
