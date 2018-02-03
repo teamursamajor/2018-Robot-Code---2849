@@ -1,9 +1,12 @@
 Priorities:
 Fix Joystick assignment
 Intake in when driving back
+FFIX SIDES ISSUEOIGJFOIHIOGJAPOKix sides issue
 Fix Auto Modes
 Mount Camera / Get USB Extenders
+Encoders automatically changing speed
 Place Logger Calls
+PID closed loop control for all subsystems
 Diagonal Autos
 Controller layouts -> make test and arcade, complete tankDrive methods
 Test Picking Auto Modes/Auto Modes/Logging/Vision/AutoChooser/Pathfinder
