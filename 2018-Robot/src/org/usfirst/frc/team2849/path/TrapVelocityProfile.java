@@ -102,6 +102,10 @@ public class TrapVelocityProfile {
 		return dt;
 	}
 	
+	public double getMaxVel() {
+		return maxVel;
+	}
+	
 	public ArrayList<Node> getNodes() {
 		return profile;
 	}
