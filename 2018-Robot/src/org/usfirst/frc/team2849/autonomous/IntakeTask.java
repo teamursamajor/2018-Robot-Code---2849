@@ -17,7 +17,7 @@ public class IntakeTask extends AutoTask {
 	}
 
 	public void run() {
-		DigitalInput intakeBeam = new DigitalInput(0);
+//		DigitalInput intakeBeam = new DigitalInput(0);
 		switch (intake) {
 		// Does not use Break Beam Sensor
 		case RUN:

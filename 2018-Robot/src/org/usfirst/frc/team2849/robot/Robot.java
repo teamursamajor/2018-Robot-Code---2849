@@ -72,10 +72,11 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	public void autonomousInit() {
 		Drive.resetNavx();
 		Drive.setControlScheme(autoCont);
-		AutoTask task = autoBuilder.buildAutoMode(
-				autoBuilder.pickAutoMode(autoSelect.getStartingPosition(), 
-											autoSelect.getAutoPrefs(),
-											AutoSelector.findAutoFiles()));
+//		AutoTask task = autoBuilder.buildAutoMode(
+//				autoBuilder.pickAutoMode(autoSelect.getStartingPosition(), 
+//											autoSelect.getAutoPrefs(),
+//											AutoSelector.findAutoFiles()));
+		AutoTask task = autoBuilder.buildAutoMode("/AutoModes/L_L0_switch.auto");
 		task.start();
 	}
 

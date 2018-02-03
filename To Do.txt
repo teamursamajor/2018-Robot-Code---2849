@@ -1,4 +1,6 @@
 Priorities:
+Fix Joystick assignment
+Intake in when driving back
 Fix Auto Modes
 Mount Camera / Get USB Extenders
 Place Logger Calls

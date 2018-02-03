@@ -5,9 +5,7 @@ import org.usfirst.frc.team2849.robot.Drive;
 
 public class DriveTask extends AutoTask {
 	private int distance;
-	
-	private ControlLayout cont;
-	
+		
 	public DriveTask(ControlLayout cont, int distance) {
 		super(cont);
 		this.distance = -distance;
@@ -30,6 +28,12 @@ public class DriveTask extends AutoTask {
 				rightPowerConstant = 0;
 			}
 			cont.setPower(leftPowerConstant * Math.signum(distance), rightPowerConstant * Math.signum(distance));
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		cont.setPower(0, 0);
 		// Drive.stop();

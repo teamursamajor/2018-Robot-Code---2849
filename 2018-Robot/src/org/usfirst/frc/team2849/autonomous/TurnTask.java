@@ -35,7 +35,7 @@ public class TurnTask extends AutoTask {
 		while (Math.abs(turnAmount(desiredAngle)) > 2) {
 			angle = Drive.getHeading();
 			powerConstant = getPower(turnAmount(desiredAngle));
-			if (count % 10000 == 0) {
+			if (count % 100 == 0) {
 				// and this
 				System.out.print("Current Angle: " + angle);
 				System.out.print("\tPower Constant: " + powerConstant);
@@ -45,18 +45,19 @@ public class TurnTask extends AutoTask {
 			count++;
 
 			try {
-				Thread.sleep(0);
+				Thread.sleep(20);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			cont.setPower(-1 * (Math.signum(turnAmount(desiredAngle)) * powerConstant),
-					(Math.signum(turnAmount(desiredAngle)) * powerConstant));
+			cont.setPower(1 * (Math.signum(turnAmount(desiredAngle)) * powerConstant),
+					-1 * (Math.signum(turnAmount(desiredAngle)) * powerConstant));
 		}
-		/** System.out.println("End Angle: " + Drive.getHeading()); */
+		System.out.println("End Angle: " + Drive.getHeading());
 		cont.setPower(0, 0);
 	}
 
 	private double getPower(double turnAmount) {
+		// TODO up slowest power
 		return (0.7 / (1 + Math.exp(4 - 0.06 * Math.abs(turnAmount)))) + 0.3;
 	}
 
