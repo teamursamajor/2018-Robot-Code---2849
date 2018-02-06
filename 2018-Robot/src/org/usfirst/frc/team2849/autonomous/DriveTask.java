@@ -19,6 +19,7 @@ public class DriveTask extends AutoTask {
 		double leftPowerConstant = 0;
 		double rightPowerConstant = 0;
 		Drive.resetEncoders();
+		double rightAdjust = 0.0628d;
 		Logger.log("Current Distance: " + distance, LogLevel.DEBUG);
 		while (Math.abs(Drive.getLeftEncoder()) < Math.abs(distance)
 				|| Math.abs(Drive.getRightEncoder()) < Math.abs(distance)) {
@@ -41,7 +42,7 @@ public class DriveTask extends AutoTask {
 				rightPowerConstant = 0;
 			}
 			cont.setSpeed(leftPowerConstant * -Math.signum(distance),
-					(rightPowerConstant * -Math.signum(distance)));
+					((rightPowerConstant - rightAdjust) * -Math.signum(distance)));
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {

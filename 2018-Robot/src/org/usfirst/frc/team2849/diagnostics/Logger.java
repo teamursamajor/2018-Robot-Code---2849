@@ -31,7 +31,7 @@ public class Logger {
 	public static void initLogger() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH-mm-ss");
 		Date date = new Date();
-		path = "/home/lvuser" + dateFormat.format(date);
+		path = "/home/lvuser/" + dateFormat.format(date);
 		write("");
 	}
 

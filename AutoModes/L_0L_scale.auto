@@ -9,4 +9,5 @@ bundle {
    drive 25
    lift scale
 }
+wait 0.5
 intake out

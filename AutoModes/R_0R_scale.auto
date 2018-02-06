@@ -1,15 +1,14 @@
 #R_*R_scale.auto
 #right bumper is corner with vault
 
-bundle
-  {
+bundle {
       intake deploy
       drive 320
-  } 
+} 
 turn TO -90
-bundle
-  {
+bundle {
      drive 25
      lift scale
-  }
+}
+wait 0.5
 intake out
