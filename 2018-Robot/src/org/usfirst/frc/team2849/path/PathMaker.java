@@ -1,10 +1,6 @@
 package org.usfirst.frc.team2849.path;
-import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Event;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -19,7 +15,6 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -28,7 +23,7 @@ import javax.swing.JTextField;
 
 import org.usfirst.frc.team2849.robot.UrsaRobot;
 
-public class PathMaker {
+public class PathMaker implements UrsaRobot {
 	// take points accumulate dist between for path length
 	// angle from arctan
 	// to get left and right, add left and right perpendicular to heading
@@ -61,28 +56,28 @@ public class PathMaker {
 		ArrayList<PointonPath> output = new ArrayList<PointonPath>();
 		output.add(
 				new PointonPath(totalDist,
-						negmod(Math.atan2(path.get(1).yft - path.get(0).yft,
-								path.get(1).xft - path.get(0).xft), Math.PI * 2) * (180 / Math.PI),
+						negmod(Math.atan2(path.get(1).getYInches() - path.get(0).getYInches(),
+								path.get(1).getXInches() - path.get(0).getXInches()), Math.PI * 2) * (180 / Math.PI),
 						path.get(0).xft, path.get(0).yft));
 		for (int i = 1; i < path.size(); i++) {
-			totalDist += Math.sqrt(Math.pow(path.get(i).xft - path.get(i - 1).xft, 2)
-					+ Math.pow(path.get(i).yft - path.get(i - 1).yft, 2));
+			totalDist += Math.sqrt(Math.pow(path.get(i).getXInches() - path.get(i - 1).getXInches(), 2)
+					+ Math.pow(path.get(i).getYInches() - path.get(i - 1).getYInches(), 2));
 			output.add(
 					new PointonPath(totalDist,
-							negmod(Math.atan2(path.get(i).yft - path.get(i - 1).yft,
-									path.get(i).xft - path.get(i - 1).xft), Math.PI * 2) * (180 / Math.PI),
+							negmod(Math.atan2(path.get(i).getYInches() - path.get(i - 1).getYInches(),
+									path.get(i).getXInches() - path.get(i - 1).getXInches()), Math.PI * 2) * (180 / Math.PI),
 							path.get(i).xft, path.get(i).yft));
 		}
 		Path mapped = new Path("output", output);
 		new PathWriter(new Path[] {mapped, mapped}, "outpath.txt");
 		mapped.mapVelocity();
 		new PathWriter(new Path[] {mapped, mapped}, "outmapped.txt");
-		new PathWriter(mapped.separate(1.067), "outsepped.txt");
+		new PathWriter(mapped.separate(ROBOT_WIDTH_FEET), "outsepped.txt");
 		System.out.println("outputed");
 	}
 	public static void input() {
-		ArrayList<PointonPath> pathl = new PathReader("outsepped.txt",false).getLeftPath().getPoints();
-		ArrayList<PointonPath> pathr = new PathReader("outsepped.txt",false).getLeftPath().getPoints();
+		ArrayList<PointonPath> pathl = new PathReader("outmapped.txt",false).getLeftPath().getPoints();
+		ArrayList<PointonPath> pathr = new PathReader("outmapped.txt",false).getLeftPath().getPoints();
 		ArrayList<PointonPath> copy = new ArrayList<PointonPath>();
 		for(int i=0;i<pathl.size();i++) {
 			copy.add(new PointonPath((pathl.get(i).x+pathr.get(i).x)/2,(pathl.get(i).y+pathr.get(i).y)/2,copy.size()));
@@ -276,7 +271,7 @@ public class PathMaker {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					int dist = Integer.parseInt(distfromwall.getText());
-					path.set(0,new PointonPath((leftornot?dist:27-dist)/PointonPath.xconv,UrsaRobot.Robotdepth/2/PointonPath.yconv,0));
+					path.set(0,new PointonPath((leftornot?dist:27-dist)/PointonPath.xconv,ROBOT_DEPTH_FEET/2/PointonPath.yconv,0));
 					PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
 					PathMaker.frame.repaint();
 				}catch(Exception E) {}
@@ -306,7 +301,7 @@ public class PathMaker {
 				
 			}
 		});
-		path.add(new PointonPath(27d/2/PointonPath.xconv,UrsaRobot.Robotdepth/2/PointonPath.yconv,0));
+		path.add(new PointonPath(27d/2/PointonPath.xconv,ROBOT_DEPTH_FEET/2/PointonPath.yconv,0));
 		
 		frame.setVisible(true);
 	}

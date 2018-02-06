@@ -5,7 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class PathReader {
+import org.usfirst.frc.team2849.robot.UrsaRobot;
+
+public class PathReader implements UrsaRobot {
 	
 	private Path leftPath;
 	private Path rightPath;
@@ -18,8 +20,8 @@ public class PathReader {
 		} else  {
 			parse(filename);
 		}
-		leftPath.createVelProfile(10, 1, .1);
-		rightPath.createVelProfile(10, 1, .1);
+		leftPath.createVelProfile(MAX_ACCELERATION, MAX_VELOCITY, .1);
+		rightPath.createVelProfile(MAX_ACCELERATION, MAX_VELOCITY, .1);
 	}
 	
 	private void parse(String filename) {
