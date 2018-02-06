@@ -41,6 +41,7 @@ public class DriveTask extends AutoTask {
 			if (Math.abs(Drive.getRightEncoder()) > Math.abs(distance)) {
 				rightPowerConstant = 0;
 			}
+			//TODO hot fix change
 			cont.setSpeed(leftPowerConstant * -Math.signum(distance),
 					((rightPowerConstant - rightAdjust) * -Math.signum(distance)));
 			try {
