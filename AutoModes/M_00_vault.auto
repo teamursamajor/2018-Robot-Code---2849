@@ -2,14 +2,11 @@
 #frame is 12 inches from right vault tape
 #center of robot is on center line
 bundle {
-   intake deploy
+   lift vault
    drive 5
 }
 turn TO -90
 drive 12
 turn TO 180
-bundle {
-   drive 5
-   lift vault
-}
+drive 5
 intake out
