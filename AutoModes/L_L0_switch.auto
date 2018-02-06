@@ -6,9 +6,11 @@ bundle {
       lift switch
    }
    serial {
-      drive 156
+      drive 130
       turn TO 90
-      drive 30
+      drive 25
    }
+   intake hold
 }
+wait 0.5
 intake out

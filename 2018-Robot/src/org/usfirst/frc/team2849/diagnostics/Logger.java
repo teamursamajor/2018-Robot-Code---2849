@@ -21,80 +21,69 @@ import java.util.*;
  */
 
 public class Logger {
-	
-	private static String path; //the path in which the logger writes to
-	
-	public Logger(String p){
-		path = "/home/lvuser/" + p; //sets the path variable to the parameter
+
+	private static String path; // the path in which the logger writes to
+
+	public static void initLogger(String p) {
+		path = "/home/lvuser/" + p; // sets the path variable to the parameter
 	}
-	public Logger() {
+
+	public static void initLogger() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH-mm-ss");
 		Date date = new Date();
-		path = "/home/lvuser" +dateFormat.format(date);
+		path = "/home/lvuser/" + dateFormat.format(date);
 		write("");
 	}
-	
-	//-- MM/DD/YYYY HH:MM:SS [LEVEL]- <info>
-	 void log(String info, Level l) {
+
+	// -- MM/DD/YYYY HH:MM:SS [LEVEL]- <info>
+	public static void log(String info, LogLevel l) {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
 		String level = "";
-		if(l == Level.DEBUG) {
+		if (l == LogLevel.DEBUG) {
 			level = "DEBUG";
-		}else if (l == Level.ERROR) {
+		} else if (l == LogLevel.ERROR) {
 			level = "ERROR";
-		}else if (l == Level.INFO) {
+		} else if (l == LogLevel.INFO) {
 			level = "INFO";
 		}
-		String prelog = dateFormat.format(date)+" ["+level+"]";
-		
+		String prelog = dateFormat.format(date) + " [" + level + "]";
+
 		String output = prelog + " " + info;
 		write(output);
 	}
-	//TODO why are these empty -20XX
-	void initLogFile() {
-		
-	}
-	
-	void initLogFile(String start) {
-		
-	}
-	
-	
-	public void trial(){
-		PowerDistributionPanel pdp = new PowerDistributionPanel();
-		for (int i=0;i<16;i++){
-			log("Channel "+i+" "+pdp.getCurrent(i) + ":", Level.INFO);
-		}
-		log("Temperature : "+pdp.getTemperature(),Level.INFO);
-		log("Total current : "+pdp.getTotalCurrent(), Level.INFO);
-		log("Total Energy : "+pdp.getTotalEnergy(), Level.INFO);
-		log("Total Power : "+pdp.getTotalPower(), Level.INFO);
-		log("Voltage : "+pdp.getVoltage(), Level.INFO);
-	}
-	
-	enum Level{
-		DEBUG,
-		INFO,
-		ERROR
-	}
-	
 
-	void write(String data) {
+	public static void trial() {
+		PowerDistributionPanel pdp = new PowerDistributionPanel();
+		for (int i = 0; i < 16; i++) {
+			log("Channel " + i + " " + pdp.getCurrent(i) + ":", LogLevel.INFO);
+		}
+		log("Temperature : " + pdp.getTemperature(), LogLevel.INFO);
+		log("Total current : " + pdp.getTotalCurrent(), LogLevel.INFO);
+		log("Total Energy : " + pdp.getTotalEnergy(), LogLevel.INFO);
+		log("Total Power : " + pdp.getTotalPower(), LogLevel.INFO);
+		log("Voltage : " + pdp.getVoltage(), LogLevel.INFO);
+	}
+
+	public enum LogLevel {
+		DEBUG, INFO, ERROR
+	}
+
+	public static void write(String data) {
 		File file = new File(path);
 		FileWriter fileWrite = null;
 		BufferedWriter buffWrite = null;
-		
+
 		try {
-			fileWrite = new FileWriter(file,true);
+			fileWrite = new FileWriter(file, true);
 			buffWrite = new BufferedWriter(fileWrite);
 			buffWrite.write(data);
 			buffWrite.append('\n');
-		}catch(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
-			
+
 		} finally {
-			try {				
+			try {
 				buffWrite.close();
 				fileWrite.close();
 			} catch (Exception e2) {
@@ -103,8 +92,4 @@ public class Logger {
 		}
 	}
 
-	//TODO why exist this does
-	public static void main(String[] args) {
-	}
-	
 }

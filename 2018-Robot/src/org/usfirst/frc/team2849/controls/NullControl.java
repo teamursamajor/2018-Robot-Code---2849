@@ -1,66 +1,21 @@
 package org.usfirst.frc.team2849.controls;
 
 import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
-import org.usfirst.frc.team2849.robot.Drive.DriveControl;
-import org.usfirst.frc.team2849.robot.Lift.LiftControl;
-
-import edu.wpi.first.wpilibj.Spark;
 
 public class NullControl implements ControlLayout {
 
 	@Override
-	public double getLeftPower() {
+	public double getLeftSpeed() {
 		return 0;
 	}
 
 	@Override
-	public double getRightPower() {
+	public double getRightSpeed() {
 		return 0;
 	}
 
 	@Override
-	public DriveControl getDrive(Spark frontLeft, Spark frontRight, Spark rearLeft, Spark rearRight) {
-		return () -> {};
-	}
-
-	@Override
-	public void setPower(double leftPower, double rightPower) {}
-
-	@Override
-	public void setLiftHeight(double liftHeight) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public double getLiftHeight() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setLiftPower(double liftPower) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public double getLiftPower() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void runLift() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public LiftControl getLift(Spark left, Spark right) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public void setSpeed(double leftPower, double rightPower) {}
 
 	@Override
 	public void setIntakeType(IntakeType type) {}
@@ -75,6 +30,40 @@ public class NullControl implements ControlLayout {
 
 	@Override
 	public boolean hasBox() {
+		return false;
+	}
+
+	@Override
+	public void setDesiredHeight(double liftHeight) {}
+
+	@Override
+	public double getDesiredHeight() {
+		return 0;
+	}
+
+	@Override
+	public void setCurrentHeight(double liftHeight) {}
+
+	@Override
+	public double getCurrentHeight() {
+		return 0;
+	}
+
+	@Override
+	public boolean getR() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean getG() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean getB() {
+		// TODO Auto-generated method stub
 		return false;
 	}
 

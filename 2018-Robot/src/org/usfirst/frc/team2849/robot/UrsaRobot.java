@@ -1,14 +1,17 @@
 package org.usfirst.frc.team2849.robot;
 
 public interface UrsaRobot {
+	//2704
+	//2407
+	public static final int DRIVE_FRONT_LEFT = 2;
+	public static final int DRIVE_FRONT_RIGHT = 7;
+	public static final int DRIVE_REAR_LEFT = 0;
+	public static final int DRIVE_REAR_RIGHT = 4;
 	
-	public static final int DRIVE_FRONT_LEFT = 7;
-	public static final int DRIVE_FRONT_RIGHT = 3;
-	public static final int DRIVE_REAR_LEFT = 4;
-	public static final int DRIVE_REAR_RIGHT = 0;
+	public static final int INTAKE_LEFT = 1;
+	public static final int INTAKE_RIGHT = 6;
 	
-	public static final int INTAKE_LEFT = 8;
-	public static final int INTAKE_RIGHT = 9;
+	public static final int LIFT = 3;
 	
 	public static final int CONTROLLER_PORT = 0;
 	
@@ -25,5 +28,5 @@ public interface UrsaRobot {
 	
 	public static final double MAX_VELOCITY = 120; // inches / second
 	public static final double MAX_ACCELERATION = 24; // inches / second^2
-		
+
 }

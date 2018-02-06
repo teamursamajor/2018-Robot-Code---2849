@@ -2,6 +2,8 @@ package org.usfirst.frc.team2849.autonomous;
 
 import org.usfirst.frc.team2849.controls.AutoControl;
 import org.usfirst.frc.team2849.controls.ControlLayout;
+import org.usfirst.frc.team2849.diagnostics.Logger;
+import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 import org.usfirst.frc.team2849.robot.Drive;
 
 public class TurnTask extends AutoTask {
@@ -29,18 +31,15 @@ public class TurnTask extends AutoTask {
 		int count = 0;
 		double powerConstant = 0;
 		double angle = Drive.getHeading();
-		// TODO can we try to incorporate stuff like this into a logger method?
-		System.out.println("Start Angle: " + Drive.getHeading());
-		System.out.println("Desired Angle: " + desiredAngle);
+		//Logger.log("Start Angle: " + Drive.getHeading(), LogLevel.DEBUG);
+		Logger.log("Desired Angle: " + desiredAngle, LogLevel.DEBUG);
 		while (Math.abs(turnAmount(desiredAngle)) > 2) {
 			angle = Drive.getHeading();
 			powerConstant = getPower(turnAmount(desiredAngle));
 			if (count % 100 == 0) {
-				// and this
-				System.out.print("Current Angle: " + angle);
-				System.out.print("\tPower Constant: " + powerConstant);
-				System.out.println("\tDesired Angle: " + desiredAngle);
-
+				//Logger.log("Current Angle: " + angle, LogLevel.DEBUG);
+				//Logger.log("\tPower Constant: " + powerConstant, LogLevel.DEBUG);
+				//Logger.log("\tDesired Angle: " + desiredAngle, LogLevel.DEBUG);
 			}
 			count++;
 
@@ -49,16 +48,18 @@ public class TurnTask extends AutoTask {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			cont.setPower(1 * (Math.signum(turnAmount(desiredAngle)) * powerConstant),
+			cont.setSpeed(1 * (Math.signum(turnAmount(desiredAngle)) * powerConstant),
 					-1 * (Math.signum(turnAmount(desiredAngle)) * powerConstant));
 		}
-		System.out.println("End Angle: " + Drive.getHeading());
-		cont.setPower(0, 0);
+//		Logger.log("End Angle: " + Drive.getHeading(), LogLevel.DEBUG)
+		cont.setSpeed(0, 0);
 	}
 
 	private double getPower(double turnAmount) {
-		// TODO up slowest power
-		return (0.7 / (1 + Math.exp(4 - 0.06 * Math.abs(turnAmount)))) + 0.3;
+		//TODO test this
+		double lowPower = .6;
+		double highPower = 1;
+		return ( (highPower - lowPower)/ (1 + Math.exp(4 - 0.06 * Math.abs(turnAmount)))) + lowPower;
 	}
 
 	/**
@@ -77,7 +78,7 @@ public class TurnTask extends AutoTask {
 			turnAmount = -180 + (turnAmount % 180);
 		else if (turnAmount < -180)
 			turnAmount = 360 + (turnAmount % 360);
-		return turnAmount;
+		return -turnAmount;
 	}
 
 	/**

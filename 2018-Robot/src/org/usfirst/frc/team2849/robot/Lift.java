@@ -4,37 +4,48 @@ import org.usfirst.frc.team2849.controls.ControlLayout;
 
 import edu.wpi.first.wpilibj.Spark;
 
-public class Lift extends Thread {
+public class Lift extends Thread implements UrsaRobot {
 
-	private static LiftControl liftcont;
-	private static Spark motor1;
-	private static Spark motor2;
-	public Lift(int channel1, int channel2, ControlLayout control){
-		motor1 = new Spark(channel1);
-		motor2 = new Spark(channel2);
-		liftcont = control.getLift(motor1, motor2);
+	private static ControlLayout cont;
+	private static Spark motor = new Spark(LIFT);
+
+	public Lift(ControlLayout control) {
+		cont = control;
 		this.start();
 	}
 
-	public void run() {	
-		while(true) {
-			liftcont.runLift();
+	public void run() {
+		double displacement = 0;
+		while (true) {
+			cont.setCurrentHeight(getLiftHeight());
+			displacement = cont.getDesiredHeight() - cont.getCurrentHeight();
+			if (cont.getDesiredHeight() != cont.getCurrentHeight()) {
+				if (cont.getDesiredHeight() > cont.getCurrentHeight()) {
+					motor.set(1);
+				}
+				if (cont.getDesiredHeight() < cont.getCurrentHeight()){
+					motor.set(-1);
+				}
+			}
+
+			if (cont.getDesiredHeight() == cont.getCurrentHeight()) {
+				motor.set(0);
+			}
 			try {
 				Thread.sleep(20);
-			}catch(Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
-	
-	public static void setControlScheme(ControlLayout cont) {
-		liftcont = cont.getLift(motor1, motor2);
+
+	public void setControlScheme(ControlLayout cont) {
+		this.cont = cont;
 	}
-	
-	public interface LiftControl {
-		
-		public void runLift();
-		
+
+	private double getLiftHeight() {
+		// TODO add encoder
+		return 0;
 	}
-	
+
 }

@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2849.autonomous;
 
 import org.usfirst.frc.team2849.controls.ControlLayout;
+import org.usfirst.frc.team2849.diagnostics.Logger;
+import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 import org.usfirst.frc.team2849.path.Path;
 import org.usfirst.frc.team2849.path.Pathfollower;
 import org.usfirst.frc.team2849.robot.Drive;
@@ -30,26 +32,26 @@ public class PathTask extends AutoTask {
 		long relTime = 0;
 		while (!leftPath.isFinished() && !rightPath.isFinished() && !DriverStation.getInstance().isDisabled()) {
 			relTime = System.currentTimeMillis() - startTime;
-			System.out.println("In TaskLoop: " + relTime);
-			System.out.println("Left: ");
+			Logger.log("In TaskLoop: " + relTime, LogLevel.DEBUG);
+			Logger.log("Left: ", LogLevel.DEBUG);
 			leftPower = follower.getCorrection(leftPath, Drive.getLeftEncoder(), relTime / 1000.0);
-			System.out.println("Right: ");
+			Logger.log("Right: ", LogLevel.DEBUG);
 			rightPower = follower.getCorrection(rightPath, Drive.getRightEncoder(), relTime / 1000.0);
-			System.out.println("L: " + leftPower);
-			System.out.println("R: " + rightPower);
+			Logger.log("L: " + leftPower, LogLevel.DEBUG);
+			Logger.log("R: " + rightPower, LogLevel.DEBUG);
 			steer = follower.getSteering(leftPath.findNextPoint(relTime / 1000.0), Drive.getHeading());
-			System.out.println("Steer: " + steer);
-			cont.setPower(-leftPower + steer, -rightPower - steer);
+			Logger.log("Steer: " + steer, LogLevel.DEBUG);
+			cont.setSpeed(-leftPower + steer, -rightPower - steer);
 			try {
 				Thread.sleep((long) (leftPath.getDt() * 1000));
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("End");
-		System.out.println("Left Finished: " + leftPath.isFinished());
-		System.out.println("Right Finished: " + rightPath.isFinished());
-		cont.setPower(0, 0);
+		Logger.log("End", LogLevel.DEBUG);
+		Logger.log("Left Finished: " + leftPath.isFinished(), LogLevel.DEBUG);
+		Logger.log("Right Finished: " + rightPath.isFinished(), LogLevel.DEBUG);
+		cont.setSpeed(0, 0);
 	}
 
 }

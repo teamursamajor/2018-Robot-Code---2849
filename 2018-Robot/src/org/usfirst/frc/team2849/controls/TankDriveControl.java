@@ -1,17 +1,11 @@
 package org.usfirst.frc.team2849.controls;
 
 import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
-import org.usfirst.frc.team2849.robot.Drive.DriveControl;
-import org.usfirst.frc.team2849.robot.Lift.LiftControl;
-
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class TankDriveControl extends XboxController implements ControlLayout {
-	
-	private double liftHeight;
-	private double liftPower;
+
+	private double currentLiftHeight;
+	private double desiredLiftHeight;
 	private boolean hasBox;
 
 	public TankDriveControl(int port) {
@@ -19,70 +13,28 @@ public class TankDriveControl extends XboxController implements ControlLayout {
 	}
 
 	@Override
-	public double getLeftPower() {
-		return super.getAxis(AXIS_LEFTSTICK_Y);
+	public double getLeftSpeed() {
+		double val = super.getAxis(AXIS_LEFTSTICK_Y);
+		return val * Math.abs(val);
 	}
 
 	@Override
-	public double getRightPower() {
-		return super.getAxis(AXIS_RIGHTSTICK_Y);
+	public double getRightSpeed() {
+		double val = super.getAxis(AXIS_RIGHTSTICK_Y);
+		return val * Math.abs(val);
 	}
 
 	@Override
-	public DriveControl getDrive(Spark frontLeft, Spark frontRight, Spark rearLeft, Spark rearRight) {
-		SpeedControllerGroup leftSide = new SpeedControllerGroup(frontLeft, rearLeft);
-		SpeedControllerGroup rightSide = new SpeedControllerGroup(frontRight, rearRight);
-		DifferentialDrive drive = new DifferentialDrive(leftSide, rightSide);
-		return () -> {
-			drive.tankDrive(getLeftPower(), getRightPower(), true);
-		};
-	}
-
-	@Override
-	public void setPower(double leftPower, double rightPower) {
-	}
-
-	@Override
-	public void setLiftHeight(double liftHeight) {
-		this.liftHeight = liftHeight;
-	}
-
-	@Override
-	public double getLiftHeight() {
-		return liftHeight;
-	}
-
-	@Override
-	public void setLiftPower(double liftPower) {
-		this.liftPower = liftPower;
-	}
-
-	@Override
-	public double getLiftPower() {
-		return liftPower;
-	}
-
-	@Override
-	public void runLift() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public LiftControl getLift(Spark left, Spark right) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public void setSpeed(double leftPower, double rightPower) {}
 
 	@Override
 	public void setIntakeType(IntakeType type) {}
 
 	@Override
 	public IntakeType getIntakeType() {
-		if(super.getButton(BUTTON_A)){
+		if (super.getButton(BUTTON_A)) {
 			return IntakeType.IN;
-		}
-		else if(super.getButton(BUTTON_B)){
+		} else if (super.getButton(BUTTON_B)) {
 			return IntakeType.OUT;
 		}
 		return IntakeType.STOP;
@@ -95,7 +47,54 @@ public class TankDriveControl extends XboxController implements ControlLayout {
 
 	@Override
 	public boolean hasBox() {
-		return hasBox;
+		if (super.getButton(BUTTON_A)) {
+			return false;
+		} else if (super.getButton(BUTTON_B)) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public void setDesiredHeight(double liftHeight) {}
+
+	@Override
+	public double getDesiredHeight() {
+		if (super.getButton(BUTTON_X))
+		{	
+		return -1;
+		}	
+		if (super.getButton(BUTTON_Y))
+		{
+		return 1;	
+		}
+		return 0;
+	
+	}
+		
+	@Override
+	public void setCurrentHeight(double liftHeight) {
+		currentLiftHeight = liftHeight;
+	}
+
+	@Override
+	public double getCurrentHeight() {
+		return currentLiftHeight;
+	}
+
+	@Override
+	public boolean getR() {
+		return getRightSpeed() >= .2;
+	}
+
+	@Override
+	public boolean getG() {
+		return getLeftSpeed() >= .2;
+	}
+
+	@Override
+	public boolean getB() {
+		return hasBox();
 	}
 
 }

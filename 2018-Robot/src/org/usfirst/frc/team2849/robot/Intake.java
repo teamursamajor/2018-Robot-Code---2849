@@ -1,7 +1,5 @@
 package org.usfirst.frc.team2849.robot;
 
-import org.usfirst.frc.team2849.autonomous.LiftTask;
-import org.usfirst.frc.team2849.autonomous.LiftTask.LiftType;
 import org.usfirst.frc.team2849.controls.ControlLayout;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -23,14 +21,17 @@ public class Intake extends Thread {
 	
 	public void run() {
 		while (true) {
-			cont.setHasBox(hasBox());
+//			cont.setHasBox(hasBox());
 			//Run just keeps running, In/Out use the sensor
+//			System.out.println(cont.getIntakeType());
+//			System.out.println(cont.hasBox());
+//			System.out.println("----");
 			switch (cont.getIntakeType()) {
 			case RUN:
 				setIntakePower(.5);
 				break;
 			case OUT:
-				if (hasBox()) {
+				if (cont.hasBox()) {
 					setIntakePower(-0.5);
 				} else {
 					setIntakePower(0);
@@ -39,8 +40,10 @@ public class Intake extends Thread {
 			case STOP:
 				setIntakePower(0);
 				break;
+			case HOLD:
+				setIntakePower(.25);
 			case IN:
-				if(!hasBox()){
+				if(!cont.hasBox()){
 					setIntakePower(0.5);
 				} else {
 					setIntakePower(0);
@@ -66,7 +69,7 @@ public class Intake extends Thread {
 	public void setIntakePower(double powerLevel){ 
 		//positive configuration
 		left.set(powerLevel);
-		right.set(-powerLevel);
+		right.set(powerLevel);
 	}
 	//TODO add sensor
 	public boolean hasBox(){

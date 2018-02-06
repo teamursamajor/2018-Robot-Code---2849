@@ -1,0 +1,40 @@
+# L_L*_switchsetup.auto
+
+#left bumper is on corner with exchange
+
+bundle {
+   
+   serial {
+      
+      #intake deploy
+      
+	lift switch
+   
+   }
+   
+   serial {
+      
+	drive 139
+      
+	turn TO 90
+      
+	drive 20
+   
+   }
+  
+   intake hold
+
+}
+
+intake out
+
+drive -20
+
+turn to 0
+
+drive 72
+
+turn to 90
+
+drive 30
+intake in

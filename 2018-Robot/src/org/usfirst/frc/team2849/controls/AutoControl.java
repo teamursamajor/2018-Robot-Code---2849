@@ -1,21 +1,18 @@
 package org.usfirst.frc.team2849.controls;
 
 import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
-import org.usfirst.frc.team2849.robot.Drive.DriveControl;
-import org.usfirst.frc.team2849.robot.Lift.LiftControl;
-
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class AutoControl implements ControlLayout {
 	
 	private double leftPower;
 	private double rightPower;
-	private IntakeType intakeType;
-	private boolean hasBox;
-	private double liftHeight;
-	private double liftPower;
+	private IntakeType intakeType = IntakeType.STOP;
+	
+	//TODO hotfix
+	private boolean hasBox = true;
+	
+	private double currentLiftHeight;
+	private double desiredLiftHeight;
 	
 	public AutoControl() {
 		leftPower = 0;
@@ -23,58 +20,18 @@ public class AutoControl implements ControlLayout {
 	}
 
 	@Override
-	public double getLeftPower() {
+	public double getLeftSpeed() {
 		return leftPower;
 	}
 	
-	public void setPower(double leftPower, double rightPower) {
+	public void setSpeed(double leftPower, double rightPower) {
 		this.leftPower = leftPower;
 		this.rightPower = rightPower;
 	}
 
 	@Override
-	public double getRightPower() {
+	public double getRightSpeed() {
 		return rightPower;
-	}
-
-	@Override
-	public DriveControl getDrive(Spark frontLeft, Spark frontRight, Spark rearLeft, Spark rearRight) {
-		SpeedControllerGroup leftSide = new SpeedControllerGroup(frontLeft, rearLeft);
-		SpeedControllerGroup rightSide = new SpeedControllerGroup(frontRight, rearRight);
-		DifferentialDrive drive = new DifferentialDrive(leftSide, rightSide);
-		return () -> { drive.tankDrive(getLeftPower(), getRightPower(), false); };
-	}
-
-	@Override
-	public void setLiftHeight(double liftHeight) {
-		this.liftHeight = liftHeight;
-	}
-
-	@Override
-	public double getLiftHeight() {
-		return liftHeight;
-	}
-
-	@Override
-	public void setLiftPower(double liftPower) {
-		this.liftPower = liftPower;		
-	}
-
-	@Override
-	public double getLiftPower() {
-		return liftPower;
-	}
-
-	@Override
-	public void runLift() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public LiftControl getLift(Spark left, Spark right) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -97,4 +54,41 @@ public class AutoControl implements ControlLayout {
 		return hasBox;
 	}
 
+	@Override
+	public void setDesiredHeight(double liftHeight) {
+		this.desiredLiftHeight = liftHeight;
+	}
+
+	@Override
+	public double getDesiredHeight() {
+		return desiredLiftHeight;
+	}
+
+	@Override
+	public void setCurrentHeight(double liftHeight) {
+		this.currentLiftHeight = liftHeight;
+	}
+
+	@Override
+	public double getCurrentHeight() {
+		return currentLiftHeight;
+	}
+
+	@Override
+	public boolean getR() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean getG() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean getB() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

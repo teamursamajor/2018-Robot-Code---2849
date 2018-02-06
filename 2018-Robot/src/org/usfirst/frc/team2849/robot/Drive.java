@@ -18,11 +18,6 @@ public class Drive implements Runnable, UrsaRobot{
 	private static Spark mRearLeft;
 	private static Spark mRearRight;
 
-	private static SpeedControllerGroup leftSide;
-	private static SpeedControllerGroup rightSide;
-
-	private static DriveControl drive;
-
 	private static double leftSpeed;
 	private static double rightSpeed;
 	private static boolean square;
@@ -34,6 +29,9 @@ public class Drive implements Runnable, UrsaRobot{
 	private static Encoder encR;
 	
 	private static ControlLayout cont;
+	
+	private static final double INCHES_PER_TICK = 0.011505d;
+
 
 	/**
 	 * Constructor for Drive class. Only one Drive object should be instantiated
@@ -56,66 +54,20 @@ public class Drive implements Runnable, UrsaRobot{
 		mRearRight = new Spark(rearRight);
 
 		cont = contScheme;
-		
-//		drive = contScheme.getDrive(mFrontLeft, mFrontRight, mRearLeft, mRearRight);
 
 		ahrs = new AHRS(SPI.Port.kMXP);
 
 		encL = new Encoder(LEFT_ENCODER_CHANNEL_A, LEFT_ENCODER_CHANNEL_B);
 		encR = new Encoder(RIGHT_ENCODER_CHANNEL_A, RIGHT_ENCODER_CHANNEL_B);
 
-		double inchesPerTick = 0.011505d;
-		encL.setDistancePerPulse(inchesPerTick);
-		encR.setDistancePerPulse(inchesPerTick);
+		encL.setDistancePerPulse(INCHES_PER_TICK);
+		encR.setDistancePerPulse(INCHES_PER_TICK);
 		encL.setReverseDirection(true);
 
 		encL.reset();
 		encR.reset();
 		
 		startDrive();
-	}
-
-	/**
-	 * External method for controlling motor speed. Checks and corrects speed
-	 * inputs to be -1 <= speed <= 1.
-	 * 
-	 * @param leftSpeed
-	 *            Speed for left side motor controllers. Should be -1 <=
-	 *            leftSpeed <= 1.
-	 * @param rightSpeed
-	 *            Speed for right side motor controllers. Should be -1 <=
-	 *            rightSpeed <= 1.
-	 */
-	public static void drive(double leftSpeed, double rightSpeed, boolean square) {
-		Drive.leftSpeed = leftSpeed;
-		Drive.rightSpeed = rightSpeed;
-		Drive.square = square;
-		normalizeSpeed();
-	}
-
-	/**
-	 * Changes the both leftSpeed and rightSpeed by some value. Does NOT set
-	 * speed, only changes speed relative to the current value. Probably
-	 * necessary for Pathfinder.
-	 * 
-	 * @param speed
-	 *            Amount to change both speeds.
-	 */
-	public static void changeSpeed(double speed) {
-		leftSpeed += speed;
-		rightSpeed += speed;
-		normalizeSpeed();
-	}
-
-	/**
-	 * Method to check that both leftSpeed and rightSpeed are -1 < speed < 1,
-	 * and sets them accordingly.
-	 */
-	public static void normalizeSpeed() {
-		if (Math.abs(leftSpeed) > 1)
-			leftSpeed = Math.signum(leftSpeed) * 1;
-		if (Math.abs(rightSpeed) > 1)
-			rightSpeed = Math.signum(rightSpeed) * 1;
 	}
 
 	/**
@@ -135,12 +87,13 @@ public class Drive implements Runnable, UrsaRobot{
 	 * Run method for driveThread
 	 */
 	@Override
+	//TODO PID
 	public void run() {
 		while (running) {
-			mFrontLeft.set(cont.getLeftPower());
-			mFrontRight.set(-cont.getRightPower());
-			mRearLeft.set(cont.getLeftPower());
-			mRearRight.set(-cont.getRightPower());
+			mFrontLeft.set(-cont.getLeftSpeed());
+			mFrontRight.set(cont.getRightSpeed());
+			mRearLeft.set(-cont.getLeftSpeed());
+			mRearRight.set(cont.getRightSpeed());
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
@@ -148,7 +101,7 @@ public class Drive implements Runnable, UrsaRobot{
 			}
 		}
 	}
-
+	//TODO make all methods non static
 	/**
 	 * Kill method for driveThread
 	 */
@@ -159,7 +112,7 @@ public class Drive implements Runnable, UrsaRobot{
 	/**
 	 * Takes the angle given by the AHRS and turns it into a heading which is
 	 * always between 0 and 360 (AHRS can return negative values and values
-	 * above 360) TODO check for efficiency
+	 * above 360)
 	 */
 
 	public static double getHeading() {
@@ -199,14 +152,8 @@ public class Drive implements Runnable, UrsaRobot{
 		mRearRight.stopMotor();
 	}
 	
-	public static void setControlScheme(ControlLayout layout) {
+	public void setControlScheme(ControlLayout layout) {
 		cont = layout;
-//		drive = layout.getDrive(mFrontLeft, mFrontRight, mRearLeft, mRearRight);
 	}
-	
-	public interface DriveControl {
-		
-		public void drive();
-		
-	}
+
 }

@@ -7,13 +7,20 @@
 
 package org.usfirst.frc.team2849.robot;
 
-import org.usfirst.frc.team2849.autonomous.*;
-import org.usfirst.frc.team2849.controls.*;
+import org.usfirst.frc.team2849.autonomous.AutoBuilder;
+import org.usfirst.frc.team2849.autonomous.AutoSelector;
+import org.usfirst.frc.team2849.autonomous.AutoTask;
+import org.usfirst.frc.team2849.controls.AutoControl;
+import org.usfirst.frc.team2849.controls.ControlLayout;
+import org.usfirst.frc.team2849.controls.NullControl;
+import org.usfirst.frc.team2849.controls.TankDriveControl;
+import org.usfirst.frc.team2849.controls.TestControl;
+import org.usfirst.frc.team2849.controls.XboxController;
+import org.usfirst.frc.team2849.diagnostics.Logger;
+import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -31,8 +38,9 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	XboxController xbox;
 	AutoSelector autoSelect;
 	AutoBuilder autoBuilder;
-
+	
 	private Intake intake;
+	private Lift lift;
 
 	private Encoder enc;
 
@@ -47,13 +55,11 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		testCont = new TestControl(CONTROLLER_PORT);
 		autoCont = new AutoControl();
 		autoBuilder = new AutoBuilder(autoCont);
-		intake = new Intake(INTAKE_LEFT, INTAKE_RIGHT, tankDriveCont);
-		drive = new Drive(DRIVE_FRONT_LEFT, DRIVE_FRONT_RIGHT, DRIVE_REAR_LEFT, DRIVE_REAR_RIGHT, tankDriveCont);
-		//TODO delete?
-		// autoChooser.addDefault("Default Auto", kDefaultAuto);
-		// autoChooser.addObject("My Auto", kCustomAuto);
-		// SmartDashboard.putData("Auto choices", autoChooser);
+		intake = new Intake(INTAKE_LEFT, INTAKE_RIGHT, autoCont);
+		lift = new Lift(autoCont);
+		drive = new Drive(DRIVE_FRONT_LEFT, DRIVE_FRONT_RIGHT, DRIVE_REAR_LEFT, DRIVE_REAR_RIGHT, autoCont);
 		xbox = new XboxController(CONTROLLER_PORT);
+		Logger.initLogger();
 	}
 
 	/**
@@ -70,14 +76,15 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		Logger.log("Started auto", LogLevel.INFO);
 		Drive.resetNavx();
 		setControlScheme(autoCont);
-//		AutoTask task = autoBuilder.buildAutoMode(
-//				autoBuilder.pickAutoMode(autoSelect.getStartingPosition(), 
-//											autoSelect.getAutoPrefs(),
-//											AutoSelector.findAutoFiles()));
-		AutoTask task = autoBuilder.buildAutoMode("/AutoModes/0_00_drive.auto");
+		String autoMode = "/AutoModes/L_R0_switch.auto";
+//		String autoMode = autoBuilder.pickAutoMode(autoSelect.getStartingPosition(), 
+//			autoSelect.getAutoPrefs(), AutoSelector.findAutoFiles())
+		AutoTask task = autoBuilder.buildAutoMode(autoMode);
 		task.start();
+		Logger.log("Current Auto Mode: " + autoMode, LogLevel.INFO);
 	}
 
 	/**
@@ -89,6 +96,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	}
 
 	public void teleopInit() {
+		Logger.log("Started teleop", LogLevel.INFO);
 		setControlScheme(tankDriveCont);
 	}
 
@@ -144,7 +152,6 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		// Thread.sleep(1000);
 		// blue.set(false);
 		// } catch (InterruptedException e) {
-		// // TODO Auto-generated catch block
 		// e.printStackTrace();
 		// }
 		// }
@@ -159,6 +166,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	}
 
 	public void testInit() {
+		Logger.log("Started test", LogLevel.INFO);
 		SmartDashboard.updateValues();
 		setControlScheme(testCont);
 	}
@@ -171,18 +179,17 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	}
 
 	public void disabledInit() {
-		Drive.setControlScheme(new NullControl());
+		Logger.log("disabled", LogLevel.INFO);
+		setControlScheme(new NullControl());
 	}
 	/**
 	 * Sets the control scheme for all subsystems to the scheme parameter
 	 * @param scheme Desired control scheme
 	 */
 	public void setControlScheme(ControlLayout scheme){
-		//TODO check for any other control schemes
-		Drive.setControlScheme(scheme);
+		drive.setControlScheme(scheme);
 		intake.setControlScheme(scheme);
-		Lift.setControlScheme(scheme);
-		
+		lift.setControlScheme(scheme);
 		
 	}
 }

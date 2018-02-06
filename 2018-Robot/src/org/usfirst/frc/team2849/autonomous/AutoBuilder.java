@@ -10,6 +10,7 @@ import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
 import org.usfirst.frc.team2849.autonomous.LiftTask.LiftType;
 import org.usfirst.frc.team2849.autonomous.TurnTask.Turntype;
 import org.usfirst.frc.team2849.controls.AutoControl;
+import org.usfirst.frc.team2849.controls.ControlLayout;
 import org.usfirst.frc.team2849.path.Path;
 import org.usfirst.frc.team2849.path.PathReader;
 
@@ -26,9 +27,9 @@ public class AutoBuilder {
 	interface Token {
 	}
 
-	AutoControl cont;
+	ControlLayout cont;
 
-	public AutoBuilder(AutoControl cont) {
+	public AutoBuilder(ControlLayout cont) {
 		this.cont = cont;
 	}
 
@@ -54,7 +55,7 @@ public class AutoBuilder {
 		}
 
 		// Creates a new instance of PrintTask class
-		public PrintTask makeTask(AutoControl cont) {
+		public PrintTask makeTask(ControlLayout cont) {
 			return new PrintTask(cont, str);
 		}
 	}
@@ -64,11 +65,10 @@ public class AutoBuilder {
 
 		public PathToken(String filename) {
 			filename = filename.replace(" ", "");
-			System.out.println("In token");
 			paths = new PathReader(filename, false).getPaths();
 		}
 
-		public PathTask makeTask(AutoControl cont) {
+		public PathTask makeTask(ControlLayout cont) {
 			return new PathTask(cont, paths);
 		}
 	}
@@ -88,12 +88,14 @@ public class AutoBuilder {
 				intake = IntakeType.STOP;
 			} else if (intakeType.equalsIgnoreCase("DEPLOY")) {
 				intake = IntakeType.DEPLOY;
+			} else if (intakeType.equalsIgnoreCase("HOLD")) {
+				intake = IntakeType.HOLD;
 			} else {
 				intake = IntakeType.STOP;
 			}
 		}
 
-		public IntakeTask makeTask(AutoControl cont) {
+		public IntakeTask makeTask(ControlLayout cont) {
 			return new IntakeTask(cont, intake);
 		}
 	}
@@ -117,7 +119,7 @@ public class AutoBuilder {
 			}
 		}
 
-		public LiftTask makeTask(AutoControl cont) {
+		public LiftTask makeTask(ControlLayout cont) {
 			return new LiftTask(cont, 0, lift);
 		}
 	}
@@ -132,7 +134,7 @@ public class AutoBuilder {
 			}
 		}
 
-		public WaitTask makeTask(AutoControl cont) {
+		public WaitTask makeTask(ControlLayout cont) {
 			return new WaitTask(cont, (long) (wait * 1000.0d));
 		}
 	}
@@ -157,16 +159,17 @@ public class AutoBuilder {
 		private Turntype turnType;
 
 		public TurnToken(String turn) {
-			if (turn.contains("TO")) {
+			turn = turn.toLowerCase();
+			if (turn.contains("to")) {
 				turnType = Turntype.TURN_TO;
-				turnAmount = Double.valueOf(turn.substring(turn.indexOf("TO") + "TO".length()));
+				turnAmount = Double.valueOf(turn.substring(turn.indexOf("to") + "TO".length()));
 			} else {
 				turnType = Turntype.TURN_BY;
-				turnAmount = Double.valueOf(turn.substring(turn.indexOf("BY") + "BY".length()));
+				turnAmount = Double.valueOf(turn.substring(turn.indexOf("by") + "BY".length()));
 			}
 		}
 
-		public TurnTask makeTask(AutoControl cont) {
+		public TurnTask makeTask(ControlLayout cont) {
 			return new TurnTask(cont, turnType, turnAmount);
 		}
 	}
@@ -176,12 +179,12 @@ public class AutoBuilder {
 
 		public DriveToken(String distance) {
 			distance = distance.replace(" ", "");
-			if (Double.parseDouble(distance) >= 0) {
+			if (Math.abs(Double.parseDouble(distance)) >= 0) {
 				dist = Double.parseDouble(distance);
 			}
 		}
 
-		public DriveTask makeTask(AutoControl cont) {
+		public DriveTask makeTask(ControlLayout cont) {
 			return new DriveTask(cont, (int) dist);
 		}
 	}

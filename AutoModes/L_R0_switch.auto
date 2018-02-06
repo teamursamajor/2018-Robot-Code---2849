@@ -6,14 +6,16 @@ bundle {
       lift switch
    }
    serial {
-      drive 58
+      drive 207
       turn TO 90
 
       #this drive distance is an estimate
-      drive 150
+      drive 192
 
-      turn TO 0
-      drive 38
+      turn TO 180
+      drive 40
+      turn TO -90
+      drive 30 	
    }
 }
 intake out

@@ -1,13 +1,15 @@
 package org.usfirst.frc.team2849.autonomous;
 
 import org.usfirst.frc.team2849.controls.ControlLayout;
+import org.usfirst.frc.team2849.diagnostics.Logger;
+import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 
 public class IntakeTask extends AutoTask {
 
-	private long timeout = 2;
+	private long timeout = 2000;
 	private long startTime;
 	public enum IntakeType {
-		IN, OUT, RUN, STOP, DEPLOY
+		IN, OUT, RUN, STOP, DEPLOY, HOLD
 	}
 
 	private IntakeType intake;
@@ -23,7 +25,7 @@ public class IntakeTask extends AutoTask {
 		switch (intake) {
 		case IN:
 		    startTime = System.currentTimeMillis();
-			while(!cont.hasBox() || System.currentTimeMillis() - startTime < timeout){
+			while(!cont.hasBox() && System.currentTimeMillis() - startTime < timeout){
 				try {
 					Thread.sleep(20);
 				} catch (InterruptedException e) {
@@ -34,7 +36,7 @@ public class IntakeTask extends AutoTask {
 			break;
 		case OUT:
 			startTime = System.currentTimeMillis();
-			while(cont.hasBox() || System.currentTimeMillis() - startTime < timeout){
+			while(cont.hasBox() && System.currentTimeMillis() - startTime < timeout){
 				try {
 					Thread.sleep(20);
 				} catch (InterruptedException e) {
@@ -44,7 +46,7 @@ public class IntakeTask extends AutoTask {
 			cont.setIntakeType(IntakeType.STOP);
 			break;
 		default:
-			System.out.println("Not In/Out Case :^)");
+			Logger.log("Intake in " + intake.name() + " case :^)", LogLevel.DEBUG);
 			break;
 		}
 

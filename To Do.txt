@@ -1,13 +1,21 @@
 Priorities:
-Fix Joystick assignment
-Intake in when driving back
-Fix Auto Modes
-Mount Camera / Get USB Extenders
-Place Logger Calls
-Diagonal Autos
-Controller layouts -> make test and arcade, complete tankDrive methods
+D R I F T
+hold to intake, press to intake
+changed the motor #s
+back wheels reaching speed first
+moving left after starting auto
+revamp auto
+tank drive moves all wheels
+recode cross switch autos to go from outside
+Intake in at .25 always
+Intake -> (Intake in, lift, intake in, drop, hold)
+Test sides issue
+Mount Camera
+Encoders automatically changing speed
+PID closed loop control for all subsystems
+Controller layouts -> make arcade(fps), driver specific
 Test Picking Auto Modes/Auto Modes/Logging/Vision/AutoChooser/Pathfinder
-Finish Auto Modes + Make More
+Finish Auto Modes + Make More (Diagonal Autos)
 Comment Code
 
 Lift Heights:
