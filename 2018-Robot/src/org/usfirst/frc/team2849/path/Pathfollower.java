@@ -26,13 +26,13 @@ public class Pathfollower {
 
 	public double getCorrection(Path path, double distance, double time) {
 		PointonPath point = path.findNextPoint(time);
-		error = (point.getPosition() * 12) - distance;
-		System.out.println("   Point Position: " + (point.getPosition() * 12));
+		error = point.getPosition() - distance;
+		System.out.println("   Point Position: " + point.getPosition());
 		System.out.println("   Distance: " + distance);
 		System.out.println("   Error: " + error);
 		System.out.println("   Velocity: " + point.getVelocity());
 		System.out.println("   Acceleration: " + point.getAccel());
-		double out = kp * error + kd * ((error - prevError) / path.getDt() - (point.getVelocity() * 12))
+		double out = kp * error + kd * ((error - prevError) / path.getDt() - point.getVelocity())
 				+ kv * point.getVelocity() + ka * point.getAccel();
 		prevError = error;
 		return out;
