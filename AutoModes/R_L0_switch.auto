@@ -1,19 +1,20 @@
-#R_L*_switch.auto
-#right bumper on corner with vault
+#R_L0_switch.auto
+#the right bumper is against the wall
 bundle {
    serial {
       intake deploy
       lift switch
+	  
    }
    serial {
-      drive 58
-      turn TO -90
-
-      #this drive distance is an estimate
-      drive 150
-
-      turn TO 0
-      drive 38
+      drive 280
+	  turn to 270
+	  drive 190
+	  turn to 180
+	  drive 116
+	  turn to 90
+	  drive 20
+	  
    }
 }
 intake out

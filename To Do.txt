@@ -1,8 +1,16 @@
 Priorities:
+D R I F T
+hold to intake, press to intake
+changed the motor #s
+back wheels reaching speed first
+moving left after starting auto
+revamp auto
+tank drive moves all wheels
+recode cross switch autos to go from outside
 Intake in at .25 always
 Intake -> (Intake in, lift, intake in, drop, hold)
 Test sides issue
-Mount Camera / Get USB Extenders
+Mount Camera
 Encoders automatically changing speed
 PID closed loop control for all subsystems
 Controller layouts -> make arcade(fps), driver specific
