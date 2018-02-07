@@ -3,16 +3,7 @@
 #center of robot is on center line
 intake deploy
 #moving to vault
-drive 5
-turn TO -90
-drive 12
-turn TO 180
-bundle{
-   drive 5
-   lift vault
-}
-
-intake out
+execute M_00_vault.auto
 bundle {
    serial {
       lift bottom

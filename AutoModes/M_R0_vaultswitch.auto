@@ -1,19 +1,7 @@
 #M_R*_vaultswitch.auto
 #frame is 12 inches from right vault tape
 #center of robot is on center line
-bundle{
-   intake deploy
-   #moving to vault
-   drive 5
-}
-turn to -90
-drive 12
-turn to 180
-bundle{
-   drive 5
-   lift vault
-}
-intake out
+execute M_00_vault.auto
 
 #delivering cube
 bundle {
