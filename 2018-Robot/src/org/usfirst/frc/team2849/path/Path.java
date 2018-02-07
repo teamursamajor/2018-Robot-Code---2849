@@ -3,9 +3,10 @@ package org.usfirst.frc.team2849.path;
 import java.util.ArrayList;
 
 import org.usfirst.frc.team2849.path.TrapVelocityProfile.Node;
+import org.usfirst.frc.team2849.robot.UrsaRobot;
 import org.usfirst.frc.team2849.util.AngleHelper;
 
-public class Path {
+public class Path implements UrsaRobot {
 
 	private ArrayList<PointonPath> path;
 	private int nextPoint;
@@ -32,11 +33,12 @@ public class Path {
 		}
 		nextPoint = 0;
 		this.name = name;
-		createVelProfile(10, 1, .1);
+		createVelProfile(MAX_ACCELERATION, MAX_VELOCITY, .1);
 	}
 	
-	public void createVelProfile(double maxVel, double maxAccel, double dt) {
-		trap = new TrapVelocityProfile(maxAccel, maxVel, dt, path.get(path.size() - 1).getPosition());
+	public void createVelProfile(double maxAccel, double maxVel, double dt) {
+		trap = new TrapVelocityProfile(maxAccel, maxVel, dt, this);
+		System.out.println("############Distance: " + path.get(path.size() -1 ).getPosition());
 		this.maxVel = maxVel;
 		this.dt = dt;
 	}
@@ -53,6 +55,10 @@ public class Path {
 		} catch (Exception e) {
 			return new PointonPath(Integer.MAX_VALUE, Integer.MAX_VALUE, -1, -1);
 		}
+	}
+	
+	public void resetIndex() {
+		nextPoint = 0;
 	}
 
 	public PointonPath findLastPoint(double pos) {
@@ -149,10 +155,11 @@ public class Path {
 		perpHeading = Math.toRadians((path.get(0).getDirection() + 90) % 360);
 		cos = Math.cos(perpHeading);
 		sin = Math.sin(perpHeading);
-		rightX = path.get(0).xft + (cos * (separation / 2));
-		rightY = path.get(0).yft + (sin * (separation / 2));
-		leftX = path.get(0).xft - (cos * (separation / 2));
-		leftY = path.get(0).yft - (sin * (separation / 2));
+		double halfSeparation = (separation) / 2;
+		rightX = path.get(0).xft + (cos * halfSeparation);
+		rightY = path.get(0).yft + (sin * halfSeparation);
+		leftX = path.get(0).xft - (cos * halfSeparation);
+		leftY = path.get(0).yft - (sin * halfSeparation);
 		leftDist = 0;
 		rightDist = 0;
 		leftVel = path.get(0).getVelocity();
@@ -166,12 +173,12 @@ public class Path {
 			perpHeading = Math.toRadians((path.get(i).getDirection() + 90) % 360);
 			cos = Math.cos(perpHeading);
 			sin = Math.sin(perpHeading);
-			rightX = path.get(i).xft + (cos * (separation / 2));
-			rightY = path.get(i).yft + (sin * (separation / 2));
-			leftX = path.get(i).xft - (cos * (separation / 2));
-			leftY = path.get(i).yft - (sin * (separation / 2));
-			rightDist += Math.sqrt(Math.pow(rightX - rightPath.get(i - 1).xft, 2) + Math.pow(rightY - rightPath.get(i - 1).yft, 2));
-			leftDist += Math.sqrt(Math.pow(leftX - leftPath.get(i - 1).xft, 2) + Math.pow(leftY - leftPath.get(i - 1).yft, 2));
+			rightX = path.get(i).xft + (cos * halfSeparation);
+			rightY = path.get(i).yft + (sin * halfSeparation);
+			leftX = path.get(i).xft - (cos * halfSeparation);
+			leftY = path.get(i).yft - (sin * halfSeparation);
+			rightDist += Math.sqrt(Math.pow((rightX * 12) - rightPath.get(i - 1).getXInches(), 2) + Math.pow((rightY * 12) - rightPath.get(i - 1).getYInches(), 2));
+			leftDist += Math.sqrt(Math.pow((leftX * 12) - leftPath.get(i - 1).getXInches(), 2) + Math.pow((leftY * 12) - leftPath.get(i - 1).getYInches(), 2));
 			rightVel = (rightDist - rightPath.get(i - 1).getPosition()) / (time - rightPath.get(i - 1).getTime()); 
 			leftVel = (leftDist - leftPath.get(i - 1).getPosition()) / (time - leftPath.get(i - 1).getTime());
 			rightAcc = (rightVel - rightPath.get(i - 1).getVelocity()) / (time - rightPath.get(i - 1).getTime());
@@ -183,12 +190,12 @@ public class Path {
 		perpHeading = Math.toRadians((path.get(path.size() - 1).getDirection() + 90) % 360);
 		cos = Math.cos(perpHeading);
 		sin = Math.sin(perpHeading);
-		rightX = path.get(path.size() - 1).xft + (cos * (separation / 2));
-		rightY = path.get(path.size() - 1).yft + (sin * (separation / 2));
-		leftX = path.get(path.size() - 1).xft - (cos * (separation / 2));
-		leftY = path.get(path.size() - 1).yft - (sin * (separation / 2));
-		rightDist += Math.sqrt(Math.pow(rightX - rightPath.get(path.size() - 2).xft, 2) + Math.pow(rightY - rightPath.get(path.size() - 2).yft, 2));
-		leftDist += Math.sqrt(Math.pow(leftX - leftPath.get(path.size() - 2).xft, 2) + Math.pow(leftY - leftPath.get(path.size() - 2).yft, 2));
+		rightX = path.get(path.size() - 1).xft + (cos * halfSeparation);
+		rightY = path.get(path.size() - 1).yft + (sin * halfSeparation);
+		leftX = path.get(path.size() - 1).xft - (cos * halfSeparation);
+		leftY = path.get(path.size() - 1).yft - (sin * halfSeparation);
+		rightDist += Math.sqrt(Math.pow((rightX * 12) - rightPath.get(path.size() - 2).getXInches(), 2) + Math.pow((rightY * 12) - rightPath.get(path.size() - 2).getYInches(), 2));
+		leftDist += Math.sqrt(Math.pow((leftX * 12) - leftPath.get(path.size() - 2).getXInches(), 2) + Math.pow((leftY * 12) - leftPath.get(path.size() - 2).getYInches(), 2));
 		rightVel = (rightDist - rightPath.get(path.size() - 2).getPosition()) / (time - rightPath.get(path.size() - 2).getTime()); 
 		leftVel = (leftDist - leftPath.get(path.size() - 2).getPosition()) / (time - leftPath.get(path.size() - 2).getTime());
 		rightAcc = (rightVel - rightPath.get(path.size() - 2).getVelocity()) / (time - rightPath.get(path.size() - 2).getTime());
@@ -214,13 +221,6 @@ public class Path {
 	}
 	
 	public void mapVelocity() {
-		System.out.println(path.get(0));
-		PointonPath approxPoint;
-		ArrayList<PointonPath> mappedPath = new ArrayList<PointonPath>();
-		for (Node point : trap.getNodes()) {
-			approxPoint = pointAt(point.getDist());
-			mappedPath.add(new PointonPath(point.getDist(), approxPoint.getDirection(), approxPoint.xft, approxPoint.yft, point.getTime(), point.getVel(), point.getAcc()));
-		}
-		path = mappedPath;
+		path = trap.getMappedPoints();
 	}
 }

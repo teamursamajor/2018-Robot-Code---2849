@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 public class PointonPath extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected double x;
 	protected double y;
 	protected double xft;// convert pixels to feet, look up conversion , field is 54/27ft.
@@ -191,4 +195,12 @@ public class PointonPath extends JPanel {
 		return time;
 	}
 
+	public double getXInches() {
+		return xft * 12;
+	}
+	
+	public double getYInches() {
+		return yft * 12;
+	}
+	
 }
