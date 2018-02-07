@@ -37,7 +37,9 @@ public class TankDriveControl extends XboxController implements ControlLayout {
 		} else if (super.getButton(BUTTON_RIGHTBUMPER)) {
 			return IntakeType.OUT;
 		} else if (super.getButton(AXIS_LEFTTRIGGER)) {
-			return IntakeType.RUN;
+			return IntakeType.RUN_IN;
+		} else if (super.getButton(AXIS_RIGHTTRIGGER)){
+			return IntakeType.RUN_OUT;
 		}
 		return IntakeType.STOP;
 	}

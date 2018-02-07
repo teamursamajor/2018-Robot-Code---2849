@@ -25,7 +25,7 @@ public class Vision implements Runnable {
 	}
 	
 	public static void visionInit() {
-		visionRun = new Thread(new Vision(), "visionThread");
+		visionRun = new Thread(new Vision(), "Vision Thread");
 		visionRun.start();
 	}
 	

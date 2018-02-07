@@ -51,6 +51,12 @@ public class Intake extends Thread {
 					setIntakePower(0);
 				}
 				break;
+			case RUN_IN:
+				setIntakePower(0.5);
+				break;
+			case RUN_OUT:
+				setIntakePower(-0.5);
+				break;
 			default:
 				setIntakePower(0);
 				break;

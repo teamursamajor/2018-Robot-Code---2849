@@ -14,12 +14,14 @@ public class PathTask extends AutoTask {
 	private Path leftPath;
 	private Path rightPath;
 	private Pathfollower follower;
+	private Drive drive;
 	
-	public PathTask(ControlLayout cont, Path[] paths) {
+	public PathTask(ControlLayout cont, Path[] paths, Drive drive) {
 		super(cont);
 		leftPath = paths[0];
 		rightPath = paths[1];
 		follower = new Pathfollower(0, 0, 0, 1.0/leftPath.getMaxVel(), 0, 0);
+		this.drive = drive;
 	}
 
 	@Override
@@ -27,19 +29,19 @@ public class PathTask extends AutoTask {
 		double leftPower;
 		double rightPower;
 		double steer;
-		Drive.resetEncoders();
+		drive.resetEncoders();
 		long startTime = System.currentTimeMillis();
 		long relTime = 0;
 		while (!leftPath.isFinished() && !rightPath.isFinished() && !DriverStation.getInstance().isDisabled()) {
 			relTime = System.currentTimeMillis() - startTime;
 			Logger.log("In TaskLoop: " + relTime, LogLevel.DEBUG);
 			Logger.log("Left: ", LogLevel.DEBUG);
-			leftPower = follower.getCorrection(leftPath, Drive.getLeftEncoder(), relTime / 1000.0);
+			leftPower = follower.getCorrection(leftPath, drive.getLeftEncoder(), relTime / 1000.0);
 			Logger.log("Right: ", LogLevel.DEBUG);
-			rightPower = follower.getCorrection(rightPath, Drive.getRightEncoder(), relTime / 1000.0);
+			rightPower = follower.getCorrection(rightPath, drive.getRightEncoder(), relTime / 1000.0);
 			Logger.log("L: " + leftPower, LogLevel.DEBUG);
 			Logger.log("R: " + rightPower, LogLevel.DEBUG);
-			steer = follower.getSteering(leftPath.findNextPoint(relTime / 1000.0), Drive.getHeading());
+			steer = follower.getSteering(leftPath.findNextPoint(relTime / 1000.0), drive.getHeading());
 			Logger.log("Steer: " + steer, LogLevel.DEBUG);
 			cont.setSpeed(-leftPower + steer, -rightPower - steer);
 			try {

@@ -54,7 +54,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		tankDriveCont = new TankDriveControl(CONTROLLER_PORT);
 		testCont = new TestControl(CONTROLLER_PORT);
 		autoCont = new AutoControl();
-		autoBuilder = new AutoBuilder(autoCont);
+		autoBuilder = new AutoBuilder(autoCont, drive);
 		intake = new Intake(INTAKE_LEFT, INTAKE_RIGHT, autoCont);
 		lift = new Lift(autoCont);
 		drive = new Drive(DRIVE_FRONT_LEFT, DRIVE_FRONT_RIGHT, DRIVE_REAR_LEFT, DRIVE_REAR_RIGHT, autoCont);
@@ -77,7 +77,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	@Override
 	public void autonomousInit() {
 		Logger.log("Started auto", LogLevel.INFO);
-		Drive.resetNavx();
+		drive.resetNavx();
 		setControlScheme(autoCont);
 		String autoMode = "/AutoModes/L_R0_switch.auto";
 //		String autoMode = autoBuilder.pickAutoMode(autoSelect.getStartingPosition(), 

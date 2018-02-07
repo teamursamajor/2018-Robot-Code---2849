@@ -7,10 +7,12 @@ import org.usfirst.frc.team2849.robot.Drive;
 
 public class DriveTask extends AutoTask {
 	private int distance;
-
-	public DriveTask(ControlLayout cont, int distance) {
+	private Drive drive;
+	
+	public DriveTask(ControlLayout cont, int distance, Drive drive) {
 		super(cont);
 		this.distance = distance;
+		this.drive = drive;
 	}
 
 	public void run() {
@@ -18,27 +20,27 @@ public class DriveTask extends AutoTask {
 
 		double leftPowerConstant = 0;
 		double rightPowerConstant = 0;
-		Drive.resetEncoders();
+		drive.resetEncoders();
 		double rightAdjust = 0.0628d;
 		Logger.log("Current Distance: " + distance, LogLevel.DEBUG);
-		while (Math.abs(Drive.getLeftEncoder()) < Math.abs(distance)
-				|| Math.abs(Drive.getRightEncoder()) < Math.abs(distance)) {
+		while (Math.abs(drive.getLeftEncoder()) < Math.abs(distance)
+				|| Math.abs(drive.getRightEncoder()) < Math.abs(distance)) {
 			
-			leftPowerConstant = getPower(Drive.getLeftEncoder(), distance);
-			rightPowerConstant = getPower(Drive.getRightEncoder(), distance);
+			leftPowerConstant = getPower(drive.getLeftEncoder(), distance);
+			rightPowerConstant = getPower(drive.getRightEncoder(), distance);
 
 			//Prints twice every second
 			if (count % 25 == 0) {
-				Logger.log("Left Power Constant: " + leftPowerConstant + "\tLeft Encoder: " + Drive.getLeftEncoder(),
+				Logger.log("Left Power Constant: " + leftPowerConstant + "\tLeft Encoder: " + drive.getLeftEncoder(),
 						LogLevel.DEBUG);
 				Logger.log(
-						"Right Power Constant: " + rightPowerConstant + "\tRight Encoder: " + Drive.getRightEncoder(),
+						"Right Power Constant: " + rightPowerConstant + "\tRight Encoder: " + drive.getRightEncoder(),
 						LogLevel.DEBUG);
 			}
-			if (Math.abs(Drive.getLeftEncoder()) > Math.abs(distance)) {
+			if (Math.abs(drive.getLeftEncoder()) > Math.abs(distance)) {
 				leftPowerConstant = 0;
 			}
-			if (Math.abs(Drive.getRightEncoder()) > Math.abs(distance)) {
+			if (Math.abs(drive.getRightEncoder()) > Math.abs(distance)) {
 				rightPowerConstant = 0;
 			}
 			//TODO hot fix change

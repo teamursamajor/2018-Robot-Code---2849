@@ -101,11 +101,10 @@ public class Drive implements Runnable, UrsaRobot{
 			}
 		}
 	}
-	//TODO make all methods non static
 	/**
 	 * Kill method for driveThread
 	 */
-	public static void kill() {
+	public void kill() {
 		running = false;
 	}
 
@@ -115,37 +114,37 @@ public class Drive implements Runnable, UrsaRobot{
 	 * above 360)
 	 */
 
-	public static double getHeading() {
+	public double getHeading() {
 		double angle = ahrs.getAngle();
 		angle = fixHeading(angle);
 		return angle;
 	}
 
-	public static double fixHeading(double heading) {
+	public double fixHeading(double heading) {
 		heading %= 360;
 		if (heading < 0)
 			heading += 360;
 		return heading;
 	}
 
-	public static double getLeftEncoder() {
+	public double getLeftEncoder() {
 		return encL.getDistance();
 	}
 
-	public static double getRightEncoder() {
+	public double getRightEncoder() {
 		return encR.getDistance();
 	}
 
-	public static void resetEncoders() {
+	public void resetEncoders() {
 		encL.reset();
 		encR.reset();
 	}
 
-	public static void resetNavx() {
+	public void resetNavx() {
 		ahrs.reset();
 	}
 	
-	public static void stop(){
+	public void stop(){
 		mFrontLeft.stopMotor();
 		mFrontRight.stopMotor();
 		mRearLeft.stopMotor();
