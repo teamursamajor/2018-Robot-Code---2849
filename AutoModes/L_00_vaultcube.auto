@@ -1,13 +1,24 @@
 #L_00_vaultcube.auto
-#
 
- 
-turn to 90
-drive 100
-turn to 180
-intake out
-turn to 0
-drive 100
-intake in
-  
-  
+
+
+execute L_00_vault.auto
+
+
+bundle {
+   serial{
+	lift bottom
+        intake in
+   }
+   serial{
+	drive -5
+	turn to 0
+	drive 30
+	turn to -90
+	drive 80
+	turn to 0
+	drive 166
+	turn to 90
+	drive 20
+	}
+}
