@@ -95,7 +95,7 @@ public class Drive implements Runnable, UrsaRobot{
 			mRearLeft.set(-cont.getLeftSpeed());
 			mRearRight.set(cont.getRightSpeed());
 			try {
-				Thread.sleep(20);
+				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -133,6 +133,14 @@ public class Drive implements Runnable, UrsaRobot{
 
 	public double getRightEncoder() {
 		return encR.getDistance();
+	}
+	
+	public double getLeftRate() {
+		return encL.getRate();
+	}
+	
+	public double getRightRate() {
+		return encR.getRate();
 	}
 
 	public void resetEncoders() {

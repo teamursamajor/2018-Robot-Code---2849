@@ -31,13 +31,13 @@ public class Path {
 		this.name = name;
 	}
 
-	public PointonPath findNextPoint(double pos) {
-		if (path.get(nextPoint).getPosition() <= pos)
+	public PointonPath findNextPoint(double time) {
+		if (path.get(nextPoint).getTime() <= time)
 			nextPoint++;
 		try {
 			return path.get(nextPoint);
 		} catch (Exception e) {
-			return new PointonPath(Integer.MAX_VALUE, Integer.MAX_VALUE, -1, -1);
+			return path.get(path.size() - 1);
 		}
 	}
 

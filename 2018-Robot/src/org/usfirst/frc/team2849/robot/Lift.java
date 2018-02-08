@@ -21,10 +21,10 @@ public class Lift extends Thread implements UrsaRobot {
 			displacement = cont.getDesiredHeight() - cont.getCurrentHeight();
 			if (cont.getDesiredHeight() != cont.getCurrentHeight()) {
 				if (cont.getDesiredHeight() > cont.getCurrentHeight()) {
-					motor.set(1);
+					motor.set(.2);
 				}
 				if (cont.getDesiredHeight() < cont.getCurrentHeight()){
-					motor.set(-1);
+					motor.set(-.5);
 				}
 			}
 

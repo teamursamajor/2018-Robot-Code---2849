@@ -13,12 +13,15 @@ public class TestControl extends XboxController implements ControlLayout {
 
 	@Override
 	public double getLeftSpeed() {
-		return super.getAxis(AXIS_LEFTSTICK_Y);
+//		return super.getAxis(AXIS_LEFTSTICK_Y);
+		return super.getButton(XboxController.BUTTON_A) ? -1 : 0;
 	}
 
 	@Override
 	public double getRightSpeed() {
-		return super.getAxis(AXIS_RIGHTSTICK_Y);
+//		return super.getAxis(AXIS_RIGHTSTICK_Y);
+		return super.getButton(XboxController.BUTTON_A) ? -1 : 0;
+
 	}
 
 	@Override

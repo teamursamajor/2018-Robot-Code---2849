@@ -33,7 +33,7 @@ public class Path implements UrsaRobot {
 		}
 		nextPoint = 0;
 		this.name = name;
-		createVelProfile(MAX_ACCELERATION, MAX_VELOCITY, .1);
+		createVelProfile(MAX_ACCELERATION, MAX_VELOCITY * .75, .1);
 	}
 	
 	public void createVelProfile(double maxAccel, double maxVel, double dt) {
@@ -44,16 +44,16 @@ public class Path implements UrsaRobot {
 	}
 	
 	public boolean isFinished() {
-		return nextPoint >= path.size();
+		return nextPoint >= path.size() - 1;
 	}
 
 	public PointonPath findNextPoint(double time) {
-		if (path.get(nextPoint).getTime() <= time)
+		if (path.get(nextPoint).getTime() <= time && nextPoint != path.size() - 1)
 			nextPoint++;
 		try {
 			return path.get(nextPoint);
 		} catch (Exception e) {
-			return new PointonPath(Integer.MAX_VALUE, Integer.MAX_VALUE, -1, -1);
+			return path.get(path.size() - 1);
 		}
 	}
 	
@@ -115,7 +115,6 @@ public class Path implements UrsaRobot {
 	}
 	
 	public double getDt() {
-		System.out.println("dt: " + dt);
 		return dt;
 	}
 	
@@ -222,5 +221,14 @@ public class Path implements UrsaRobot {
 	
 	public void mapVelocity() {
 		path = trap.getMappedPoints();
+	}
+	
+	public static void main(String[] args) {
+		Path path = new Path("output");
+		path.add(new PointonPath(0, 0, 0, 0, 0, 0, 0));
+		path.add(new PointonPath(240, 0, 0, 0, 0, 0, 0));
+		path.createVelProfile(MAX_ACCELERATION, MAX_VELOCITY, .1);
+		path.mapVelocity();
+		new PathWriter(new Path[] {path, path}, "outmapped.txt");
 	}
 }
