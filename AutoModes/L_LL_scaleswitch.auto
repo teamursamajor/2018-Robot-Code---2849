@@ -1,0 +1,7 @@
+#L_LL_scaleswitch.auto
+
+execute L_0L_scalecube.auto
+
+#deliver cube to left switch
+drive 10
+intake out

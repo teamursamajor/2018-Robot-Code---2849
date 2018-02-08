@@ -1,38 +1,13 @@
 #R_*L_2xscale.auto
 #right bumper is on corner with exchange
 #deliver first cube to scale
-bundle {
-   intake deploy
-   drive 250
-}
-turn to -90
-drive 130
-turn to 0
-drive 50
-bundle {
-   lift scale
-   drive 25
-}
-intake out
-
-#pick up another cube
-bundle {
-   lift bottom
-   drive -10
-}
-drive -90
-turn to 90
-bundle {
-   drive 3
-   intake in
-}
-
+execute R_0L_scalecube.auto
 #deliver second cube
 drive -3
 turn to 0
 drive 90
 bundle {
    lift scale
-   drive to 14
+   drive 14
 }
 intake out

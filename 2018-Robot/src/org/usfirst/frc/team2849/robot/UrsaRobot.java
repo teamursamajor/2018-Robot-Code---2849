@@ -5,11 +5,11 @@ public interface UrsaRobot {
 	//2407
 	public static final int DRIVE_FRONT_LEFT = 2;
 	public static final int DRIVE_FRONT_RIGHT = 7;
-	public static final int DRIVE_REAR_LEFT = 0;
-	public static final int DRIVE_REAR_RIGHT = 4;
+	public static final int DRIVE_REAR_LEFT = 1;
+	public static final int DRIVE_REAR_RIGHT = 6;
 	
-	public static final int INTAKE_LEFT = 1;
-	public static final int INTAKE_RIGHT = 6;
+	public static final int INTAKE_LEFT = 0;
+	public static final int INTAKE_RIGHT = 5;
 	
 	public static final int LIFT = 3;
 	
