@@ -1,5 +1,6 @@
 Priorities:
 D R I F T
+do both encoders have the same inches per tick (distance per pulse)
 logger
 scaleswitch and down on the master lift
 timeouts on lift

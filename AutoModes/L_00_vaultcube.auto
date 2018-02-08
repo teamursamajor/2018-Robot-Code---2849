@@ -1,14 +1,11 @@
 #L_00_vaultcube.auto
 
-
-
 execute L_00_vault.auto
-
 
 bundle {
    serial{
-	lift bottom
-        intake in
+	   lift bottom
+       intake in
    }
    serial{
 	drive -5

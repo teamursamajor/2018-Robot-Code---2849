@@ -8,8 +8,7 @@ execute R_0L_scale.auto
 drive -10
 turn to 180
 drive 100
-turn to 90
 bundle {
-	drive 20
+	drive 10
 	intake in
 }

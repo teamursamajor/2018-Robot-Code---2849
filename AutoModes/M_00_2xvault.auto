@@ -1,0 +1,12 @@
+#M_00_2xvault
+execute M_00_vault.auto
+drive -100
+turn to 90
+bundle {
+   drive 10
+   intake in
+}
+drive -10
+turn to 180
+drive 100
+intake out
