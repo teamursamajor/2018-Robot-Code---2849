@@ -229,6 +229,7 @@ public class Path implements UrsaRobot {
 		path = trap.getMappedPoints();
 	}
 	
+	
 	public static void main(String[] args) {
 		Path path = new Path("output");
 		path.add(new PointonPath(0, 0, 0, 0, 0, 0, 0));

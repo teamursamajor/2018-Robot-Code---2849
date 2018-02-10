@@ -50,14 +50,13 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	 */
 	@Override
 	public void robotInit() {
+		drive = new Drive(DRIVE_FRONT_LEFT, DRIVE_FRONT_RIGHT, DRIVE_REAR_LEFT, DRIVE_REAR_RIGHT, autoCont);
 		autoSelect = new AutoSelector(5);
 		tankDriveCont = new TankDriveControl(CONTROLLER_PORT);
 		testCont = new TestControl(CONTROLLER_PORT);
 		autoCont = new AutoControl();
 		intake = new Intake(INTAKE_LEFT, INTAKE_RIGHT, autoCont);
 		lift = new Lift(autoCont);
-		drive = new Drive(DRIVE_FRONT_LEFT, DRIVE_FRONT_RIGHT, DRIVE_REAR_LEFT, DRIVE_REAR_RIGHT, autoCont);
-		autoBuilder = new AutoBuilder(autoCont, drive);
 		xbox = new XboxController(CONTROLLER_PORT);
 		Logger.initLogger();
 	}
@@ -79,7 +78,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		Logger.log("Started auto", LogLevel.INFO);
 		drive.resetNavx();
 		setControlScheme(autoCont);
-		String autoMode = "/AutoModes/R_L0_switch.auto";
+		String autoMode = "/AutoModes/0_00_path.auto";
 //		String autoMode = autoBuilder.pickAutoMode(autoSelect.getStartingPosition(), 
 //			autoSelect.getAutoPrefs(), AutoSelector.findAutoFiles())
 		AutoTask task = autoBuilder.buildAutoMode(autoMode);
@@ -176,9 +175,6 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		System.out.println("Left rate: " + drive.getLeftRate());
-		System.out.println("Right rate: " + drive.getRightRate());
-		System.out.println("");
 	}
 
 	public void disabledInit() {

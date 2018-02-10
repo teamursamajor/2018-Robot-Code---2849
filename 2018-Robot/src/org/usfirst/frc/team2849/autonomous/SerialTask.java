@@ -10,12 +10,7 @@ public class SerialTask extends GroupTask {
 	@Override
 	public void run() {
 		for (AutoTask t : tasks) {
-			t.start();
-			try {
-				t.join();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			t.run();
 		}
 	}
 
