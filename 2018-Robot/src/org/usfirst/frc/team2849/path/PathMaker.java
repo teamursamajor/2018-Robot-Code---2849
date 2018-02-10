@@ -57,7 +57,7 @@ public class PathMaker implements UrsaRobot {
 		output.add(
 				new PointonPath(totalDist,
 						negmod(Math.atan2(path.get(1).getYInches() - path.get(0).getYInches(),
-								path.get(1).getXInches() - path.get(0).getXInches()), Math.PI * 2) * (180 / Math.PI),
+								path.get(1).getXInches() - path.get(0).getXInches()), Math.PI * 2) * (180 / Math.PI) - 90,
 						path.get(0).xft, path.get(0).yft));
 		for (int i = 1; i < path.size(); i++) {
 			totalDist += Math.sqrt(Math.pow(path.get(i).getXInches() - path.get(i - 1).getXInches(), 2)
@@ -65,7 +65,7 @@ public class PathMaker implements UrsaRobot {
 			output.add(
 					new PointonPath(totalDist,
 							negmod(Math.atan2(path.get(i).getYInches() - path.get(i - 1).getYInches(),
-									path.get(i).getXInches() - path.get(i - 1).getXInches()), Math.PI * 2) * (180 / Math.PI),
+									path.get(i).getXInches() - path.get(i - 1).getXInches()), Math.PI * 2) * (180 / Math.PI) - 90,
 							path.get(i).xft, path.get(i).yft));
 		}
 		Path mapped = new Path("output", output);

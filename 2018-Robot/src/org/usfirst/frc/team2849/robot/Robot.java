@@ -55,7 +55,6 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		tankDriveCont = new TankDriveControl(CONTROLLER_PORT);
 		testCont = new TestControl(CONTROLLER_PORT);
 		autoCont = new AutoControl();
-		autoBuilder = new AutoBuilder(autoCont, drive);
 		intake = new Intake(INTAKE_LEFT, INTAKE_RIGHT, autoCont);
 		lift = new Lift(autoCont);
 		xbox = new XboxController(CONTROLLER_PORT);

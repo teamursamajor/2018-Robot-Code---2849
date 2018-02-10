@@ -28,6 +28,7 @@ public class Pathfollower {
 		PointonPath point = path.findNextPoint(time);
 		error = point.getPosition() - distance;
 		System.out.println("   Point Position: " + point.getPosition());
+		System.out.println("   Point time: " + point.getTime());
 		System.out.println("   Distance: " + distance);
 		System.out.println("   Error: " + error);
 		System.out.println("   Velocity: " + point.getVelocity());

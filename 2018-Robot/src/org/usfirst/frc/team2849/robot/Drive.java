@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2849.robot;
 
 import org.usfirst.frc.team2849.controls.ControlLayout;
+import org.usfirst.frc.team2849.diagnostics.Logger;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -11,7 +12,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.RobotDriveBase;
 
-public class Drive implements Runnable, UrsaRobot{
+public class Drive implements Runnable, UrsaRobot, Subsystem {
 
 	private static Spark mFrontLeft;
 	private static Spark mFrontRight;
@@ -95,7 +96,7 @@ public class Drive implements Runnable, UrsaRobot{
 			mRearLeft.set(-cont.getLeftSpeed());
 			mRearRight.set(cont.getRightSpeed());
 			try {
-				Thread.sleep(20);
+				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -119,10 +120,10 @@ public class Drive implements Runnable, UrsaRobot{
 		angle = fixHeading(angle);
 		return angle;
 	}
-
+	
 	public double fixHeading(double heading) {
 		heading %= 360;
-		if (heading < 0)
+		while (heading < 0)
 			heading += 360;
 		return heading;
 	}
@@ -133,6 +134,14 @@ public class Drive implements Runnable, UrsaRobot{
 
 	public double getRightEncoder() {
 		return encR.getDistance();
+	}
+	
+	public double getLeftRate() {
+		return encL.getRate();
+	}
+	
+	public double getRightRate() {
+		return encR.getRate();
 	}
 
 	public void resetEncoders() {
@@ -153,6 +162,16 @@ public class Drive implements Runnable, UrsaRobot{
 	
 	public void setControlScheme(ControlLayout layout) {
 		cont = layout;
+	}
+	
+	/**
+	 * Takes date and info and assembles it into a log output string for Drive subsystem
+	 * @param date
+	 * Used in Logger.run() method where it is substituted for Logger.getDate()
+	 */
+	public String getLogData(String date) {
+		//TODO add any relevant information here
+		return date + " [" + Logger.LogLevel.INFO + "] Drive: " + "...";
 	}
 
 }

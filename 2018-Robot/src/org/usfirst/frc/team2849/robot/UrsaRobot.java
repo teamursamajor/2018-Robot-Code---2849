@@ -28,5 +28,12 @@ public interface UrsaRobot {
 	
 	public static final double MAX_VELOCITY = 120; // inches / second
 	public static final double MAX_ACCELERATION = 24; // inches / second^2
+	
+	public static final int LED_Solenoid_port_1 = 1;
+	public static final int LED_Solenoid_port_2 = 2;
+	public static final int LED_Solenoid_port_3 = 3;
+	public static final int LED_Solenoid_port_4 = 4;
+	public static final int LED_Solenoid_port_5 = 5;
+	public static final int LED_Solenoid_port_6 = 6;
 
 }

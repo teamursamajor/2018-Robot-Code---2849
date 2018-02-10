@@ -4,7 +4,7 @@ import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
 
 public class TankDriveControl extends XboxController implements ControlLayout {
 
-	private double currentLiftHeight;
+	private double currentLiftHeight = 0;
 	private double desiredLiftHeight;
 	private boolean hasBox;
 

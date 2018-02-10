@@ -11,12 +11,12 @@ bundle {
 	  turn to -90
 	  
 	  #this drive distance is an estimate
-	  drive 192
+	  drive 215
 	  
 	  turn to 180
-	  drive 40
+	  drive 52
 	  turn to 90
-	  drive 30
+	  drive 7
 	  
    }
 }
