@@ -182,6 +182,12 @@ public class Path implements UrsaRobot {
 			leftVel = (leftDist - leftPath.get(i - 1).getPosition()) / (time - leftPath.get(i - 1).getTime());
 			rightAcc = (rightVel - rightPath.get(i - 1).getVelocity()) / (time - rightPath.get(i - 1).getTime());
 			leftAcc = (leftVel - leftPath.get(i - 1).getVelocity()) / (time - leftPath.get(i - 1).getTime());
+			System.out.println("leftX: " + leftX);
+			System.out.println("leftY: " + leftY);
+			System.out.println("leftDist: " + leftDist);
+			System.out.println("");
+			
+			
 			leftPath.add(new PointonPath(leftDist, path.get(i).getDirection(), leftX, leftY, time, leftVel, leftAcc));
 			rightPath.add(new PointonPath(rightDist, path.get(i).getDirection(), rightX, rightY, time, rightVel, rightAcc));
 		}

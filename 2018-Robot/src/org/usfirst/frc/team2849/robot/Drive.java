@@ -120,10 +120,10 @@ public class Drive implements Runnable, UrsaRobot, Subsystem {
 		angle = fixHeading(angle);
 		return angle;
 	}
-
+	
 	public double fixHeading(double heading) {
 		heading %= 360;
-		if (heading < 0)
+		while (heading < 0)
 			heading += 360;
 		return heading;
 	}

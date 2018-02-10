@@ -1,9 +1,8 @@
-package com.teamursamajor.auto;
+package src.com.teamursamajor.auto;
 
 import java.util.ArrayList;
 
-import com.teamursamajor.auto.PointonPath;
-import com.teamursamajor.auto.TrapVelocityProfile.Node;
+import src.com.teamursamajor.auto.TrapVelocityProfile.Node;
 
 public class Path {
 
