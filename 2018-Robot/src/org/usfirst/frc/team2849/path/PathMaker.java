@@ -125,6 +125,7 @@ public class PathMaker implements UrsaRobot {
 				g.drawImage(field, 0, 0, 400, 800, null);
 				g.drawImage(overlay, 0, 0, 400, 800, null);
 				g.drawImage(overfield, 0, 0, 400, 800, null);
+				g.fillOval((int)(path.get(0).x-5), (int) (path.get(0).y-5), 10, 10);
 			}
 		};
 		frame.add(fieldPanel);
@@ -288,6 +289,11 @@ public class PathMaker implements UrsaRobot {
 			public void actionPerformed(ActionEvent e) {
 				leftornot=!leftornot;
 				distfromwallstring.setText("Distance from "+(leftornot?"left":"right")+" wall:");
+				for (int i=0;i<path.size();i++) {
+					path.set(i, new PointonPath(400 - path.get(i).x,path.get(i).y,i));
+				}
+				PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+				frame.repaint();
 			}
 		});
 		
