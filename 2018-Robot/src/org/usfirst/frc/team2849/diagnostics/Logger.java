@@ -46,9 +46,10 @@ public class Logger extends Thread {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			for (Subsystem s: subsystems) {			
-				System.out.println(s.getLogData(getDate()));
-				//write(s.getLogData(getDate()));
+			for (Subsystem s: subsystems) {
+				//for testing
+				//System.out.println(s.getLogData(getDate()));
+				write(s.getLogData(getDate()));
 			}
 			
 		}
