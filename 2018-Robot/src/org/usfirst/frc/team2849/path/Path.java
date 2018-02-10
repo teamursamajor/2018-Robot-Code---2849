@@ -229,4 +229,14 @@ public class Path implements UrsaRobot {
 	public void mapVelocity() {
 		path = trap.getMappedPoints();
 	}
+	
+	public static void main(String[] args) {
+		Path path = new Path("output");
+		path.add(new PointonPath(0, 0, 0, 0, 0, 0, 0));
+		path.add(new PointonPath(120, 0, 0, 0, 0, 0, 0));
+		path.createVelProfile(MAX_ACCELERATION, MAX_VELOCITY, .1);
+		path.mapVelocity();
+		new PathWriter(new Path[] {path, path}, "outmapped.txt");
+	}
+	
 }
