@@ -102,6 +102,11 @@ public class XboxController extends Joystick implements Runnable {
 		return this.getRawAxis(axisNumber) < lessThan;
 	}
 	
+	public double getSquaredAxis(int axisNumber) {
+		double rawInput = this.getAxis(axisNumber);
+		return rawInput * Math.abs(rawInput);
+	}
+	
 	/**
 	 * Checks if a specified POV is pressed
 	 * @param dPadNumber

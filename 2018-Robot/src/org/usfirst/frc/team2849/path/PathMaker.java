@@ -273,7 +273,8 @@ public class PathMaker implements UrsaRobot {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					int dist = Integer.parseInt(distfromwall.getText());
-					path.set(0,new PointonPath((leftornot?dist:27-dist)/PointonPath.xconv,ROBOT_DEPTH_FEET/2/PointonPath.yconv,0));
+//					path.set(0,new PointonPath((leftornot?dist:27-dist)/PointonPath.xconv,ROBOT_DEPTH_FEET/2/PointonPath.yconv,0));
+					path.set(0,new PointonPath((27-2.5)/PointonPath.xconv,ROBOT_DEPTH_FEET/2/PointonPath.yconv,0));
 					PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
 					PathMaker.frame.repaint();
 				}catch(Exception E) {}
@@ -308,7 +309,7 @@ public class PathMaker implements UrsaRobot {
 				
 			}
 		});
-		path.add(new PointonPath(27d/2/PointonPath.xconv,ROBOT_DEPTH_FEET/2/PointonPath.yconv,0));
+		path.add(new PointonPath((27-2.5)/PointonPath.xconv,ROBOT_DEPTH_FEET/2/PointonPath.yconv,0));
 		
 		frame.setVisible(true);
 	}

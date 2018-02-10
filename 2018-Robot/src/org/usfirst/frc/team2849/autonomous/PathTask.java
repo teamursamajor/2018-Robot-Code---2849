@@ -22,7 +22,7 @@ public class PathTask extends AutoTask implements UrsaRobot {
 		leftPath = paths[0];
 		rightPath = paths[1];
 //		follower = new Pathfollower(1/50.0, 0, 1/200.0, 1.0/MAX_VELOCITY, 1/(2.5 * MAX_ACCELERATION), 1/100.0);
-		follower = new Pathfollower(1/40.0, 0, 0, 1.0/MAX_VELOCITY, 1/(1.5 * MAX_ACCELERATION), 1/33.3);
+		follower = new Pathfollower(1/40.0, 0, 0, 1.0/MAX_VELOCITY, 1/(1.75 * MAX_ACCELERATION), 1/20.0);
 		this.drive = drive;
 	}
 
