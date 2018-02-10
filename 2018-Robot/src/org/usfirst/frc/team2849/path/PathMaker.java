@@ -75,6 +75,7 @@ public class PathMaker implements UrsaRobot {
 		new PathWriter(mapped.separate(ROBOT_WIDTH_FEET), "outsepped.txt");
 		System.out.println("outputed");
 	}
+	
 	public static void input() {
 		ArrayList<PointonPath> pathl = new PathReader("outmapped.txt",false).getLeftPath().getPoints();
 		ArrayList<PointonPath> pathr = new PathReader("outmapped.txt",false).getLeftPath().getPoints();
