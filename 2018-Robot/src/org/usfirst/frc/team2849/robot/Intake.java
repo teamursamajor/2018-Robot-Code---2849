@@ -42,12 +42,20 @@ public class Intake extends Thread {
 				break;
 			case HOLD:
 				setIntakePower(.25);
+			//TODO update to more complex intake (in, lift up, in again, lift down)
+			//puts it on the front frame to keep the cube off the ground
 			case IN:
 				if(!cont.hasBox()){
 					setIntakePower(0.5);
 				} else {
 					setIntakePower(0);
 				}
+				break;
+			case RUN_IN:
+				setIntakePower(0.5);
+				break;
+			case RUN_OUT:
+				setIntakePower(-0.5);
 				break;
 			default:
 				setIntakePower(0);

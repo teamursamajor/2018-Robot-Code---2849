@@ -19,7 +19,7 @@ import java.util.*;
  *  3. void initLogFile()
  *  3b. void initLogFile(string logStartStuff)
  */
-
+//TODO open bufferedWriter on robotInit, global variable for log level
 public class Logger {
 
 	private static String path; // the path in which the logger writes to

@@ -32,6 +32,5 @@ public interface ControlLayout {
     public boolean getR();
     public boolean getG();
     public boolean getB();
-    
-    
+       
 }

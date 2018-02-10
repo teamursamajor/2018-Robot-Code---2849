@@ -7,13 +7,16 @@ bundle {
 	  
    }
    serial {
-      drive 280
-	  turn to 270
-	  drive 190
+      drive 207
+	  turn to -90
+	  
+	  #this drive distance is an estimate
+	  drive 192
+	  
 	  turn to 180
-	  drive 116
+	  drive 40
 	  turn to 90
-	  drive 20
+	  drive 30
 	  
    }
 }

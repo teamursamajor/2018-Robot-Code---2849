@@ -1,0 +1,14 @@
+#R_*L_scalecube.auto
+#right bumper on right wall
+
+#go to scale
+execute R_0L_scale.auto
+
+#pick up new cube
+drive -10
+turn to 180
+drive 100
+bundle {
+	drive 10
+	intake in
+}

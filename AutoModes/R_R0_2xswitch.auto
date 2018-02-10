@@ -2,42 +2,6 @@
 #right bumper on corner with exchange
 #robot is 32 wide, 28 long
 #center of the robot is 16 inch right from center
-#deliver first cube
-bundle {
-   intake deploy
-   serial {
-      drive 168
-      turn -90
-   }
-}
-
-bundle {
-   drive 40
-   serial {
-      wait 1
-      lift switch
-   }
-}
-intake out
-
-#pick up another cube
-bundle {
-   lift bottom
-   drive -5
-}
-turn BY -90
-drive 28
-turn BY 90
-bundle {
-   intake in
-   drive 70
-}
-
-#deliver second cube
-bundle {
-   lift scale
-   drive -30
-}
-turn BY 90
-drive 30    
+execute R_R0_switchcube.auto
+drive 10
 intake out

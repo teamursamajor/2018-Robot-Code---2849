@@ -1,21 +1,9 @@
 #M_R*_switchcube.auto
 #frame is 12 inches from right vault tape
 #center of robot is on center line
+
 #deliver cube
-bundle {
-   serial {
-      intake deploy
-      lift switch
-   }
-   serial {
-      drive 130
-      turn by 90
-      drive 20
-      turn to 0
-      drive 10
-   }
-}
-intake out
+execute M_R0_switch.auto
 
 #pick up another cube
 bundle {

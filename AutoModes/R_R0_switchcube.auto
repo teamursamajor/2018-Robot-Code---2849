@@ -1,29 +1,20 @@
 #R_R*_switchcube.auto
 #right bumper is on corner with exchange
+
 #deliver first cube
-bundle {
-   serial {
-      intake deploy
-      lift switch
-   }
-   serial {
-      drive 130
-      turn by -90
-      drive 20
-      turn to 0
-      drive 10     
-   }
-}
-intake out
+execute R_R0_switch.auto
+
 #pick up second cube
 bundle {
-   serial {
-      lift bottom
-      intake in
-   }
-   serial {
-      drive -10
-      turn by -90
-      drive 20
-   }
+   lift bottom
+   drive -10
+}
+turn to 0
+drive 50
+turn to -90
+drive 10
+turn to 180
+bundle {
+   intake in
+   drive 12
 }

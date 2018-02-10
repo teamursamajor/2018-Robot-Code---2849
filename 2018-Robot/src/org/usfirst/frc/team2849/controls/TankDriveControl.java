@@ -32,10 +32,14 @@ public class TankDriveControl extends XboxController implements ControlLayout {
 
 	@Override
 	public IntakeType getIntakeType() {
-		if (super.getButton(BUTTON_A)) {
+		if (super.getButton(BUTTON_LEFTBUMPER)) {
 			return IntakeType.IN;
-		} else if (super.getButton(BUTTON_B)) {
+		} else if (super.getButton(BUTTON_RIGHTBUMPER)) {
 			return IntakeType.OUT;
+		} else if (super.getButton(AXIS_LEFTTRIGGER)) {
+			return IntakeType.RUN_IN;
+		} else if (super.getButton(AXIS_RIGHTTRIGGER)){
+			return IntakeType.RUN_OUT;
 		}
 		return IntakeType.STOP;
 	}
@@ -45,6 +49,7 @@ public class TankDriveControl extends XboxController implements ControlLayout {
 		this.hasBox = hasBox;
 	}
 
+	//TODO update to use a sensor
 	@Override
 	public boolean hasBox() {
 		if (super.getButton(BUTTON_A)) {
@@ -60,16 +65,13 @@ public class TankDriveControl extends XboxController implements ControlLayout {
 
 	@Override
 	public double getDesiredHeight() {
-		if (super.getButton(BUTTON_X))
-		{	
+		if (super.getButton(BUTTON_X)) {	
 		return -1;
 		}	
-		if (super.getButton(BUTTON_Y))
-		{
+		if (super.getButton(BUTTON_Y)) {
 		return 1;	
 		}
 		return 0;
-	
 	}
 		
 	@Override

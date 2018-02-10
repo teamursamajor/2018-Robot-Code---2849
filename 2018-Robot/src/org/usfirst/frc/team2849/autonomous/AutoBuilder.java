@@ -13,6 +13,7 @@ import org.usfirst.frc.team2849.controls.AutoControl;
 import org.usfirst.frc.team2849.controls.ControlLayout;
 import org.usfirst.frc.team2849.path.Path;
 import org.usfirst.frc.team2849.path.PathReader;
+import org.usfirst.frc.team2849.robot.Drive;
 
 import edu.wpi.first.wpilibj.DriverStation;
 
@@ -28,9 +29,11 @@ public class AutoBuilder {
 	}
 
 	ControlLayout cont;
+	private Drive drive;
 
-	public AutoBuilder(ControlLayout cont) {
+	public AutoBuilder(ControlLayout cont, Drive drive) {
 		this.cont = cont;
+		this.drive = drive;
 	}
 
 	class ExecuteToken implements Token {
@@ -69,7 +72,7 @@ public class AutoBuilder {
 		}
 
 		public PathTask makeTask(ControlLayout cont) {
-			return new PathTask(cont, paths);
+			return new PathTask(cont, paths, drive);
 		}
 	}
 
@@ -170,7 +173,7 @@ public class AutoBuilder {
 		}
 
 		public TurnTask makeTask(ControlLayout cont) {
-			return new TurnTask(cont, turnType, turnAmount);
+			return new TurnTask(cont, turnType, turnAmount, drive);
 		}
 	}
 
@@ -185,7 +188,7 @@ public class AutoBuilder {
 		}
 
 		public DriveTask makeTask(ControlLayout cont) {
-			return new DriveTask(cont, (int) dist);
+			return new DriveTask(cont, (int) dist, drive);
 		}
 	}
 

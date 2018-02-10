@@ -9,7 +9,7 @@ public class IntakeTask extends AutoTask {
 	private long timeout = 2000;
 	private long startTime;
 	public enum IntakeType {
-		IN, OUT, RUN, STOP, DEPLOY, HOLD
+		IN, OUT, RUN, STOP, DEPLOY, HOLD, RUN_IN, RUN_OUT
 	}
 
 	private IntakeType intake;

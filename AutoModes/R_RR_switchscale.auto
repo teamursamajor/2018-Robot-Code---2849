@@ -1,0 +1,28 @@
+#R_RR_switchscale.auto
+
+execute R_R0_switch.auto
+
+#picking up second cube
+bundle{
+	serial{
+		lift bottom
+		intake in
+    }
+	serial{
+		drive -10
+		turn to 0
+		drive 30
+		turn to -90
+		drive 15
+	}
+}
+#dropping off second cube
+drive -5
+turn to 0
+serial{
+		wait 2
+		lift scale
+	}
+	drive 100
+}
+intake out

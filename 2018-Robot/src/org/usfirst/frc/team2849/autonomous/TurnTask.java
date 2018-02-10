@@ -14,11 +14,13 @@ public class TurnTask extends AutoTask {
 
 	private double desiredAngle;
 	private Turntype type;
+	private Drive drive;
 	
-	public TurnTask(ControlLayout cont, Turntype type, double desiredAngle) {
+	public TurnTask(ControlLayout cont, Turntype type, double desiredAngle, Drive drive) {
 		super(cont);
 		this.desiredAngle = desiredAngle;
 		this.type = type;
+		this.drive = drive;
 	}
 
 	/**
@@ -27,14 +29,14 @@ public class TurnTask extends AutoTask {
 	 * smoothly. TODO Add proportional control, fix turn direction!!!
 	 */
 	public void turnTo(double desiredAngle) {
-		desiredAngle = Drive.fixHeading(desiredAngle);
+		desiredAngle = drive.fixHeading(desiredAngle);
 		int count = 0;
 		double powerConstant = 0;
-		double angle = Drive.getHeading();
-		//Logger.log("Start Angle: " + Drive.getHeading(), LogLevel.DEBUG);
+		double angle = drive.getHeading();
+		//Logger.log("Start Angle: " + drive.getHeading(), LogLevel.DEBUG);
 		Logger.log("Desired Angle: " + desiredAngle, LogLevel.DEBUG);
 		while (Math.abs(turnAmount(desiredAngle)) > 2) {
-			angle = Drive.getHeading();
+			angle = drive.getHeading();
 			powerConstant = getPower(turnAmount(desiredAngle));
 			if (count % 100 == 0) {
 				//Logger.log("Current Angle: " + angle, LogLevel.DEBUG);
@@ -51,7 +53,7 @@ public class TurnTask extends AutoTask {
 			cont.setSpeed(1 * (Math.signum(turnAmount(desiredAngle)) * powerConstant),
 					-1 * (Math.signum(turnAmount(desiredAngle)) * powerConstant));
 		}
-//		Logger.log("End Angle: " + Drive.getHeading(), LogLevel.DEBUG)
+//		Logger.log("End Angle: " + drive.getHeading(), LogLevel.DEBUG)
 		cont.setSpeed(0, 0);
 	}
 
@@ -71,8 +73,8 @@ public class TurnTask extends AutoTask {
 	 *            the angle you want to turn TO.
 	 */
 	public double turnAmount(double desiredAngle) {
-		double angle = Drive.getHeading();
-		desiredAngle = Drive.fixHeading(desiredAngle);
+		double angle = drive.getHeading();
+		desiredAngle = drive.fixHeading(desiredAngle);
 		double turnAmount = desiredAngle - angle;
 		if (turnAmount > 180)
 			turnAmount = -180 + (turnAmount % 180);
@@ -89,7 +91,7 @@ public class TurnTask extends AutoTask {
 	 *            the angle you want to turn BY.
 	 */
 	public void turnBy(double desiredAngle) {
-		double currentAngle = Drive.getHeading();
+		double currentAngle = drive.getHeading();
 		double finalAngle = currentAngle + desiredAngle;
 		turnTo(finalAngle);
 	}

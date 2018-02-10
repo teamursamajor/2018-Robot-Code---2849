@@ -1,46 +1,31 @@
 #R_LL_switchscale.auto
 
-#depositing first cube on switch
-bundle {
-   intake deploy
-   drive 70
-}
-turn to -90
-drive 140
-turn by 90
-bundle {
-   drive 85
-   serial {
-      wait 4
-      lift switch
-   }
+#dropping off first box
+execute R_L0_switch.auto
+
+#picking up second box at switch
+bundle{
+	serial{
+		lift bottom
+		intake in
+	}
+	serial{
+		drive -10
+		turn to 0
+		drive 28
+		turn to 90
+		drive 15
+	}
 }
 
-#drop off cube
-bundle {
-   serial {
-      intake out
-      lift bottom
-   }
-   serial {
-      turn to 90
-      drive 24
-   }
+#dropping off second box at scale
+bundle{
+	serial{
+		lift scale
+	}
+	serial{
+	turn to 0
+	drive 110
+	}
 }
-#pick up a cube
-bundle {
-   serial {
-      lift bottom
-      intake in
-   }
-   serial {
-      drive -24
-      turn to 0
-      drive 30
-      turn to 90
-      drive 30
-      turn to 0
-      drive 100
-   }
-}
-#intake code
+intake out

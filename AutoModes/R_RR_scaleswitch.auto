@@ -2,57 +2,12 @@
 
 #right bumper is on corner with exchange
 
-#deliver first cube to scale
-
-bundle {
-   
-   intake deploy  
-   serial {
-
-      drive 324
-
-      turn to -90
-
-   }
-}
-
-bundle {
-   lift scale
- 
-   drive 30
-}
-intake out
-
-#picking up second cube
-
-bundle {
-   lift bottom
-
-   drive -30
-
-}
-turn by -90
-
-drive 119
-
-turn to -90
-
-bundle {
-   intake in
-   drive 10
-
-}
-
+execute R_0R_scalecube.auto
 
 #delivering second cube
 
-drive -10
-turn to -180
 bundle {
-
    lift switch
-   drive 10
-
+   drive 13
 }
-
 intake out

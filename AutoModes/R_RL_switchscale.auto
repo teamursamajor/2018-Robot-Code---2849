@@ -1,18 +1,7 @@
 #R_LR_switchscale.auto
 #right bumper is on corner with exchange
 
-#depositing first cube on switch
-bundle {
-   intake deploy
-   drive 164
-}
-turn to -90
-drive 20
-bundle {
-   drive 30
-   lift switch
-}
-intake out
+execute R_R0_switch.auto
 
 #picking up second cube
 bundle {
