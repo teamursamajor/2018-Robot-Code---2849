@@ -22,11 +22,11 @@ public class LED extends Thread {
 	
 	public void run() {
 		while (true) {
-			rLED.set(cont.getR());
-			gLED.set(cont.getG());
-			bLED.set(cont.getB());
+			rLED.set(cont.getLED().getR());
+			gLED.set(cont.getLED().getG());
+			bLED.set(cont.getLED().getB());
 			try {
-				Thread.sleep(20);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

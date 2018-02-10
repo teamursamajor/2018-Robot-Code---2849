@@ -49,7 +49,7 @@ public class PathTask extends AutoTask implements UrsaRobot {
 			steer = follower.getSteering(leftPath.findNextPoint(relTime / 1000.0), drive.getRawHeading());
 			rightPath.findNextPoint(relTime / 1000.0);
 //			Logger.log("Steer: " + steer, LogLevel.DEBUG);
-			cont.setSpeed(-(leftPower + steer), -(rightPower - steer));
+			cont.getDrive().setSpeed(-(leftPower + steer), -(rightPower - steer));
 			try {
 				Thread.sleep((long) (leftPath.getDt() * 1000));
 			} catch (InterruptedException e) {
@@ -62,7 +62,7 @@ public class PathTask extends AutoTask implements UrsaRobot {
 		Logger.log("End", LogLevel.DEBUG);
 		Logger.log("Left Finished: " + leftPath.isFinished(), LogLevel.DEBUG);
 		Logger.log("Right Finished: " + rightPath.isFinished(), LogLevel.DEBUG);
-		cont.setSpeed(0, 0);
+		cont.getDrive().setSpeed(0, 0);
 		drive.stop();
 		startTime = System.currentTimeMillis();
 		while (System.currentTimeMillis() - startTime < 3000) {}

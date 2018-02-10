@@ -1,36 +1,60 @@
 package org.usfirst.frc.team2849.controls;
 
-import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
+import org.usfirst.frc.team2849.controls.drive.DriveControl;
+import org.usfirst.frc.team2849.controls.intake.IntakeControl;
+import org.usfirst.frc.team2849.controls.led.LEDControl;
+import org.usfirst.frc.team2849.controls.lift.LiftControl;
 
-public interface ControlLayout {
+public class ControlLayout {
 	
-	public double getLeftSpeed();
-	public double getRightSpeed();
-
-	//not the drug
-	public void setSpeed(double leftPower, double rightPower);
-
-	//Intake methods
-    public void setIntakeType(IntakeType type);
-    
-    public IntakeType getIntakeType();
-
-	public void setHasBox(boolean hasBox);
+	private DriveControl drive;
+	private IntakeControl intake;
+	private LiftControl lift;
+	private LEDControl led;
 	
-	public boolean hasBox();
-    
-    //Lift Methods
-    public void setDesiredHeight(double liftHeight);
- 
-    public double getDesiredHeight();
-    
-    public void setCurrentHeight(double liftHeight);
-    
-    public double getCurrentHeight();
-    
-    //LED Methods
-    public boolean getR();
-    public boolean getG();
-    public boolean getB();
-       
+	public ControlLayout(DriveControl drive, IntakeControl intake, LiftControl lift, LEDControl led) {
+		this.setDrive(drive);
+		this.setIntake(intake);
+		this.setLift(lift);
+		this.setLed(led);
+	}
+
+	public DriveControl getDrive() {
+		return drive;
+	}
+
+	public void setDrive(DriveControl drive) {
+		this.drive = drive;
+	}
+
+	public IntakeControl getIntake() {
+		return intake;
+	}
+
+	public void setIntake(IntakeControl intake) {
+		this.intake = intake;
+	}
+
+	public LiftControl getLift() {
+		return lift;
+	}
+
+	public void setLift(LiftControl lift) {
+		this.lift = lift;
+	}
+
+	public LEDControl getLED() {
+		return led;
+	}
+
+	public void setLed(LEDControl led) {
+		this.led = led;
+	}
+	
+	public void updateControlLayout(DriveControl drive, IntakeControl intake, LiftControl lift, LEDControl led) {
+		this.setDrive(drive);
+		this.setIntake(intake);
+		this.setLift(lift);
+		this.setLed(led);
+	}
 }

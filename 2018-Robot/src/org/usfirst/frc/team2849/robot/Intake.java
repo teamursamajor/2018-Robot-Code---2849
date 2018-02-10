@@ -27,12 +27,12 @@ public class Intake extends Thread implements Subsystem {
 //			System.out.println(cont.getIntakeType());
 //			System.out.println(cont.hasBox());
 //			System.out.println("----");
-			switch (cont.getIntakeType()) {
+			switch (cont.getIntake().getIntakeType()) {
 			case RUN:
 				setIntakePower(.5);
 				break;
 			case OUT:
-				if (cont.hasBox()) {
+				if (cont.getIntake().hasBox()) {
 					setIntakePower(-0.5);
 				} else {
 					setIntakePower(0);
@@ -46,7 +46,7 @@ public class Intake extends Thread implements Subsystem {
 			//TODO update to more complex intake (in, lift up, in again, lift down)
 			//puts it on the front frame to keep the cube off the ground
 			case IN:
-				if(!cont.hasBox()){
+				if(!cont.getIntake().hasBox()){
 					setIntakePower(0.5);
 				} else {
 					setIntakePower(0);
