@@ -17,19 +17,23 @@ public class Lift extends Thread implements UrsaRobot, Subsystem {
 
 	public void run() {
 		double displacement = 0;
+		double desiredHeight;
+		double currentHeight;
 		while (true) {
-			cont.setCurrentHeight(getLiftHeight());
-			displacement = cont.getDesiredHeight() - cont.getCurrentHeight();
-			if (cont.getDesiredHeight() != cont.getCurrentHeight()) {
-				if (cont.getDesiredHeight() > cont.getCurrentHeight()) {
+			cont.getLift().setCurrentHeight(getLiftHeight());
+			desiredHeight = cont.getLift().getDesiredHeight();
+			currentHeight = cont.getLift().getCurrentHeight();
+			displacement = desiredHeight - currentHeight;
+			if (desiredHeight != currentHeight) {
+				if (desiredHeight > currentHeight) {
 					motor.set(.2);
 				}
-				if (cont.getDesiredHeight() < cont.getCurrentHeight()){
+				if (desiredHeight < currentHeight){
 					motor.set(-.5);
 				}
 			}
 
-			if (cont.getDesiredHeight() == cont.getCurrentHeight()) {
+			if (desiredHeight == currentHeight) {
 				motor.set(0);
 			}
 			try {
