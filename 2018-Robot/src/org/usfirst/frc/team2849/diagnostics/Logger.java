@@ -70,6 +70,41 @@ public class Logger extends Thread {
 		Date date = new Date();
 		path = "/home/lvuser/" + dateFormat.format(date);
 		write("");
+		/*
+		 * You need to make Logger static, and put the code in the constuctor here then 
+		 * actually define the collection subsystems
+		 * please put LEDDiagnosticPanel in your list of subsystems
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 */
 	}
 	
 	/**
