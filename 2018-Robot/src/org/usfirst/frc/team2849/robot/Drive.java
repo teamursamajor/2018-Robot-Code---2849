@@ -63,7 +63,7 @@ public class Drive implements Runnable, UrsaRobot, Subsystem {
 
 		encL.setDistancePerPulse(INCHES_PER_TICK);
 		encR.setDistancePerPulse(INCHES_PER_TICK);
-		encL.setReverseDirection(true);
+		encR.setReverseDirection(true);
 
 		encL.reset();
 		encR.reset();
@@ -121,6 +121,10 @@ public class Drive implements Runnable, UrsaRobot, Subsystem {
 		return angle;
 	}
 	
+	public double getRawHeading() {
+		return ahrs.getAngle();
+	}
+	
 	public double fixHeading(double heading) {
 		heading %= 360;
 		while (heading < 0)
@@ -158,6 +162,7 @@ public class Drive implements Runnable, UrsaRobot, Subsystem {
 		mFrontRight.stopMotor();
 		mRearLeft.stopMotor();
 		mRearRight.stopMotor();
+		mFrontLeft.stopMotor();
 	}
 	
 	public void setControlScheme(ControlLayout layout) {
@@ -172,6 +177,6 @@ public class Drive implements Runnable, UrsaRobot, Subsystem {
 	public String getLogData(String date) {
 		//TODO add any relevant information here
 		return date + " [" + Logger.LogLevel.INFO + "] Drive: " + "...";
-	}
+	}	
 
 }

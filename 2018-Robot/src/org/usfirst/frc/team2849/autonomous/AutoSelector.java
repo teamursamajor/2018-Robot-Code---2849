@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class AutoSelector {
 	private ArrayList<SendableChooser<String>> autoList = new ArrayList<SendableChooser<String>>();
 	private SendableChooser<Character> startingPosition = new SendableChooser<Character>();
-	
+		
 	public AutoSelector(int numChoosers) {
 		startingPosition.addDefault("Select starting position...", ' ');
 		startingPosition.addObject("Left", 'L');

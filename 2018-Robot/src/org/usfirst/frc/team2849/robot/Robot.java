@@ -50,11 +50,12 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	 */
 	@Override
 	public void robotInit() {
-		drive = new Drive(DRIVE_FRONT_LEFT, DRIVE_FRONT_RIGHT, DRIVE_REAR_LEFT, DRIVE_REAR_RIGHT, autoCont);
+		autoCont = new AutoControl();
 		autoSelect = new AutoSelector(5);
 		tankDriveCont = new TankDriveControl(CONTROLLER_PORT);
 		testCont = new TestControl(CONTROLLER_PORT);
-		autoCont = new AutoControl();
+		drive = new Drive(DRIVE_FRONT_LEFT, DRIVE_FRONT_RIGHT, DRIVE_REAR_LEFT, DRIVE_REAR_RIGHT, autoCont);
+		autoBuilder = new AutoBuilder(autoCont, drive);
 		intake = new Intake(INTAKE_LEFT, INTAKE_RIGHT, autoCont);
 		lift = new Lift(autoCont);
 		xbox = new XboxController(CONTROLLER_PORT);
@@ -175,12 +176,19 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		System.out.println("Left: " + drive.getLeftEncoder());
+		System.out.println("Right: " + drive.getRightEncoder());
 	}
 
 	public void disabledInit() {
 		Logger.log("disabled", LogLevel.INFO);
 		setControlScheme(new NullControl());
 	}
+	
+	public void disabledPeriodic() {
+		drive.stop();
+	}
+	
 	/**
 	 * Sets the control scheme for all subsystems to the scheme parameter
 	 * @param scheme Desired control scheme
@@ -189,6 +197,5 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		drive.setControlScheme(scheme);
 		intake.setControlScheme(scheme);
 		lift.setControlScheme(scheme);
-		
 	}
 }

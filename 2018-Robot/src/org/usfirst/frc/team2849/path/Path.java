@@ -70,12 +70,11 @@ public class Path implements UrsaRobot {
 	}
 
 	public PointonPath findNearestPoint(double pos) {
-		PointonPath next = findNextPoint(pos);
-		PointonPath last = findLastPoint(pos);
-		if (next.getPosition() - pos <= pos - last.getPosition())
-			return next;
+		PointonPath[] neighbors = findSurroundingPoints(pos);
+		if (neighbors[1].getPosition() - pos <= pos - neighbors[0].getPosition())
+			return neighbors[1];
 		else
-			return last;
+			return neighbors[0];
 	}
 
 	public PointonPath[] findSurroundingPoints(double pos) {
@@ -151,7 +150,7 @@ public class Path implements UrsaRobot {
 		double cos;
 		double sin;
 		double time = 0;
-		perpHeading = Math.toRadians((path.get(0).getDirection() + 90) % 360);
+		perpHeading = Math.toRadians(path.get(0).getDirection() % 360);
 		cos = Math.cos(perpHeading);
 		sin = Math.sin(perpHeading);
 		double halfSeparation = (separation) / 2;
@@ -233,7 +232,7 @@ public class Path implements UrsaRobot {
 	public static void main(String[] args) {
 		Path path = new Path("output");
 		path.add(new PointonPath(0, 0, 0, 0, 0, 0, 0));
-		path.add(new PointonPath(240, 0, 0, 0, 0, 0, 0));
+		path.add(new PointonPath(120, 0, 0, 0, 0, 0, 0));
 		path.createVelProfile(MAX_ACCELERATION, MAX_VELOCITY, .1);
 		path.mapVelocity();
 		new PathWriter(new Path[] {path, path}, "outmapped.txt");
