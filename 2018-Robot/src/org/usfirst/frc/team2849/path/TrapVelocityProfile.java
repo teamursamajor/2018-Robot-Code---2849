@@ -137,8 +137,10 @@ public class TrapVelocityProfile {
 				dir = points[0].getDirection() + (totalDist - points[0].getPosition())
 						* (AngleHelper.getSmallestAngleBetween(points[0].getDirection(), points[1].getDirection())
 								/ (points[1].getPosition() - points[0].getPosition()));
-				xft = points[0].xft + Math.cos(Math.toRadians(dir)) * (ds / 12);
-				yft = points[0].yft + Math.sin(Math.toDegrees(dir)) * (ds / 12);
+//				xft = points[0].xft + Math.cos(Math.toRadians(dir)) * ((totalDist - points[0].getPosition()) / 12);
+//				yft = points[0].yft + Math.sin(Math.toDegrees(dir)) * ((totalDist - points[0].getPosition()) / 12);
+				xft = points[0].xft;
+				yft = points[0].yft;
 				toAdd = new PointonPath(totalDist, dir, xft, yft, t, curVel, maxAccel);
 			} else if (t < accelTime + cruiseTime) {
 				totalDist = accelDist + maxVel * (t - accelTime);
@@ -147,8 +149,10 @@ public class TrapVelocityProfile {
 				dir = points[0].getDirection() + (totalDist - points[0].getPosition())
 						* (AngleHelper.getSmallestAngleBetween(points[0].getDirection(), points[1].getDirection())
 								/ (points[1].getPosition() - points[0].getPosition()));
-				xft = points[0].xft + Math.cos(Math.toRadians(dir)) * (ds / 12);
-				yft = points[0].yft + Math.sin(Math.toDegrees(dir)) * (ds / 12);
+//				xft = points[0].xft + Math.cos(Math.toRadians(dir)) * (ds / 12);
+//				yft = points[0].yft + Math.sin(Math.toDegrees(dir)) * (ds / 12);
+				xft = points[1].xft;
+				yft = points[1].yft;
 				toAdd = new PointonPath(totalDist, dir, xft, yft, t, maxVel, 0);
 			} else if (t < totalTime) {
 				System.out.println("accelTime < t < totalTime");
@@ -163,8 +167,10 @@ public class TrapVelocityProfile {
 				dir = points[0].getDirection() + (totalDist - points[0].getPosition())
 						* (AngleHelper.getSmallestAngleBetween(points[0].getDirection(), points[1].getDirection())
 								/ (points[1].getPosition() - points[0].getPosition()));
-				xft = points[0].xft + Math.cos(Math.toRadians(dir)) * (ds / 12);
-				yft = points[0].yft + Math.sin(Math.toDegrees(dir)) * (ds / 12);
+//				xft = points[0].xft + Math.cos(Math.toRadians(dir)) * (ds / 12);
+//				yft = points[0].yft + Math.sin(Math.toDegrees(dir)) * (ds / 12);
+				xft = points[1].xft;
+				yft = points[1].yft;
 				toAdd = new PointonPath(totalDist, dir, xft, yft, t, curVel, -maxAccel);
 			} else {
 				System.out.println("Time should not be greater than totalTime: " + t);

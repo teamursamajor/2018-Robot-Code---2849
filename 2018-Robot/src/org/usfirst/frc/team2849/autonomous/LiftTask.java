@@ -2,10 +2,6 @@ package org.usfirst.frc.team2849.autonomous;
 
 import org.usfirst.frc.team2849.controls.ControlLayout;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Encoder;
-
 public class LiftTask extends AutoTask {
 
 	public enum LiftType {
@@ -24,6 +20,6 @@ public class LiftTask extends AutoTask {
 	}
 
 	public String toString() {
-		return "LiftTask: " + cont.getDesiredHeight() + "\n";
+		return "LiftTask: " + cont.getLift().getDesiredHeight() + "\n";
 	}
 }

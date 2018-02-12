@@ -21,7 +21,8 @@ public class PathTask extends AutoTask implements UrsaRobot {
 		super(cont);
 		leftPath = paths[0];
 		rightPath = paths[1];
-		follower = new Pathfollower(1/100.0, 0, 0, 1.0/MAX_VELOCITY, 1/100.0, 0);
+//		follower = new Pathfollower(1/50.0, 0, 1/200.0, 1.0/MAX_VELOCITY, 1/(2.5 * MAX_ACCELERATION), 1/100.0);
+		follower = new Pathfollower(1/40.0, 0, 0, 1.0/MAX_VELOCITY, 1/(1.5 * MAX_ACCELERATION), 1/33.3);
 		this.drive = drive;
 	}
 
@@ -30,6 +31,7 @@ public class PathTask extends AutoTask implements UrsaRobot {
 		double leftPower;
 		double rightPower;
 		double steer;
+		drive.resetNavx();
 		drive.resetEncoders();
 		long startTime = System.currentTimeMillis();
 		long relTime = 0;
@@ -44,10 +46,10 @@ public class PathTask extends AutoTask implements UrsaRobot {
 			rightPower = follower.getCorrection(rightPath, drive.getRightEncoder(), relTime / 1000.0);
 //			Logger.log("L: " + leftPower, LogLevel.DEBUG);
 //			Logger.log("R: " + rightPower, LogLevel.DEBUG);
-			steer = follower.getSteering(leftPath.findNextPoint(relTime / 1000.0), drive.getHeading());
+			steer = follower.getSteering(leftPath.findNextPoint(relTime / 1000.0), drive.getRawHeading());
 			rightPath.findNextPoint(relTime / 1000.0);
 //			Logger.log("Steer: " + steer, LogLevel.DEBUG);
-			cont.setSpeed(-leftPower + steer, -rightPower - steer);
+			cont.getDrive().setSpeed(-(leftPower + steer), -(rightPower - steer));
 			try {
 				Thread.sleep((long) (leftPath.getDt() * 1000));
 			} catch (InterruptedException e) {
@@ -60,8 +62,12 @@ public class PathTask extends AutoTask implements UrsaRobot {
 		Logger.log("End", LogLevel.DEBUG);
 		Logger.log("Left Finished: " + leftPath.isFinished(), LogLevel.DEBUG);
 		Logger.log("Right Finished: " + rightPath.isFinished(), LogLevel.DEBUG);
-		cont.setSpeed(0, 0);
+		cont.getDrive().setSpeed(0, 0);
 		drive.stop();
+		startTime = System.currentTimeMillis();
+		while (System.currentTimeMillis() - startTime < 3000) {}
+		System.out.println("leftDist: " + drive.getLeftEncoder() );
+		System.out.println("rightDist: " + drive.getRightEncoder());
 	}
 
 }

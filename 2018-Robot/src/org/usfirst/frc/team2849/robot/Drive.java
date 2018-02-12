@@ -48,14 +48,14 @@ public class Drive implements Runnable, UrsaRobot, Subsystem {
 	 *            Channel number for rear right motor
 	 */
 
-	public Drive(int frontLeft, int frontRight, int rearLeft, int rearRight, ControlLayout contScheme) {
+	public Drive(int frontLeft, int frontRight, int rearLeft, int rearRight, ControlLayout cont) {
 		mFrontLeft = new Spark(frontLeft);
 		mFrontRight = new Spark(frontRight);
 		mRearLeft = new Spark(rearLeft);
 		mRearRight = new Spark(rearRight);
 
-		cont = contScheme;
-
+		this.cont = cont;
+		
 		ahrs = new AHRS(SPI.Port.kMXP);
 
 		encL = new Encoder(LEFT_ENCODER_CHANNEL_A, LEFT_ENCODER_CHANNEL_B);
@@ -63,7 +63,7 @@ public class Drive implements Runnable, UrsaRobot, Subsystem {
 
 		encL.setDistancePerPulse(INCHES_PER_TICK);
 		encR.setDistancePerPulse(INCHES_PER_TICK);
-		encL.setReverseDirection(true);
+		encR.setReverseDirection(true);
 
 		encL.reset();
 		encR.reset();
@@ -91,10 +91,10 @@ public class Drive implements Runnable, UrsaRobot, Subsystem {
 	//TODO PID
 	public void run() {
 		while (running) {
-			mFrontLeft.set(-cont.getLeftSpeed());
-			mFrontRight.set(cont.getRightSpeed());
-			mRearLeft.set(-cont.getLeftSpeed());
-			mRearRight.set(cont.getRightSpeed());
+			mFrontLeft.set(-cont.getDrive().getLeftSpeed());
+			mFrontRight.set(cont.getDrive().getRightSpeed());
+			mRearLeft.set(-cont.getDrive().getLeftSpeed());
+			mRearRight.set(cont.getDrive().getRightSpeed());
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
@@ -119,6 +119,10 @@ public class Drive implements Runnable, UrsaRobot, Subsystem {
 		double angle = ahrs.getAngle();
 		angle = fixHeading(angle);
 		return angle;
+	}
+	
+	public double getRawHeading() {
+		return ahrs.getAngle();
 	}
 	
 	public double fixHeading(double heading) {
@@ -158,6 +162,7 @@ public class Drive implements Runnable, UrsaRobot, Subsystem {
 		mFrontRight.stopMotor();
 		mRearLeft.stopMotor();
 		mRearRight.stopMotor();
+		mFrontLeft.stopMotor();
 	}
 	
 	public void setControlScheme(ControlLayout layout) {
@@ -172,6 +177,6 @@ public class Drive implements Runnable, UrsaRobot, Subsystem {
 	public String getLogData(String date) {
 		//TODO add any relevant information here
 		return date + " [" + Logger.LogLevel.INFO + "] Drive: " + "...";
-	}
+	}	
 
 }

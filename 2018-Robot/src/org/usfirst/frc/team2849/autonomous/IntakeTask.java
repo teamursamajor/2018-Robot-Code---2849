@@ -20,30 +20,30 @@ public class IntakeTask extends AutoTask {
 	}
 
 	public void run() {
-		cont.setIntakeType(intake);
+		cont.getIntake().setIntakeType(intake);
 		//Run just keeps running, In/Out use the sensor
 		switch (intake) {
 		case IN:
 		    startTime = System.currentTimeMillis();
-			while(!cont.hasBox() && System.currentTimeMillis() - startTime < timeout){
+			while(!cont.getIntake().hasBox() && System.currentTimeMillis() - startTime < timeout){
 				try {
 					Thread.sleep(20);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
-			cont.setIntakeType(IntakeType.STOP);
+			cont.getIntake().setIntakeType(IntakeType.STOP);
 			break;
 		case OUT:
 			startTime = System.currentTimeMillis();
-			while(cont.hasBox() && System.currentTimeMillis() - startTime < timeout){
+			while(cont.getIntake().hasBox() && System.currentTimeMillis() - startTime < timeout){
 				try {
 					Thread.sleep(20);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
-			cont.setIntakeType(IntakeType.STOP);
+			cont.getIntake().setIntakeType(IntakeType.STOP);
 			break;
 		default:
 			Logger.log("Intake in " + intake.name() + " case :^)", LogLevel.DEBUG);

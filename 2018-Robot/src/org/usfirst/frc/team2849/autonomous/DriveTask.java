@@ -44,7 +44,7 @@ public class DriveTask extends AutoTask {
 				rightPowerConstant = 0;
 			}
 			//TODO hot fix change
-			cont.setSpeed(leftPowerConstant * -Math.signum(distance),
+			cont.getDrive().setSpeed(leftPowerConstant * -Math.signum(distance),
 					((rightPowerConstant - rightAdjust) * -Math.signum(distance)));
 			try {
 				Thread.sleep(20);
@@ -53,7 +53,7 @@ public class DriveTask extends AutoTask {
 			}
 		}
 		Logger.log("Drive loop ended", LogLevel.DEBUG);
-		cont.setSpeed(0, 0);
+		cont.getDrive().setSpeed(0, 0);
 	}
 
 	public String toString() {
