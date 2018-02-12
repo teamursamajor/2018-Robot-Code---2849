@@ -33,7 +33,7 @@ public class Path implements UrsaRobot {
 		}
 		nextPoint = 0;
 		this.name = name;
-		createVelProfile(MAX_ACCELERATION, MAX_VELOCITY, .1);
+		createVelProfile(MAX_ACCELERATION, MAX_VELOCITY * .75, .1);
 	}
 	
 	public void createVelProfile(double maxAccel, double maxVel, double dt) {
@@ -44,16 +44,16 @@ public class Path implements UrsaRobot {
 	}
 	
 	public boolean isFinished() {
-		return nextPoint >= path.size();
+		return nextPoint >= path.size() - 1;
 	}
 
 	public PointonPath findNextPoint(double time) {
-		if (path.get(nextPoint).getTime() <= time)
+		if (path.get(nextPoint).getTime() <= time && nextPoint != path.size() - 1)
 			nextPoint++;
 		try {
 			return path.get(nextPoint);
 		} catch (Exception e) {
-			return new PointonPath(Integer.MAX_VALUE, Integer.MAX_VALUE, -1, -1);
+			return path.get(path.size() - 1);
 		}
 	}
 	
@@ -70,12 +70,11 @@ public class Path implements UrsaRobot {
 	}
 
 	public PointonPath findNearestPoint(double pos) {
-		PointonPath next = findNextPoint(pos);
-		PointonPath last = findLastPoint(pos);
-		if (next.getPosition() - pos <= pos - last.getPosition())
-			return next;
+		PointonPath[] neighbors = findSurroundingPoints(pos);
+		if (neighbors[1].getPosition() - pos <= pos - neighbors[0].getPosition())
+			return neighbors[1];
 		else
-			return last;
+			return neighbors[0];
 	}
 
 	public PointonPath[] findSurroundingPoints(double pos) {
@@ -115,7 +114,6 @@ public class Path implements UrsaRobot {
 	}
 	
 	public double getDt() {
-		System.out.println("dt: " + dt);
 		return dt;
 	}
 	
@@ -152,7 +150,7 @@ public class Path implements UrsaRobot {
 		double cos;
 		double sin;
 		double time = 0;
-		perpHeading = Math.toRadians((path.get(0).getDirection() + 90) % 360);
+		perpHeading = Math.toRadians(path.get(0).getDirection() % 360);
 		cos = Math.cos(perpHeading);
 		sin = Math.sin(perpHeading);
 		double halfSeparation = (separation) / 2;
@@ -183,6 +181,12 @@ public class Path implements UrsaRobot {
 			leftVel = (leftDist - leftPath.get(i - 1).getPosition()) / (time - leftPath.get(i - 1).getTime());
 			rightAcc = (rightVel - rightPath.get(i - 1).getVelocity()) / (time - rightPath.get(i - 1).getTime());
 			leftAcc = (leftVel - leftPath.get(i - 1).getVelocity()) / (time - leftPath.get(i - 1).getTime());
+			System.out.println("leftX: " + leftX);
+			System.out.println("leftY: " + leftY);
+			System.out.println("leftDist: " + leftDist);
+			System.out.println("");
+			
+			
 			leftPath.add(new PointonPath(leftDist, path.get(i).getDirection(), leftX, leftY, time, leftVel, leftAcc));
 			rightPath.add(new PointonPath(rightDist, path.get(i).getDirection(), rightX, rightY, time, rightVel, rightAcc));
 		}
@@ -222,5 +226,15 @@ public class Path implements UrsaRobot {
 	
 	public void mapVelocity() {
 		path = trap.getMappedPoints();
+	}
+	
+	
+	public static void main(String[] args) {
+		Path path = new Path("output");
+		path.add(new PointonPath(0, 0, 0, 0, 0, 0, 0));
+		path.add(new PointonPath(120, 0, 0, 0, 0, 0, 0));
+		path.createVelProfile(MAX_ACCELERATION, MAX_VELOCITY, .1);
+		path.mapVelocity();
+		new PathWriter(new Path[] {path, path}, "outmapped.txt");
 	}
 }

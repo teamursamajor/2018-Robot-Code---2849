@@ -1,4 +1,4 @@
-package com.teamursamajor.auto;
+package src.com.teamursamajor.auto;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;

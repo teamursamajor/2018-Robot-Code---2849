@@ -26,7 +26,14 @@ public interface UrsaRobot {
 	public static final double ROBOT_WIDTH_FEET = 32.0 / 12.0;
 	public static final double ROBOT_DEPTH_FEET = 28.0 / 12.0;
 	
-	public static final double MAX_VELOCITY = 120; // inches / second
-	public static final double MAX_ACCELERATION = 24; // inches / second^2
+	public static final double MAX_VELOCITY = 160; // inches / second
+	public static final double MAX_ACCELERATION = 160 * 2; // inches / second^2
+	
+	public static final int LED_Solenoid_port_1 = 1;
+	public static final int LED_Solenoid_port_2 = 2;
+	public static final int LED_Solenoid_port_3 = 3;
+	public static final int LED_Solenoid_port_4 = 4;
+	public static final int LED_Solenoid_port_5 = 5;
+	public static final int LED_Solenoid_port_6 = 6;
 
 }

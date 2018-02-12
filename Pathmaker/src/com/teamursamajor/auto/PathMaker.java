@@ -1,4 +1,4 @@
-package com.teamursamajor.auto;
+package src.com.teamursamajor.auto;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;

@@ -57,7 +57,7 @@ public class PathMaker implements UrsaRobot {
 		output.add(
 				new PointonPath(totalDist,
 						negmod(Math.atan2(path.get(1).getYInches() - path.get(0).getYInches(),
-								path.get(1).getXInches() - path.get(0).getXInches()), Math.PI * 2) * (180 / Math.PI),
+								path.get(1).getXInches() - path.get(0).getXInches()), Math.PI * 2) * (180 / Math.PI) - 90,
 						path.get(0).xft, path.get(0).yft));
 		for (int i = 1; i < path.size(); i++) {
 			totalDist += Math.sqrt(Math.pow(path.get(i).getXInches() - path.get(i - 1).getXInches(), 2)
@@ -65,7 +65,7 @@ public class PathMaker implements UrsaRobot {
 			output.add(
 					new PointonPath(totalDist,
 							negmod(Math.atan2(path.get(i).getYInches() - path.get(i - 1).getYInches(),
-									path.get(i).getXInches() - path.get(i - 1).getXInches()), Math.PI * 2) * (180 / Math.PI),
+									path.get(i).getXInches() - path.get(i - 1).getXInches()), Math.PI * 2) * (180 / Math.PI) - 90,
 							path.get(i).xft, path.get(i).yft));
 		}
 		Path mapped = new Path("output", output);
@@ -75,6 +75,7 @@ public class PathMaker implements UrsaRobot {
 		new PathWriter(mapped.separate(ROBOT_WIDTH_FEET), "outsepped.txt");
 		System.out.println("outputed");
 	}
+	
 	public static void input() {
 		ArrayList<PointonPath> pathl = new PathReader("outmapped.txt",false).getLeftPath().getPoints();
 		ArrayList<PointonPath> pathr = new PathReader("outmapped.txt",false).getLeftPath().getPoints();
@@ -125,6 +126,7 @@ public class PathMaker implements UrsaRobot {
 				g.drawImage(field, 0, 0, 400, 800, null);
 				g.drawImage(overlay, 0, 0, 400, 800, null);
 				g.drawImage(overfield, 0, 0, 400, 800, null);
+				g.fillOval((int)(path.get(0).x-5), (int) (path.get(0).y-5), 10, 10);
 			}
 		};
 		frame.add(fieldPanel);
@@ -288,6 +290,11 @@ public class PathMaker implements UrsaRobot {
 			public void actionPerformed(ActionEvent e) {
 				leftornot=!leftornot;
 				distfromwallstring.setText("Distance from "+(leftornot?"left":"right")+" wall:");
+				for (int i=0;i<path.size();i++) {
+					path.set(i, new PointonPath(400 - path.get(i).x,path.get(i).y,i));
+				}
+				PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+				frame.repaint();
 			}
 		});
 		

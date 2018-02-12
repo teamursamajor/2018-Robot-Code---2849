@@ -1,11 +1,12 @@
 package org.usfirst.frc.team2849.robot;
 
 import org.usfirst.frc.team2849.controls.ControlLayout;
+import org.usfirst.frc.team2849.diagnostics.Logger;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
 
-public class Intake extends Thread {
+public class Intake extends Thread implements Subsystem {
 	
 	private ControlLayout cont;
 	private Spark left;
@@ -26,12 +27,12 @@ public class Intake extends Thread {
 //			System.out.println(cont.getIntakeType());
 //			System.out.println(cont.hasBox());
 //			System.out.println("----");
-			switch (cont.getIntakeType()) {
+			switch (cont.getIntake().getIntakeType()) {
 			case RUN:
 				setIntakePower(.5);
 				break;
 			case OUT:
-				if (cont.hasBox()) {
+				if (cont.getIntake().hasBox()) {
 					setIntakePower(-0.5);
 				} else {
 					setIntakePower(0);
@@ -45,7 +46,7 @@ public class Intake extends Thread {
 			//TODO update to more complex intake (in, lift up, in again, lift down)
 			//puts it on the front frame to keep the cube off the ground
 			case IN:
-				if(!cont.hasBox()){
+				if(!cont.getIntake().hasBox()){
 					setIntakePower(0.5);
 				} else {
 					setIntakePower(0);
@@ -82,5 +83,15 @@ public class Intake extends Thread {
 	//TODO add sensor
 	public boolean hasBox(){
 		return true;
+	}
+	
+	/**
+	 * Takes date and info and assembles it into a log output string for Intake subsystem
+	 * @param date
+	 * Used in Logger.run() method where it is substituted for Logger.getDate()
+	 */
+	public String getLogData(String date) {
+		//TODO add any relevant information here
+		return date + " [" + Logger.LogLevel.INFO + "] Intake: " + "...";
 	}
 }

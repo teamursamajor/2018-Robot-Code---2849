@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2849.autonomous;
 
-import org.usfirst.frc.team2849.controls.AutoControl;
 import org.usfirst.frc.team2849.controls.ControlLayout;
 import org.usfirst.frc.team2849.diagnostics.Logger;
 import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
@@ -50,11 +49,11 @@ public class TurnTask extends AutoTask {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			cont.setSpeed(1 * (Math.signum(turnAmount(desiredAngle)) * powerConstant),
+			cont.getDrive().setSpeed(1 * (Math.signum(turnAmount(desiredAngle)) * powerConstant),
 					-1 * (Math.signum(turnAmount(desiredAngle)) * powerConstant));
 		}
 //		Logger.log("End Angle: " + drive.getHeading(), LogLevel.DEBUG)
-		cont.setSpeed(0, 0);
+		cont.getDrive().setSpeed(0, 0);
 	}
 
 	private double getPower(double turnAmount) {

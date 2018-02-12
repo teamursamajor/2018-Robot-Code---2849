@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2849.robot;
 
 import org.usfirst.frc.team2849.controls.ControlLayout;
+import org.usfirst.frc.team2849.diagnostics.Logger;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -11,7 +12,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.RobotDriveBase;
 
-public class Drive implements Runnable, UrsaRobot{
+public class Drive implements Runnable, UrsaRobot, Subsystem {
 
 	private static Spark mFrontLeft;
 	private static Spark mFrontRight;
@@ -47,14 +48,14 @@ public class Drive implements Runnable, UrsaRobot{
 	 *            Channel number for rear right motor
 	 */
 
-	public Drive(int frontLeft, int frontRight, int rearLeft, int rearRight, ControlLayout contScheme) {
+	public Drive(int frontLeft, int frontRight, int rearLeft, int rearRight, ControlLayout cont) {
 		mFrontLeft = new Spark(frontLeft);
 		mFrontRight = new Spark(frontRight);
 		mRearLeft = new Spark(rearLeft);
 		mRearRight = new Spark(rearRight);
 
-		cont = contScheme;
-
+		this.cont = cont;
+		
 		ahrs = new AHRS(SPI.Port.kMXP);
 
 		encL = new Encoder(LEFT_ENCODER_CHANNEL_A, LEFT_ENCODER_CHANNEL_B);
@@ -62,7 +63,7 @@ public class Drive implements Runnable, UrsaRobot{
 
 		encL.setDistancePerPulse(INCHES_PER_TICK);
 		encR.setDistancePerPulse(INCHES_PER_TICK);
-		encL.setReverseDirection(true);
+		encR.setReverseDirection(true);
 
 		encL.reset();
 		encR.reset();
@@ -90,12 +91,12 @@ public class Drive implements Runnable, UrsaRobot{
 	//TODO PID
 	public void run() {
 		while (running) {
-			mFrontLeft.set(-cont.getLeftSpeed());
-			mFrontRight.set(cont.getRightSpeed());
-			mRearLeft.set(-cont.getLeftSpeed());
-			mRearRight.set(cont.getRightSpeed());
+			mFrontLeft.set(-cont.getDrive().getLeftSpeed());
+			mFrontRight.set(cont.getDrive().getRightSpeed());
+			mRearLeft.set(-cont.getDrive().getLeftSpeed());
+			mRearRight.set(cont.getDrive().getRightSpeed());
 			try {
-				Thread.sleep(20);
+				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -119,10 +120,14 @@ public class Drive implements Runnable, UrsaRobot{
 		angle = fixHeading(angle);
 		return angle;
 	}
-
+	
+	public double getRawHeading() {
+		return ahrs.getAngle();
+	}
+	
 	public double fixHeading(double heading) {
 		heading %= 360;
-		if (heading < 0)
+		while (heading < 0)
 			heading += 360;
 		return heading;
 	}
@@ -133,6 +138,14 @@ public class Drive implements Runnable, UrsaRobot{
 
 	public double getRightEncoder() {
 		return encR.getDistance();
+	}
+	
+	public double getLeftRate() {
+		return encL.getRate();
+	}
+	
+	public double getRightRate() {
+		return encR.getRate();
 	}
 
 	public void resetEncoders() {
@@ -149,10 +162,21 @@ public class Drive implements Runnable, UrsaRobot{
 		mFrontRight.stopMotor();
 		mRearLeft.stopMotor();
 		mRearRight.stopMotor();
+		mFrontLeft.stopMotor();
 	}
 	
 	public void setControlScheme(ControlLayout layout) {
 		cont = layout;
 	}
+	
+	/**
+	 * Takes date and info and assembles it into a log output string for Drive subsystem
+	 * @param date
+	 * Used in Logger.run() method where it is substituted for Logger.getDate()
+	 */
+	public String getLogData(String date) {
+		//TODO add any relevant information here
+		return date + " [" + Logger.LogLevel.INFO + "] Drive: " + "...";
+	}	
 
 }

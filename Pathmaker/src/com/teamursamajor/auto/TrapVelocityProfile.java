@@ -1,4 +1,4 @@
-package com.teamursamajor.auto;
+package src.com.teamursamajor.auto;
 import java.util.ArrayList;
 
 public class TrapVelocityProfile {
