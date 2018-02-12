@@ -89,9 +89,10 @@ public class PathMaker implements UrsaRobot {
 		frame.repaint();
 		frame.dispatchEvent(new MouseWheelEvent (frame,0,0,0,0,0,0,false, 3,1,0));
 	}
-	//starting point set, set te startin point by text eild with distance from left wall
-	//clear button
-	//also get around to loading specific ones
+	//TODO: Flip Top and bOttom 
+	//File Picking (JFileChooser)				//starting point set, set te startin point by text eild with distance from left wall
+												//clear button
+												//also get around to loading specific ones
 	static void init() {
 		frame = new JFrame() ;
 		frame.setLayout(null);
