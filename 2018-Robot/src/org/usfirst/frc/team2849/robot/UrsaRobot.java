@@ -13,7 +13,7 @@ public interface UrsaRobot {
 	
 	public static final int LIFT = 5;
 	
-	public static final int CONTROLLER_PORT = 0;
+	public static final int CONTROLLER_PORT = 1;
 	
 	public static final int LEFT_ENCODER_CHANNEL_A = 0;
 	public static final int LEFT_ENCODER_CHANNEL_B = 1;

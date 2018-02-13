@@ -1,12 +1,11 @@
 package org.usfirst.frc.team2849.robot;
 
 import org.usfirst.frc.team2849.controls.ControlLayout;
-import org.usfirst.frc.team2849.diagnostics.Logger;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
 
-public class Intake extends Thread implements Subsystem {
+public class Intake extends Thread {
 	
 	private ControlLayout cont;
 	private Spark left;
@@ -84,14 +83,5 @@ public class Intake extends Thread implements Subsystem {
 	public boolean hasBox(){
 		return true;
 	}
-	
-	/**
-	 * Takes date and info and assembles it into a log output string for Intake subsystem
-	 * @param date
-	 * Used in Logger.run() method where it is substituted for Logger.getDate()
-	 */
-	public String getLogData(String date) {
-		//TODO add any relevant information here
-		return date + " [" + Logger.LogLevel.INFO + "] Intake: " + "...";
-	}
+
 }

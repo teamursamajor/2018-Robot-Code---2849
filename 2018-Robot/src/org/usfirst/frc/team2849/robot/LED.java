@@ -24,12 +24,41 @@ public class LED extends Thread {
 			rLED.set(cont.getLED().getR());
 			gLED.set(cont.getLED().getG());
 			bLED.set(cont.getLED().getB());
+//			System.out.println(cont.getLED().getR());
+//			rLED.set(true);
+//			gLED.set(false);
+//			bLED.set(false);
 			try {
-				Thread.sleep(100);
+				Thread.sleep(50);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
 	}
+	
+	//Terrible Idea down below
+//	public void setRGB(int rPercent, int gPercent, int bPercent) {
+//		for(int n = 1; n<100;n++) {
+//			if(n == rPercent) {
+//				rLED.set(true);
+//			}
+//			if(n != rPercent) {
+//				rLED.set(false);
+//			}
+//			if(n == gPercent) {
+//				gLED.set(true);
+//			}
+//			if(n != gPercent) {
+//				gLED.set(false);
+//			}
+//			if(n == bPercent) {
+//				bLED.set(true);
+//			}
+//			if(n != bPercent) {
+//				bLED.set(false);
+//			}
+//		}
+//		
+//	}
 	
 }
