@@ -41,6 +41,7 @@ public class DriveTask extends AutoTask {
 			rightPowerConstant = getPower(drive.getRightEncoder(), distance);
 
 			//Prints twice every second
+			//TODO delete or add a count increment
 			if (count % 25 == 0) {
 				Logger.log("Left Power Constant: " + leftPowerConstant + "\tLeft Encoder: " + drive.getLeftEncoder(),
 						LogLevel.DEBUG);
@@ -80,4 +81,5 @@ public class DriveTask extends AutoTask {
 		return (0.6 / (1 + Math.exp(5 - 0.18 * currentDistance))) + 0.3;
 
 	}
+
 }

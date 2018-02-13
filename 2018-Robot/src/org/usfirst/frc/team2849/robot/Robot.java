@@ -27,6 +27,7 @@ import org.usfirst.frc.team2849.controls.lift.NullLift;
 import org.usfirst.frc.team2849.controls.lift.XYLift;
 import org.usfirst.frc.team2849.diagnostics.Logger;
 import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
+import org.usfirst.frc.team2849.diagnostics.LoggerSelector;
 import org.usfirst.frc.team2849.diagnostics.PDP;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -49,6 +50,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	AutoSelector autoSelect;
 	AutoBuilder autoBuilder;
 	PDP pdp;
+	LoggerSelector loggerSelect;
 	
 	private Intake intake;
 	private Lift lift;
@@ -70,8 +72,8 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		xbox = new XboxController(CONTROLLER_PORT);
 		led = new LED(cont);
 		pdp = new PDP();
-		//TODO set to LogLevel.ERROR for comp
-		Logger.setLevel(LogLevel.DEBUG);
+		Logger.level = LogLevel.DEBUG;
+		loggerSelect = new LoggerSelector();
 		Logger.log("********ROBOT PROGRAM STARTING********", LogLevel.INFO);
 	}
 

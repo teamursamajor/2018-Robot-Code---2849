@@ -6,7 +6,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 public class Logger {
 	/**
@@ -17,7 +20,7 @@ public class Logger {
 		ERROR, INFO, DEBUG
 	}
 
-	private static LogLevel level;
+	public static LogLevel level;
 	private static File file;
 	private static FileWriter fileWrite;
 	private static BufferedWriter buffWrite;
