@@ -12,6 +12,7 @@ import org.usfirst.frc.team2849.autonomous.AutoSelector;
 import org.usfirst.frc.team2849.autonomous.AutoTask;
 import org.usfirst.frc.team2849.controls.ControlLayout;
 import org.usfirst.frc.team2849.controls.XboxController;
+import org.usfirst.frc.team2849.controls.drive.ArcadeDrive;
 import org.usfirst.frc.team2849.controls.drive.AutoDrive;
 import org.usfirst.frc.team2849.controls.drive.NullDrive;
 import org.usfirst.frc.team2849.controls.drive.TankDrive;
@@ -111,7 +112,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 
 	public void teleopInit() {
 		Logger.log("Started teleop", LogLevel.INFO);
-		cont.updateControlLayout(new TankDrive(xbox), new BumperTriggerIntake(xbox), new XYLift(xbox), new TeleopLED());
+		cont.updateControlLayout(new ArcadeDrive(xbox, true), new BumperTriggerIntake(xbox), new XYLift(xbox), new TeleopLED());
 	}
 
 	/**

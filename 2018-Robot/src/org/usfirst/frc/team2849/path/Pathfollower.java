@@ -25,7 +25,7 @@ public class Pathfollower {
 	}
 
 	public double getCorrection(Path path, double distance, double time) {
-		PointonPath point = path.findNextPoint(time);
+		PointonPath point = path.findNextPointDist(distance);
 		error = point.getPosition() - distance;
 		System.out.println("   Point Position: " + point.getPosition());
 		System.out.println("   Point time: " + point.getTime());
@@ -44,6 +44,16 @@ public class Pathfollower {
 		System.out.println("   Heading: " + heading);
 		System.out.println("   Point Heading: " + point.getDirection());
 		return kturn * AngleHelper.getSmallestAngleBetween(heading, point.getDirection());
+	}
+	
+	public double getDoubleSteering(PointonPath point, PointonPath secondPoint, double heading) {
+		System.out.println("   Heading: " + heading);
+		System.out.println("   First Point Heading: " + point.getDirection());
+		System.out.println("   Second Point Heading: " + secondPoint.getDirection());
+		double smallestAngle = AngleHelper.getSmallestAngleBetween(heading, point.getDirection());
+		if (Math.abs(smallestAngle) >= 1) 
+			return kturn * smallestAngle + .25 * kturn * AngleHelper.getSmallestAngleBetween(heading, secondPoint.getDirection());
+		else return 0;
 	}
 	
 	public double constrain(double power) {
