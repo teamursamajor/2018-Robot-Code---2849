@@ -1,16 +1,11 @@
 Priorities:
 driverstation logger level
-
 integrate encoders into lift
 do both encoders have the same inches per tick (distance per pulse)
 logger
 timeouts on lift
 effect of gravity on lift
-back wheels reaching speed first
-moving left after starting auto
-revamp auto modes
 Redo Auto Strategy
-recode cross switch autos to go from outside
 Intake in at .25 always
 
 Mount Camera
