@@ -9,26 +9,33 @@ public class AutoLED implements LEDControl {
 	private int rPercent = 54;
 	private int gPercent = 9;
 	private int bPercent = 99;
+	
+	private double levelCount = 1.0;
+	private int aimCount=1;
+	private int timesCount =1;
+	private boolean output;
 
 	@Override
 	public boolean getR() {
 		// TODO Auto-generated method stub
 		
-		//old code:
-		//return false;
+		double percentCount = rPercent / 100.0;
+		output =false;
 		
-		rCounter ++;
+		levelCount += percentCount;
+		int hit = (int)levelCount;
 		
-		if(rCounter > 100) {
-			rCounter = 1;
+		if(hit == aimCount) {
+			aimCount ++;
+			output = true;
 		}
-		
-		if(rPercent >= rCounter) {
-			return true;
+		if(timesCount >100) {
+			timesCount = 1;
+			levelCount = 0.0;
+			aimCount = 1;
 		}
-		else {
-			return false;
-		}
+		timesCount ++;
+		return output;
 		
 		
 	}
@@ -92,6 +99,7 @@ public class AutoLED implements LEDControl {
 	public int getBPercent() {
 		return bPercent;
 	}
+	
 	
 
 }
