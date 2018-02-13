@@ -11,7 +11,7 @@ public class NullIntake implements IntakeControl {
 
 	@Override
 	public IntakeType getIntakeType() {
-		return null;
+		return IntakeType.STOP;
 	}
 
 	@Override

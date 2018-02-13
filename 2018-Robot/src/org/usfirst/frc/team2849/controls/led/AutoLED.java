@@ -2,13 +2,13 @@ package org.usfirst.frc.team2849.controls.led;
 
 public class AutoLED implements LEDControl {
 	
-	int rCounter = 18;
-	int gCounter = 3;
-	int bCounter = 33;
+	int rCounter = 0;
+	int gCounter = 0;
+	int bCounter = 0;
 	
-	private int rPercent = 0;
-	private int gPercent = 0;
-	private int bPercent = 0;
+	private int rPercent = 54;
+	private int gPercent = 9;
+	private int bPercent = 99;
 
 	@Override
 	public boolean getR() {
