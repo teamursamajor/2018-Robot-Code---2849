@@ -6,9 +6,9 @@ public class AutoLED implements LEDControl {
 	int gCounter = 0;
 	int bCounter = 0;
 	
-	private int rPercent = 54;
-	private int gPercent = 9;
-	private int bPercent = 99;
+	private int rPercent = 0;
+	private int gPercent = 53;
+	private int bPercent = 55;
 	
 	private double levelCount = 1.0;
 	private int aimCount=1;
@@ -43,39 +43,49 @@ public class AutoLED implements LEDControl {
 	@Override
 	public boolean getG() {
 		// TODO Auto-generated method stub
-		//return false;
+
+		double percentCount = gPercent / 100.0;
+		output =false;
 		
-		gCounter ++;
+		levelCount += percentCount;
+		int hit = (int)levelCount;
 		
-		if(gCounter > 100) {
-			gCounter = 1;
+		if(hit == aimCount) {
+			aimCount ++;
+			output = true;
 		}
+		if(timesCount >100) {
+			timesCount = 1;
+			levelCount = 0.0;
+			aimCount = 1;
+		}
+		timesCount ++;
+		return output;
 		
-		if(gPercent >= gCounter) {
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 
 	@Override
 	public boolean getB() {
 		// TODO Auto-generated method stub
-		//return false;
+
+		double percentCount = bPercent / 100.0;
+		output =false;
 		
-		bCounter ++;
+		levelCount += percentCount;
+		int hit = (int)levelCount;
 		
-		if(bCounter > 100) {
-			bCounter = 1;
+		if(hit == aimCount) {
+			aimCount ++;
+			output = true;
 		}
+		if(timesCount >100) {
+			timesCount = 1;
+			levelCount = 0.0;
+			aimCount = 1;
+		}
+		timesCount ++;
+		return output;
 		
-		if(bPercent >= bCounter) {
-			return true;
-		}
-		else {
-			return false;
-		}
 		
 	}
 	
