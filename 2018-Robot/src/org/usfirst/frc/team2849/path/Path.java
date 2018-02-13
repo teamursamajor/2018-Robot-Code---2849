@@ -33,7 +33,7 @@ public class Path implements UrsaRobot {
 		}
 		nextPoint = 0;
 		this.name = name;
-		createVelProfile(MAX_ACCELERATION, MAX_VELOCITY * .75, .1);
+		createVelProfile(MAX_ACCELERATION, MAX_VELOCITY * .75, .01);
 	}
 	
 	public void createVelProfile(double maxAccel, double maxVel, double dt) {
@@ -47,7 +47,7 @@ public class Path implements UrsaRobot {
 		return nextPoint >= path.size() - 1;
 	}
 
-	public PointonPath findNextPoint(double time) {
+	public PointonPath findNextPointTime(double time) {
 		if (path.get(nextPoint).getTime() <= time && nextPoint != path.size() - 1)
 			nextPoint++;
 		try {
@@ -55,6 +55,20 @@ public class Path implements UrsaRobot {
 		} catch (Exception e) {
 			return path.get(path.size() - 1);
 		}
+	}
+	
+	public PointonPath findNextPointDist(double dist) {
+		if (path.get(nextPoint).getPosition() <= dist && nextPoint != path.size() - 1)
+			nextPoint++;
+		try {
+			return path.get(nextPoint);
+		} catch (Exception e) {
+			return path.get(path.size() - 1);
+		}
+	}
+	
+	public int getIndex() {
+		return nextPoint;
 	}
 	
 	public void resetIndex() {
@@ -98,7 +112,12 @@ public class Path implements UrsaRobot {
 	}
 
 	public PointonPath get(int index) {
-		return path.get(index);
+		if (index < path.size() && index >= 0)
+			return path.get(index);
+		else if (index >= path.size())
+			return path.get(path.size() - 1);
+		else
+			return path.get(0);
 	}
 
 	public ArrayList<PointonPath> getPoints() {
