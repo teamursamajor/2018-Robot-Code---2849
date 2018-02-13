@@ -43,6 +43,13 @@ public class Path implements UrsaRobot {
 		this.dt = dt;
 	}
 	
+	public void createVelProfile() {
+		trap = new TrapVelocityProfile(MAX_ACCELERATION, MAX_VELOCITY, .1, this);
+		System.out.println("############Distance: " + path.get(path.size() -1 ).getPosition());
+		this.maxVel = MAX_VELOCITY;
+		this.dt = .1;
+	}
+	
 	public boolean isFinished() {
 		return nextPoint >= path.size() - 1;
 	}
