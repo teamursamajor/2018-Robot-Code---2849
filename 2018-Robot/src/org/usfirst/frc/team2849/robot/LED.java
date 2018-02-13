@@ -31,11 +31,11 @@ public class LED extends Thread {
 //			rLED.set(true);
 //			gLED.set(false);
 //			bLED.set(false);
-//			try {
-//				Thread.sleep(2);
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
