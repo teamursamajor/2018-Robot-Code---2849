@@ -2,6 +2,7 @@ package org.usfirst.frc.team2849.robot;
 
 import org.usfirst.frc.team2849.controls.ControlLayout;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Solenoid;
 
 public class LED extends Thread {
@@ -20,16 +21,18 @@ public class LED extends Thread {
 	}
 	
 	public void run() {
+		boolean red = false;
 		while (true) {
-			rLED.set(cont.getLED().getR());
-			gLED.set(cont.getLED().getG());
-			bLED.set(cont.getLED().getB());
-//			System.out.println(cont.getLED().getR());
+			red = cont.getLED().getR();
+			rLED.set(red);
+//			gLED.set(cont.getLED().getG());
+//			bLED.set(cont.getLED().getB());
+//			System.out.println(red);
 //			rLED.set(true);
 //			gLED.set(false);
 //			bLED.set(false);
 			try {
-				Thread.sleep(50);
+				Thread.sleep(1);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
