@@ -5,7 +5,7 @@ import org.usfirst.frc.team2849.diagnostics.Logger;
 
 import edu.wpi.first.wpilibj.Spark;
 
-public class Lift extends Thread implements UrsaRobot, Subsystem {
+public class Lift extends Thread implements UrsaRobot {
 
 	private static ControlLayout cont;
 	private static Spark motor = new Spark(LIFT);
@@ -51,16 +51,6 @@ public class Lift extends Thread implements UrsaRobot, Subsystem {
 	private double getLiftHeight() {
 		// TODO add encoder
 		return 0;
-	}
-	
-	/**
-	 * Takes date and info and assembles it into a log output string for Lift subsystem
-	 * @param date
-	 * Used in Logger.run() method where it is substituted for Logger.getDate()
-	 */
-	public String getLogData(String date) {
-		//TODO add any relevant information here
-		return date + " [" + Logger.LogLevel.INFO + "] Lift: " + "...";
 	}
 
 }

@@ -57,7 +57,4 @@ public class LED extends Thread {
 		
 	}
 	
-	
-	
-	
 }
