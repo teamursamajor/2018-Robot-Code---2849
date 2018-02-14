@@ -15,7 +15,7 @@ public class Lift extends Thread implements UrsaRobot {
 	public Lift(ControlLayout control) {
 		cont = control;
 		this.start();
-		liftEnc  = new Encoder(UrsaRobot.LEFT_ENCODER_CHANNEL_A, UrsaRobot.LEFT_ENCODER_CHANNEL_B);
+		liftEnc  = new Encoder(UrsaRobot.LIFT_ENCODER_CHANNEL_A, UrsaRobot.LIFT_ENCODER_CHANNEL_B);
 	}
 
 	public void run() {

@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2849.robot;
 
 import org.opencv.core.Mat;
+import org.usfirst.frc.team2849.diagnostics.Logger;
+import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
@@ -18,6 +20,7 @@ public class Vision implements Runnable {
 		intakeCam = new UsbCamera("Intake Camera", 0);
 		
 		CameraServer.getInstance().addCamera(intakeCam);
+		
 		intakeCam.setResolution(160, 120);
 
 		cvSink = CameraServer.getInstance().getVideo(intakeCam);
@@ -27,6 +30,7 @@ public class Vision implements Runnable {
 	public static void visionInit() {
 		visionRun = new Thread(new Vision(), "Vision Thread");
 		visionRun.start();
+		Logger.log("Starting Vision Thread", LogLevel.INFO);
 	}
 	
 	public void run() {

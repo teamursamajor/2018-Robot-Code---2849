@@ -63,6 +63,8 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	 */
 	@Override
 	public void robotInit() {
+		Logger.setLevel(LogLevel.DEBUG);
+		Logger.log("********ROBOT PROGRAM STARTING********", LogLevel.INFO);
 		cont = new ControlLayout(new NullDrive(), new NullIntake(), new NullLift(), new NullLED());
 		autoSelect = new AutoSelector(5);
 		drive = new Drive(DRIVE_FRONT_LEFT, DRIVE_FRONT_RIGHT, DRIVE_REAR_LEFT, DRIVE_REAR_RIGHT, cont);
@@ -72,9 +74,8 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		xbox = new XboxController(CONTROLLER_PORT);
 		led = new LED(cont);
 		pdp = new PDP();
+		Vision.visionInit();
 		debugSelect = new DebugSelector();
-		Logger.setLevel(LogLevel.DEBUG);
-		Logger.log("********ROBOT PROGRAM STARTING********", LogLevel.INFO);
 	}
 
 	/**
