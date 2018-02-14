@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2849.robot;
 
 import org.usfirst.frc.team2849.controls.ControlLayout;
+import org.usfirst.frc.team2849.controls.led.ColorsLED;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -159,6 +160,7 @@ public class Drive implements Runnable, UrsaRobot {
 		mRearLeft.stopMotor();
 		mRearRight.stopMotor();
 		mFrontLeft.stopMotor();
+		
 	}
 	
 	public void setControlScheme(ControlLayout layout) {

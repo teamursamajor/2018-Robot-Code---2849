@@ -4,17 +4,17 @@ public class TeleopLED implements LEDControl {
 	
 	@Override
 	public boolean getR() {
-		return false;
+		return ColorsLED.getRed();
 	}
 
 	@Override
 	public boolean getG() {
-		return false;
+		return ColorsLED.getGreen();
 	}
 
 	@Override
 	public boolean getB() {
-		return false;
+		return ColorsLED.getBlue();
 	}
 
 }
