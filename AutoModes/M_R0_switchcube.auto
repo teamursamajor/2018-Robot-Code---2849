@@ -13,7 +13,7 @@ bundle {
    }
    serial{
       drive -10
-      turn by -90
+      turn to -90
       drive 20
    }
 }

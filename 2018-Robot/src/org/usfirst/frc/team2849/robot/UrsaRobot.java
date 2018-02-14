@@ -20,6 +20,10 @@ public interface UrsaRobot {
 	public static final int RIGHT_ENCODER_CHANNEL_A = 2;
 	public static final int RIGHT_ENCODER_CHANNEL_B = 3;
 	
+	public static final int LIFT_ENCODER_CHANNEL_A = 4;
+	public static final int LIFT_ENCODER_CHANNEL_B = 5;
+
+	
 	public static final double ROBOT_WIDTH_INCHES  = 32d;/*in*///12;//ft
 	public static final double ROBOT_DEPTH_INCHES = 28d;/*in*///12;//ft
 	

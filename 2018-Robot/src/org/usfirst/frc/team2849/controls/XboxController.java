@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2849.controls;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 
 /**
@@ -120,6 +121,7 @@ public class XboxController extends Joystick implements Runnable {
 	/**
 	 * Started on object init, runs in background and monitors rumble
 	 */
+	
 	public void run() {
 		while (running) {
 			if (System.currentTimeMillis() - rumbleStopTime < 0) {
