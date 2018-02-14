@@ -27,6 +27,7 @@ import org.usfirst.frc.team2849.controls.lift.NullLift;
 import org.usfirst.frc.team2849.controls.lift.XYLift;
 import org.usfirst.frc.team2849.diagnostics.Logger;
 import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
+import org.usfirst.frc.team2849.diagnostics.DebugSelector;
 import org.usfirst.frc.team2849.diagnostics.PDP;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -49,6 +50,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	AutoSelector autoSelect;
 	AutoBuilder autoBuilder;
 	PDP pdp;
+	DebugSelector debugSelect;
 	
 	private Intake intake;
 	private Lift lift;
@@ -70,7 +72,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		xbox = new XboxController(CONTROLLER_PORT);
 		led = new LED(cont);
 		pdp = new PDP();
-		//TODO set to LogLevel.ERROR for comp
+		debugSelect = new DebugSelector();
 		Logger.setLevel(LogLevel.DEBUG);
 		Logger.log("********ROBOT PROGRAM STARTING********", LogLevel.INFO);
 	}
@@ -97,6 +99,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 //			autoSelect.getAutoPrefs(), AutoSelector.findAutoFiles())
 		AutoTask task = autoBuilder.buildAutoMode(autoMode);
 		task.start();
+		Logger.setLevel(debugSelect.getLevel());
 		Logger.log("Current Auto Mode: " + autoMode, LogLevel.INFO);
 	}
 

@@ -10,39 +10,37 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-
 public class DebugLog {
-	
+	private DebugSelector debugSelect = new DebugSelector();
 	private BufferedWriter log = null;
 	private String file;
-	//initialize the file destination and BufferedWriter in general
-	public void debugLogInit(String fileDestination){
-		
+
+	// initialize the file destination and BufferedWriter in general
+	public void debugLogInit(String fileDestination) {
 		DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 		Date dateobj = new Date();
-		
-		try {
-			file = fileDestination;
-			FileWriter fw = new FileWriter(file);
-			log = new BufferedWriter (fw);
-			log.write("Debug log File on " + df.format(dateobj.getTime())  + " : ");
-			log.newLine();
+		//Only runs this if the current Logger level is debug
+		if (debugSelect.isDebug()) {
+			try {
+				file = fileDestination;
+				FileWriter fw = new FileWriter(file);
+				log = new BufferedWriter(fw);
+				log.write("Debug log File on " + df.format(dateobj.getTime()) + " : ");
+				log.newLine();
+			} catch (IOException ioe) {
+				ioe.printStackTrace();
 			}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
 		}
 	}
-	
+
 	public void logWriteLn(String string) {
 		try {
 			log.write(string);
 			log.newLine();
-		}
-		catch(IOException ioe) {
+		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
-		
+
 	}
-	
 
 }

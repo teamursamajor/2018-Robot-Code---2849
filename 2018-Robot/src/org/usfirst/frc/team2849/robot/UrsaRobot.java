@@ -3,17 +3,17 @@ package org.usfirst.frc.team2849.robot;
 public interface UrsaRobot {
 	//2704
 	//2407
-	public static final int DRIVE_FRONT_LEFT = 1;
-	public static final int DRIVE_FRONT_RIGHT = 7;
-	public static final int DRIVE_REAR_LEFT = 0;
-	public static final int DRIVE_REAR_RIGHT = 6;
+	public static final int DRIVE_FRONT_LEFT = 0;
+	public static final int DRIVE_FRONT_RIGHT = 2;
+	public static final int DRIVE_REAR_LEFT = 6;
+	public static final int DRIVE_REAR_RIGHT = 7;
 	
 	public static final int INTAKE_LEFT = 3;
 	public static final int INTAKE_RIGHT = 4;
 	
 	public static final int LIFT = 5;
 	
-	public static final int CONTROLLER_PORT = 1;
+	public static final int CONTROLLER_PORT = 0;
 	
 	public static final int LEFT_ENCODER_CHANNEL_A = 0;
 	public static final int LEFT_ENCODER_CHANNEL_B = 1;

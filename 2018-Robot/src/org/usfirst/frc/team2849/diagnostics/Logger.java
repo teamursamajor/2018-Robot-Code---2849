@@ -23,8 +23,6 @@ public class Logger {
 	private static BufferedWriter buffWrite;
 	private static boolean writersOpened = false;
 
-	private static String path; // the path in which the logger writes to
-
 	/**
 	 * @return Date in the format MM/DD/YYYY HH:MM:SS (example: 01/19/2018
 	 *         18:55:03)
@@ -56,7 +54,7 @@ public class Logger {
 		if (level.compareTo(lev) >= 0) {
 			//TODO this toString might print incorrectly; in that case use ifs to set to a string
 			if (writePrefix) {
-				write(getTime() + " [" + level.toString() + "] " + info, file);
+				write(getTime() + " [" + lev.toString() + "] " + info, file);
 			} else {
 				write(info, file);
 			}
@@ -91,6 +89,7 @@ public class Logger {
 
 	public static void setLevel(LogLevel lev) {
 		level = lev;
+		Logger.log("Logger Level: " + level, LogLevel.INFO);
 	}
 
 	public static void openWriters() {
