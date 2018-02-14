@@ -39,18 +39,23 @@ public class TriggerLift implements LiftControl {
 		int height = 1;
 		height += getTriggerValue();
 		switch (height) {
+		//ground level
 		case 1:
 			desiredHeight = 0;
 			break;
+		//vault height	
 		case 2:
 			desiredHeight = 1.75;
 			break;
+		//switch height
 		case 3:
 			desiredHeight = 20;
 			break;
+		//scale height	
 		case 4:
 			desiredHeight = 75;
 			break;
+		//stays at same height	
 		default:
 			desiredHeight = getCurrentHeight();
 			break;
