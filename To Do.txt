@@ -1,5 +1,4 @@
 Priorities:
-driverstation logger level
 integrate encoders into lift
 do both encoders have the same inches per tick (distance per pulse)
 logger
