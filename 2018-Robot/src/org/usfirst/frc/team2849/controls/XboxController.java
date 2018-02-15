@@ -36,11 +36,18 @@ public class XboxController extends Joystick implements Runnable {
 
 	private boolean running = false;
 	private long rumbleStopTime = 0;
-
+    Latch buttonLatch[]=new Latch[10];
+    Latch axisLatch[]=new Latch [6];
 	public XboxController(int port) {
 		super(port);
 		Thread rumbleThread = new Thread(this, "rumbleThread");
 		rumbleThread.start();
+		for (Latch num1: buttonLatch){
+			num1=new Latch();
+		}
+		for (Latch num2: axisLatch){
+			num2=new Latch();
+		}
 	}
 
 	/**
@@ -117,7 +124,14 @@ public class XboxController extends Joystick implements Runnable {
 	public boolean getDPad(int dPadNumber) {
 		return this.getPOV(0) == dPadNumber;
 	}
-
+	
+	public boolean getSingleButtonPress(int indexnum){
+		return buttonLatch[indexnum-1].buttonPress(getButton(indexnum));
+	}
+	
+	public boolean getSingleAxisPress(int indexnum){
+		return axisLatch[indexnum-1].buttonPress(getAxisGreaterThan(indexnum,0.25));
+	}
 	/**
 	 * Started on object init, runs in background and monitors rumble
 	 */
@@ -136,6 +150,26 @@ public class XboxController extends Joystick implements Runnable {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+		}
+	}
+	/**
+	 * Rising edge detector
+	 * @author kingeinstein
+	 *
+	 */
+	
+	public class Latch {
+		private boolean lastInput = false;
+		
+		public Latch(){
+			
+		}
+		
+		public boolean buttonPress(boolean button){
+			boolean press = !lastInput && button;
+			lastInput = button;
+			return press;
+			
 		}
 	}
 
