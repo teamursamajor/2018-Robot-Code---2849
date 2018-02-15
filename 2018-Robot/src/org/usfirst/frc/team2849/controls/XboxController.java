@@ -54,7 +54,7 @@ public class XboxController extends Joystick implements Runnable {
 	 * Starts the controller rumbling for a set amount of time
 	 * @param rumbleTime
 	 * 				time for the controller to rumble in milliseconds
-	 */a
+	 */
 	public void rumbleFor(int rumbleTime) {
 		rumbleStopTime = System.currentTimeMillis() + rumbleTime;
 	}
