@@ -120,8 +120,6 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	/**
 	 * This function is called periodically during operator control.
 	 */
-
-
 	@Override
 	public void teleopPeriodic() {
 

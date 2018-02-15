@@ -33,7 +33,6 @@ public class TriggerLift implements LiftControl {
 	}
 	@Override
 	public void setDesiredHeight(double liftHeight) {
-		// TODO Auto-generated method stub
 		switch (heights[indexValue]) {
 		//ground level
 		case BOTTOM:
