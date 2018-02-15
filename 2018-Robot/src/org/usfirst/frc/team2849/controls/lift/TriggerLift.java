@@ -3,25 +3,24 @@
  */
 package org.usfirst.frc.team2849.controls.lift;
 
+import org.usfirst.frc.team2849.autonomous.LiftTask.*;
 /**
  * @author kingeinstein
  *
  */
 import org.usfirst.frc.team2849.controls.XboxController;
-import org.usfirst.frc.team2849.robot.UrsaRobot;
-
-import edu.wpi.first.wpilibj.Encoder;
 
 public class TriggerLift implements LiftControl {
 
 	private XboxController xbox;
 	private double desiredHeight;
+	public int indexValue=0;
 	double currentHeight = 0;
-
+	LiftType heights[]={LiftType.BOTTOM,LiftType.VAULT,LiftType.SWITCH,LiftType.SCALE};
 	public TriggerLift(XboxController xbox) {
 		this.xbox = xbox;
 	}
-
+	
 	public int getTriggerValue() {
 		if (xbox.getButton(XboxController.AXIS_LEFTTRIGGER)) {
 			return -1;
@@ -32,27 +31,24 @@ public class TriggerLift implements LiftControl {
 			return 0;
 		}
 	}
-
 	@Override
 	public void setDesiredHeight(double liftHeight) {
 		// TODO Auto-generated method stub
-		int height = 1;
-		height += getTriggerValue();
-		switch (height) {
+		switch (heights[indexValue]) {
 		//ground level
-		case 1:
-			desiredHeight = 0;
+		case BOTTOM:
+			desiredHeight =0;
 			break;
 		//vault height	
-		case 2:
+		case VAULT:
 			desiredHeight = 1.75;
 			break;
 		//switch height
-		case 3:
+		case SWITCH:
 			desiredHeight = 20;
 			break;
 		//scale height	
-		case 4:
+		case SCALE:
 			desiredHeight = 75;
 			break;
 		//stays at same height	
