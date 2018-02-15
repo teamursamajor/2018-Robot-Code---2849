@@ -65,6 +65,7 @@ public class PathTask extends AutoTask implements UrsaRobot {
 				Thread.sleep((long) (10));
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+				Logger.log("PathTask run method Thread.sleep call, printStackTrace", LogLevel.ERROR);
 			}
 		}
 		System.out.println("end");

@@ -56,5 +56,4 @@ public class Lift extends Thread implements UrsaRobot {
 		// put encoder code in a comment, needs to account for cumulative
 		return 0;
 	}
-
 }

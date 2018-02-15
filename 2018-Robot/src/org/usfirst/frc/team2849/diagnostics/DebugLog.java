@@ -1,6 +1,9 @@
 package org.usfirst.frc.team2849.diagnostics;
 
 import java.util.Date;
+
+import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,10 +28,11 @@ public class DebugLog {
 				file = fileDestination;
 				FileWriter fw = new FileWriter(file);
 				log = new BufferedWriter(fw);
-				log.write("Debug log File on " + df.format(dateobj.getTime()) + " : ");
+				log.write("Debug log file on " + df.format(dateobj.getTime()) + " : ");
 				log.newLine();
 			} catch (IOException ioe) {
 				ioe.printStackTrace();
+				Logger.log("DebugLog debugLogInit printStackTrace", LogLevel.ERROR);
 			}
 		}
 	}
@@ -39,6 +43,7 @@ public class DebugLog {
 			log.newLine();
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
+			Logger.log("DebugLog logWriteLn printStackTrace", LogLevel.ERROR);
 		}
 
 	}

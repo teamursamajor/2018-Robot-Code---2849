@@ -21,6 +21,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import org.usfirst.frc.team2849.diagnostics.Logger;
+import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 import org.usfirst.frc.team2849.robot.UrsaRobot;
 
 public class PathMaker implements UrsaRobot {
@@ -343,6 +345,7 @@ public class PathMaker implements UrsaRobot {
 			overfield = ImageIO.read(new File(System.getProperty("user.dir") + "/Transparentoverfield.png"));
 		} catch (Exception E) {
 			E.printStackTrace();
+			Logger.log("PathMaker importImages printStackTrace", LogLevel.ERROR);
 		}
 	}
 }

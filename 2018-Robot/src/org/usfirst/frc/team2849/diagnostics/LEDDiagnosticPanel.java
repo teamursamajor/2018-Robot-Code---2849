@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2849.diagnostics;
 
+import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 import org.usfirst.frc.team2849.robot.UrsaRobot;
 
 import edu.wpi.first.wpilibj.Solenoid;
@@ -25,6 +26,7 @@ public class LEDDiagnosticPanel extends Thread {
 			Thread.sleep(1);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+			Logger.log("LED Diagnostic Thread.sleep call, printStackTrace", LogLevel.ERROR);
 		}
 		for (int i = 0; i < conditions.length; i++) {
 			solenoids[i].set(conditions[i]);

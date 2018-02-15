@@ -10,6 +10,8 @@ import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
 import org.usfirst.frc.team2849.autonomous.LiftTask.LiftType;
 import org.usfirst.frc.team2849.autonomous.TurnTask.Turntype;
 import org.usfirst.frc.team2849.controls.ControlLayout;
+import org.usfirst.frc.team2849.diagnostics.Logger;
+import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 import org.usfirst.frc.team2849.path.Path;
 import org.usfirst.frc.team2849.path.PathReader;
 import org.usfirst.frc.team2849.robot.Drive;
@@ -283,6 +285,7 @@ public class AutoBuilder {
 			return parseAuto(tokenize(filename), new SerialTask(cont));
 		} catch (IOException e) {
 			e.printStackTrace();
+			Logger.log("AutoBuilder buildAutoMode parseAuto printStackTrace", LogLevel.ERROR);
 			return null;
 		}
 	}

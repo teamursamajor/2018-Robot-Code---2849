@@ -5,6 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+import org.usfirst.frc.team2849.diagnostics.Logger;
+import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 import org.usfirst.frc.team2849.robot.UrsaRobot;
 
 public class PathReader implements UrsaRobot {
@@ -93,6 +95,7 @@ public class PathReader implements UrsaRobot {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+			Logger.log("PathReader parseCheeze printStackTrace", LogLevel.ERROR);
 		}
 	}
 	
