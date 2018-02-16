@@ -11,6 +11,7 @@ public class ColorsLED {
 		blueLED = false;
 		greenLED = false;
 	}
+	
 	public static void setBlue(){
 		redLED = false;
 		blueLED = true;
