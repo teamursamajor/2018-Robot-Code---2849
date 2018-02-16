@@ -39,10 +39,9 @@ public class Lift extends Thread implements UrsaRobot {
 			 * look into adding an error/leeway here: ie if desiredHeight -
 			 * currentHeight > .5 or something
 			 */
-			if (desiredHeight - currentHeight < -1 * acceptableRange) {
+			if (desiredHeight - currentHeight < acceptableRange) {
 				motor.set(1);
-			}
-			else if (desiredHeight - currentHeight > acceptableRange) {
+			} else if (desiredHeight - currentHeight < -1 * acceptableRange) {
 				motor.set(-.3);
 			}
 
@@ -51,12 +50,14 @@ public class Lift extends Thread implements UrsaRobot {
 			 * dont want the lift running Plus, I think for readability it
 			 * should be currentHeight == desiredHeight
 			 */
+
+			//would desiredHeight ever actually equal currentHeight? we have to consider error here
+			//if (desiredHeight - currentHeight > acceptableRange && desiredHeight - currentHeight > -1 * acceptableRange)
 			
-			// would desiredHeight ever actually equal currentHeight? we have to consider error here
-			// if (desiredHeight - currentHeight < acceptableRange && desiredHeight - currentHeight > -1 * acceptableRange)
-			if (desiredHeight == currentHeight) {
-				motor.set(.25);
-			}
+			//TODO account for gravity
+			//if (desiredHeight == currentHeight) {
+			//motor.set(.25);
+			//}
 			try {
 				Thread.sleep(20);
 			} catch (Exception e) {
