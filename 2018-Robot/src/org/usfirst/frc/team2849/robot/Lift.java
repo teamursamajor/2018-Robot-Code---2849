@@ -39,11 +39,15 @@ public class Lift extends Thread implements UrsaRobot {
 			 * look into adding an error/leeway here: ie if desiredHeight -
 			 * currentHeight > .5 or something
 			 */
-			if (desiredHeight - currentHeight < acceptableRange) {
-				motor.set(0.75);
-			} else if (desiredHeight - currentHeight < -1 * acceptableRange) {
-				motor.set(-.3);
-			}
+			//this code currently makes x go up and y go down, shouldnt it be the other way?
+//			if (desiredHeight - currentHeight < acceptableRange) {
+//				motor.set(1);
+//			} else if (desiredHeight - currentHeight < -1 * acceptableRange) {
+//				motor.set(-.3);
+//			}
+			if(desiredHeight == 1) motor.set(.75);
+			else if(desiredHeight == -1) motor.set(-0.3);
+			else if(desiredHeight == 0) motor.set(0);
 
 			/*
 			 * TODO I dont think this is correct. If we're at the bottom, we
@@ -53,7 +57,7 @@ public class Lift extends Thread implements UrsaRobot {
 
 			//would desiredHeight ever actually equal currentHeight? we have to consider error here
 			//if (desiredHeight - currentHeight > acceptableRange && desiredHeight - currentHeight > -1 * acceptableRange)
-			
+
 			//TODO account for gravity
 			//if (desiredHeight == currentHeight) {
 			//motor.set(.25);

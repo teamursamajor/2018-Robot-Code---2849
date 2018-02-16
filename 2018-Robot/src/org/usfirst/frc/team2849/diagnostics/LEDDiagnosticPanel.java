@@ -23,7 +23,7 @@ public class LEDDiagnosticPanel extends Thread {
 
 	public void run() {
 		try {
-			Thread.sleep(1);
+			Thread.sleep(20);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 			Logger.log("LED Diagnostic Thread.sleep call, printStackTrace", LogLevel.ERROR);

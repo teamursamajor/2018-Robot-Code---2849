@@ -43,6 +43,5 @@ public class ArcadeDrive implements DriveControl {
 			leftSpeed /= -min;
 			rightSpeed /= -min;
 		}
-	}
-	
+	}	
 }

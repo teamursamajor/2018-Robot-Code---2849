@@ -1,14 +1,10 @@
 Priorities:
-lift not linear
-kill intake/lift buttons (and switch to other style of control)
-shuffleboard
 timeouts on lift
 Redo Auto Strategy
-Mount sensors
 Mount Camera
 PID closed loop control for all subsystems
-Test Picking Auto Modes/AutoChooser
-Google Doc + Programming Pamphlet
+Controller layouts ->, driver specific
+Test Picking AutoModes/AutoChooser/Pathfinder
 Comment Code
 
 Lift Heights:
