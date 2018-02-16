@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2849.robot;
 
 import org.usfirst.frc.team2849.controls.ControlLayout;
+import org.usfirst.frc.team2849.controls.led.ColorsCheck;
 import org.usfirst.frc.team2849.controls.led.ColorsLED;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -25,14 +26,33 @@ public class LED extends Thread {
 		boolean red = false;
 		while (true) {
 			//Determining the color here
-			if(ColorsCheck.stopCheck == true) {
-				ColorsLED.setRed();
+			if(ColorsCheck.getStopLED()) {
+				ColorsLED.setRed ();
 			}
-			else if(ColorsCheck.intakeOutCheck == true) {
+			else if(ColorsCheck.getIntakeOutLED()) {
 				ColorsLED.setBlue ();
 			}
-			
-			
+			else if(ColorsCheck.getLiftDownLED()) {
+				ColorsLED.setYellow ();
+			}
+			else if(ColorsCheck.getMaxHeightLED()) {
+				ColorsLED.setPurple ();
+			}
+			else if(ColorsCheck.getLiftUpLED()) {
+				ColorsLED.setYellow ();
+			}
+			else if(ColorsCheck.getHaveCubeLED()) {
+				ColorsLED.setGreen ();
+			}
+			else if(ColorsCheck.getIntakeInLED()) {
+				ColorsLED.setBlue ();
+			}
+			else if(ColorsCheck.getMovingLED()) {
+				ColorsLED.setWhite ();
+			}
+			else{
+				ColorsLED.setNullColor();
+			}
 			
 			
 			//setting the LEDs here

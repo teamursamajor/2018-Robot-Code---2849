@@ -169,5 +169,8 @@ public class Drive implements Runnable, UrsaRobot {
 	public void setControlScheme(ControlLayout layout) {
 		cont = layout;
 	}
+	public static boolean getRunning(){
+		return running;
+	}
 
 }
