@@ -6,10 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 public class Logger {
 	/**
@@ -20,13 +17,11 @@ public class Logger {
 		ERROR, INFO, DEBUG
 	}
 
-	public static LogLevel level;
+	private static LogLevel level;
 	private static File file;
 	private static FileWriter fileWrite;
 	private static BufferedWriter buffWrite;
 	private static boolean writersOpened = false;
-
-	private static String path; // the path in which the logger writes to
 
 	/**
 	 * @return Date in the format MM/DD/YYYY HH:MM:SS (example: 01/19/2018
@@ -59,7 +54,7 @@ public class Logger {
 		if (level.compareTo(lev) >= 0) {
 			//TODO this toString might print incorrectly; in that case use ifs to set to a string
 			if (writePrefix) {
-				write(getTime() + " [" + level.toString() + "] " + info, file);
+				write(getTime() + " [" + lev.toString() + "] " + info, file);
 			} else {
 				write(info, file);
 			}
@@ -94,6 +89,7 @@ public class Logger {
 
 	public static void setLevel(LogLevel lev) {
 		level = lev;
+		Logger.log("Logger Level: " + level, LogLevel.INFO);
 	}
 
 	public static void openWriters() {
