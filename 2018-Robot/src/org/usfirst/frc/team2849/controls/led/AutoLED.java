@@ -3,6 +3,7 @@ package org.usfirst.frc.team2849.controls.led;
 public class AutoLED implements LEDControl {
 	
 
+
 	@Override
 	public boolean getR() {
 		// TODO Auto-generated method stub
@@ -20,11 +21,4 @@ public class AutoLED implements LEDControl {
 		// TODO Auto-generated method stub
 		return ColorsLED.getBlue();
 	}
-	
-	
-	
-	
-	
-	
-
 }

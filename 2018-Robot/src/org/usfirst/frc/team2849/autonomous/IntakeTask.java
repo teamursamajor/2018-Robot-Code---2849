@@ -30,6 +30,7 @@ public class IntakeTask extends AutoTask {
 					Thread.sleep(20);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
+					Logger.log("IntakeTask run method intake case IN Thread.sleep call, printStackTrace", LogLevel.ERROR);
 				}
 			}
 			cont.getIntake().setIntakeType(IntakeType.STOP);
@@ -41,6 +42,7 @@ public class IntakeTask extends AutoTask {
 					Thread.sleep(20);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
+					Logger.log("IntakeTask run method intake case OUT Thread.sleep call, printStackTrace", LogLevel.ERROR);
 				}
 			}
 			cont.getIntake().setIntakeType(IntakeType.STOP);

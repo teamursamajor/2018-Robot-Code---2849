@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2849.robot;
 
 import org.usfirst.frc.team2849.controls.ControlLayout;
+import org.usfirst.frc.team2849.diagnostics.Logger;
+import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
@@ -66,6 +68,7 @@ public class Intake extends Thread {
 				Thread.sleep(20); //because we all need breaks
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+				Logger.log("Intake run method Thread.sleep call, printStackTrace", LogLevel.ERROR);
 			}
 		}
 	}

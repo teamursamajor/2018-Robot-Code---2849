@@ -1,5 +1,8 @@
 package org.usfirst.frc.team2849.controls;
 
+import org.usfirst.frc.team2849.diagnostics.Logger;
+import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 
@@ -150,6 +153,7 @@ public class XboxController extends Joystick implements Runnable {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+			Logger.log("Xbox Controller Thread.sleep call, printStackTrace", LogLevel.ERROR);
 		}
 	}
 	/**

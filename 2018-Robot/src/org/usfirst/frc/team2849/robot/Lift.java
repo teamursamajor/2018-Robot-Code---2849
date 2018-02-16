@@ -75,5 +75,4 @@ public class Lift extends Thread implements UrsaRobot {
 		// liftEnc.getDistance();
 		return 0;
 	}
-
 }

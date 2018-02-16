@@ -2,6 +2,8 @@ package org.usfirst.frc.team2849.robot;
 
 import org.usfirst.frc.team2849.controls.ControlLayout;
 import org.usfirst.frc.team2849.controls.led.ColorsLED;
+import org.usfirst.frc.team2849.diagnostics.Logger;
+import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -96,6 +98,7 @@ public class Drive implements Runnable, UrsaRobot {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+				Logger.log("Drive driveThread run method Thread.sleep call, printStackTrace", LogLevel.ERROR);
 			}
 		}
 	}
