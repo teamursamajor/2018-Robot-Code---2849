@@ -94,6 +94,7 @@ public class Drive implements Runnable, UrsaRobot {
 			mFrontRight.set(cont.getDrive().getRightSpeed());
 			mRearLeft.set(-cont.getDrive().getLeftSpeed());
 			mRearRight.set(cont.getDrive().getRightSpeed());
+
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {

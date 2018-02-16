@@ -33,7 +33,7 @@ public class Path implements UrsaRobot {
 		}
 		nextPoint = 0;
 		this.name = name;
-		createVelProfile(MAX_ACCELERATION, MAX_VELOCITY * .75, .01);
+		createVelProfile(MAX_ACCELERATION, MAX_VELOCITY * .75, .05);
 	}
 	
 	public void createVelProfile(double maxAccel, double maxVel, double dt) {

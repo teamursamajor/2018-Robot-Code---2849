@@ -27,6 +27,12 @@ public class LED extends Thread {
 			rLED.set(cont.getLED().getR());
 			gLED.set(cont.getLED().getG());
 			bLED.set(cont.getLED().getB());
+			
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

@@ -22,7 +22,7 @@ public class PathTask extends AutoTask implements UrsaRobot {
 		leftPath = paths[0];
 		rightPath = paths[1];
 //		follower = new Pathfollower(1/50.0, 0, 1/200.0, 1.0/MAX_VELOCITY, 1/(2.5 * MAX_ACCELERATION), 1/100.0);
-		follower = new Pathfollower(1/12.0, 0, 0, 1.0/MAX_VELOCITY, 1/(2.5 * MAX_ACCELERATION), 1/20.0);
+		follower = new Pathfollower(1/10.0, 0, 0, 1.0/MAX_VELOCITY, 1/(2.5 * MAX_ACCELERATION), 1/20.0);
 		this.drive = drive;
 	}
 
@@ -36,33 +36,36 @@ public class PathTask extends AutoTask implements UrsaRobot {
 		drive.resetEncoders();
 		long startTime = System.currentTimeMillis();
 		long relTime = 0;
+		long prevTime = 0;
 		double averageDist = 0;
 		while (!leftPath.isFinished() && !rightPath.isFinished() && !DriverStation.getInstance().isDisabled() && (System.currentTimeMillis() - startTime) / 1000.0 < leftPath.get(leftPath.numPoints() - 1).getTime() * 5) {
 			relTime = System.currentTimeMillis() - startTime;
-//			Logger.log("In TaskLoop: " + relTime, LogLevel.DEBUG);
+			Logger.log("In TaskLoop: " + relTime, LogLevel.DEBUG);
+			Logger.log("Time since last loop: " + (relTime - prevTime) / 1000.0, LogLevel.DEBUG);
 //			Logger.log("Left: ", LogLevel.DEBUG);
-			
+			prevTime = relTime;
 			averageDist = (drive.getLeftEncoder() + drive.getRightEncoder()) / 2;
 //			
 //			System.out.println("Left: " + (relTime / 1000.0));
 //			leftPower = follower.getCorrection(leftPath, drive.getLeftEncoder(), relTime / 1000.0);
-////			Logger.log("Right: ", LogLevel.DEBUG);
+//			Logger.log("Right: ", LogLevel.DEBUG);
 //			System.out.println("Right: " + (relTime / 1000.0));
 //			rightPower = follower.getCorrection(rightPath, drive.getRightEncoder(), relTime / 1000.0);
 			power = follower.getCorrection(leftPath, averageDist, relTime / 1000.0);
+			Logger.log("Power: " + power, LogLevel.DEBUG);
 //			Logger.log("L: " + leftPower, LogLevel.DEBUG);
 //			Logger.log("R: " + rightPower, LogLevel.DEBUG);
 //			steer = follower.getSteering(leftPath.findNextPoint(relTime / 1000.0), drive.getRawHeading());
 //			steer = follower.getDoubleSteering(leftPath.findNextPointTime(relTime / 1000.0), leftPath.get(leftPath.getIndex() + 1), drive.getRawHeading());
 			steer = follower.getDoubleSteering(leftPath.findNextPointDist(averageDist), leftPath.get(leftPath.getIndex() + 1), drive.getRawHeading());
+			Logger.log("Steer: " + steer, LogLevel.DEBUG);
 			rightPath.findNextPointDist(averageDist);
 			rightPath.findNextPointDist(averageDist);
 //			rightPath.findNextPoint(relTime / 1000.0);
 //			Logger.log("Steer: " + steer, LogLevel.DEBUG);
-			System.out.println("");
 			cont.getDrive().setSpeed(-(power + steer), -(power - steer));
 			try {
-				Thread.sleep((long) (10));
+				Thread.sleep((long) (1000 * leftPath.getDt()));
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 				Logger.log("PathTask run method Thread.sleep call, printStackTrace", LogLevel.ERROR);
