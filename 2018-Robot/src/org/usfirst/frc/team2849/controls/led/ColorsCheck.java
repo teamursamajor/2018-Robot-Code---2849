@@ -23,38 +23,38 @@ public class ColorsCheck {
 		return stopCheck;
 	}
 
-	public static boolean getIntakeInLED() {
-		
-	}
-
-	public static boolean getIntakeOutLED() {
-
-	}
-
-	public static boolean getLiftUpLED() {
-
-	}
-
-	public static boolean getLiftDownLED() {
-
-	}
-
-	public static boolean getHaveCubeLED() {
-
-	}
-
-	public static boolean getMaxHeightLED() {
-
-	}
-
-	public static boolean getMovingLED() {
-		if (cont.getDrive().getRightSpeed() > 0.1 || cont.getDrive().getRightSpeed() < -.1
-				|| cont.getDrive().getLeftSpeed() > 0.1 || cont.getDrive().getLeftSpeed() < -.1	) {
-			movingCheck = true;
-		} else {
-			movingCheck = false;
-		}
-		return movingCheck;
-	}
+//	public static boolean getIntakeInLED() {
+//		
+//	}
+//
+//	public static boolean getIntakeOutLED() {
+//
+//	}
+//
+//	public static boolean getLiftUpLED() {
+//
+//	}
+//
+//	public static boolean getLiftDownLED() {
+//
+//	}
+//
+//	public static boolean getHaveCubeLED() {
+//
+//	}
+//
+//	public static boolean getMaxHeightLED() {
+//
+//	}
+//
+//	public static boolean getMovingLED() {
+//		if (cont.getDrive().getRightSpeed() > 0.1 || cont.getDrive().getRightSpeed() < -.1
+//				|| cont.getDrive().getLeftSpeed() > 0.1 || cont.getDrive().getLeftSpeed() < -.1	) {
+//			movingCheck = true;
+//		} else {
+//			movingCheck = false;
+//		}
+//		return movingCheck;
+//	}
 
 }

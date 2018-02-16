@@ -29,27 +29,27 @@ public class LED extends Thread {
 			if(ColorsCheck.getStopLED()) {
 				ColorsLED.setRed ();
 			}
-			else if(ColorsCheck.getIntakeOutLED()) {
-				ColorsLED.setBlue ();
-			}
-			else if(ColorsCheck.getLiftDownLED()) {
-				ColorsLED.setYellow ();
-			}
-			else if(ColorsCheck.getMaxHeightLED()) {
-				ColorsLED.setPurple ();
-			}
-			else if(ColorsCheck.getLiftUpLED()) {
-				ColorsLED.setYellow ();
-			}
-			else if(ColorsCheck.getHaveCubeLED()) {
-				ColorsLED.setGreen ();
-			}
-			else if(ColorsCheck.getIntakeInLED()) {
-				ColorsLED.setBlue ();
-			}
-			else if(ColorsCheck.getMovingLED()) {
-				ColorsLED.setWhite ();
-			}
+//			else if(ColorsCheck.getIntakeOutLED()) {
+//				ColorsLED.setBlue ();
+//			}
+//			else if(ColorsCheck.getLiftDownLED()) {
+//				ColorsLED.setYellow ();
+//			}
+//			else if(ColorsCheck.getMaxHeightLED()) {
+//				ColorsLED.setPurple ();
+//			}
+//			else if(ColorsCheck.getLiftUpLED()) {
+//				ColorsLED.setYellow ();
+//			}
+//			else if(ColorsCheck.getHaveCubeLED()) {
+//				ColorsLED.setGreen ();
+//			}
+//			else if(ColorsCheck.getIntakeInLED()) {
+//				ColorsLED.setBlue ();
+//			}
+//			else if(ColorsCheck.getMovingLED()) {
+//				ColorsLED.setWhite ();
+//			}
 			else{
 				ColorsLED.setNullColor();
 			}
