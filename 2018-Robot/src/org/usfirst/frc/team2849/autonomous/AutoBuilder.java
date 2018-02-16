@@ -43,7 +43,7 @@ public class AutoBuilder {
 		}
 	}
 
-	/*
+	/**
 	 * PrintToken: A token that prints all arguments passed to it
 	 * 
 	 * @param str String that you want to print

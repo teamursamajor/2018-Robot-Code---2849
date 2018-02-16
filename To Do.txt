@@ -1,16 +1,14 @@
 Priorities:
-integrate encoders into lift
-do both encoders have the same inches per tick (distance per pulse)
-logger
+lift not linear
+kill intake/lift buttons (and switch to other style of control)
+shuffleboard
 timeouts on lift
-effect of gravity on lift
 Redo Auto Strategy
-Intake in at .25 always
-
+Mount sensors
 Mount Camera
 PID closed loop control for all subsystems
-Controller layouts ->, driver specific
-Test Picking Auto Modes/Auto Modes/Logging/Vision/AutoChooser/Pathfinder
+Test Picking Auto Modes/AutoChooser
+Google Doc + Programming Pamphlet
 Comment Code
 
 Lift Heights:

@@ -21,10 +21,10 @@ public class Vision implements Runnable {
 		
 		CameraServer.getInstance().addCamera(intakeCam);
 		
-		intakeCam.setResolution(160, 120);
+		intakeCam.setResolution(240,180);
 
 		cvSink = CameraServer.getInstance().getVideo(intakeCam);
-		outputStream = CameraServer.getInstance().putVideo("Intake Camera", 160, 120);
+		outputStream = CameraServer.getInstance().putVideo("Intake Camera", 240, 180);
 	}
 	
 	public static void visionInit() {

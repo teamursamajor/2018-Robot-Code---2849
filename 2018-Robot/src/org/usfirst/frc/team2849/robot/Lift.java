@@ -24,6 +24,8 @@ public class Lift extends Thread implements UrsaRobot {
 		double displacement = 0;
 		double desiredHeight;
 		double currentHeight;
+		// acceptable error may need to be adjusted; change this value if so
+		double acceptableRange = 2;
 		while (true) {
 			cont.getLift().setCurrentHeight(getLiftHeight());
 			desiredHeight = cont.getLift().getDesiredHeight();
@@ -37,9 +39,10 @@ public class Lift extends Thread implements UrsaRobot {
 			 * look into adding an error/leeway here: ie if desiredHeight -
 			 * currentHeight > .5 or something
 			 */
-			if (desiredHeight > currentHeight) {
+			if (desiredHeight - currentHeight < -1 * acceptableRange) {
 				motor.set(1);
-			} else if (desiredHeight < currentHeight) {
+			}
+			else if (desiredHeight - currentHeight > acceptableRange) {
 				motor.set(-.3);
 			}
 
@@ -48,6 +51,9 @@ public class Lift extends Thread implements UrsaRobot {
 			 * dont want the lift running Plus, I think for readability it
 			 * should be currentHeight == desiredHeight
 			 */
+			
+			// would desiredHeight ever actually equal currentHeight? we have to consider error here
+			// if (desiredHeight - currentHeight < acceptableRange && desiredHeight - currentHeight > -1 * acceptableRange)
 			if (desiredHeight == currentHeight) {
 				motor.set(.25);
 			}
