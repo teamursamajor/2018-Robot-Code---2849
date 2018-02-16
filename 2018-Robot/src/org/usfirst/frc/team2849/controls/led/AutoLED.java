@@ -6,9 +6,9 @@ public class AutoLED implements LEDControl {
 	int gCounter = 0;
 	int bCounter = 0;
 	
-	private int rPercent = 54;
-	private int gPercent = 9;
-	private int bPercent = 99;
+	private int rPercent = 50;
+	private int gPercent = 0;
+	private int bPercent = 0;
 	
 	private double levelCount = 1.0;
 	private int aimCount=1;
