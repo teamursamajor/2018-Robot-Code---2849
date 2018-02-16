@@ -24,6 +24,18 @@ public class LED extends Thread {
 	public void run() {
 		boolean red = false;
 		while (true) {
+			//Determining the color here
+			if(ColorsCheck.stopCheck == true) {
+				ColorsLED.setRed();
+			}
+			else if(ColorsCheck.intakeOutCheck == true) {
+				ColorsLED.setBlue ();
+			}
+			
+			
+			
+			
+			//setting the LEDs here
 			rLED.set(cont.getLED().getR());
 			gLED.set(cont.getLED().getG());
 			bLED.set(cont.getLED().getB());
