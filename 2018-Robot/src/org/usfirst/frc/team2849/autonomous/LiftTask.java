@@ -16,7 +16,9 @@ public class LiftTask extends AutoTask {
 
 	@Override
 	public void run() {
-		
+		//TODO
+		//sets a set point for desiredHeight, takes in currentHeight
+		//tells lift.java to stop running motors after a specified period of time
 	}
 
 	public String toString() {

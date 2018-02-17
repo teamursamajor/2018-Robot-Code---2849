@@ -23,50 +23,50 @@ public class ColorsCheck {
 		return stopCheck;
 	}
 
-	public static boolean getIntakeInLED() {
-		//TODO check if this is inwards or outwards
-		if(Intake.getIntakePower > .1) {
-			intakeInCheck = true;
-		}
-		else{
-			intakeInCheck = false;
-		}
-	}
-
-	public static boolean getIntakeOutLED() {
-		//TODO check if this is inwards or outwards
-		if(Intake.getIntakePower < -.1) {
-			intakeOutCheck = true;
-		}
-		else{
-			intakeOutCheck = false;
-		}
-	}
-
-	public static boolean getLiftUpLED() {
-
-	}
-
-	public static boolean getLiftDownLED() {
-
-	}
-
-	public static boolean getHaveCubeLED() {
-
-	}
-
-	public static boolean getMaxHeightLED() {
-
-	}
-
-	public static boolean getMovingLED() {
-		if (cont.getDrive().getRightSpeed() > 0.1 || cont.getDrive().getRightSpeed() < -.1
-				|| cont.getDrive().getLeftSpeed() > 0.1 || cont.getDrive().getLeftSpeed() < -.1	) {
-			movingCheck = true;
-		} else {
-			movingCheck = false;
-		}
-		return movingCheck;
-	}
+//	public static boolean getIntakeInLED() {
+//		//TODO check if this is inwards or outwards
+//		if(Intake.getIntakePower > .1) {
+//			intakeInCheck = true;
+//		}
+//		else{
+//			intakeInCheck = false;
+//		}
+//	}
+//
+//	public static boolean getIntakeOutLED() {
+//		//TODO check if this is inwards or outwards
+//		if(Intake.getIntakePower < -.1) {
+//			intakeOutCheck = true;
+//		}
+//		else{
+//			intakeOutCheck = false;
+//		}
+//	}
+//
+//	public static boolean getLiftUpLED() {
+//
+//	}
+//
+//	public static boolean getLiftDownLED() {
+//
+//	}
+//
+//	public static boolean getHaveCubeLED() {
+//
+//	}
+//
+//	public static boolean getMaxHeightLED() {
+//
+//	}
+//
+//	public static boolean getMovingLED() {
+//		if (cont.getDrive().getRightSpeed() > 0.1 || cont.getDrive().getRightSpeed() < -.1
+//				|| cont.getDrive().getLeftSpeed() > 0.1 || cont.getDrive().getLeftSpeed() < -.1	) {
+//			movingCheck = true;
+//		} else {
+//			movingCheck = false;
+//		}
+//		return movingCheck;
+//	}
 
 }

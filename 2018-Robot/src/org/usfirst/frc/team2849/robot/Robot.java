@@ -15,6 +15,7 @@ import org.usfirst.frc.team2849.controls.XboxController;
 import org.usfirst.frc.team2849.controls.drive.ArcadeDrive;
 import org.usfirst.frc.team2849.controls.drive.AutoDrive;
 import org.usfirst.frc.team2849.controls.drive.NullDrive;
+import org.usfirst.frc.team2849.controls.drive.TankDrive;
 import org.usfirst.frc.team2849.controls.intake.AutoIntake;
 import org.usfirst.frc.team2849.controls.intake.BumperTriggerIntake;
 import org.usfirst.frc.team2849.controls.intake.NullIntake;
@@ -68,7 +69,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		autoSelect = new AutoSelector(5);
 		drive = new Drive(DRIVE_FRONT_LEFT, DRIVE_FRONT_RIGHT, DRIVE_REAR_LEFT, DRIVE_REAR_RIGHT, cont);
 		autoBuilder = new AutoBuilder(cont, drive);
-//		intake = new Intake(INTAKE_LEFT, INTAKE_RIGHT, cont);
+		intake = new Intake(INTAKE_LEFT, INTAKE_RIGHT, cont);
 		lift = new Lift(cont);
 		xbox = new XboxController(CONTROLLER_PORT);
 		led = new LED(cont);
@@ -114,7 +115,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 
 	public void teleopInit() {
 		Logger.log("Started teleop", LogLevel.INFO);
-		cont.updateControlLayout(new ArcadeDrive(xbox, true), new BumperTriggerIntake(xbox), new XYLift(xbox), new TeleopLED());
+		cont.updateControlLayout(new TankDrive(xbox), new BumperTriggerIntake(xbox), new XYLift(xbox), new TeleopLED());
 	}
 
 	/**
