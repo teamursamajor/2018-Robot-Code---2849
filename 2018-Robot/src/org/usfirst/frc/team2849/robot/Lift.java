@@ -15,6 +15,10 @@ public class Lift extends Thread implements UrsaRobot {
 
 	private double desiredHeight;
 	private double currentHeight;
+
+	//TODO set this value
+	private double inchesPerTick = 1.0d;
+
 	// acceptable error may need to be adjusted; if so change this value
 	private double acceptableRange = 2;
 
@@ -22,10 +26,15 @@ public class Lift extends Thread implements UrsaRobot {
 		cont = control;
 		this.start();
 		liftEnc = new Encoder(UrsaRobot.LIFT_ENCODER_CHANNEL_A, UrsaRobot.LIFT_ENCODER_CHANNEL_B);
+		liftEnc.setDistancePerPulse(inchesPerTick);
 	}
 
 	public void run() {
+		liftEnc.reset();
+		int count = 0;
 		while (true) {
+			count++;
+			if(count%100 == 0) System.out.println(liftEnc.getDistance());
 			cont.getLift().setCurrentHeight(getLiftHeight());
 			desiredHeight = cont.getLift().getDesiredHeight();
 			currentHeight = cont.getLift().getCurrentHeight();
@@ -53,8 +62,8 @@ public class Lift extends Thread implements UrsaRobot {
 	}
 
 	public double getLiftHeight() {
-//		return liftEnc.getDistance();
-		return 0;
+		return liftEnc.getDistance();
+		//		return 0;
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2849.robot;
 
+import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
 import org.usfirst.frc.team2849.controls.ControlLayout;
 import org.usfirst.frc.team2849.controls.led.ColorsLED;
 import org.usfirst.frc.team2849.diagnostics.Logger;
@@ -94,7 +95,10 @@ public class Drive implements Runnable, UrsaRobot {
 			mFrontRight.set(cont.getDrive().getRightSpeed());
 			mRearLeft.set(-cont.getDrive().getLeftSpeed());
 			mRearRight.set(cont.getDrive().getRightSpeed());
-
+			//TODO test this
+			if(mFrontLeft.getSpeed() < 0 && mFrontRight.getSpeed() < 0){
+				cont.getIntake().setIntakeType(IntakeType.HOLD);
+			}
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {

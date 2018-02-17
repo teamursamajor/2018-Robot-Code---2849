@@ -76,9 +76,11 @@ public class DriveTask extends AutoTask {
 	public double getPower(double currentDistance, double totalDistance) {
 		currentDistance = Math.abs(currentDistance);
 		totalDistance = Math.abs(totalDistance);
+		double minPower = .5;
+		double maxPower = 1;
 		if (currentDistance > totalDistance / 2)
 			currentDistance = (totalDistance - currentDistance) - (totalDistance / 5);
-		return (0.6 / (1 + Math.exp(5 - 0.18 * currentDistance))) + 0.3;
+		return ((maxPower - minPower) / (1 + Math.exp(5 - 0.18 * currentDistance))) + minPower;
 
 	}
 

@@ -70,7 +70,7 @@ public class AutoBuilder {
 		public PathToken(String filename) {
 			filename = filename.replace(" ", "");
 			//put all paths into /AutoModes/Paths
-			paths = new PathReader("/home/lvuser/automodes/paths/" + filename + ".txt", false).getPaths();
+			paths = new PathReader("/home/lvuser/automodes/paths/" + filename + ".path", false).getPaths();
 		}
 
 		public PathTask makeTask(ControlLayout cont) {
