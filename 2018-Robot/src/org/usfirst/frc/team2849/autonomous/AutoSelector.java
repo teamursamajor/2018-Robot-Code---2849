@@ -84,7 +84,7 @@ public class AutoSelector {
 	}
 
 	public static String getMatchingAutomode(String mode, File[] files){
-		
+		return "";
 	}
 	
 }
