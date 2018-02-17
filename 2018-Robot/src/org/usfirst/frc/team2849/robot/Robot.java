@@ -73,6 +73,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		drive.resetNavx();
 //		Vision.visionInit();
 		debugSelect = new DebugSelector();
+		Logger.setLevel(debugSelect.getLevel());
 	}
 
 	/**
@@ -99,8 +100,8 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		AutoTask task = autoBuilder.buildAutoMode(autoMode);
 		task.start();
 		System.out.println(task.toString());
-		Logger.setLevel(debugSelect.getLevel());
 		Logger.log("Current Auto Mode: " + autoMode, LogLevel.INFO);
+		Logger.setLevel(debugSelect.getLevel());
 	}
 
 	/**

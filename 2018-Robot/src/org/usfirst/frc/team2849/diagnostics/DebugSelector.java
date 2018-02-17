@@ -19,7 +19,7 @@ public class DebugSelector {
 	}
 
 	public LogLevel getLevel() {
-		if (debugSelect.get()) {
+		if (debugSelect.get() == true) {
 			System.out.println("Debug enabled");
 			return LogLevel.DEBUG;
 		}

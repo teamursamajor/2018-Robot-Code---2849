@@ -334,9 +334,6 @@ public class AutoBuilder {
 		
 		String regex = "^[" + robotPosition + "0]_[" + switchPos + "0][" + scalePos + "0]_" + mode + "\\.auto$";
 		
-		System.out.println(regex);
-		System.out.println("L_0L_scale.auto".matches(regex));
-		
 		for (File f: autoFiles) {
 			if (f.getName().matches(regex)) {
 				return "/home/lvuser/automodes/" + f.getName();
