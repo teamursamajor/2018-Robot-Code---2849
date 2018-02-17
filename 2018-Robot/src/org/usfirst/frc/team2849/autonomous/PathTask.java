@@ -71,9 +71,9 @@ public class PathTask extends AutoTask implements UrsaRobot {
 				Logger.log("PathTask run method Thread.sleep call, printStackTrace", LogLevel.ERROR);
 			}
 		}
-		System.out.println("end");
-		System.out.println("Left end: " + leftPath.isFinished());
-		System.out.println("Right end: " + rightPath.isFinished());
+//		System.out.println("end");
+//		System.out.println("Left end: " + leftPath.isFinished());
+//		System.out.println("Right end: " + rightPath.isFinished());
 		Logger.log("End", LogLevel.DEBUG);
 		Logger.log("Left Finished: " + leftPath.isFinished(), LogLevel.DEBUG);
 		Logger.log("Right Finished: " + rightPath.isFinished(), LogLevel.DEBUG);
@@ -83,8 +83,8 @@ public class PathTask extends AutoTask implements UrsaRobot {
 		drive.stop();
 		startTime = System.currentTimeMillis();
 		while (System.currentTimeMillis() - startTime < 3000) {}
-		System.out.println("leftDist: " + drive.getLeftEncoder() );
-		System.out.println("rightDist: " + drive.getRightEncoder());
+//		System.out.println("leftDist: " + drive.getLeftEncoder() );
+//		System.out.println("rightDist: " + drive.getRightEncoder());
 	}
 
 }

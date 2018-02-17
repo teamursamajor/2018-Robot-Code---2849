@@ -43,8 +43,8 @@ public class Pathfollower {
 	}
 	
 	public double getSteering(PointonPath point, double heading) {
-		System.out.println("   Heading: " + heading);
-		System.out.println("   Point Heading: " + point.getDirection());
+//		System.out.println("   Heading: " + heading);
+//		System.out.println("   Point Heading: " + point.getDirection());
 		return kturn * AngleHelper.getSmallestAngleBetween(heading, point.getDirection());
 	}
 	

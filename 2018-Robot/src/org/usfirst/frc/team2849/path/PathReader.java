@@ -28,7 +28,7 @@ public class PathReader implements UrsaRobot {
 	
 	private void parse(String filename) {
 		try {
-			System.out.println(filename);
+//			System.out.println(filename);
 			List<String> lines = Files.readAllLines(Paths.get(filename), Charset.defaultCharset());
 			String state = "name";
 			for (String line : lines) {
