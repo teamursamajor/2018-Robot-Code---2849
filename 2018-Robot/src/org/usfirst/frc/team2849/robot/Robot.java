@@ -72,7 +72,9 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		pdp = new PDP();
 		drive.resetNavx();
 //		Vision.visionInit();
+		System.out.println("before init debugselect");
 		debugSelect = new DebugSelector();
+		System.out.println("after init debugselect");
 		Logger.setLevel(debugSelect.getLevel());
 	}
 
@@ -129,6 +131,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		Logger.log("Started test", LogLevel.INFO);
 		SmartDashboard.updateValues();
 		cont.updateControlLayout(new ArcadeDrive(xbox, true), new BumperTriggerIntake(xbox), new XYLift(xbox), new TeleopLED());
+		debugSelect.initialize();
 	}
 
 	/**
@@ -136,10 +139,10 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		System.out.println("Left Encoder: " + drive.getLeftEncoder());
-		System.out.println("Right Encoder: " + drive.getRightEncoder());
-		System.out.println("Heading: " + drive.getRawHeading());
-		System.out.println("");
+//		System.out.println("Left Encoder: " + drive.getLeftEncoder());
+//		System.out.println("Right Encoder: " + drive.getRightEncoder());
+//		System.out.println("Heading: " + drive.getRawHeading());
+//		System.out.println("");
 	}
 
 	public void disabledInit() {
