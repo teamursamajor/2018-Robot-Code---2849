@@ -41,7 +41,7 @@ public class AutoBuilder {
 		private String scriptName;
 
 		public ExecuteToken(String scriptName) {
-			this.scriptName = scriptName.trim();
+			this.scriptName = "/home/lvuser/automodes/" + scriptName.trim();
 		}
 	}
 
@@ -69,7 +69,8 @@ public class AutoBuilder {
 
 		public PathToken(String filename) {
 			filename = filename.replace(" ", "");
-			paths = new PathReader("/Paths/" + filename, false).getPaths();
+			//put all paths into /AutoModes/Paths
+			paths = new PathReader("/home/lvuser/automodes/paths/" + filename + ".txt", false).getPaths();
 		}
 
 		public PathTask makeTask(ControlLayout cont) {

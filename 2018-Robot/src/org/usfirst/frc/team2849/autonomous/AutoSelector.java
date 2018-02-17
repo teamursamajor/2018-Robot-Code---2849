@@ -16,8 +16,10 @@ public class AutoSelector {
 		startingPosition.addObject("Left", 'L');
 		startingPosition.addObject("Middle", 'M');
 		startingPosition.addObject("Right", 'R');
-		for (int i = 0; i < 4; i++)
-			autoList.add(new SendableChooser<String>());
+		for (int i = 0; i < 4; i++){
+			SendableChooser<String> sc = new SendableChooser<String>();
+			autoList.add(sc);
+		}
 		sendAutoModes(findAutoModes());
 	}
 
