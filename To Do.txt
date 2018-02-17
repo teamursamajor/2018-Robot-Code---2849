@@ -1,9 +1,9 @@
 Priorities:
-charge batteries
-recode auto
+test intake while driving
 Mount Camera
-Test Picking AutoModes/AutoChooser/Pathfinder
+test automodes
 fix shuffleboard
+fix debugselector because it is an absolute broken mess now
 Comment Code
 redo intake wires
 
