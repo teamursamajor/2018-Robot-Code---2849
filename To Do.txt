@@ -1,11 +1,12 @@
 Priorities:
 test intake while driving
+calibrate lift encoder
 Mount Camera
-test automodes
+test automodes (and finalize, ie deploying intake)
 fix shuffleboard
-fix debugselector because it is an absolute broken mess now
+fix debugselector because it is an absolute broken mess now ("nice" -20XX)
+2 cube pathfinder autos
 Comment Code
-redo intake wires
 
 Ongoing:
 dropbox with the jars/gitbash?
