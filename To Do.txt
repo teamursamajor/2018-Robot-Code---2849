@@ -1,17 +1,11 @@
 Priorities:
-timeouts on lift
-Redo Auto Strategy
+charge batteries
+recode auto
 Mount Camera
-PID closed loop control for all subsystems
-Controller layouts ->, driver specific
 Test Picking AutoModes/AutoChooser/Pathfinder
+fix shuffleboard
 Comment Code
-
-Lift Heights:
-Bottom - 0
-Vault - 1.75
-Switch - 20
-Scale - 75
+redo intake wires
 
 Ongoing:
 dropbox with the jars/gitbash?
