@@ -95,7 +95,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		Logger.log("Started auto", LogLevel.INFO);
 		drive.resetNavx();
 		cont.updateControlLayout(new AutoDrive(), new AutoIntake(), new AutoLift(), new AutoLED());
-		String autoMode = "/AutoModes/0_00_path.auto";
+		String autoMode = "/AutoModes/R_0R_scale.auto";
 //		String autoMode = autoBuilder.pickAutoMode(autoSelect.getStartingPosition(), 
 //			autoSelect.getAutoPrefs(), AutoSelector.findAutoFiles())
 		AutoTask task = autoBuilder.buildAutoMode(autoMode);

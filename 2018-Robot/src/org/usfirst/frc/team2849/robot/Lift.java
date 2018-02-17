@@ -46,7 +46,7 @@ public class Lift extends Thread implements UrsaRobot {
 //				motor.set(-.3);
 //			}
 			if(desiredHeight == 1) motor.set(.75);
-			else if(desiredHeight == -1) motor.set(-0.3);
+			else if(desiredHeight == -1) motor.set(-0.1);
 			else if(desiredHeight == 0) motor.set(0);
 
 			/*
