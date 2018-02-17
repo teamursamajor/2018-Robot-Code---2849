@@ -69,7 +69,7 @@ public class AutoBuilder {
 
 		public PathToken(String filename) {
 			filename = filename.replace(" ", "");
-			paths = new PathReader(filename, false).getPaths();
+			paths = new PathReader("/Paths/" + filename, false).getPaths();
 		}
 
 		public PathTask makeTask(ControlLayout cont) {
@@ -201,6 +201,9 @@ public class AutoBuilder {
 		while ((line = buff.readLine()) != null) {
 			if (line.contains("#")) {
 				continue;
+			} else if (line.contains("follow")) {
+				String current = line.substring(line.indexOf("follow") + "follow".length());
+				ret.add(new PathToken(current));
 			} else if (line.contains("execute")) {
 				String current = line.substring(line.indexOf("execute") + "execute".length());
 				ret.add(new ExecuteToken(current));
@@ -216,9 +219,6 @@ public class AutoBuilder {
 			} else if (line.contains("lift")) {
 				String current = line.substring(line.indexOf("lift") + "lift".length());
 				ret.add(new LiftToken(current));
-			} else if (line.contains("follow")) {
-				String current = line.substring(line.indexOf("follow") + "follow".length());
-				ret.add(new PathToken(current));
 			} else if (line.contains("intake")) {
 				String current = line.substring(line.indexOf("intake") + "intake".length());
 				ret.add(new IntakeToken(current));

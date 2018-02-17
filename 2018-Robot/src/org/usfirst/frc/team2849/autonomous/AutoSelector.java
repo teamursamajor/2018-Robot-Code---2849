@@ -82,5 +82,4 @@ public class AutoSelector {
 	public char getStartingPosition() {
 		return startingPosition.getSelected();
 	}
-	
 }
