@@ -69,6 +69,7 @@ public class AutoBuilder {
 
 		public PathToken(String filename) {
 			filename = filename.replace(" ", "");
+			//put all paths into /AutoModes/Paths
 			paths = new PathReader("/Paths/" + filename, false).getPaths();
 		}
 
