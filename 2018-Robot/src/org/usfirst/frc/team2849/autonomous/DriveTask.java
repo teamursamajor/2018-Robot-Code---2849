@@ -24,9 +24,9 @@ public class DriveTask extends AutoTask {
 	}
 
 	public void run() {
-		new PathTask(cont, new Path[] {straightPath, straightPath}, drive).start();		
+//		new PathTask(cont, new Path[] {straightPath, straightPath}, drive).start();		
 		
-		/*
+		
 		int count = 0;
 
 		double leftPowerConstant = 0;
@@ -66,7 +66,7 @@ public class DriveTask extends AutoTask {
 			
 		}
 		Logger.log("Drive loop ended", LogLevel.DEBUG);
-		cont.getDrive().setSpeed(0, 0); */
+		cont.getDrive().setSpeed(0, 0);
 	}
 
 	public String toString() {
