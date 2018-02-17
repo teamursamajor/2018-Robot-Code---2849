@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DebugSelector {
 
-/*  FALLBACK CODE (since currently DebugSelector is a complete mess; note that this is broken too)
+/*  FALLBACK CODE (since currently DebugSelector is a complete mess)
 *   ----------------------------------------------------------------------------------------------
 * 	private SendableChooser<Logger.LogLevel> debugSelect = new SendableChooser<Logger.LogLevel>();
 * 
