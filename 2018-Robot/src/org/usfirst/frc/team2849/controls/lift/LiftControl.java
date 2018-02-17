@@ -10,4 +10,7 @@ public interface LiftControl {
     
     public double getCurrentHeight();
 
+    public void setReached(boolean hasReached);
+    
+    public boolean getReached();
 }

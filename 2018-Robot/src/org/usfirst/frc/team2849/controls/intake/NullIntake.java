@@ -14,14 +14,4 @@ public class NullIntake implements IntakeControl {
 		return IntakeType.STOP;
 	}
 
-	@Override
-	public void setHasBox(boolean hasBox) {
-
-	}
-
-	@Override
-	public boolean hasBox() {
-		return false;
-	}
-
 }

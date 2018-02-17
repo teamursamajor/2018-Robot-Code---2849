@@ -26,21 +26,12 @@ public class Intake extends Thread {
 
 	public void run() {
 		while (true) {
-			// cont.setHasBox(hasBox());
-			// Run just keeps running, In/Out use the sensor
-			// System.out.println(cont.getIntakeType());
-			// System.out.println(cont.hasBox());
-			// System.out.println("----");
 			switch (cont.getIntake().getIntakeType()) {
 			case RUN:
 				setIntakePower(.5);
 				break;
 			case OUT:
-				if (cont.getIntake().hasBox()) {
-					setIntakePower(-0.5);
-				} else {
-					setIntakePower(0);
-				}
+				setIntakePower(-0.5);
 				break;
 			case STOP:
 				setIntakePower(0);
@@ -51,11 +42,7 @@ public class Intake extends Thread {
 				// lift down)
 				// puts it on the front frame to keep the cube off the ground
 			case IN:
-				if (!cont.getIntake().hasBox()) {
-					setIntakePower(0.5);
-				} else {
-					setIntakePower(0);
-				}
+				setIntakePower(0.5);
 				break;
 			case RUN_IN:
 				setIntakePower(0.5);
@@ -91,11 +78,6 @@ public class Intake extends Thread {
 	}
 	public static double getIntakePower() {
 		return intakePower;
-	}
-
-	// TODO add sensor
-	public boolean hasBox() {
-		return true;
 	}
 
 }

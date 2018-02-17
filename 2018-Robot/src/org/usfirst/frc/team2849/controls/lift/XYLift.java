@@ -5,6 +5,7 @@ import org.usfirst.frc.team2849.controls.XboxController;
 public class XYLift implements LiftControl {
 
 	private XboxController xbox;
+	private boolean hasReached;
 	private double currentLiftHeight;
 	
 	public XYLift(XboxController xbox) {
@@ -18,10 +19,10 @@ public class XYLift implements LiftControl {
 	@Override
 	public double getDesiredHeight() {
 		if (xbox.getButton(XboxController.BUTTON_X)) {
-			return -1;
+			return Integer.MIN_VALUE;
 		}
 		if (xbox.getButton(XboxController.BUTTON_Y)) {
-			return 1;
+			return Integer.MAX_VALUE;
 		}
 		return 0;
 	}
@@ -34,6 +35,16 @@ public class XYLift implements LiftControl {
 	@Override
 	public double getCurrentHeight() {
 		return currentLiftHeight;
+	}
+
+	@Override
+	public void setReached(boolean hasReached) {
+		this.hasReached = hasReached;
+	}
+
+	@Override
+	public boolean getReached() {
+		return hasReached;
 	}
 
 }

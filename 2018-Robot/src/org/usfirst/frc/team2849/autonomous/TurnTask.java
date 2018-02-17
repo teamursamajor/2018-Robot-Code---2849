@@ -58,7 +58,6 @@ public class TurnTask extends AutoTask {
 	}
 
 	private double getPower(double turnAmount) {
-		//TODO test this
 		double lowPower = .6;
 		double highPower = 1;
 		return ( (highPower - lowPower)/ (1 + Math.exp(4 - 0.06 * Math.abs(turnAmount)))) + lowPower;

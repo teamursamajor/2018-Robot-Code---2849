@@ -7,9 +7,4 @@ public interface IntakeControl {
     public void setIntakeType(IntakeType type);
     
     public IntakeType getIntakeType();
-
-	public void setHasBox(boolean hasBox);
-	
-	public boolean hasBox();
-
 }

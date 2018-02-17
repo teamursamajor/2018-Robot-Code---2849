@@ -22,4 +22,14 @@ public class NullLift implements LiftControl {
 		return 0;
 	}
 
+	@Override
+	public void setReached(boolean hasReached) {
+		
+	}
+
+	@Override
+	public boolean getReached() {
+		return true;
+	}
+
 }

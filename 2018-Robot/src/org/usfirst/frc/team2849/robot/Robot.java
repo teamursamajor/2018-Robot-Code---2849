@@ -29,8 +29,6 @@ import org.usfirst.frc.team2849.diagnostics.DebugSelector;
 import org.usfirst.frc.team2849.diagnostics.Logger;
 import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 import org.usfirst.frc.team2849.diagnostics.PDP;
-
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -55,8 +53,6 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	private Intake intake;
 	private Lift lift;
 
-	private Encoder enc;
-
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -66,7 +62,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		Logger.setLevel(LogLevel.DEBUG);
 		Logger.log("********ROBOT PROGRAM STARTING********", LogLevel.INFO);
 		cont = new ControlLayout(new NullDrive(), new NullIntake(), new NullLift(), new NullLED());
-		autoSelect = new AutoSelector(5);
+		autoSelect = new AutoSelector();
 		drive = new Drive(DRIVE_FRONT_LEFT, DRIVE_FRONT_RIGHT, DRIVE_REAR_LEFT, DRIVE_REAR_RIGHT, cont);
 		autoBuilder = new AutoBuilder(cont, drive);
 		intake = new Intake(INTAKE_LEFT, INTAKE_RIGHT, cont);
@@ -96,11 +92,12 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		Logger.log("Started auto", LogLevel.INFO);
 		drive.resetNavx();
 		cont.updateControlLayout(new AutoDrive(), new AutoIntake(), new AutoLift(), new AutoLED());
-		String autoMode = "/AutoModes/R_0R_scale.auto";
-//		String autoMode = autoBuilder.pickAutoMode(autoSelect.getStartingPosition(), 
-//			autoSelect.getAutoPrefs(), AutoSelector.findAutoFiles())
+//		String autoMode = "/home/lvuser/automodes/R_0R_scale.auto";
+		String autoMode = autoBuilder.pickAutoMode(autoSelect.getStartingPosition(), 
+			autoSelect.getAutoPrefs(), autoSelect.findAutoFiles());
 		AutoTask task = autoBuilder.buildAutoMode(autoMode);
 		task.start();
+		System.out.println(task.toString());
 		Logger.setLevel(debugSelect.getLevel());
 		Logger.log("Current Auto Mode: " + autoMode, LogLevel.INFO);
 	}

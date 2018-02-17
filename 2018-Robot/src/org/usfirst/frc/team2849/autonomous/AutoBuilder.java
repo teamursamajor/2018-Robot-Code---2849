@@ -124,7 +124,7 @@ public class AutoBuilder {
 		}
 
 		public LiftTask makeTask(ControlLayout cont) {
-			return new LiftTask(cont, 0, lift);
+			return new LiftTask(cont, LiftTask.presetToHeight(lift));
 		}
 	}
 
@@ -306,29 +306,26 @@ public class AutoBuilder {
 	 */
 	public String pickAutoMode(char robotPosition, String[] autoPrefs, File[] autoFiles) {
 		// Gets the ownership information from the FMS
-		String sides = DriverStation.getInstance().getGameSpecificMessage();
-		char switchSide = sides.charAt(0);
-		char scaleSide = sides.charAt(1);
-		String compatibleAuto = "/AutoModes/0_00_drive.auto";
-		String desiredAuto = "/AutoModes/0_00_drive.auto";
+		String sides = DriverStation.getInstance().getGameSpecificMessage().substring(0,2);
+		
+		//for potential future use
+		String oppSide = DriverStation.getInstance().getGameSpecificMessage().substring(2);
+		
+		String compatibleAuto = "/home/lvuser/automodes/0_00_drive.auto";
+		String desiredAuto = "/home/lvuser/automodes/" + robotPosition + "_" + sides + "_";
 		String fileName = "";
-
-		// Checks each autoPreference (ex: 2xscale) in the String[] of
-		// preferences for one which matches our current setup
-		for (String autoPreference : autoPrefs) {
-			desiredAuto = "/AutoModes/" + robotPosition + "_" + switchSide + scaleSide + "_"
-					+ autoPreference + ".auto";
-			// Checks each file in our AutoModes folder for one which has a name
-			// indicating compatibility with our current situation
-			for (File autoFile : autoFiles) {
-				//Replaces all the 0s in the file name with a . so that the RegEx can detect it
-				fileName = autoFile.getName().replaceAll("0", ".");
-				if (desiredAuto.matches(fileName)) {
-					compatibleAuto = autoFile.getName();
-				}
-			}
+		
+		switch(sides){
+		case "LL":
+			return desiredAuto += autoPrefs[0];
+		case "LR":
+			return desiredAuto += autoPrefs[1];
+		case "RL":
+			return desiredAuto += autoPrefs[2];
+		case "RR":
+			return desiredAuto += autoPrefs[3];
+		default:
+			return compatibleAuto;
 		}
-
-		return compatibleAuto;
 	}
 }

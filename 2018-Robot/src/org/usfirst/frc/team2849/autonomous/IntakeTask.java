@@ -25,7 +25,7 @@ public class IntakeTask extends AutoTask {
 		switch (intake) {
 		case IN:
 		    startTime = System.currentTimeMillis();
-			while(!cont.getIntake().hasBox() && System.currentTimeMillis() - startTime < timeout){
+			while(System.currentTimeMillis() - startTime < timeout){
 				try {
 					Thread.sleep(20);
 				} catch (InterruptedException e) {
@@ -37,7 +37,7 @@ public class IntakeTask extends AutoTask {
 			break;
 		case OUT:
 			startTime = System.currentTimeMillis();
-			while(cont.getIntake().hasBox() && System.currentTimeMillis() - startTime < timeout){
+			while(System.currentTimeMillis() - startTime < timeout){
 				try {
 					Thread.sleep(20);
 				} catch (InterruptedException e) {

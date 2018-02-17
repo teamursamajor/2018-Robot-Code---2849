@@ -13,52 +13,56 @@ import org.usfirst.frc.team2849.controls.XboxController;
 public class TriggerLift implements LiftControl {
 
 	private XboxController xbox;
-	private double desiredHeight;
-	public int indexValue=0;
-	double currentHeight = 0;
-	LiftType heights[]={LiftType.BOTTOM,LiftType.VAULT,LiftType.SWITCH,LiftType.SCALE};
-	public TriggerLift(XboxController xbox) {
+	private double currentHeight;
+	private boolean hasReached;
+	LiftType liftType;
+
+	public TriggerLift(XboxController xbox, LiftType liftType) {
 		this.xbox = xbox;
+		this.liftType = liftType;
 	}
-	
+
 	public int getTriggerValue() {
 		if (xbox.getButton(XboxController.AXIS_LEFTTRIGGER)) {
-			return -1;
+			return Integer.MIN_VALUE;
 		}
 		if (xbox.getButton(XboxController.AXIS_RIGHTTRIGGER)) {
-			return 1;
+			return Integer.MAX_VALUE;
 		} else {
 			return 0;
 		}
 	}
+
 	@Override
 	public void setDesiredHeight(double liftHeight) {
-		switch (heights[indexValue]) {
-		//ground level
-		case BOTTOM:
-			desiredHeight =0;
-			break;
-		//vault height	
-		case VAULT:
-			desiredHeight = 1.75;
-			break;
-		//switch height
-		case SWITCH:
-			desiredHeight = 20;
-			break;
-		//scale height	
-		case SCALE:
-			desiredHeight = 75;
-			break;
-		//stays at same height	
-		default:
-			desiredHeight = getCurrentHeight();
-			break;
-		}
+
 	}
 
 	@Override
 	public double getDesiredHeight() {
+		double desiredHeight;
+		switch (liftType) {
+		// ground level
+		case BOTTOM:
+			desiredHeight = 0;
+			break;
+		// vault height
+		case VAULT:
+			desiredHeight = 1.75;
+			break;
+		// switch height
+		case SWITCH:
+			desiredHeight = 20;
+			break;
+		// scale height
+		case SCALE:
+			desiredHeight = 75;
+			break;
+		// stays at same height
+		default:
+			desiredHeight = getCurrentHeight();
+			break;
+		}
 		return desiredHeight;
 	}
 
@@ -70,6 +74,16 @@ public class TriggerLift implements LiftControl {
 	@Override
 	public double getCurrentHeight() {
 		return currentHeight;
+	}
+
+	@Override
+	public void setReached(boolean hasReached) {
+		this.hasReached = hasReached;
+	}
+
+	@Override
+	public boolean getReached() {
+		return hasReached;
 	}
 
 }
