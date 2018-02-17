@@ -95,6 +95,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 //		String autoMode = "/home/lvuser/automodes/R_0R_scale.auto";
 		String autoMode = autoBuilder.pickAutoMode(autoSelect.getStartingPosition(), 
 			autoSelect.getAutoPrefs(), autoSelect.findAutoFiles());
+		System.out.println("Now running " + autoMode);
 		AutoTask task = autoBuilder.buildAutoMode(autoMode);
 		task.start();
 		System.out.println(task.toString());

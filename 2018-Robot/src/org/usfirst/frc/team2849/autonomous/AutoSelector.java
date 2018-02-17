@@ -82,9 +82,4 @@ public class AutoSelector {
 	public char getStartingPosition() {
 		return startingPosition.getSelected();
 	}
-
-	public static String getMatchingAutomode(String mode, File[] files){
-		return "";
-	}
-	
 }

@@ -307,26 +307,42 @@ public class AutoBuilder {
 	 */
 	public String pickAutoMode(char robotPosition, String[] autoPrefs, File[] autoFiles) {
 		// Gets the ownership information from the FMS
-		String sides = DriverStation.getInstance().getGameSpecificMessage().substring(0,2);
+		String switchPos = DriverStation.getInstance().getGameSpecificMessage().substring(0,1);
+		String scalePos = DriverStation.getInstance().getGameSpecificMessage().substring(1,2);
+		String mode;
+		System.out.println(switchPos + scalePos);
+		
+		switch (switchPos + scalePos) {
+		case "LL":
+			mode = autoPrefs[0];
+			break;
+		case "LR":
+			mode = autoPrefs[1];
+			break;
+		case "RL":
+			mode = autoPrefs[2];
+			break;
+		case "RR":
+			mode = autoPrefs[3];
+			break;
+		default:
+			mode = "drive";
+			break;
+		}
 		
 		//for potential future use
 		String oppSide = DriverStation.getInstance().getGameSpecificMessage().substring(2);
 		
-		String compatibleAuto = "/home/lvuser/automodes/0_00_drive.auto";
-		String desiredAuto = "/home/lvuser/automodes/" + robotPosition + "_" + sides + "_";
-		String fileName = "";
+		String regex = "^[" + robotPosition + "0]_[" + switchPos + "0][" + scalePos + "0]_" + mode + "\\.auto$";
 		
-		switch(sides){
-		case "LL":
-			return desiredAuto += autoPrefs[0];
-		case "LR":
-			return desiredAuto += autoPrefs[1];
-		case "RL":
-			return desiredAuto += autoPrefs[2];
-		case "RR":
-			return desiredAuto += autoPrefs[3];
-		default:
-			return compatibleAuto;
+		System.out.println(regex);
+		System.out.println("L_0L_scale.auto".matches(regex));
+		
+		for (File f: autoFiles) {
+			if (f.getName().matches(regex)) {
+				return "/home/lvuser/automodes/" + f.getName();
+			}
 		}
+		return "/home/lvuser/automodes/0_00_drive.auto";
 	}
 }
