@@ -8,7 +8,7 @@ public class LiftTask extends AutoTask {
 	private double height;
 
 	// max time the lift can run for in ms
-	private long timeout = 3000;
+	private long timeout = 2000;
 
 	public enum LiftType {
 		BOTTOM, VAULT, SWITCH, SCALE

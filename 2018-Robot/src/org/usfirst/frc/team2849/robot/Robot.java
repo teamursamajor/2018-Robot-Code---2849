@@ -61,20 +61,20 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	public void robotInit() {
 		Logger.setLevel(LogLevel.DEBUG);
 		Logger.log("********ROBOT PROGRAM STARTING********", LogLevel.INFO);
+		xbox = new XboxController(0);
 		cont = new ControlLayout(new NullDrive(), new NullIntake(), new NullLift(), new NullLED());
 		autoSelect = new AutoSelector();
 		drive = new Drive(DRIVE_FRONT_LEFT, DRIVE_FRONT_RIGHT, DRIVE_REAR_LEFT, DRIVE_REAR_RIGHT, cont);
 		autoBuilder = new AutoBuilder(cont, drive);
 		intake = new Intake(INTAKE_LEFT, INTAKE_RIGHT, cont);
 		lift = new Lift(cont);
-		xbox = new XboxController(CONTROLLER_PORT);
 		led = new LED(cont);
 		pdp = new PDP();
 		drive.resetNavx();
-//		Vision.visionInit();
-		System.out.println("before init debugselect");
+		Vision.visionInit();
+//		System.out.println("before init debugselect");
 		debugSelect = new DebugSelector();
-		System.out.println("after init debugselect");
+//		System.out.println("after init debugselect");
 		Logger.setLevel(debugSelect.getLevel());
 	}
 
@@ -116,6 +116,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 
 	public void teleopInit() {
 		Logger.log("Started teleop", LogLevel.INFO);
+		System.out.println(cont);
 		cont.updateControlLayout(new TankDrive(xbox), new BumperTriggerIntake(xbox), new XYLift(xbox), new TeleopLED());
 	}
 
@@ -131,7 +132,6 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		Logger.log("Started test", LogLevel.INFO);
 		SmartDashboard.updateValues();
 		cont.updateControlLayout(new ArcadeDrive(xbox, true), new BumperTriggerIntake(xbox), new XYLift(xbox), new TeleopLED());
-		debugSelect.initialize();
 	}
 
 	/**
