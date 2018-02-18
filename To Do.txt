@@ -17,6 +17,7 @@ limelight
 hackerman
 update eclipse
 scouting
+fast led
 
 Future Plans:
 First Comp      | Auto Modes Booklet (Google Doc and QR Code)
