@@ -11,7 +11,7 @@ public class Lift extends Thread implements UrsaRobot {
 
 	private ControlLayout cont;
 	private static Spark motor = new Spark(LIFT);
-//	Encoder liftEnc;
+	Encoder liftEnc;
 
 	private double desiredHeight;
 	private double currentHeight;
