@@ -34,7 +34,7 @@ public class XYLift implements LiftControl {
 
 	@Override
 	public double getCurrentHeight() {
-		return currentLiftHeight;
+		return 0;
 	}
 
 	@Override

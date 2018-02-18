@@ -6,12 +6,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 public class DebugSelector {
 
-	private SendableChooser<Logger.LogLevel> debugSelect = new SendableChooser<Logger.LogLevel>();
+	private SendableChooser<LogLevel> debugSelect = new SendableChooser<LogLevel>();
 	
 	public DebugSelector () {
 		// TODO change default to debug disabled for comp
-		debugSelect.addDefault("Enabled", Logger.LogLevel.DEBUG);
-		debugSelect.addObject("Disabled", Logger.LogLevel.INFO);
+		debugSelect.addDefault("Enabled", LogLevel.DEBUG);
+		debugSelect.addObject("Disabled", LogLevel.INFO);
 	}
 	
 	public LogLevel getLevel() {

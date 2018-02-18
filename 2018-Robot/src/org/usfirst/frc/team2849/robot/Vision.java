@@ -21,7 +21,7 @@ public class Vision implements Runnable {
 
 		CameraServer.getInstance().addCamera(intakeCam);
 
-		intakeCam.setResolution(240, 180);
+//		intakeCam.setResolution(240, 180);
 
 		cvSink = CameraServer.getInstance().getVideo(intakeCam);
 		outputStream = CameraServer.getInstance().putVideo("Intake Camera", 240, 180);
@@ -40,7 +40,6 @@ public class Vision implements Runnable {
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

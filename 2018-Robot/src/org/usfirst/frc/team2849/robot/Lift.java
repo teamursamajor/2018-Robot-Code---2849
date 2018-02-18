@@ -11,7 +11,7 @@ public class Lift extends Thread implements UrsaRobot {
 
 	private ControlLayout cont;
 	private static Spark motor = new Spark(LIFT);
-	Encoder liftEnc;
+//	Encoder liftEnc;
 
 	private double desiredHeight;
 	private double currentHeight;
@@ -25,27 +25,28 @@ public class Lift extends Thread implements UrsaRobot {
 	public Lift(ControlLayout control) {
 		cont = control;
 		this.start();
-		liftEnc = new Encoder(UrsaRobot.LIFT_ENCODER_CHANNEL_A, UrsaRobot.LIFT_ENCODER_CHANNEL_B);
-		liftEnc.setDistancePerPulse(inchesPerTick);
+//		liftEnc = new Encoder(UrsaRobot.LIFT_ENCODER_CHANNEL_A, UrsaRobot.LIFT_ENCODER_CHANNEL_B);
+//		liftEnc.setDistancePerPulse(inchesPerTick);
 	}
 
 	public void run() {
-		liftEnc.reset();
+//		liftEnc.reset();
 		int count = 0;
 		while (true) {
 			count++;
-			if(count%100 == 0) System.out.println(liftEnc.getDistance());
+//			if(count%100 == 0) System.out.println(liftEnc.getDistance());
 			cont.getLift().setCurrentHeight(getLiftHeight());
 			desiredHeight = cont.getLift().getDesiredHeight();
 			currentHeight = cont.getLift().getCurrentHeight();
-			if (checkReached()) {
-				motor.set(.25);
-			} else if (desiredHeight > currentHeight) {
-				motor.set(.75);
+//			if (checkReached()) {
+//				motor.set(.25);
+//			} else 
+				if (desiredHeight > currentHeight) {
+				motor.set(1);
 			} else if (desiredHeight < currentHeight) {
-				motor.set(-0.3);
+				motor.set(-0.25);
 			} else {
-				motor.set(0);
+				motor.set(0.25);
 			}
 
 			try {
@@ -62,8 +63,8 @@ public class Lift extends Thread implements UrsaRobot {
 	}
 
 	public double getLiftHeight() {
-		return liftEnc.getDistance();
-		//		return 0;
+//		return liftEnc.getDistance();
+				return 0;
 	}
 
 	/**
@@ -74,8 +75,7 @@ public class Lift extends Thread implements UrsaRobot {
 	 *         otherwise
 	 */
 	public boolean checkReached() {
-		boolean hasReached = desiredHeight - currentHeight < acceptableRange
-				|| currentHeight - desiredHeight < acceptableRange;
+		boolean hasReached = Math.abs(desiredHeight - currentHeight) < acceptableRange;
 		cont.getLift().setReached(hasReached);
 		return hasReached;
 
