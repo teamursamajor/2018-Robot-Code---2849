@@ -47,7 +47,7 @@ public class Lift extends Thread implements UrsaRobot {
 				//increase power until arms are on TODO
 				motor.set(-0.20);
 			} else {
-				motor.set(.25);
+				motor.set(0);
 			}
 
 			try {

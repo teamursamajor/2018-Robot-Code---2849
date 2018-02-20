@@ -29,6 +29,7 @@ import org.usfirst.frc.team2849.diagnostics.DebugSelector;
 import org.usfirst.frc.team2849.diagnostics.Logger;
 import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 import org.usfirst.frc.team2849.diagnostics.PDP;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -49,6 +50,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	AutoBuilder autoBuilder;
 	PDP pdp;
 	DebugSelector debugSelect;
+	String robotMode;
 	
 	private Intake intake;
 	private Lift lift;
@@ -72,9 +74,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		pdp = new PDP();
 		drive.resetNavx();
 //		Vision.visionInit();
-//		System.out.println("before init debugselect");
 		debugSelect = new DebugSelector();
-//		System.out.println("after init debugselect");
 		Logger.setLevel(debugSelect.getLevel());
 	}
 
@@ -85,7 +85,6 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
 	 * getString line to get the auto name from the text box below the Gyro
 	 *
-	 * <p>
 	 * You can add additional auto modes by adding additional comparisons to the
 	 * switch structure below with additional strings. If using the
 	 * SendableChooser make sure to add them to the chooser code above as well.
@@ -93,6 +92,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	@Override
 	public void autonomousInit() {
 		Logger.log("Started auto", LogLevel.INFO);
+		robotMode = "auto";
 		drive.resetNavx();
 		cont.updateControlLayout(new AutoDrive(), new AutoIntake(), new AutoLift(), new AutoLED());
 //		String autoMode = "/home/lvuser/automodes/R_0R_scale.auto";
@@ -114,8 +114,13 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 
 	}
 
+	/**
+	 * This function is run when teleop mode is first started up and should be
+	 * used for any teleop initialization code.
+	 */
 	public void teleopInit() {
 		Logger.log("Started teleop", LogLevel.INFO);
+		robotMode = "teleop";
 		System.out.println(cont);
 		cont.updateControlLayout(new TankDrive(xbox), new BumperTriggerIntake(xbox), new XYLift(xbox), new TeleopLED());
 	}
@@ -127,9 +132,14 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	public void teleopPeriodic() {
 
 	}
-
+	
+	/**
+	 * This function is run when test mode is first started up and should be
+	 * used for any test initialization code.
+	 */
 	public void testInit() {
 		Logger.log("Started test", LogLevel.INFO);
+		robotMode = "test";
 		SmartDashboard.updateValues();
 		cont.updateControlLayout(new ArcadeDrive(xbox, true), new BumperTriggerIntake(xbox), new XYLift(xbox), new TeleopLED());
 	}
@@ -145,12 +155,19 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 //		System.out.println("");
 	}
 
+	/**
+	 * This function is run when a mode is initially disabled and should be
+	 * used for any disabling code.
+	 */
 	public void disabledInit() {
-		Logger.log("disabled", LogLevel.INFO);
+		Logger.log("Disabled " + robotMode + " mode", LogLevel.INFO);
 		Logger.closeWriters();
 		cont.updateControlLayout(new NullDrive(), new NullIntake(), new NullLift(), new NullLED());
 	}
 	
+	/**
+	 * This function is called periodically when a mode is disabled.
+	 */
 	public void disabledPeriodic() {
 		drive.stop();
 	}
