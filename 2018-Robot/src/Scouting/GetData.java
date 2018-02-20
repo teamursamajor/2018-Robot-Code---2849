@@ -11,39 +11,54 @@ public class GetData {
 	final static String basehttpsURL = "https://www.thebluealliance.com/api/v3";
 	final static String year = "2018";
 	//{teamkey}=frc{team_number}
+	
+	
+	
+	//THESE ARE THE COMMENTS THAT TELL YOU HOW THIS THING WORKS:
+	//BASICALLY THERE ARE TWO METHODS THAT MAKE GETDATA WORK
+	//1. getthing(String ming)
+	//		THIS TAKES THE STRING FROM THE BLUE ALLIANCE API PAGE
+	//		https://www.thebluealliance.com/apidocs/v3
+	//		AND RETURNS THE ENTIRE JSON DATA PASSED BACK FROM THE WEBPAGE AS A WHOLE STRING
+	// 
+	//2. geththingsfromthing(Sring gottonthing, String hingtogetfromthinggotton)
+	//		THIS TAKES THE FULL JSON DATA PASSED FROM THE gething METHOD IN THE gottonthing PARAMETER
+	// 		IT ALSO TAKES A STRING THAT LABELS WHICH PEICE OF DATA YOU WANT PARSED FROM THE JSON FILE
+	// 		THEN IT RETURNS ALL PEICES OF DATA IN THAT JSON FILE YOU PASSED THAT WERE LABELED IN THE thingtogetfromthinggotton PARAMETER
 	public static void main(String[] a) {
-		System.out.println(getthing("/event/2016wvrox/teams"));
-//		for (String r :getallteamNamesatevent("2016wvrox")){
-//			System.out.println(r);
-//		}
-		
-		//menu:pick event from events in year (year can be manual)
-		//-this gives a list of all teams a the event
-//		System.out.println(getthing("/events/2016/keys"));
-//		System.out.println(getthing("/team/frc2849/events"));
+		for (String r : getEventsforYear(year)){
+			System.out.println(r);
+		}
 	}
-	static ArrayList<String> getEventsforTeam(String teamkey) {//actually doesn't work
-		ArrayList<String> teamNames = getthingsfromthing(getthing("/team/"+teamkey+"/events"), "key");
-		return teamNames;
-	}
-	static ArrayList<String> getEventsforYear(String year) {//actually doesn't work
-		ArrayList<String> teamNames = getthingsfromthing(getthing("/event/2016wvrox/teams"), "nickname");
-		return teamNames;
-	}
+	
 	static ArrayList<String> getTeamNames(String eventkey) {
 		ArrayList<String> teamNames = getthingsfromthing(getthing("/event/2016wvrox/teams"), "nickname");
+		return teamNames;
+	}
+	static ArrayList<String> getTeamKeys(String eventkey) {
+		ArrayList<String> teamNames = getthingsfromthing(getthing("/event/2016wvrox/teams"), "key");
 		return teamNames;
 	}
 	static ArrayList<String> getTeamNumbers(String eventkey) {
 		ArrayList<String> teamNames = getthingsfromthing(getthing("/event/2016wvrox/teams"), "team_number");
 		return teamNames;
 	}
-	static ArrayList<String> getTeamKeys(String eventkey) {
-		ArrayList<String> teamNames = getthingsfromthing(getthing("/event/2016wvrox/teams"), "key");
+	
+	
+	
+	
+	
+	static ArrayList<String> getEventsforTeam(String teamkey) {
+		ArrayList<String> teamNames = getthingsfromthing(getthing("/team/"+teamkey+"/events"), "key");
+		return teamNames;
+	}
+	static ArrayList<String> getEventsforYear(String year) {
+		ArrayList<String> teamNames = getthingsfromthing(getthing("/events/"+year), "key");
 		return teamNames;
 	}	
 	static ArrayList<String> getthingsfromthing(String gottonthing, String thingtogetfromthinggotton) {
 		ArrayList<String> allthings = new ArrayList<String>();
+		thingtogetfromthinggotton = "\""+thingtogetfromthinggotton+"\"";
 		while(gottonthing.indexOf(thingtogetfromthinggotton)!=-1) {
 			gottonthing=gottonthing.substring(gottonthing.indexOf(thingtogetfromthinggotton)+thingtogetfromthinggotton.length()+3);
 			allthings.add(gottonthing.substring(0, gottonthing.indexOf(",")));
