@@ -11,17 +11,7 @@ public class NullIntake implements IntakeControl {
 
 	@Override
 	public IntakeType getIntakeType() {
-		return null;
-	}
-
-	@Override
-	public void setHasBox(boolean hasBox) {
-
-	}
-
-	@Override
-	public boolean hasBox() {
-		return false;
+		return IntakeType.STOP;
 	}
 
 }

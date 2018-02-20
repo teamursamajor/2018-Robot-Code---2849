@@ -12,6 +12,7 @@ import org.usfirst.frc.team2849.autonomous.AutoSelector;
 import org.usfirst.frc.team2849.autonomous.AutoTask;
 import org.usfirst.frc.team2849.controls.ControlLayout;
 import org.usfirst.frc.team2849.controls.XboxController;
+import org.usfirst.frc.team2849.controls.drive.ArcadeDrive;
 import org.usfirst.frc.team2849.controls.drive.AutoDrive;
 import org.usfirst.frc.team2849.controls.drive.NullDrive;
 import org.usfirst.frc.team2849.controls.drive.TankDrive;
@@ -24,10 +25,10 @@ import org.usfirst.frc.team2849.controls.led.TeleopLED;
 import org.usfirst.frc.team2849.controls.lift.AutoLift;
 import org.usfirst.frc.team2849.controls.lift.NullLift;
 import org.usfirst.frc.team2849.controls.lift.XYLift;
+import org.usfirst.frc.team2849.diagnostics.DebugSelector;
 import org.usfirst.frc.team2849.diagnostics.Logger;
 import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
-
-import edu.wpi.first.wpilibj.Encoder;
+import org.usfirst.frc.team2849.diagnostics.PDP;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -42,14 +43,15 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	
 	ControlLayout cont;
 	Drive drive;
+	LED led;
 	XboxController xbox;
 	AutoSelector autoSelect;
 	AutoBuilder autoBuilder;
+	PDP pdp;
+	DebugSelector debugSelect;
 	
 	private Intake intake;
 	private Lift lift;
-
-	private Encoder enc;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -57,14 +59,23 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	 */
 	@Override
 	public void robotInit() {
+		Logger.setLevel(LogLevel.DEBUG);
+		Logger.log("********ROBOT PROGRAM STARTING********", LogLevel.INFO);
+		xbox = new XboxController(0);
 		cont = new ControlLayout(new NullDrive(), new NullIntake(), new NullLift(), new NullLED());
-		autoSelect = new AutoSelector(5);
+		autoSelect = new AutoSelector();
 		drive = new Drive(DRIVE_FRONT_LEFT, DRIVE_FRONT_RIGHT, DRIVE_REAR_LEFT, DRIVE_REAR_RIGHT, cont);
 		autoBuilder = new AutoBuilder(cont, drive);
 		intake = new Intake(INTAKE_LEFT, INTAKE_RIGHT, cont);
 		lift = new Lift(cont);
-		xbox = new XboxController(CONTROLLER_PORT);
-		Logger.initLogger();
+		led = new LED(cont);
+		pdp = new PDP();
+		drive.resetNavx();
+		Vision.visionInit();
+//		System.out.println("before init debugselect");
+		debugSelect = new DebugSelector();
+//		System.out.println("after init debugselect");
+		Logger.setLevel(debugSelect.getLevel());
 	}
 
 	/**
@@ -84,12 +95,15 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		Logger.log("Started auto", LogLevel.INFO);
 		drive.resetNavx();
 		cont.updateControlLayout(new AutoDrive(), new AutoIntake(), new AutoLift(), new AutoLED());
-		String autoMode = "/AutoModes/0_00_path.auto";
-//		String autoMode = autoBuilder.pickAutoMode(autoSelect.getStartingPosition(), 
-//			autoSelect.getAutoPrefs(), AutoSelector.findAutoFiles())
+//		String autoMode = "/home/lvuser/automodes/R_0R_scale.auto";
+		String autoMode = autoBuilder.pickAutoMode(autoSelect.getStartingPosition(), 
+			autoSelect.getAutoPrefs(), autoSelect.findAutoFiles());
+		System.out.println("Now running " + autoMode);
 		AutoTask task = autoBuilder.buildAutoMode(autoMode);
 		task.start();
+		System.out.println(task.toString());
 		Logger.log("Current Auto Mode: " + autoMode, LogLevel.INFO);
+		Logger.setLevel(debugSelect.getLevel());
 	}
 
 	/**
@@ -102,14 +116,13 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 
 	public void teleopInit() {
 		Logger.log("Started teleop", LogLevel.INFO);
+		System.out.println(cont);
 		cont.updateControlLayout(new TankDrive(xbox), new BumperTriggerIntake(xbox), new XYLift(xbox), new TeleopLED());
 	}
 
 	/**
 	 * This function is called periodically during operator control.
 	 */
-
-
 	@Override
 	public void teleopPeriodic() {
 
@@ -118,7 +131,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	public void testInit() {
 		Logger.log("Started test", LogLevel.INFO);
 		SmartDashboard.updateValues();
-		cont.updateControlLayout(new TankDrive(xbox), new BumperTriggerIntake(xbox), new XYLift(xbox), new TeleopLED());
+		cont.updateControlLayout(new ArcadeDrive(xbox, true), new BumperTriggerIntake(xbox), new XYLift(xbox), new TeleopLED());
 	}
 
 	/**
@@ -126,12 +139,15 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		System.out.println("Left: " + drive.getLeftEncoder());
-		System.out.println("Right: " + drive.getRightEncoder());
+//		System.out.println("Left Encoder: " + drive.getLeftEncoder());
+//		System.out.println("Right Encoder: " + drive.getRightEncoder());
+//		System.out.println("Heading: " + drive.getRawHeading());
+//		System.out.println("");
 	}
 
 	public void disabledInit() {
 		Logger.log("disabled", LogLevel.INFO);
+		Logger.closeWriters();
 		cont.updateControlLayout(new NullDrive(), new NullIntake(), new NullLift(), new NullLED());
 	}
 	

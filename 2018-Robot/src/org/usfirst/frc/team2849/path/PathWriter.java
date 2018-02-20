@@ -3,6 +3,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import org.usfirst.frc.team2849.diagnostics.Logger;
+import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
+
 public class PathWriter {
 	
 	public PathWriter(Path[] paths, String filename) {
@@ -32,6 +35,7 @@ public class PathWriter {
 			Files.write(Paths.get(System.getProperty("user.dir") + "\\" + filename), toWrite.getBytes());
 		} catch (IOException e) {
 			e.printStackTrace();
+			Logger.log("PathWriter writePath printStackTrace", LogLevel.ERROR);
 		}
 	}
 

@@ -4,6 +4,7 @@ public class AutoLift implements LiftControl {
 
 	private double currentLiftHeight;
 	private double desiredLiftHeight;
+	private boolean hasReached;
 	
 	@Override
 	public void setDesiredHeight(double liftHeight) {
@@ -23,6 +24,16 @@ public class AutoLift implements LiftControl {
 	@Override
 	public double getCurrentHeight() {
 		return currentLiftHeight;
+	}
+
+	@Override
+	public void setReached(boolean hasReached) {
+		this.hasReached = hasReached;
+	}
+
+	@Override
+	public boolean getReached() {
+		return hasReached;
 	}
 
 }

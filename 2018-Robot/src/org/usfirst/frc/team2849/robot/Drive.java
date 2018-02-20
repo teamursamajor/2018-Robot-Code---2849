@@ -1,18 +1,18 @@
 package org.usfirst.frc.team2849.robot;
 
+import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
 import org.usfirst.frc.team2849.controls.ControlLayout;
+import org.usfirst.frc.team2849.controls.led.ColorsLED;
 import org.usfirst.frc.team2849.diagnostics.Logger;
+import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.drive.RobotDriveBase;
 
-public class Drive implements Runnable, UrsaRobot, Subsystem {
+public class Drive implements Runnable, UrsaRobot {
 
 	private static Spark mFrontLeft;
 	private static Spark mFrontRight;
@@ -95,10 +95,15 @@ public class Drive implements Runnable, UrsaRobot, Subsystem {
 			mFrontRight.set(cont.getDrive().getRightSpeed());
 			mRearLeft.set(-cont.getDrive().getLeftSpeed());
 			mRearRight.set(cont.getDrive().getRightSpeed());
+			//TODO test this
+			if(mFrontLeft.getSpeed() < 0 && mFrontRight.getSpeed() < 0){
+				cont.getIntake().setIntakeType(IntakeType.HOLD);
+			}
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+				Logger.log("Drive driveThread run method Thread.sleep call, printStackTrace", LogLevel.ERROR);
 			}
 		}
 	}
@@ -163,20 +168,14 @@ public class Drive implements Runnable, UrsaRobot, Subsystem {
 		mRearLeft.stopMotor();
 		mRearRight.stopMotor();
 		mFrontLeft.stopMotor();
+		
 	}
 	
 	public void setControlScheme(ControlLayout layout) {
 		cont = layout;
 	}
-	
-	/**
-	 * Takes date and info and assembles it into a log output string for Drive subsystem
-	 * @param date
-	 * Used in Logger.run() method where it is substituted for Logger.getDate()
-	 */
-	public String getLogData(String date) {
-		//TODO add any relevant information here
-		return date + " [" + Logger.LogLevel.INFO + "] Drive: " + "...";
-	}	
+	public static boolean getRunning(){
+		return running;
+	}
 
 }

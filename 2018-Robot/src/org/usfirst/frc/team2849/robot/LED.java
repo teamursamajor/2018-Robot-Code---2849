@@ -1,7 +1,10 @@
 package org.usfirst.frc.team2849.robot;
 
 import org.usfirst.frc.team2849.controls.ControlLayout;
+import org.usfirst.frc.team2849.controls.led.ColorsCheck;
+import org.usfirst.frc.team2849.controls.led.ColorsLED;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Solenoid;
 
 public class LED extends Thread {
@@ -10,8 +13,6 @@ public class LED extends Thread {
 	private Solenoid  rLED;
 	private Solenoid  gLED;
 	private Solenoid  bLED;
-	
-	
 	
 	public LED(ControlLayout cont) {
 		this.cont = cont;
@@ -22,45 +23,52 @@ public class LED extends Thread {
 	}
 	
 	public void run() {
-		
+		boolean red = false;
 		while (true) {
+			//Determining the color here
+			if(ColorsCheck.getStopLED()) {
+				ColorsLED.setRed ();
+			}
+//			else if(ColorsCheck.getIntakeOutLED()) {
+//				ColorsLED.setBlue ();
+//			}
+//			else if(ColorsCheck.getLiftDownLED()) {
+//				ColorsLED.setYellow ();
+//			}
+//			else if(ColorsCheck.getMaxHeightLED()) {
+//				ColorsLED.setPurple ();
+//			}
+//			else if(ColorsCheck.getLiftUpLED()) {
+//				ColorsLED.setYellow ();
+//			}
+//			else if(ColorsCheck.getHaveCubeLED()) {
+//				ColorsLED.setGreen ();
+//			}
+//			else if(ColorsCheck.getIntakeInLED()) {
+//				ColorsLED.setBlue ();
+//			}
+//			else if(ColorsCheck.getMovingLED()) {
+//				ColorsLED.setWhite ();
+//			}
+			else{
+				ColorsLED.setNullColor();
+			}
+			
+			
+			//setting the LEDs here
 			rLED.set(cont.getLED().getR());
 			gLED.set(cont.getLED().getG());
 			bLED.set(cont.getLED().getB());
+			
 			try {
-				Thread.sleep(100);
+				Thread.sleep(20);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+
 		}
 	}
 	
-	//Terrible Idea down below
-//	public void setRGB(int rPercent, int gPercent, int bPercent) {
-//		for(int n = 1; n<100;n++) {
-//			if(n == rPercent) {
-//				rLED.set(true);
-//			}
-//			if(n != rPercent) {
-//				rLED.set(false);
-//			}
-//			if(n == gPercent) {
-//				gLED.set(true);
-//			}
-//			if(n != gPercent) {
-//				gLED.set(false);
-//			}
-//			if(n == bPercent) {
-//				bLED.set(true);
-//			}
-//			if(n != bPercent) {
-//				bLED.set(false);
-//			}
-//		}
-//		
-//	}
-	
-	
-	
+
 	
 }

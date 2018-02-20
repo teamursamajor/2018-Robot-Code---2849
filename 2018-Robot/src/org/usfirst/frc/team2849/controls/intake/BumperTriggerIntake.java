@@ -6,8 +6,6 @@ import org.usfirst.frc.team2849.controls.XboxController;
 public class BumperTriggerIntake implements IntakeControl {
 
 	private XboxController xbox;
-	@SuppressWarnings("unused")
-	private boolean hasBox;
 	
 	public BumperTriggerIntake(XboxController xbox) {
 		this.xbox = xbox;
@@ -28,22 +26,6 @@ public class BumperTriggerIntake implements IntakeControl {
 			return IntakeType.RUN_OUT;
 		}
 		return IntakeType.STOP;
-	}
-
-	@Override
-	public void setHasBox(boolean hasBox) {
-		this.hasBox = hasBox;
-	}
-
-	//TODO update to use a sensor
-	@Override
-	public boolean hasBox() {
-		if (xbox.getButton(XboxController.BUTTON_LEFTBUMPER)) {
-			return false;
-		} else if (xbox.getButton(XboxController.BUTTON_RIGHTBUMPER)) {
-			return true;
-		}
-		return false;
 	}
 
 }

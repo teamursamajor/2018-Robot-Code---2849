@@ -25,22 +25,24 @@ public class IntakeTask extends AutoTask {
 		switch (intake) {
 		case IN:
 		    startTime = System.currentTimeMillis();
-			while(!cont.getIntake().hasBox() && System.currentTimeMillis() - startTime < timeout){
+			while(System.currentTimeMillis() - startTime < timeout){
 				try {
 					Thread.sleep(20);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
+					Logger.log("IntakeTask run method intake case IN Thread.sleep call, printStackTrace", LogLevel.ERROR);
 				}
 			}
 			cont.getIntake().setIntakeType(IntakeType.STOP);
 			break;
 		case OUT:
 			startTime = System.currentTimeMillis();
-			while(cont.getIntake().hasBox() && System.currentTimeMillis() - startTime < timeout){
+			while(System.currentTimeMillis() - startTime < timeout){
 				try {
 					Thread.sleep(20);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
+					Logger.log("IntakeTask run method intake case OUT Thread.sleep call, printStackTrace", LogLevel.ERROR);
 				}
 			}
 			cont.getIntake().setIntakeType(IntakeType.STOP);

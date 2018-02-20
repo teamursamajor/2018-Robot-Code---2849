@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2849.autonomous;
 
 import org.usfirst.frc.team2849.controls.ControlLayout;
+import org.usfirst.frc.team2849.diagnostics.Logger;
+import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 
 public class WaitTask extends AutoTask {
 	
@@ -16,6 +18,7 @@ public class WaitTask extends AutoTask {
 			Thread.sleep(waitTime);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+			Logger.log("WaitTask run method Thread.sleep call, printStackTrace", LogLevel.ERROR);
 		}
 	}
 	

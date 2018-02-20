@@ -48,6 +48,7 @@ public class TurnTask extends AutoTask {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+				Logger.log("TurnTask turnTo method Thread.sleep call, printStackTrace", LogLevel.ERROR);
 			}
 			cont.getDrive().setSpeed(1 * (Math.signum(turnAmount(desiredAngle)) * powerConstant),
 					-1 * (Math.signum(turnAmount(desiredAngle)) * powerConstant));
@@ -57,7 +58,6 @@ public class TurnTask extends AutoTask {
 	}
 
 	private double getPower(double turnAmount) {
-		//TODO test this
 		double lowPower = .6;
 		double highPower = 1;
 		return ( (highPower - lowPower)/ (1 + Math.exp(4 - 0.06 * Math.abs(turnAmount)))) + lowPower;

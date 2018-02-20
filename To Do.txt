@@ -1,31 +1,12 @@
 Priorities:
-D R I F T
-do both encoders have the same inches per tick (distance per pulse)
-logger
-scaleswitch and down on the master lift
-timeouts on lift
-effect of gravity on lift
-changed the motor #s
-back wheels reaching speed first
-moving left after starting auto
-revamp auto modes
-Redo Auto Strategy
-tank drive moves all wheels
-recode cross switch autos to go from outside
-Intake in at .25 always
+test intake while driving
+calibrate lift encoder
 Mount Camera
-Encoders automatically changing speed
-PID closed loop control for all subsystems
-Controller layouts -> make arcade(fps), driver specific
-Test Picking Auto Modes/Auto Modes/Logging/Vision/AutoChooser/Pathfinder
-Finish Auto Modes + Make More (Diagonal Autos)
+test automodes (and finalize, ie deploying intake)
+fix shuffleboard
+fix debugselector because it is an absolute broken mess now ("nice" -20XX)
+2 cube pathfinder autos
 Comment Code
-
-Lift Heights:
-Bottom - 0
-Vault - 1.75
-Switch - 20
-Scale - 75
 
 Ongoing:
 dropbox with the jars/gitbash?
@@ -35,6 +16,8 @@ password recovery software (windows 10 compatible)
 limelight
 hackerman
 update eclipse
+scouting
+fast led
 
 Future Plans:
 First Comp      | Auto Modes Booklet (Google Doc and QR Code)

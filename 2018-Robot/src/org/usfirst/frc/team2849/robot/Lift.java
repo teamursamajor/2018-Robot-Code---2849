@@ -2,44 +2,58 @@ package org.usfirst.frc.team2849.robot;
 
 import org.usfirst.frc.team2849.controls.ControlLayout;
 import org.usfirst.frc.team2849.diagnostics.Logger;
+import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
 
-public class Lift extends Thread implements UrsaRobot, Subsystem {
+public class Lift extends Thread implements UrsaRobot {
 
-	private static ControlLayout cont;
+	private ControlLayout cont;
 	private static Spark motor = new Spark(LIFT);
+	Encoder liftEnc;
+
+	private double desiredHeight;
+	private double currentHeight;
+
+	//TODO set this value
+	private double inchesPerTick = 1.0d;
+
+	// acceptable error may need to be adjusted; if so change this value
+	private double acceptableRange = 2;
 
 	public Lift(ControlLayout control) {
 		cont = control;
 		this.start();
+//		liftEnc = new Encoder(UrsaRobot.LIFT_ENCODER_CHANNEL_A, UrsaRobot.LIFT_ENCODER_CHANNEL_B);
+//		liftEnc.setDistancePerPulse(inchesPerTick);
 	}
 
 	public void run() {
-		double displacement = 0;
-		double desiredHeight;
-		double currentHeight;
+//		liftEnc.reset();
+		int count = 0;
 		while (true) {
+			count++;
+//			if(count%100 == 0) System.out.println(liftEnc.getDistance());
 			cont.getLift().setCurrentHeight(getLiftHeight());
 			desiredHeight = cont.getLift().getDesiredHeight();
 			currentHeight = cont.getLift().getCurrentHeight();
-			displacement = desiredHeight - currentHeight;
-			if (desiredHeight != currentHeight) {
+//			if (checkReached()) {
+//				motor.set(.25);
+//			} else 
 				if (desiredHeight > currentHeight) {
-					motor.set(.2);
-				}
-				if (desiredHeight < currentHeight){
-					motor.set(-.5);
-				}
+				motor.set(1);
+			} else if (desiredHeight < currentHeight) {
+				motor.set(-0.25);
+			} else {
+				motor.set(0.25);
 			}
 
-			if (desiredHeight == currentHeight) {
-				motor.set(0);
-			}
 			try {
 				Thread.sleep(20);
 			} catch (Exception e) {
 				e.printStackTrace();
+				Logger.log("Lift.java thread.sleep call, printStackTrace", LogLevel.ERROR);
 			}
 		}
 	}
@@ -48,19 +62,22 @@ public class Lift extends Thread implements UrsaRobot, Subsystem {
 		this.cont = cont;
 	}
 
-	private double getLiftHeight() {
-		// TODO add encoder
-		return 0;
-	}
-	
-	/**
-	 * Takes date and info and assembles it into a log output string for Lift subsystem
-	 * @param date
-	 * Used in Logger.run() method where it is substituted for Logger.getDate()
-	 */
-	public String getLogData(String date) {
-		//TODO add any relevant information here
-		return date + " [" + Logger.LogLevel.INFO + "] Lift: " + "...";
+	public double getLiftHeight() {
+//		return liftEnc.getDistance();
+				return 0;
 	}
 
+	/**
+	 * Tells cont if we are within some amount of our desiredHeight and returns
+	 * true or false.
+	 * 
+	 * @return Returns true if we are within the acceptableRange, returns false
+	 *         otherwise
+	 */
+	public boolean checkReached() {
+		boolean hasReached = Math.abs(desiredHeight - currentHeight) < acceptableRange;
+		cont.getLift().setReached(hasReached);
+		return hasReached;
+
+	}
 }

@@ -103,13 +103,13 @@ public class TrapVelocityProfile {
 		totalTime = 2 * accelTime + cruiseTime;
 		maxVel = maxAccel * accelTime;
 
-		System.out.println("Acceleration time: " + accelTime);
-		System.out.println("Acceleration distance: " + accelDist);
-		System.out.println("Cruise time: " + cruiseTime);
-		System.out.println("Cruise Distance: " + cruiseDist);
-
-		System.out.println("Total calculated time: " + totalTime);
-		System.out.println("Total given distance: " + distance);
+//		System.out.println("Acceleration time: " + accelTime);
+//		System.out.println("Acceleration distance: " + accelDist);
+//		System.out.println("Cruise time: " + cruiseTime);
+//		System.out.println("Cruise Distance: " + cruiseDist);
+//
+//		System.out.println("Total calculated time: " + totalTime);
+//		System.out.println("Total given distance: " + distance);
 		double ds;
 		double dir;
 		double xft;
@@ -121,19 +121,19 @@ public class TrapVelocityProfile {
 		int lastIndex = 0;
 		for (double t = dt; t < totalTime; t += dt) {
 			if (t < accelTime) {
-				System.out.println("t < accelTime");
-				System.out.println("curVel: " + curVel);
-				System.out.println("totalDist: " + totalDist);
-				System.out.println("");
+//				System.out.println("t < accelTime");
+//				System.out.println("curVel: " + curVel);
+//				System.out.println("totalDist: " + totalDist);
+//				System.out.println("");
 				curVel = maxAccel * t;
 				totalDist = (maxAccel / 2) * Math.pow(t, 2);
 				ds = totalDist - mappedPath.get(lastIndex).getPosition();
 				points = path.findSurroundingPoints(totalDist);
-				System.out.println("Direction 0: " + points[0].getDirection());
-				System.out.println("Direction 1: " + points[1].getDirection());
-				System.out.println("Smallest Angle: " + AngleHelper.getSmallestAngleBetween(points[0].getDirection(), points[1].getDirection()));
-				System.out.println("Distance difference: " + (totalDist - points[0].getPosition()));
-				System.out.println("");
+//				System.out.println("Direction 0: " + points[0].getDirection());
+//				System.out.println("Direction 1: " + points[1].getDirection());
+//				System.out.println("Smallest Angle: " + AngleHelper.getSmallestAngleBetween(points[0].getDirection(), points[1].getDirection()));
+//				System.out.println("Distance difference: " + (totalDist - points[0].getPosition()));
+//				System.out.println("");
 				dir = points[0].getDirection() + (totalDist - points[0].getPosition())
 						* (AngleHelper.getSmallestAngleBetween(points[0].getDirection(), points[1].getDirection())
 								/ (points[1].getPosition() - points[0].getPosition()));
@@ -155,10 +155,10 @@ public class TrapVelocityProfile {
 				yft = points[1].yft;
 				toAdd = new PointonPath(totalDist, dir, xft, yft, t, maxVel, 0);
 			} else if (t < totalTime) {
-				System.out.println("accelTime < t < totalTime");
-				System.out.println("curVel: " + curVel);
-				System.out.println("totalDist: " + totalDist);
-				System.out.println("");
+//				System.out.println("accelTime < t < totalTime");
+//				System.out.println("curVel: " + curVel);
+//				System.out.println("totalDist: " + totalDist);
+//				System.out.println("");
 				curVel = maxVel - maxAccel * (t - (accelTime + cruiseTime));
 				totalDist = accelDist + cruiseDist + maxVel * (t - (accelTime + cruiseTime))
 						- (maxAccel / 2) * Math.pow(t - (accelTime + cruiseTime), 2);
@@ -173,7 +173,7 @@ public class TrapVelocityProfile {
 				yft = points[1].yft;
 				toAdd = new PointonPath(totalDist, dir, xft, yft, t, curVel, -maxAccel);
 			} else {
-				System.out.println("Time should not be greater than totalTime: " + t);
+//				System.out.println("Time should not be greater than totalTime: " + t);
 				toAdd = null;
 			}
 			mappedPath.add(toAdd);
@@ -181,7 +181,7 @@ public class TrapVelocityProfile {
 		}
 		mappedPath.add(new PointonPath(distance, path.get(path.numPoints() - 1).getDirection(),
 				path.get(path.numPoints() - 1).xft, path.get(path.numPoints() - 1).yft, totalTime, 0, 0)); // end point
-		System.out.println("Total accumulated distance: " + totalDist);
+		// System.out.println("Total accumulated distance: " + totalDist);
 	}
 
 	/*

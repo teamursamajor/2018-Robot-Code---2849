@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2849.path;
 
+import org.usfirst.frc.team2849.diagnostics.Logger;
+import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 import org.usfirst.frc.team2849.util.AngleHelper;
 
 public class Pathfollower {
@@ -25,14 +27,14 @@ public class Pathfollower {
 	}
 
 	public double getCorrection(Path path, double distance, double time) {
-		PointonPath point = path.findNextPoint(time);
+		PointonPath point = path.findNextPointDist(distance);
 		error = point.getPosition() - distance;
-		System.out.println("   Point Position: " + point.getPosition());
-		System.out.println("   Point time: " + point.getTime());
-		System.out.println("   Distance: " + distance);
-		System.out.println("   Error: " + error);
-		System.out.println("   Velocity: " + point.getVelocity());
-		System.out.println("   Acceleration: " + point.getAccel());
+		Logger.log("   Point Position: " + point.getPosition(), LogLevel.DEBUG);
+		Logger.log("   Point time: " + point.getTime(), LogLevel.DEBUG);
+		Logger.log("   Distance: " + distance, LogLevel.DEBUG);
+		Logger.log("   Error: " + error, LogLevel.DEBUG);
+		Logger.log("   Velocity: " + point.getVelocity(), LogLevel.DEBUG);
+		Logger.log("   Acceleration: " + point.getAccel(), LogLevel.DEBUG);
 		double out = kp * error + kd * (point.getVelocity() - (error - prevError) / path.getDt())
 				+ kv * point.getVelocity() + ka * point.getAccel();
 		prevError = error;
@@ -41,9 +43,19 @@ public class Pathfollower {
 	}
 	
 	public double getSteering(PointonPath point, double heading) {
-		System.out.println("   Heading: " + heading);
-		System.out.println("   Point Heading: " + point.getDirection());
+//		System.out.println("   Heading: " + heading);
+//		System.out.println("   Point Heading: " + point.getDirection());
 		return kturn * AngleHelper.getSmallestAngleBetween(heading, point.getDirection());
+	}
+	
+	public double getDoubleSteering(PointonPath point, PointonPath secondPoint, double heading) {
+		Logger.log("   Heading: " + heading, LogLevel.DEBUG);
+		Logger.log("   First Point Heading: " + point.getDirection(), LogLevel.DEBUG);
+		Logger.log("   Second Point Heading: " + secondPoint.getDirection(), LogLevel.DEBUG);
+		double smallestAngle = AngleHelper.getSmallestAngleBetween(heading, point.getDirection());
+		if (Math.abs(smallestAngle) >= 0) 
+			return kturn * smallestAngle + .25 * kturn * AngleHelper.getSmallestAngleBetween(heading, secondPoint.getDirection());
+		else return 0;
 	}
 	
 	public double constrain(double power) {

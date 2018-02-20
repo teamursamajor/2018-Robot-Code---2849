@@ -10,27 +10,31 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class AutoSelector {
 	private ArrayList<SendableChooser<String>> autoList = new ArrayList<SendableChooser<String>>();
 	private SendableChooser<Character> startingPosition = new SendableChooser<Character>();
-		
-	public AutoSelector(int numChoosers) {
+
+	public AutoSelector() {
 		startingPosition.addDefault("Select starting position...", ' ');
 		startingPosition.addObject("Left", 'L');
 		startingPosition.addObject("Middle", 'M');
 		startingPosition.addObject("Right", 'R');
-		for (int i = 0; i < numChoosers; i++) autoList.add(new SendableChooser<String>());
+		for (int i = 0; i < 4; i++){
+			SendableChooser<String> sc = new SendableChooser<String>();
+			autoList.add(sc);
+		}
 		sendAutoModes(findAutoModes());
 	}
-	
-	public static File[] findAutoFiles() {
+
+	public File[] findAutoFiles() {
 		File[] autoFiles;
-		File autoDirectory = new File("/home/lvuser/AutoModes/");
+		File autoDirectory = new File("/home/lvuser/automodes/");
 		if (autoDirectory.isDirectory()) {
 			autoFiles = autoDirectory.listFiles((File dir, String name) -> {
-				return name.matches(".*auto");
+				// Regex expression which only checks for files matching our
+				// naming syntax
+				return name.matches("[LMR0]_[LR0]{2}_.*\\.auto");
 			});
 		} else {
 			autoFiles = null;
 		}
-		"hi".replaceAll("0", ".");
 		return autoFiles;
 	}
 
@@ -50,21 +54,20 @@ public class AutoSelector {
 	}
 
 	public void sendAutoModes(String[] names) {
-		for (int i = 0; i < autoList.size(); i++) {
-			autoList.get(i).addDefault("Select auto #" + (i + 1), "");
+		autoList.get(0).addDefault("Select LL auto", "LL");
+		autoList.get(1).addDefault("Select LR auto", "LR");
+		autoList.get(2).addDefault("Select RL auto", "RL");
+		autoList.get(3).addDefault("Select RR auto", "RR");
+
+		for(SendableChooser<String> chooser: autoList){
 			for (String name : names) {
-				autoList.get(i).addObject(name, name);
+				chooser.addObject(name, name);
 			}
-			SmartDashboard.putData("Auto preference #" + (i + 1), autoList.get(i));
+			SmartDashboard.putData("Auto Mode for " + chooser.getSelected(), chooser);
 		}
+		SmartDashboard.putData("Robot Start Position", startingPosition);
 	}
-	
-	public void updateModes() {
-		for (int i = 0; i < autoList.size(); i++) {
-			SmartDashboard.putData("Auto preference #" + (i + 1), autoList.get(i));
-		}
-	}
-	
+
 	public String[] getAutoPrefs() {
 		String[] prefs = new String[autoList.size()];
 		int i = 0;
@@ -73,13 +76,12 @@ public class AutoSelector {
 		}
 		return prefs;
 	}
-	
+
 	public String getAutoPref(int num) {
 		return autoList.get(num).getSelected();
 	}
-	
+
 	public char getStartingPosition() {
 		return startingPosition.getSelected();
 	}
-
 }

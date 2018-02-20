@@ -10,6 +10,8 @@ import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
 import org.usfirst.frc.team2849.autonomous.LiftTask.LiftType;
 import org.usfirst.frc.team2849.autonomous.TurnTask.Turntype;
 import org.usfirst.frc.team2849.controls.ControlLayout;
+import org.usfirst.frc.team2849.diagnostics.Logger;
+import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 import org.usfirst.frc.team2849.path.Path;
 import org.usfirst.frc.team2849.path.PathReader;
 import org.usfirst.frc.team2849.robot.Drive;
@@ -39,11 +41,11 @@ public class AutoBuilder {
 		private String scriptName;
 
 		public ExecuteToken(String scriptName) {
-			this.scriptName = scriptName.trim();
+			this.scriptName = "/home/lvuser/automodes/" + scriptName.trim();
 		}
 	}
 
-	/*
+	/**
 	 * PrintToken: A token that prints all arguments passed to it
 	 * 
 	 * @param str String that you want to print
@@ -67,7 +69,8 @@ public class AutoBuilder {
 
 		public PathToken(String filename) {
 			filename = filename.replace(" ", "");
-			paths = new PathReader(filename, false).getPaths();
+			//put all paths into /AutoModes/Paths
+			paths = new PathReader("/home/lvuser/automodes/paths/" + filename + ".path", false).getPaths();
 		}
 
 		public PathTask makeTask(ControlLayout cont) {
@@ -122,7 +125,7 @@ public class AutoBuilder {
 		}
 
 		public LiftTask makeTask(ControlLayout cont) {
-			return new LiftTask(cont, 0, lift);
+			return new LiftTask(cont, LiftTask.presetToHeight(lift));
 		}
 	}
 
@@ -199,6 +202,9 @@ public class AutoBuilder {
 		while ((line = buff.readLine()) != null) {
 			if (line.contains("#")) {
 				continue;
+			} else if (line.contains("follow")) {
+				String current = line.substring(line.indexOf("follow") + "follow".length());
+				ret.add(new PathToken(current));
 			} else if (line.contains("execute")) {
 				String current = line.substring(line.indexOf("execute") + "execute".length());
 				ret.add(new ExecuteToken(current));
@@ -214,9 +220,6 @@ public class AutoBuilder {
 			} else if (line.contains("lift")) {
 				String current = line.substring(line.indexOf("lift") + "lift".length());
 				ret.add(new LiftToken(current));
-			} else if (line.contains("follow")) {
-				String current = line.substring(line.indexOf("follow") + "follow".length());
-				ret.add(new PathToken(current));
 			} else if (line.contains("intake")) {
 				String current = line.substring(line.indexOf("intake") + "intake".length());
 				ret.add(new IntakeToken(current));
@@ -283,6 +286,7 @@ public class AutoBuilder {
 			return parseAuto(tokenize(filename), new SerialTask(cont));
 		} catch (IOException e) {
 			e.printStackTrace();
+			Logger.log("AutoBuilder buildAutoMode parseAuto printStackTrace", LogLevel.ERROR);
 			return null;
 		}
 	}
@@ -303,29 +307,39 @@ public class AutoBuilder {
 	 */
 	public String pickAutoMode(char robotPosition, String[] autoPrefs, File[] autoFiles) {
 		// Gets the ownership information from the FMS
-		String sides = DriverStation.getInstance().getGameSpecificMessage();
-		char switchSide = sides.charAt(0);
-		char scaleSide = sides.charAt(1);
-		String compatibleAuto = "/AutoModes/0_00_drive.auto";
-		String desiredAuto = "/AutoModes/0_00_drive.auto";
-		String fileName = "";
-
-		// Checks each autoPreference (ex: 2xscale) in the String[] of
-		// preferences for one which matches our current setup
-		for (String autoPreference : autoPrefs) {
-			desiredAuto = "/AutoModes/" + robotPosition + "_" + switchSide + scaleSide + "_"
-					+ autoPreference + ".auto";
-			// Checks each file in our AutoModes folder for one which has a name
-			// indicating compatibility with our current situation
-			for (File autoFile : autoFiles) {
-				//Replaces all the 0s in the file name with a . so that the RegEx can detect it
-				fileName = autoFile.getName().replaceAll("0", ".");
-				if (desiredAuto.matches(fileName)) {
-					compatibleAuto = autoFile.getName();
-				}
+		String switchPos = DriverStation.getInstance().getGameSpecificMessage().substring(0,1);
+		String scalePos = DriverStation.getInstance().getGameSpecificMessage().substring(1,2);
+		String mode;
+		System.out.println(switchPos + scalePos);
+		
+		switch (switchPos + scalePos) {
+		case "LL":
+			mode = autoPrefs[0];
+			break;
+		case "LR":
+			mode = autoPrefs[1];
+			break;
+		case "RL":
+			mode = autoPrefs[2];
+			break;
+		case "RR":
+			mode = autoPrefs[3];
+			break;
+		default:
+			mode = "drive";
+			break;
+		}
+		
+		//for potential future use
+		String oppSide = DriverStation.getInstance().getGameSpecificMessage().substring(2);
+		
+		String regex = "^[" + robotPosition + "0]_[" + switchPos + "0][" + scalePos + "0]_" + mode + "\\.auto$";
+		
+		for (File f: autoFiles) {
+			if (f.getName().matches(regex)) {
+				return "/home/lvuser/automodes/" + f.getName();
 			}
 		}
-
-		return compatibleAuto;
+		return "/home/lvuser/automodes/0_00_drive.auto";
 	}
 }

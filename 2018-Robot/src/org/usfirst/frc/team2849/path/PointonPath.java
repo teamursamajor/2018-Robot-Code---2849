@@ -69,7 +69,7 @@ public class PointonPath extends JPanel {
 		// precision);
 	}
 
-	PointonPath(double pos, double dir, double xft_, double yft_, double time, double vel, double accel) {
+	public PointonPath(double pos, double dir, double xft_, double yft_, double time, double vel, double accel) {
 		position = pos;
 		direction = dir;
 		xft = xft_; // Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10, precision);
