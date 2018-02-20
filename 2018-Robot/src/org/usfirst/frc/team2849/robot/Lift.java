@@ -33,8 +33,8 @@ public class Lift extends Thread implements UrsaRobot {
 //		liftEnc.reset();
 		int count = 0;
 		while (true) {
-			count++;
-//			if(count%100 == 0) System.out.println(liftEnc.getDistance());
+			count = (count + 1) % 100;
+//			if(count == 0) System.out.println(liftEnc.getDistance());
 			cont.getLift().setCurrentHeight(getLiftHeight());
 			desiredHeight = cont.getLift().getDesiredHeight();
 			currentHeight = cont.getLift().getCurrentHeight();

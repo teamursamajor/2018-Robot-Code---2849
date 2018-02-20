@@ -26,9 +26,7 @@ public class DriveTask extends AutoTask {
 	public void run() {
 //		new PathTask(cont, new Path[] {straightPath, straightPath}, drive).start();		
 		
-		
 		int count = 0;
-
 		double leftPowerConstant = 0;
 		double rightPowerConstant = 0;
 		drive.resetEncoders();
@@ -41,8 +39,8 @@ public class DriveTask extends AutoTask {
 			rightPowerConstant = getPower(drive.getRightEncoder(), distance);
 
 			//Prints twice every second
-			//TODO delete or add a count increment
-			if (count % 25 == 0) {
+			count = (count + 1) % 500;
+			if (count == 0) {
 				Logger.log("Left Power Constant: " + leftPowerConstant + "\tLeft Encoder: " + drive.getLeftEncoder(),
 						LogLevel.DEBUG);
 				Logger.log(

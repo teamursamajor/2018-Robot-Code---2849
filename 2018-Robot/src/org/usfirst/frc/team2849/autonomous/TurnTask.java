@@ -37,12 +37,12 @@ public class TurnTask extends AutoTask {
 		while (Math.abs(turnAmount(desiredAngle)) > 2) {
 			angle = drive.getHeading();
 			powerConstant = getPower(turnAmount(desiredAngle));
-			if (count % 100 == 0) {
+			count = (count + 1) % 100;
+			if (count == 0) {
 				//Logger.log("Current Angle: " + angle, LogLevel.DEBUG);
 				//Logger.log("\tPower Constant: " + powerConstant, LogLevel.DEBUG);
 				//Logger.log("\tDesired Angle: " + desiredAngle, LogLevel.DEBUG);
 			}
-			count++;
 
 			try {
 				Thread.sleep(20);
