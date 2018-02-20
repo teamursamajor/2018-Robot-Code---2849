@@ -71,7 +71,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		led = new LED(cont);
 		pdp = new PDP();
 		drive.resetNavx();
-		Vision.visionInit();
+//		Vision.visionInit();
 //		System.out.println("before init debugselect");
 		debugSelect = new DebugSelector();
 //		System.out.println("after init debugselect");

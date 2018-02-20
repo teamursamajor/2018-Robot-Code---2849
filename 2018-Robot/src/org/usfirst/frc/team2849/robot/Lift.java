@@ -20,7 +20,7 @@ public class Lift extends Thread implements UrsaRobot {
 	private double inchesPerTick = 1.0d;
 
 	// acceptable error may need to be adjusted; if so change this value
-	private double acceptableRange = 2;
+	private double acceptableRange = 4;
 
 	public Lift(ControlLayout control) {
 		cont = control;
@@ -41,12 +41,13 @@ public class Lift extends Thread implements UrsaRobot {
 //			if (checkReached()) {
 //				motor.set(.25);
 //			} else 
-				if (desiredHeight > currentHeight) {
-				motor.set(1);
+			if (desiredHeight > currentHeight) {
+				motor.set(1.00);
 			} else if (desiredHeight < currentHeight) {
-				motor.set(-0.25);
+				//increase power until arms are on TODO
+				motor.set(-0.20);
 			} else {
-				motor.set(0.25);
+				motor.set(.25);
 			}
 
 			try {
