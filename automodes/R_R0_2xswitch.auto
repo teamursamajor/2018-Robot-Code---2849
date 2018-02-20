@@ -1,0 +1,7 @@
+#R_R*_2xswitch.auto
+#right bumper on corner with exchange
+#robot is 32 wide, 28 long
+#center of the robot is 16 inch right from center
+execute R_R0_switchcube.auto
+drive 10
+intake out

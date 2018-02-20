@@ -1,0 +1,34 @@
+#L_*L_2xscale(inside).auto
+#left bumper is on corner with exchange
+#deliver first cube
+bundle {
+   intake deploy
+   drive 210
+}
+turn to 90
+drive 30
+turn to 0
+bundle {
+   lift scale
+   drive 90
+}
+intake out
+
+#pick up another cube
+bundle {
+   lift bottom
+   drive -90
+}
+turn to 90
+bundle {
+   intake in
+   drive 3
+}
+
+#delivering second cube
+turn to 0
+bundle {
+   lift scale
+   drive 90
+}
+intake out

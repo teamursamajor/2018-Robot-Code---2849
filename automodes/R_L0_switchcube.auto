@@ -1,0 +1,20 @@
+#R_L*_switchcube.auto
+#right bumper should be on corner with exchange
+
+#deliver first cube
+execute R_L0_switch.auto
+
+#pick up second cube
+bundle {
+   lift bottom
+   drive -10
+}
+turn to 0
+drive 50
+turn to 90
+drive 10
+turn to 180
+bundle {
+   intake in
+   drive 12
+}

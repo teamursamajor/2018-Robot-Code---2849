@@ -95,6 +95,13 @@ public class Drive implements Runnable, UrsaRobot {
 			mFrontRight.set(cont.getDrive().getRightSpeed());
 			mRearLeft.set(-cont.getDrive().getLeftSpeed());
 			mRearRight.set(cont.getDrive().getRightSpeed());
+			
+			//TODO The code below was to fix stuff on the practice chassis.
+			//TODO Make sure to remove after
+//			mFrontLeft.set(cont.getDrive().getLeftSpeed());
+//			mFrontRight.set(-cont.getDrive().getRightSpeed());
+//			mRearLeft.set(cont.getDrive().getLeftSpeed());
+//			mRearRight.set(-cont.getDrive().getRightSpeed());
 			//TODO test this
 			if(mFrontLeft.getSpeed() < 0 && mFrontRight.getSpeed() < 0){
 				cont.getIntake().setIntakeType(IntakeType.HOLD);

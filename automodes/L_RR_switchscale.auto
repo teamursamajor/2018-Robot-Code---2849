@@ -1,0 +1,41 @@
+#L_RR_switchscale.auto
+
+#depositing first cube on switch
+bundle {
+   intake deploy
+   drive 130
+}
+turn to 90
+drive 185
+turn to 0
+drive 38
+turn to -90
+bundle {
+   drive 10
+   lift switch
+}
+intake out
+
+#picking up second cube
+bundle {
+   lift bottom
+   drive -10
+}
+turn to 0
+drive 32
+turn to -90
+bundle {
+   drive 10
+   intake in
+}
+
+#depositing second cube on scale
+drive -10
+turn to 0
+drive 90
+bundle {
+   drive 13
+   lift switch
+}
+intake out
+

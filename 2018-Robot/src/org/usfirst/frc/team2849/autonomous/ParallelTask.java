@@ -11,6 +11,8 @@ public class ParallelTask extends GroupTask {
 	
 	@Override
 	public void run() {
+		Logger.log("Running parallel task", LogLevel.INFO);
+
 		for(AutoTask t:tasks) {
 			t.start();
 		}

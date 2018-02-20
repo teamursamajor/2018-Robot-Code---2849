@@ -1,0 +1,23 @@
+#R_L0_switch.auto
+#the right bumper is against the wall
+bundle {
+   serial {
+      intake deploy
+      lift switch
+	  
+   }
+   serial {
+      drive 207
+	  turn to -90
+	  
+	  #this drive distance is an estimate
+	  drive 215
+	  
+	  turn to 180
+	  drive 52
+	  turn to 90
+	  drive 7
+	  
+   }
+}
+intake out

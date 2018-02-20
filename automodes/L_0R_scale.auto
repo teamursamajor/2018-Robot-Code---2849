@@ -1,0 +1,21 @@
+#L_*R_scale.auto
+#left bumper is on corner with exchange
+
+bundle {
+   intake deploy
+   drive 207
+}
+turn TO 90
+
+#this drive distance is an estimate
+drive 150
+
+turn TO 0
+bundle {
+   drive 100
+   serial {
+      wait 2
+      lift scale
+   }
+}
+intake out

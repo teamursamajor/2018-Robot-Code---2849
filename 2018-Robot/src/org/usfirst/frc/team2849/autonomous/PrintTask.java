@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2849.autonomous;
 
 import org.usfirst.frc.team2849.controls.ControlLayout;
+import org.usfirst.frc.team2849.diagnostics.Logger;
+import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 
 /* PrintTask
  *     Prints the arguments sent to it
@@ -19,6 +21,8 @@ public class PrintTask extends AutoTask {
 	
 	//Prints the string to System.out
 	public void run() {
+		Logger.log("Running print task", LogLevel.INFO);
+
 		System.out.println(str);
 	}
 	

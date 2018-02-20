@@ -1,0 +1,7 @@
+#L_L0_2xswitch.auto
+
+execute L_L0_switchcube.auto
+
+#delivering to switch
+drive 10
+intake out

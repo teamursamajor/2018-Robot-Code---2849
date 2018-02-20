@@ -1,0 +1,17 @@
+#R_LR_scaleswitch
+execute R_0R_scalecube.auto
+
+#delivering second cube
+drive -5
+turn to 0
+drive 14
+turn to -90
+drive 200
+turn to 180
+drive 50
+bundle {
+   turn to 90
+   lift switch
+}
+drive 10
+intake out

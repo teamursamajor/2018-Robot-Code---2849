@@ -1,4 +1,7 @@
 Priorities:
+adjust arcade drive
+FMS
+talon srx
 test intake while driving
 calibrate lift encoder
 Mount Camera

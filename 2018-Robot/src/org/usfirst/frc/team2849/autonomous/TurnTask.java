@@ -34,6 +34,7 @@ public class TurnTask extends AutoTask {
 		double angle = drive.getHeading();
 		//Logger.log("Start Angle: " + drive.getHeading(), LogLevel.DEBUG);
 		Logger.log("Desired Angle: " + desiredAngle, LogLevel.DEBUG);
+		System.out.println("pre-turn loop");
 		while (Math.abs(turnAmount(desiredAngle)) > 2) {
 			angle = drive.getHeading();
 			powerConstant = getPower(turnAmount(desiredAngle));
@@ -41,6 +42,7 @@ public class TurnTask extends AutoTask {
 				//Logger.log("Current Angle: " + angle, LogLevel.DEBUG);
 				//Logger.log("\tPower Constant: " + powerConstant, LogLevel.DEBUG);
 				//Logger.log("\tDesired Angle: " + desiredAngle, LogLevel.DEBUG);
+				System.out.println("in turn loop");
 			}
 			count++;
 
@@ -53,6 +55,7 @@ public class TurnTask extends AutoTask {
 			cont.getDrive().setSpeed(1 * (Math.signum(turnAmount(desiredAngle)) * powerConstant),
 					-1 * (Math.signum(turnAmount(desiredAngle)) * powerConstant));
 		}
+		System.out.println("Post turn loop");
 //		Logger.log("End Angle: " + drive.getHeading(), LogLevel.DEBUG)
 		cont.getDrive().setSpeed(0, 0);
 	}
@@ -96,6 +99,7 @@ public class TurnTask extends AutoTask {
 	}
 
 	public void run() {
+		Logger.log("Running turn task", LogLevel.INFO);
 		if (type == Turntype.TURN_TO) {
 			turnTo(desiredAngle);
 		} else if (type == Turntype.TURN_BY) {

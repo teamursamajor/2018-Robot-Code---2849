@@ -16,7 +16,7 @@ public class Lift extends Thread implements UrsaRobot {
 	private double desiredHeight;
 	private double currentHeight;
 
-	//TODO set this value
+	// TODO set this value
 	private double inchesPerTick = 1.0d;
 
 	// acceptable error may need to be adjusted; if so change this value
@@ -25,23 +25,24 @@ public class Lift extends Thread implements UrsaRobot {
 	public Lift(ControlLayout control) {
 		cont = control;
 		this.start();
-//		liftEnc = new Encoder(UrsaRobot.LIFT_ENCODER_CHANNEL_A, UrsaRobot.LIFT_ENCODER_CHANNEL_B);
-//		liftEnc.setDistancePerPulse(inchesPerTick);
+		// liftEnc = new Encoder(UrsaRobot.LIFT_ENCODER_CHANNEL_A,
+		// UrsaRobot.LIFT_ENCODER_CHANNEL_B);
+		// liftEnc.setDistancePerPulse(inchesPerTick);
 	}
 
 	public void run() {
-//		liftEnc.reset();
+		// liftEnc.reset();
 		int count = 0;
 		while (true) {
 			count++;
-//			if(count%100 == 0) System.out.println(liftEnc.getDistance());
+			// if(count%100 == 0) System.out.println(liftEnc.getDistance());
 			cont.getLift().setCurrentHeight(getLiftHeight());
 			desiredHeight = cont.getLift().getDesiredHeight();
 			currentHeight = cont.getLift().getCurrentHeight();
-//			if (checkReached()) {
-//				motor.set(.25);
-//			} else 
-				if (desiredHeight > currentHeight) {
+			// if (checkReached()) {
+			// motor.set(.25);
+			// } else
+			if (desiredHeight > currentHeight) {
 				motor.set(1);
 			} else if (desiredHeight < currentHeight) {
 				motor.set(-0.25);
@@ -63,8 +64,8 @@ public class Lift extends Thread implements UrsaRobot {
 	}
 
 	public double getLiftHeight() {
-//		return liftEnc.getDistance();
-				return 0;
+		// return liftEnc.getDistance();
+		return 0;
 	}
 
 	/**

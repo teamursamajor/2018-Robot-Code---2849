@@ -20,6 +20,8 @@ public class IntakeTask extends AutoTask {
 	}
 
 	public void run() {
+		Logger.log("Running intake task", LogLevel.INFO);
+
 		cont.getIntake().setIntakeType(intake);
 		//Run just keeps running, In/Out use the sensor
 		switch (intake) {
