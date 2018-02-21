@@ -20,6 +20,7 @@ import org.usfirst.frc.team2849.controls.intake.AutoIntake;
 import org.usfirst.frc.team2849.controls.intake.BumperTriggerIntake;
 import org.usfirst.frc.team2849.controls.intake.NullIntake;
 import org.usfirst.frc.team2849.controls.led.AutoLED;
+import org.usfirst.frc.team2849.controls.led.ColorsCheck;
 import org.usfirst.frc.team2849.controls.led.NullLED;
 import org.usfirst.frc.team2849.controls.led.TeleopLED;
 import org.usfirst.frc.team2849.controls.lift.AutoLift;
@@ -29,6 +30,7 @@ import org.usfirst.frc.team2849.diagnostics.DebugSelector;
 import org.usfirst.frc.team2849.diagnostics.Logger;
 import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 import org.usfirst.frc.team2849.diagnostics.PDP;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -49,6 +51,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	AutoBuilder autoBuilder;
 	PDP pdp;
 	DebugSelector debugSelect;
+	ColorsCheck colorsCheck;
 	
 	private Intake intake;
 	private Lift lift;
@@ -70,6 +73,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		lift = new Lift(cont);
 		led = new LED(cont);
 		pdp = new PDP();
+		colorsCheck = new ColorsCheck(cont);
 		drive.resetNavx();
 		Vision.visionInit();
 //		System.out.println("before init debugselect");
