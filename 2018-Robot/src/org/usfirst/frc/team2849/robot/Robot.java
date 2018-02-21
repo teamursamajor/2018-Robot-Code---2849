@@ -20,6 +20,7 @@ import org.usfirst.frc.team2849.controls.intake.AutoIntake;
 import org.usfirst.frc.team2849.controls.intake.BumperTriggerIntake;
 import org.usfirst.frc.team2849.controls.intake.NullIntake;
 import org.usfirst.frc.team2849.controls.led.AutoLED;
+import org.usfirst.frc.team2849.controls.led.ColorsCheck;
 import org.usfirst.frc.team2849.controls.led.NullLED;
 import org.usfirst.frc.team2849.controls.led.TeleopLED;
 import org.usfirst.frc.team2849.controls.lift.AutoLift;
@@ -51,6 +52,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	PDP pdp;
 	DebugSelector debugSelect;
 	String robotMode;
+	ColorsCheck colorsCheck;
 	
 	private Intake intake;
 	private Lift lift;
@@ -72,8 +74,9 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		lift = new Lift(cont);
 		led = new LED(cont);
 		pdp = new PDP();
+		colorsCheck = new ColorsCheck(cont);
 		drive.resetNavx();
-//		Vision.visionInit();
+		Vision.visionInit();
 		debugSelect = new DebugSelector();
 		Logger.setLevel(debugSelect.getLevel());
 	}
@@ -85,6 +88,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
 	 * getString line to get the auto name from the text box below the Gyro
 	 *
+	 * <p>
 	 * You can add additional auto modes by adding additional comparisons to the
 	 * switch structure below with additional strings. If using the
 	 * SendableChooser make sure to add them to the chooser code above as well.

@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2849.controls.led;
 
+import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
+import org.usfirst.frc.team2849.controls.ControlLayout;
 import org.usfirst.frc.team2849.robot.Drive;
 
 public class ColorsCheck {
@@ -13,61 +15,91 @@ public class ColorsCheck {
 	private static boolean maxHeightCheck = false;
 	private static boolean movingCheck = false;
 
+	private static ControlLayout cont;
+
+	public ColorsCheck(ControlLayout cont) {
+		this.cont = cont;
+	}
+
 	public static boolean getStopLED() {
 		//TODO broken
-		if(!Drive.getRunning()){
+		if (!Drive.getRunning()) {
 			stopCheck = true;
-		}
-		else{
+		} else {
 			stopCheck = false;
 		}
 		return stopCheck;
 	}
 
-//	public static boolean getIntakeInLED() {
-//		//TODO check if this is inwards or outwards
-//		if(Intake.getIntakePower > .1) {
-//			intakeInCheck = true;
-//		}
-//		else{
-//			intakeInCheck = false;
-//		}
-//	}
-//
-//	public static boolean getIntakeOutLED() {
-//		//TODO check if this is inwards or outwards
-//		if(Intake.getIntakePower < -.1) {
-//			intakeOutCheck = true;
-//		}
-//		else{
-//			intakeOutCheck = false;
-//		}
-//	}
-//
-//	public static boolean getLiftUpLED() {
-//
-//	}
-//
-//	public static boolean getLiftDownLED() {
-//
-//	}
-//
-//	public static boolean getHaveCubeLED() {
-//
-//	}
-//
-//	public static boolean getMaxHeightLED() {
-//
-//	}
-//
-//	public static boolean getMovingLED() {
-//		if (cont.getDrive().getRightSpeed() > 0.1 || cont.getDrive().getRightSpeed() < -.1
-//				|| cont.getDrive().getLeftSpeed() > 0.1 || cont.getDrive().getLeftSpeed() < -.1	) {
-//			movingCheck = true;
-//		} else {
-//			movingCheck = false;
-//		}
-//		return movingCheck;
-//	}
+	public static boolean getIntakeInLED() {
+		// TODO check if this is inwards or outwards
+		if (cont.getIntake().getIntakeType().equals(IntakeType.IN)
+				|| cont.getIntake().getIntakeType().equals(IntakeType.RUN_IN)) {
+			intakeInCheck = true;
+		} else {
+			intakeInCheck = false;
+		}
+		return intakeInCheck;
+	}
+
+	public static boolean getIntakeOutLED() {
+		// TODO check if this is inwards or outwards
+		if ((cont.getIntake().getIntakeType().equals(IntakeType.OUT)
+				|| (cont.getIntake().getIntakeType().equals(IntakeType.RUN_OUT)))) {
+			intakeOutCheck = true;
+		} else {
+			intakeOutCheck = false;
+		}
+		return intakeOutCheck;
+	}
+
+	public static boolean getLiftUpLED() {
+		if (cont.getLift().getDesiredHeight() > cont.getLift().getCurrentHeight()) {
+			liftUpCheck = true;
+			return liftUpCheck;
+		}
+		else {
+			liftUpCheck = false;
+			return liftUpCheck;
+		}
+	}
+
+	public static boolean getLiftDownLED() {
+		if (cont.getLift().getDesiredHeight() < cont.getLift().getCurrentHeight()) {
+			liftDownCheck = true;
+			return liftDownCheck;
+		}
+		else {
+			liftDownCheck = false;
+			return liftDownCheck;
+		}
+			
+		
+	}
+
+	public static boolean getHaveCubeLED() {
+
+		// TODO Please add some sensor eventually -sorry we wont
+
+		return false;
+
+	}
+
+	public static boolean getMaxHeightLED() {
+		// TODO include sensor for this
+
+		return false;
+
+	}
+
+	public static boolean getMovingLED() {
+		if (cont.getDrive().getRightSpeed() > 0.1 || cont.getDrive().getRightSpeed() < -.1
+				|| cont.getDrive().getLeftSpeed() > 0.1 || cont.getDrive().getLeftSpeed() < -.1) {
+			movingCheck = true;
+		} else {
+			movingCheck = false;
+		}
+		return movingCheck;
+	}
 
 }

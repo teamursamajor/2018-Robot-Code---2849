@@ -178,5 +178,8 @@ public class Drive implements Runnable, UrsaRobot {
 	public static boolean getRunning(){
 		return running;
 	}
+	
+	public void summonSatan() {
+	}
 
 }
