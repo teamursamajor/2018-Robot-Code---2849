@@ -14,6 +14,7 @@ public class ColorsCheck {
 	private static boolean movingCheck = false;
 
 	public static boolean getStopLED() {
+		//TODO broken
 		if(!Drive.getRunning()){
 			stopCheck = true;
 		}
