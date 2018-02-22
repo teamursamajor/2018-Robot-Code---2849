@@ -15,10 +15,12 @@ import org.usfirst.frc.team2849.controls.XboxController;
 import org.usfirst.frc.team2849.controls.drive.ArcadeDrive;
 import org.usfirst.frc.team2849.controls.drive.AutoDrive;
 import org.usfirst.frc.team2849.controls.drive.NullDrive;
+//import org.usfirst.frc.team2849.controls.drive.TankDrive;
 import org.usfirst.frc.team2849.controls.intake.AutoIntake;
 import org.usfirst.frc.team2849.controls.intake.BumperTriggerIntake;
 import org.usfirst.frc.team2849.controls.intake.NullIntake;
 import org.usfirst.frc.team2849.controls.led.AutoLED;
+import org.usfirst.frc.team2849.controls.led.ColorsCheck;
 import org.usfirst.frc.team2849.controls.led.NullLED;
 import org.usfirst.frc.team2849.controls.led.TeleopLED;
 import org.usfirst.frc.team2849.controls.lift.AutoLift;
@@ -28,7 +30,7 @@ import org.usfirst.frc.team2849.diagnostics.DebugSelector;
 import org.usfirst.frc.team2849.diagnostics.Logger;
 import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 import org.usfirst.frc.team2849.diagnostics.PDP;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
@@ -50,6 +52,8 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	PDP pdp;
 	DebugSelector debugSelect;
 	DigitalInput limSwitch;
+	String robotMode;
+	ColorsCheck colorsCheck;
 	
 	private Intake intake;
 	private Lift lift;
@@ -71,11 +75,10 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		lift = new Lift(cont);
 		led = new LED(cont);
 		pdp = new PDP();
+		colorsCheck = new ColorsCheck(cont);
 		drive.resetNavx();
-//		Vision.visionInit();
-//		System.out.println("before init debugselect");
+		Vision.visionInit();
 		debugSelect = new DebugSelector();
-//		System.out.println("after init debugselect");
 		Logger.setLevel(debugSelect.getLevel());
 	}
 
@@ -115,8 +118,13 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 
 	}
 
+	/**
+	 * This function is run when teleop mode is first started up and should be
+	 * used for any teleop initialization code.
+	 */
 	public void teleopInit() {
 		Logger.log("Started teleop", LogLevel.INFO);
+		robotMode = "teleop";
 		System.out.println(cont);
 		cont.updateControlLayout(new ArcadeDrive(xbox, true), new BumperTriggerIntake(xbox), new XYLift(xbox), new TeleopLED());
 		Logger.setLevel(debugSelect.getLevel());
@@ -129,9 +137,14 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	public void teleopPeriodic() {
 		
 	}
-
+	
+	/**
+	 * This function is run when test mode is first started up and should be
+	 * used for any test initialization code.
+	 */
 	public void testInit() {
 		Logger.log("Started test", LogLevel.INFO);
+		robotMode = "test";
 //		SmartDashboard.updateValues();
 		cont.updateControlLayout(new ArcadeDrive(xbox, true), new BumperTriggerIntake(xbox), new XYLift(xbox), new TeleopLED());
 		Logger.setLevel(debugSelect.getLevel());
@@ -150,14 +163,19 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		System.out.println(limSwitch.get());
 	}
 
+	/**
+	 * This function is run when a mode is initially disabled and should be
+	 * used for any disabling code.
+	 */
 	public void disabledInit() {
-//		System.out.println("disabled init top");
-		Logger.log("disabled", LogLevel.INFO);
+		Logger.log("Disabled " + robotMode + " mode", LogLevel.INFO);
 		Logger.closeWriters();
 		cont.updateControlLayout(new NullDrive(), new NullIntake(), new NullLift(), new NullLED());
-//		System.out.println("disabled init bottom");
 	}
 	
+	/**
+	 * This function is called periodically when a mode is disabled.
+	 */
 	public void disabledPeriodic() {
 		drive.stop();
 	}

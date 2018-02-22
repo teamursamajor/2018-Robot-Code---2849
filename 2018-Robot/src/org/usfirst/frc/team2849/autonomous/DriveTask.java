@@ -31,44 +31,43 @@ public class DriveTask extends AutoTask {
 
 		new PathTask(cont, new Path[] {straightPath, straightPath}, drive).start();		
 		
-//		int count = 0;
-//
-//		double leftPowerConstant = 0;
-//		double rightPowerConstant = 0;
-//		drive.resetEncoders();
-//		double rightAdjust = 0.0628d;
-//		Logger.log("Current Distance: " + distance, LogLevel.DEBUG);
-//		while ((Math.abs(drive.getLeftEncoder()) < Math.abs(distance)
-//				|| Math.abs(drive.getRightEncoder()) < Math.abs(distance)) && !DriverStation.getInstance().isDisabled()) {
-//			
-//			leftPowerConstant = getPower(drive.getLeftEncoder(), distance);
-//			rightPowerConstant = getPower(drive.getRightEncoder(), distance);
-//
-//			//Prints twice every second
-//			//TODO delete or add a count increment
-//			if (count % 25 == 0) {
-////				Logger.log("Left Power Constant: " + leftPowerConstant + "\tLeft Encoder: " + drive.getLeftEncoder(),
-////						LogLevel.DEBUG);
-////				Logger.log(
-////						"Right Power Constant: " + rightPowerConstant + "\tRight Encoder: " + drive.getRightEncoder(),
-////						LogLevel.DEBUG);
-//			}
-//			if (Math.abs(drive.getLeftEncoder()) > Math.abs(distance)) {
-//				leftPowerConstant = 0;
-//			}
-//			if (Math.abs(drive.getRightEncoder()) > Math.abs(distance)) {
-//				rightPowerConstant = 0;
-//			}
-//			//TODO hot fix change
-//			cont.getDrive().setSpeed(leftPowerConstant * -Math.signum(distance),
-//					((rightPowerConstant - rightAdjust) * -Math.signum(distance)));
-//			try {
-//				Thread.sleep(20);
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
-//			
-//		}
+		int count = 0;
+		double leftPowerConstant = 0;
+		double rightPowerConstant = 0;
+		drive.resetEncoders();
+		double rightAdjust = 0.0628d;
+		Logger.log("Current Distance: " + distance, LogLevel.DEBUG);
+		while (Math.abs(drive.getLeftEncoder()) < Math.abs(distance)
+				|| Math.abs(drive.getRightEncoder()) < Math.abs(distance)) {
+			
+			leftPowerConstant = getPower(drive.getLeftEncoder(), distance);
+			rightPowerConstant = getPower(drive.getRightEncoder(), distance);
+
+			//Prints twice every second
+			count = (count + 1) % 500;
+			if (count == 0) {
+				Logger.log("Left Power Constant: " + leftPowerConstant + "\tLeft Encoder: " + drive.getLeftEncoder(),
+						LogLevel.DEBUG);
+				Logger.log(
+						"Right Power Constant: " + rightPowerConstant + "\tRight Encoder: " + drive.getRightEncoder(),
+						LogLevel.DEBUG);
+			}
+			if (Math.abs(drive.getLeftEncoder()) > Math.abs(distance)) {
+				leftPowerConstant = 0;
+			}
+			if (Math.abs(drive.getRightEncoder()) > Math.abs(distance)) {
+				rightPowerConstant = 0;
+			}
+			//TODO hot fix change
+			cont.getDrive().setSpeed(leftPowerConstant * -Math.signum(distance),
+					((rightPowerConstant - rightAdjust) * -Math.signum(distance)));
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+		}
 		Logger.log("Drive loop ended", LogLevel.DEBUG);
 		cont.getDrive().setSpeed(0, 0);
 	}

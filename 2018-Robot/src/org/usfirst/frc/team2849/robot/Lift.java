@@ -25,23 +25,23 @@ public class Lift extends Thread implements UrsaRobot {
 	public Lift(ControlLayout control) {
 		cont = control;
 		this.start();
-		// liftEnc = new Encoder(UrsaRobot.LIFT_ENCODER_CHANNEL_A,
-		// UrsaRobot.LIFT_ENCODER_CHANNEL_B);
-		// liftEnc.setDistancePerPulse(inchesPerTick);
+		//liftEnc = new Encoder(UrsaRobot.LIFT_ENCODER_CHANNEL_A,
+		//UrsaRobot.LIFT_ENCODER_CHANNEL_B);
+		//liftEnc.setDistancePerPulse(inchesPerTick);
 	}
 
 	public void run() {
 		// liftEnc.reset();
 		int count = 0;
 		while (true) {
-			count++;
-			// if(count%100 == 0) System.out.println(liftEnc.getDistance());
+			count = (count + 1) % 100;
+			//if(count == 0) System.out.println(liftEnc.getDistance());
 			cont.getLift().setCurrentHeight(getLiftHeight());
 			desiredHeight = cont.getLift().getDesiredHeight();
 			currentHeight = cont.getLift().getCurrentHeight();
-			// if (checkReached()) {
-			// motor.set(.25);
-			// } else
+			//if (checkReached()) {
+			// 	motor.set(.25);
+			//} else
 			if (desiredHeight > currentHeight) {
 				motor.set(1);
 			} else if (desiredHeight < currentHeight) {
@@ -64,7 +64,7 @@ public class Lift extends Thread implements UrsaRobot {
 	}
 
 	public double getLiftHeight() {
-		// return liftEnc.getDistance();
+		//return liftEnc.getDistance();
 		return 0;
 	}
 
@@ -79,6 +79,5 @@ public class Lift extends Thread implements UrsaRobot {
 		boolean hasReached = Math.abs(desiredHeight - currentHeight) < acceptableRange;
 		cont.getLift().setReached(hasReached);
 		return hasReached;
-
 	}
 }

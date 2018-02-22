@@ -1,51 +1,103 @@
 package Scouting;
-
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.net.ssl.HttpsURLConnection;
-
-
 public class GetData {
 	final static String basehttpsURL = "https://www.thebluealliance.com/api/v3";
 	final static String year = "2018";
 	//{teamkey}=frc{team_number}
+	
+	
+	
+	//THESE ARE THE COMMENTS THAT TELL YOU HOW THIS THING WORKS:
+	//BASICALLY THERE ARE TWO METHODS THAT MAKE GETDATA WORK
+	//1. getthing(String ming)
+	//		THIS TAKES THE STRING FROM THE BLUE ALLIANCE API PAGE
+	//		https://www.thebluealliance.com/apidocs/v3
+	//		AND RETURNS THE ENTIRE JSON DATA PASSED BACK FROM THE WEBPAGE AS A WHOLE STRING
+	// 
+	//2. geththingsfromthing(Sring gottonthing, String hingtogetfromthinggotton)
+	//		THIS TAKES THE FULL JSON DATA PASSED FROM THE gething METHOD IN THE gottonthing PARAMETER
+	// 		IT ALSO TAKES A STRING THAT LABELS WHICH PEICE OF DATA YOU WANT PARSED FROM THE JSON FILE
+	// 		THEN IT RETURNS ALL PEICES OF DATA IN THAT JSON FILE YOU PASSED THAT WERE LABELED IN THE thingtogetfromthinggotton PARAMETER
+	//3. getstufftoget (String gottonthing)
+	//		THIS ALSO TAKES THE GET THING AS FIRST AND ONLY PARAMETER, RETURNS AN ARRAY OF EVERYTHING LEGAL TO PASS TO getthingsfromthing that is not null
+	
+	
+	//rank, record
+	//ranking points, match points, auto points, other categories of points in game menu; average, total
+	//whether or not they were picked for elimination last event
+	//OPR, DPR
+	
 	public static void main(String[] a) {
-		System.out.println(getthing("/event/2016wvrox/teams"));
-//		for (String r :getallteamNamesatevent("2016wvrox")){
+		//do thing for events that is already done for teams
+		
+		
+		
+		
+		String EVENTKEY = "2016wvrox";//for testing change to use for real
+		String got = getthing("/event/2016wvrox/teams");
+		System.out.println(got);
+//		for (String r : getstufftoget(got)){
 //			System.out.println(r);
 //		}
-		
-		//menu:pick event from events in year (year can be manual)
-		//-this gives a list of all teams a the event
-//		System.out.println(getthing("/events/2016/keys"));
-//		System.out.println(getthing("/team/frc2849/events"));
+//		System.out.println(got);
+//		ArrayList<String> teamnames = getTeamNames(got,"2016wvrox");
+//		ArrayList<String> teamkeys = getTeamKeys(got,"2016wvrox");
+//		ArrayList<String> teamnumbers = getTeamNumbers(got,"2016wvrox");
+//		for(int i=0;i<teamnames.size();i++) {
+//			System.out.println(i+new String(new char[Math.abs(2-(int)Math.log10(i==0?1:i))]).replace('\0', ' ')+"] "+teamnames.get(i)+new String(new char[Math.abs(35-teamnames.get(i).length())]).replace('\0', ' ')+teamnumbers.get(i));
+////			System.out.println(teamkeys.get(i));
+//		}
+//		
+//		System.out.println("Which Team would you like to see more of?");
+//		int teamnumberchosen;
+//		Scanner reader = new Scanner(System.in);
+//		do {
+//			
+//			teamnumberchosen = reader.nextInt();
+//			System.out.println(teamnumberchosen);
+//		}while(!(teamnumbers.contains(""+teamnumberchosen)));
+//		reader.close();
+//		int nthteamchosen = teamnumbers.indexOf(""+teamnumberchosen);
+//		System.out.println("Youhaveselected"+ teamnames.get(nthteamchosen));
+//		System.out.println(getthing("/team/"+teamkeys.get(nthteamchosen)));
+		System.out.println(getthing("/team/"+"frc2849"));
 	}
-	static ArrayList<String> getEventsforTeam(String teamkey) {//actually doesn't work
+	
+	static ArrayList<String> getTeamNames(String gotton, String eventkey) {//gotton=getthing("/event/2016wvrox/teams")
+		ArrayList<String> teamNames = getthingsfromthing(gotton, "nickname");
+		return teamNames;
+	}
+	static ArrayList<String> getTeamKeys(String gotton,String eventkey) {//gotton=getthing("/event/2016wvrox/teams")
+		ArrayList<String> teamNames = getthingsfromthing(gotton, "key");
+		return teamNames;
+	}
+	static ArrayList<String> getTeamNumbers(String gotton,String eventkey) {//gotton=getthing("/event/2016wvrox/teams")
+		ArrayList<String> teamNames = getthingsfromthing(gotton, "team_number");
+		return teamNames;
+	}
+	
+	
+	
+	
+	
+	static ArrayList<String> getEventsforTeam(String teamkey) {
 		ArrayList<String> teamNames = getthingsfromthing(getthing("/team/"+teamkey+"/events"), "key");
 		return teamNames;
 	}
-	static ArrayList<String> getEventsforYear(String year) {//actually doesn't work
-		ArrayList<String> teamNames = getthingsfromthing(getthing("/event/2016wvrox/teams"), "nickname");
-		return teamNames;
-	}
-	static ArrayList<String> getTeamNames(String eventkey) {
-		ArrayList<String> teamNames = getthingsfromthing(getthing("/event/2016wvrox/teams"), "nickname");
-		return teamNames;
-	}
-	static ArrayList<String> getTeamNumbers(String eventkey) {
-		ArrayList<String> teamNames = getthingsfromthing(getthing("/event/2016wvrox/teams"), "team_number");
-		return teamNames;
-	}
-	static ArrayList<String> getTeamKeys(String eventkey) {
-		ArrayList<String> teamNames = getthingsfromthing(getthing("/event/2016wvrox/teams"), "key");
+	static ArrayList<String> getEventsforYear(String year) {
+		ArrayList<String> teamNames = getthingsfromthing(getthing("/events/"+year), "key");
 		return teamNames;
 	}	
 	static ArrayList<String> getthingsfromthing(String gottonthing, String thingtogetfromthinggotton) {
 		ArrayList<String> allthings = new ArrayList<String>();
+		thingtogetfromthinggotton = "\""+thingtogetfromthinggotton+"\"";
 		while(gottonthing.indexOf(thingtogetfromthinggotton)!=-1) {
-			gottonthing=gottonthing.substring(gottonthing.indexOf(thingtogetfromthinggotton)+thingtogetfromthinggotton.length()+3);
+			gottonthing=gottonthing.substring(gottonthing.indexOf(thingtogetfromthinggotton)+thingtogetfromthinggotton.length()+2);
 			allthings.add(gottonthing.substring(0, gottonthing.indexOf(",")));
 		}
 		for(int i=0;i<allthings.size();i++) {
@@ -76,5 +128,26 @@ public class GetData {
 			}
 
 		return returnvalue;
+	}
+	static ArrayList<String> getstufftoget(String gottonthing){
+		ArrayList<String> legalparameters = new ArrayList<String>();
+		gottonthing=gottonthing.substring(gottonthing.indexOf("{")+1, gottonthing.indexOf("}"));
+		
+		//THE LINE OF CODE ABOVE DOESN"T WORK BECAUSE THERE IS A SECOND PAIR OF CURLY BRACES INSIDE THE ONE I WANT
+		
+		
+		for(int j=0;j<gottonthing.length();j++) {
+			if(gottonthing.substring(j, j+1).equals("\"")) {
+				gottonthing=gottonthing.substring(0, j)+gottonthing.substring(j+1);
+			}
+			if(gottonthing.substring(j, j+1).equals("{")) {
+				gottonthing=gottonthing.substring(0, j)+gottonthing.substring(gottonthing.indexOf("}"));
+			}
+		}
+		while(gottonthing.indexOf(":")!=-1) {
+			legalparameters.add(gottonthing.substring(1,gottonthing.indexOf(":")-2));
+			gottonthing=gottonthing.substring(gottonthing.indexOf(",")+1);
+		}
+		return legalparameters;
 	}
 }

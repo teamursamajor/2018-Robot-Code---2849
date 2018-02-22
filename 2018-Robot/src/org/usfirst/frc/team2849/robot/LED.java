@@ -53,8 +53,6 @@ public class LED extends Thread {
 			else{
 				ColorsLED.setNullColor();
 			}
-			
-			
 			//setting the LEDs here
 			rLED.set(cont.getLED().getR());
 			gLED.set(cont.getLED().getG());

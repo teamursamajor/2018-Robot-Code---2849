@@ -14,9 +14,9 @@ public class Intake extends Thread {
 	private Spark right;
 	private DigitalInput limitSwitch;
 
-	//To hold the power of Intake for debugging purposes
-	private static double intakePower = 0.0;
-	
+	// To hold the power of Intake for debugging purposes
+	private double intakePower = 0.0;
+
 	public Intake(int channelLeft, int channelRight, ControlLayout cont) {
 		left = new Spark(channelLeft);
 		right = new Spark(channelRight);
@@ -72,12 +72,9 @@ public class Intake extends Thread {
 		// positive configuration
 		left.set(powerLevel);
 		right.set(powerLevel);
-		
-		//Hold powerLevel value to debug
+
+		// Hold powerLevel value to debug
 		intakePower = powerLevel;
-	}
-	public static double getIntakePower() {
-		return intakePower;
 	}
 
 }
