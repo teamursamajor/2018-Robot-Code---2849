@@ -1,6 +1,0 @@
-#M_R0_2xswitch.auto
-execute M_R0_switchcube.auto
-drive -20
-turn to 0
-drive 10
-intake out
