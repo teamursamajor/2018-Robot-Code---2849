@@ -4,12 +4,13 @@ FMS
 talon srx
 test intake while driving
 calibrate lift encoder
-Mount Camera
 test automodes (and finalize, ie deploying intake)
-fix shuffleboard
+fix shuffleboard (may not actually be possible)
 fix debugselector because it is an absolute broken mess now ("nice" -20XX)
+-- only the toggle switch thing is broken, and it seems to be a bug with smartdashboard; not something we can control. could just go with a dropdown menu. probably better in the long run if smartdashboard resets every time it's opened
 2 cube pathfinder autos
-Comment Code
+comment/clean code
+remove separate Pathmaker project (what is spline?)
 
 Ongoing:
 dropbox with the jars/gitbash?
