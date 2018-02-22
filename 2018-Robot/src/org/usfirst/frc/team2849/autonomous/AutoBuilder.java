@@ -70,7 +70,7 @@ public class AutoBuilder {
 
 		public PathToken(String filename) {
 			filename = filename.replace(" ", "");
-			//put all paths into /AutoModes/Paths
+			//put all paths into /automodes/paths
 			paths = new PathReader("/home/lvuser/automodes/paths/" + filename + ".path", false).getPaths();
 		}
 
@@ -207,41 +207,46 @@ public class AutoBuilder {
 		buff = new BufferedReader(new FileReader(filename));
 		String line = null;
 		while ((line = buff.readLine()) != null) {
-			if (line.contains("#")) {
-				continue;
-			} else if (line.contains("follow")) {
+			if (line.contains("#")) { // If the line is a comment
+				continue; // Continues to next line
+			} else if (line.contains("follow")) { // If the line is a path token
 				String current = line.substring(line.indexOf("follow") + "follow".length());
-				ret.add(new PathToken(current));
-			} else if (line.contains("execute")) {
+				// The path to follow (name of path file) is what comes after the token "follow"
+				ret.add(new PathToken(current)); // Adds new path token to the ArrayList of all tokens
+			} else if (line.contains("execute")) { // If the line is an execute token
 				String current = line.substring(line.indexOf("execute") + "execute".length());
-				ret.add(new ExecuteToken(current));
-			} else if (line.contains("wait")) {
+				// The automode to execute (name of auto file) is what comes after the token "execute"
+				ret.add(new ExecuteToken(current)); // Adds new execute token to the ArrayList of all tokens
+			} else if (line.contains("wait")) { // If the line is a wait token
 				String current = line.substring(line.indexOf("wait") + "wait".length());
-				ret.add(new WaitToken(current));
-			} else if (line.contains("drive")) {
+				// The length (in seconds) to wait is what comes after the token "wait"
+				ret.add(new WaitToken(current)); // Adds new wait token to the ArrayList of all tokens
+			} else if (line.contains("drive")) { // If the line is a drive token
 				String current = line.substring(line.indexOf("drive") + "drive".length());
-				ret.add(new DriveToken(current));
-			} else if (line.contains("turn")) {
+				// The length (in feet) to drive is what comes after the token "drive"
+				ret.add(new DriveToken(current)); // Adds new drive token to the ArrayList of all tokens
+			} else if (line.contains("turn")) { // If the line is a turn token
 				String current = line.substring(line.indexOf("turn") + "turn".length());
-				ret.add(new TurnToken(current));
-			} else if (line.contains("lift")) {
+				// The type and amount in degrees to turn is what comes after the token "turn"
+				ret.add(new TurnToken(current)); // Adds new turn token to the ArrayList of all tokens
+			} else if (line.contains("lift")) { // If the line is a lift token
 				String current = line.substring(line.indexOf("lift") + "lift".length());
-				ret.add(new LiftToken(current));
-			} else if (line.contains("intake")) {
+				// The preset height to lift to is what comes after the token "lift"
+				ret.add(new LiftToken(current)); // Adds new lift token to the ArrayList of all tokens
+			} else if (line.contains("intake")) { // If the line is an intake token
 				String current = line.substring(line.indexOf("intake") + "intake".length());
-				ret.add(new IntakeToken(current));
+				// The intake mode is what comes after the token "intake"
+				ret.add(new IntakeToken(current)); // Adds new intake token to the ArrayList of all tokens
 			} else if (line.contains("print")) { // If the line is a print token
 				String current = line.substring(line.indexOf("print") + "print".length());
-				// The data that should be printed is everything that comes
-				// after the token "print"
-				ret.add(new PrintToken(current)); // Adds new Print Token to the
-													// ArrayList of all tokens
-			} else if (line.contains("bundle")) {
-				ret.add(new BundleToken());
-			} else if (line.contains("serial")) {
-				ret.add(new SerialToken());
-			} else if (line.contains("}")) {
-				ret.add(new RightBraceToken());
+				// The data to print is everything that comes after the token "print"
+				ret.add(new PrintToken(current)); // Adds new print token to the ArrayList of all tokens
+			} else if (line.contains("bundle")) { // If the line is a bundle token
+				ret.add(new BundleToken()); // Adds new bundle token to the ArrayList of all tokens
+			} else if (line.contains("serial")) { // If the line is a serial token
+				ret.add(new SerialToken()); // Adds new serial token to the ArrayList of all tokens
+			} else if (line.contains("}")) { // If the line is a right brace (ends a group task)
+				ret.add(new RightBraceToken()); // Adds new right brace token to the ArrayList of all tokens
 			}
 		}
 		buff.close();
