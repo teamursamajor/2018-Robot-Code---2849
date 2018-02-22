@@ -30,7 +30,7 @@ import org.usfirst.frc.team2849.diagnostics.DebugSelector;
 import org.usfirst.frc.team2849.diagnostics.Logger;
 import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 import org.usfirst.frc.team2849.diagnostics.PDP;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
@@ -95,10 +95,12 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		Logger.log("Started auto", LogLevel.INFO);
+		Logger.log("Started Autonomous mode", LogLevel.INFO);
+		robotMode = "Autonomous";
 		drive.resetNavx();
 		cont.updateControlLayout(new AutoDrive(), new AutoIntake(), new AutoLift(), new AutoLED());
-//		String autoMode = "/home/lvuser/automodes/L_L0_path_switch.auto";
+//		For setting autoMode manually (for testing)
+//	 	String autoMode = "/home/lvuser/automodes/L_L0_path_switch.auto";
 		String autoMode = autoBuilder.pickAutoMode(autoSelect.getStartingPosition(), 
 			autoSelect.getAutoPrefs(), autoSelect.findAutoFiles());
 		System.out.println("Now running " + autoMode);
@@ -122,8 +124,8 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	 * used for any teleop initialization code.
 	 */
 	public void teleopInit() {
-		Logger.log("Started teleop", LogLevel.INFO);
-		robotMode = "teleop";
+		Logger.log("Started Teleop mode", LogLevel.INFO);
+		robotMode = "Teleop";
 		System.out.println(cont);
 		cont.updateControlLayout(new ArcadeDrive(xbox, true), new BumperTriggerIntake(xbox), new XYLift(xbox), new TeleopLED());
 		Logger.setLevel(debugSelect.getLevel());
@@ -142,9 +144,10 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	 * used for any test initialization code.
 	 */
 	public void testInit() {
-		Logger.log("Started test", LogLevel.INFO);
-		robotMode = "test";
-//		SmartDashboard.updateValues();
+		Logger.log("Started Test mode", LogLevel.INFO);
+		robotMode = "Test";
+//		SmartDashboard.updateValues(); <-- TODO what is this for? is it still needed?
+//		For anyone who wants Tank Drive: change "new ArcadeDrive" to "new TankDrive" and uncomment the TankDrive import
 		cont.updateControlLayout(new ArcadeDrive(xbox, true), new BumperTriggerIntake(xbox), new XYLift(xbox), new TeleopLED());
 		Logger.setLevel(debugSelect.getLevel());
 		limSwitch = new DigitalInput(4);
