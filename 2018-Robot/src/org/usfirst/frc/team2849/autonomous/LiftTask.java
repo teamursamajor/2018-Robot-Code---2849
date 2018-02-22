@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2849.autonomous;
 
 import org.usfirst.frc.team2849.controls.ControlLayout;
+import org.usfirst.frc.team2849.diagnostics.Logger;
+import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 import org.usfirst.frc.team2849.robot.Lift;
 
 public class LiftTask extends AutoTask {
@@ -21,9 +23,11 @@ public class LiftTask extends AutoTask {
 
 	@Override
 	public void run() {
+		Logger.log("Running lift task", LogLevel.INFO);
+
 		cont.getLift().setDesiredHeight(height);
 		long startTime = System.currentTimeMillis();
-		while (!cont.getLift().getReached() || System.currentTimeMillis() - startTime < timeout) {
+		while (!cont.getLift().getReached() && System.currentTimeMillis() - startTime < timeout) {
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {

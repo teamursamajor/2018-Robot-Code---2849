@@ -14,6 +14,8 @@ public class WaitTask extends AutoTask {
 
 	@Override
 	public void run() {
+		Logger.log("Running wait task", LogLevel.INFO);
+
 		try {
 			Thread.sleep(waitTime);
 		} catch (InterruptedException e) {

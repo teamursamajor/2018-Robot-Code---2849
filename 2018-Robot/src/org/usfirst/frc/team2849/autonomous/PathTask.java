@@ -16,42 +16,49 @@ public class PathTask extends AutoTask implements UrsaRobot {
 	private Path rightPath;
 	private Pathfollower follower;
 	private Drive drive;
+	private boolean started = false;
+	private boolean ended = false;
 	
 	public PathTask(ControlLayout cont, Path[] paths, Drive drive) {
 		super(cont);
 		leftPath = paths[0];
 		rightPath = paths[1];
 //		follower = new Pathfollower(1/50.0, 0, 1/200.0, 1.0/MAX_VELOCITY, 1/(2.5 * MAX_ACCELERATION), 1/100.0);
-		follower = new Pathfollower(1/10.0, 0, 0, 1.0/MAX_VELOCITY, 1/(2.5 * MAX_ACCELERATION), 1/20.0);
+		follower = new Pathfollower(1/15.0, 0, 0, 1.0/MAX_VELOCITY, 1/(2.5 * MAX_ACCELERATION), 1/50.0);
 		this.drive = drive;
 	}
 
 	@Override
 	public void run() {
+		Logger.log("Running path task", LogLevel.INFO);
+
 		double leftPower;
 		double rightPower;
 		double power;
 		double steer;
-		drive.resetNavx();
+//		drive.resetNavx();
 		drive.resetEncoders();
 		long startTime = System.currentTimeMillis();
 		long relTime = 0;
 		long prevTime = 0;
 		double averageDist = 0;
-		while (!leftPath.isFinished() && !rightPath.isFinished() && !DriverStation.getInstance().isDisabled() && (System.currentTimeMillis() - startTime) / 1000.0 < leftPath.get(leftPath.numPoints() - 1).getTime() * 5) {
+		started = false;
+		ended = false;
+		while (!ended && !leftPath.isFinished() && !rightPath.isFinished() && !DriverStation.getInstance().isDisabled() && (System.currentTimeMillis() - startTime) / 1000.0 < leftPath.get(leftPath.numPoints() - 1).getTime() * 5) {
 			relTime = System.currentTimeMillis() - startTime;
 			Logger.log("In TaskLoop: " + relTime, LogLevel.DEBUG);
 			Logger.log("Time since last loop: " + (relTime - prevTime) / 1000.0, LogLevel.DEBUG);
 //			Logger.log("Left: ", LogLevel.DEBUG);
 			prevTime = relTime;
 			averageDist = (drive.getLeftEncoder() + drive.getRightEncoder()) / 2;
-//			
 //			System.out.println("Left: " + (relTime / 1000.0));
 //			leftPower = follower.getCorrection(leftPath, drive.getLeftEncoder(), relTime / 1000.0);
 //			Logger.log("Right: ", LogLevel.DEBUG);
 //			System.out.println("Right: " + (relTime / 1000.0));
 //			rightPower = follower.getCorrection(rightPath, drive.getRightEncoder(), relTime / 1000.0);
 			power = follower.getCorrection(leftPath, averageDist, relTime / 1000.0);
+			if (power > .05) started = true;
+			if (power < .05 && started) ended = true;
 			Logger.log("Power: " + power, LogLevel.DEBUG);
 //			Logger.log("L: " + leftPower, LogLevel.DEBUG);
 //			Logger.log("R: " + rightPower, LogLevel.DEBUG);
@@ -82,9 +89,8 @@ public class PathTask extends AutoTask implements UrsaRobot {
 		cont.getDrive().setSpeed(0, 0);
 		drive.stop();
 		startTime = System.currentTimeMillis();
-		while (System.currentTimeMillis() - startTime < 3000) {}
-//		System.out.println("leftDist: " + drive.getLeftEncoder() );
-//		System.out.println("rightDist: " + drive.getRightEncoder());
+		System.out.println("leftDist: " + drive.getLeftEncoder() );
+		System.out.println("rightDist: " + drive.getRightEncoder());
 	}
 
 }

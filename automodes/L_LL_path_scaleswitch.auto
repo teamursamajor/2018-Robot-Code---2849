@@ -1,0 +1,10 @@
+#scale to cube path
+execute L_0L_path_scale.auto
+bundle {
+	turn to 180
+	lift bottom
+}
+follow L_scale_cube
+intake in
+lift switch
+intake out

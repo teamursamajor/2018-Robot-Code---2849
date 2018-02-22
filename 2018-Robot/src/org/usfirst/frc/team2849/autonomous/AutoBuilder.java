@@ -60,6 +60,7 @@ public class AutoBuilder {
 
 		// Creates a new instance of PrintTask class
 		public PrintTask makeTask(ControlLayout cont) {
+			Logger.log("[TASK] Print Task", LogLevel.INFO);
 			return new PrintTask(cont, str);
 		}
 	}
@@ -74,6 +75,7 @@ public class AutoBuilder {
 		}
 
 		public PathTask makeTask(ControlLayout cont) {
+			Logger.log("[TASK] Path Task", LogLevel.INFO);
 			return new PathTask(cont, paths, drive);
 		}
 	}
@@ -101,6 +103,7 @@ public class AutoBuilder {
 		}
 
 		public IntakeTask makeTask(ControlLayout cont) {
+			Logger.log("[TASK] Intake Task", LogLevel.INFO);
 			return new IntakeTask(cont, intake);
 		}
 	}
@@ -125,6 +128,7 @@ public class AutoBuilder {
 		}
 
 		public LiftTask makeTask(ControlLayout cont) {
+			Logger.log("[TASK] Lift Task", LogLevel.INFO);
 			return new LiftTask(cont, LiftTask.presetToHeight(lift));
 		}
 	}
@@ -140,6 +144,7 @@ public class AutoBuilder {
 		}
 
 		public WaitTask makeTask(ControlLayout cont) {
+			Logger.log("[TASK] Wait Task", LogLevel.INFO);
 			return new WaitTask(cont, (long) (wait * 1000.0d));
 		}
 	}
@@ -175,6 +180,7 @@ public class AutoBuilder {
 		}
 
 		public TurnTask makeTask(ControlLayout cont) {
+			Logger.log("[TASK] Turn Task", LogLevel.INFO);
 			return new TurnTask(cont, turnType, turnAmount, drive);
 		}
 	}
@@ -190,6 +196,7 @@ public class AutoBuilder {
 		}
 
 		public DriveTask makeTask(ControlLayout cont) {
+			Logger.log("[TASK] Drive Task", LogLevel.INFO);
 			return new DriveTask(cont, (int) dist, drive);
 		}
 	}
@@ -243,6 +250,7 @@ public class AutoBuilder {
 
 	private AutoTask parseAuto(ArrayList<Token> toks, GroupTask ret) {
 		if (toks.size() == 0) {
+			Logger.log("[TASK] Wait Task", LogLevel.INFO);
 			return new WaitTask(cont, 0);
 		}
 

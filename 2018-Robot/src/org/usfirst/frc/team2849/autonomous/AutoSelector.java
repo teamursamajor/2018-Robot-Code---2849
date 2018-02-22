@@ -65,7 +65,7 @@ public class AutoSelector {
 			}
 			SmartDashboard.putData("Auto Mode for " + chooser.getSelected(), chooser);
 		}
-		SmartDashboard.putData("Robot Start Position", startingPosition);
+		SmartDashboard.putData("Start Position", startingPosition);
 	}
 
 	public String[] getAutoPrefs() {

@@ -28,10 +28,10 @@ public class Intake extends Thread {
 		while (true) {
 			switch (cont.getIntake().getIntakeType()) {
 			case RUN:
-				setIntakePower(.5);
+				setIntakePower(1);
 				break;
 			case OUT:
-				setIntakePower(-0.5);
+				setIntakePower(-1);
 				break;
 			case STOP:
 				setIntakePower(0);

@@ -16,13 +16,13 @@ public class BumperTriggerIntake implements IntakeControl {
 
 	@Override
 	public IntakeType getIntakeType() {
-		if (xbox.getButton(XboxController.BUTTON_LEFTBUMPER)) {
+		if (xbox.getButton(XboxController.BUTTON_RIGHTBUMPER)) {
 			return IntakeType.IN;
-		} else if (xbox.getButton(XboxController.BUTTON_RIGHTBUMPER)) {
+		} else if (xbox.getButton(XboxController.BUTTON_LEFTBUMPER)) {
 			return IntakeType.OUT;
-		} else if (xbox.getAxisGreaterThan(XboxController.AXIS_LEFTTRIGGER, .2)) {
+		} else if (xbox.getAxisGreaterThan(XboxController.AXIS_RIGHTTRIGGER, .2)) {
 			return IntakeType.RUN_IN;
-		} else if (xbox.getAxisGreaterThan(XboxController.AXIS_RIGHTTRIGGER, .2)){
+		} else if (xbox.getAxisGreaterThan(XboxController.AXIS_LEFTTRIGGER, .2)){
 			return IntakeType.RUN_OUT;
 		}
 		return IntakeType.STOP;

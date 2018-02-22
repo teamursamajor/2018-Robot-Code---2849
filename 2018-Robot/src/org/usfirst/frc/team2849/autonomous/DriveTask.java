@@ -7,6 +7,8 @@ import org.usfirst.frc.team2849.path.Path;
 import org.usfirst.frc.team2849.path.PointonPath;
 import org.usfirst.frc.team2849.robot.Drive;
 
+import edu.wpi.first.wpilibj.DriverStation;
+
 public class DriveTask extends AutoTask {
 	private int distance;
 	private Drive drive;
@@ -17,14 +19,17 @@ public class DriveTask extends AutoTask {
 		this.distance = distance;
 		this.drive = drive;
 		this.straightPath = new Path("drivePath");
+	}
+
+	public void run() {
+		Logger.log("Running drive task", LogLevel.INFO);
+		
 		straightPath.add(new PointonPath(0.0, drive.getRawHeading(), 0.0, 0.0, 0.0, 0.0, 0.0));
 		straightPath.add(new PointonPath(distance, drive.getRawHeading(), 0, 0, 0, 0, 0));
 		straightPath.createVelProfile();
 		straightPath.mapVelocity();
-	}
 
-	public void run() {
-//		new PathTask(cont, new Path[] {straightPath, straightPath}, drive).start();		
+		new PathTask(cont, new Path[] {straightPath, straightPath}, drive).start();		
 		
 		int count = 0;
 		double leftPowerConstant = 0;
