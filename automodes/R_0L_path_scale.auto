@@ -1,6 +1,0 @@
-#R_0L_path_scale
-bundle {
-	follow R_0L_path_scale
-	lift scale
-}
-intake out

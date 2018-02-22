@@ -1,6 +1,0 @@
-#R_R0_path_switch
-bundle {
-	follow R_R0_path_switch
-	lift switch
-}
-intake out

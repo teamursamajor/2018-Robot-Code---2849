@@ -1,5 +1,0 @@
-#R_LL_scaleswitch.auto
-execute R_0L_scalecube.auto
-#deliver second cube to left switch
-drive 10
-intake out

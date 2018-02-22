@@ -1,4 +1,0 @@
-#L_R0_2xswitch.auto
-execute L_R0_switchcube.auto
-drive 10
-intake out
