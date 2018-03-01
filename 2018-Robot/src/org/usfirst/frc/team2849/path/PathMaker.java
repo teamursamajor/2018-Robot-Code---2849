@@ -481,7 +481,7 @@ public class PathMaker implements UrsaRobot {
 			overfield = ImageIO.read(new File(System.getProperty("user.dir") + "/Transparentoverfield.png"));
 		} catch (Exception E) {
 			E.printStackTrace();
-			Logger.log("PathMaker importImages printStackTrace", LogLevel.ERROR);
+			Logger.log("PathMaker importImages method printStackTrace", LogLevel.ERROR);
 		}
 	}
 }

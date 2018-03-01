@@ -28,7 +28,7 @@ public class PDP extends Thread {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-				Logger.log("PDP Thread.sleep call, printStackTrace", LogLevel.ERROR);
+				Logger.log("PDP run method Thread.sleep call, printStackTrace", LogLevel.ERROR);
 			}
 		}
 	}

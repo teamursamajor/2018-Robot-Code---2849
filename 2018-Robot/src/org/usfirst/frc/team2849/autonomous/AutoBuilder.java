@@ -250,7 +250,7 @@ public class AutoBuilder {
 			}
 		}
 		buff.close();
-		return ret;
+		return ret; // Returns ArrayList of all tokens
 	}
 
 	private AutoTask parseAuto(ArrayList<Token> toks, GroupTask ret) {
@@ -299,7 +299,7 @@ public class AutoBuilder {
 			return parseAuto(tokenize(filename), new SerialTask(cont));
 		} catch (IOException e) {
 			e.printStackTrace();
-			Logger.log("AutoBuilder buildAutoMode parseAuto printStackTrace", LogLevel.ERROR);
+			Logger.log("AutoBuilder buildAutoMode method parseAuto printStackTrace", LogLevel.ERROR);
 			return null;
 		}
 	}

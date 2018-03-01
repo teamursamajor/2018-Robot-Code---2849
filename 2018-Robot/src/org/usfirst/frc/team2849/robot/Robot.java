@@ -41,6 +41,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  * creating this project, you must also update the build.properties file in the
  * project.
  */
+
 public class Robot extends IterativeRobot implements UrsaRobot {
 	
 	ControlLayout cont;
@@ -123,6 +124,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	 * This function is run when teleop mode is first started up and should be
 	 * used for any teleop initialization code.
 	 */
+	@Override
 	public void teleopInit() {
 		Logger.log("Started Teleop mode", LogLevel.INFO);
 		robotMode = "Teleop";
@@ -143,6 +145,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	 * This function is run when test mode is first started up and should be
 	 * used for any test initialization code.
 	 */
+	@Override
 	public void testInit() {
 		Logger.log("Started Test mode", LogLevel.INFO);
 		robotMode = "Test";
@@ -169,6 +172,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	 * This function is run when a mode is initially disabled and should be
 	 * used for any disabling code.
 	 */
+	@Override
 	public void disabledInit() {
 		Logger.log("Disabled " + robotMode + " mode", LogLevel.INFO);
 		Logger.closeWriters();
@@ -178,6 +182,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	/**
 	 * This function is called periodically when a mode is disabled.
 	 */
+	@Override
 	public void disabledPeriodic() {
 		drive.stop();
 	}

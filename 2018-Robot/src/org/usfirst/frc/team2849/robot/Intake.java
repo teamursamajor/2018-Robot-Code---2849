@@ -38,8 +38,7 @@ public class Intake extends Thread {
 				break;
 			case HOLD:
 				setIntakePower(.25);
-				// TODO update to more complex intake (in, lift up, in again,
-				// lift down)
+				// TODO update to more complex intake (in, lift up, in again, lift down)
 				// puts it on the front frame to keep the cube off the ground
 			case IN:
 				setIntakePower(0.5);
@@ -53,7 +52,6 @@ public class Intake extends Thread {
 			default:
 				setIntakePower(0);
 				break;
-
 			}
 			try {
 				Thread.sleep(20); // because we all need breaks
@@ -62,10 +60,6 @@ public class Intake extends Thread {
 				Logger.log("Intake run method Thread.sleep call, printStackTrace", LogLevel.ERROR);
 			}
 		}
-	}
-
-	public void setControlScheme(ControlLayout controller) {
-		cont = controller;
 	}
 
 	public void setIntakePower(double powerLevel) {

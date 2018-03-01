@@ -95,7 +95,7 @@ public class PathReader implements UrsaRobot {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			Logger.log("PathReader parseCheeze printStackTrace", LogLevel.ERROR);
+			Logger.log("PathReader parseCheeze method printStackTrace", LogLevel.ERROR);
 		}
 	}
 	

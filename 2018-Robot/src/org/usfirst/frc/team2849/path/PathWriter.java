@@ -35,7 +35,7 @@ public class PathWriter {
 			Files.write(Paths.get(System.getProperty("user.dir") + "\\" + filename), toWrite.getBytes());
 		} catch (IOException e) {
 			e.printStackTrace();
-			Logger.log("PathWriter writePath printStackTrace", LogLevel.ERROR);
+			Logger.log("PathWriter writePath method printStackTrace", LogLevel.ERROR);
 		}
 	}
 

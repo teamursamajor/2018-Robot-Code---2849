@@ -32,7 +32,7 @@ public class DebugLog {
 				log.newLine();
 			} catch (IOException ioe) {
 				ioe.printStackTrace();
-				Logger.log("DebugLog debugLogInit printStackTrace", LogLevel.ERROR);
+				Logger.log("DebugLog debugLogInit method printStackTrace", LogLevel.ERROR);
 			}
 		}
 	}
@@ -43,7 +43,7 @@ public class DebugLog {
 			log.newLine();
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
-			Logger.log("DebugLog logWriteLn printStackTrace", LogLevel.ERROR);
+			Logger.log("DebugLog logWriteLn method printStackTrace", LogLevel.ERROR);
 		}
 
 	}

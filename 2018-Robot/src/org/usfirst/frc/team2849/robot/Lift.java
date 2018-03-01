@@ -54,13 +54,9 @@ public class Lift extends Thread implements UrsaRobot {
 				Thread.sleep(20);
 			} catch (Exception e) {
 				e.printStackTrace();
-				Logger.log("Lift.java thread.sleep call, printStackTrace", LogLevel.ERROR);
+				Logger.log("Lift run method Thread.sleep call, printStackTrace", LogLevel.ERROR);
 			}
 		}
-	}
-
-	public void setControlScheme(ControlLayout cont) {
-		this.cont = cont;
 	}
 
 	public double getLiftHeight() {

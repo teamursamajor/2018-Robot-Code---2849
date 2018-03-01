@@ -2,7 +2,6 @@ package org.usfirst.frc.team2849.robot;
 
 import org.usfirst.frc.team2849.autonomous.IntakeTask.IntakeType;
 import org.usfirst.frc.team2849.controls.ControlLayout;
-import org.usfirst.frc.team2849.controls.led.ColorsLED;
 import org.usfirst.frc.team2849.diagnostics.Logger;
 import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 
@@ -28,11 +27,10 @@ public class Drive implements Runnable, UrsaRobot {
 
 	private static Encoder encL;
 	private static Encoder encR;
-	
-	private static ControlLayout cont;
-	
-	private static final double INCHES_PER_TICK = 0.011505d;
 
+	private static ControlLayout cont;
+
+	private static final double INCHES_PER_TICK = 0.011505d;
 
 	/**
 	 * Constructor for Drive class. Only one Drive object should be instantiated
@@ -55,7 +53,7 @@ public class Drive implements Runnable, UrsaRobot {
 		mRearRight = new Spark(rearRight);
 
 		this.cont = cont;
-		
+
 		ahrs = new AHRS(SPI.Port.kMXP);
 
 		encL = new Encoder(LEFT_ENCODER_CHANNEL_A, LEFT_ENCODER_CHANNEL_B);
@@ -67,7 +65,7 @@ public class Drive implements Runnable, UrsaRobot {
 
 		encL.reset();
 		encR.reset();
-		
+
 		startDrive();
 	}
 
@@ -88,7 +86,7 @@ public class Drive implements Runnable, UrsaRobot {
 	 * Run method for driveThread
 	 */
 	@Override
-	//TODO PID
+	// TODO PID
 	public void run() {
 		while (running) {
 			mFrontLeft.set(-cont.getDrive().getLeftSpeed());
@@ -96,24 +94,19 @@ public class Drive implements Runnable, UrsaRobot {
 			mRearLeft.set(-cont.getDrive().getLeftSpeed());
 			mRearRight.set(cont.getDrive().getRightSpeed());
 			
-			//TODO The code below was to fix stuff on the practice chassis.
-			//TODO Make sure to remove after
-//			mFrontLeft.set(cont.getDrive().getLeftSpeed());
-//			mFrontRight.set(-cont.getDrive().getRightSpeed());
-//			mRearLeft.set(cont.getDrive().getLeftSpeed());
-//			mRearRight.set(-cont.getDrive().getRightSpeed());
-			//TODO test this
-			if(mFrontLeft.getSpeed() < 0 && mFrontRight.getSpeed() < 0){
+			// TODO test this
+			if (mFrontLeft.getSpeed() < 0 && mFrontRight.getSpeed() < 0) {
 				cont.getIntake().setIntakeType(IntakeType.HOLD);
 			}
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-				Logger.log("Drive driveThread run method Thread.sleep call, printStackTrace", LogLevel.ERROR);
+				Logger.log("Drive run method Thread.sleep call, printStackTrace", LogLevel.ERROR);
 			}
 		}
 	}
+
 	/**
 	 * Kill method for driveThread
 	 */
@@ -132,11 +125,19 @@ public class Drive implements Runnable, UrsaRobot {
 		angle = fixHeading(angle);
 		return angle;
 	}
-	
+
 	public double getRawHeading() {
 		return ahrs.getAngle();
 	}
-	
+
+	/**
+	 * Takes an angle and turns it into a heading which is always between 0 and
+	 * 360
+	 * 
+	 * @param heading
+	 *            Angle to turn into a heading between 0 and 360
+	 * @return Heading between 0 and 360
+	 */
 	public double fixHeading(double heading) {
 		heading %= 360;
 		while (heading < 0)
@@ -151,11 +152,11 @@ public class Drive implements Runnable, UrsaRobot {
 	public double getRightEncoder() {
 		return encR.getDistance();
 	}
-	
+
 	public double getLeftRate() {
 		return encL.getRate();
 	}
-	
+
 	public double getRightRate() {
 		return encR.getRate();
 	}
@@ -168,24 +169,22 @@ public class Drive implements Runnable, UrsaRobot {
 	public void resetNavx() {
 		ahrs.reset();
 	}
-	
-	public void stop(){
+
+	/**
+	 * Method to stop all four motors
+	 */
+	public void stop() {
 		mFrontLeft.stopMotor();
 		mFrontRight.stopMotor();
 		mRearLeft.stopMotor();
 		mRearRight.stopMotor();
-		mFrontLeft.stopMotor();
-		
 	}
-	
-	public void setControlScheme(ControlLayout layout) {
-		cont = layout;
-	}
-	
-	public static boolean getRunning(){
+
+	public static boolean getRunning() {
 		return running;
 	}
-	
+
+	// TODO what even
 	public void summonSatan() {
 	}
 
