@@ -99,6 +99,7 @@ public class ColorsCheck {
 		} else {
 			movingCheck = false;
 		}
+		movingCheck = true;
 		return movingCheck;
 	}
 
