@@ -197,6 +197,7 @@ public class AutoBuilder {
 
 		public DriveTask makeTask(ControlLayout cont) {
 			Logger.log("[TASK] Drive Task", LogLevel.INFO);
+			//TODO should dist be an int in the first place? it's parsed as a double but drivetask only takes ints
 			return new DriveTask(cont, (int) dist, drive);
 		}
 	}
