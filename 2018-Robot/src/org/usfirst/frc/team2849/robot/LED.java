@@ -16,10 +16,11 @@ public class LED extends Thread {
 	
 	public LED(ControlLayout cont) {
 		this.cont = cont;
-		rLED = new Solenoid(0);
-		gLED = new Solenoid(1);
-		bLED = new Solenoid(2);
-		this.start();
+//		rLED = new Solenoid(0);
+//		gLED = new Solenoid(1);
+//		bLED = new Solenoid(2);
+		//Temp fix since this is all broken -20XX
+//		this.start();
 	}
 	
 	public void run() { 
@@ -94,8 +95,6 @@ public class LED extends Thread {
 			rLED.set(cont.getLED().getR());
             gLED.set(cont.getLED().getG());
 			bLED.set(cont.getLED().getB());
-			
-
 			
 			try {
 				Thread.sleep(20);

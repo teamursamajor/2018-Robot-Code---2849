@@ -46,13 +46,13 @@ public class Drive implements Runnable, UrsaRobot {
 	 *            Channel number for rear right motor
 	 */
 
-	public Drive(int frontLeft, int frontRight, int rearLeft, int rearRight, ControlLayout cont) {
+	public Drive(int frontLeft, int frontRight, int rearLeft, int rearRight, ControlLayout controller) {
 		mFrontLeft = new Spark(frontLeft);
 		mFrontRight = new Spark(frontRight);
 		mRearLeft = new Spark(rearLeft);
 		mRearRight = new Spark(rearRight);
 
-		this.cont = cont;
+		cont = controller;
 
 		ahrs = new AHRS(SPI.Port.kMXP);
 
@@ -99,7 +99,7 @@ public class Drive implements Runnable, UrsaRobot {
 				cont.getIntake().setIntakeType(IntakeType.HOLD);
 			}
 			try {
-				Thread.sleep(10);
+				Thread.sleep(20);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 				Logger.log("Drive run method Thread.sleep call, printStackTrace", LogLevel.ERROR);
@@ -185,6 +185,7 @@ public class Drive implements Runnable, UrsaRobot {
 	}
 
 	// TODO what even
+	//As of 3/9/2018 at 5:49 PM this method has been declared sacred and will not be deleted. Ever. -20XX
 	public void summonSatan() {
 	}
 

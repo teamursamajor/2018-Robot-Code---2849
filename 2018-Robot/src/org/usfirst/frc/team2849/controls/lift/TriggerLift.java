@@ -21,12 +21,16 @@ public class TriggerLift implements LiftControl {
 		this.xbox = xbox;
 		this.liftType = liftType;
 	}
+	
+	public TriggerLift(XboxController xbox) {
+		this.xbox = xbox;
+	}
 
 	public int getTriggerValue() {
-		if (xbox.getButton(XboxController.AXIS_LEFTTRIGGER)) {
+		if (xbox.getAxisGreaterThan(XboxController.AXIS_LEFTTRIGGER, 0.5)) {
 			return Integer.MIN_VALUE;
 		}
-		if (xbox.getButton(XboxController.AXIS_RIGHTTRIGGER)) {
+		if (xbox.getAxisGreaterThan(XboxController.AXIS_RIGHTTRIGGER, 0.5)) {
 			return Integer.MAX_VALUE;
 		} else {
 			return 0;
@@ -40,30 +44,7 @@ public class TriggerLift implements LiftControl {
 
 	@Override
 	public double getDesiredHeight() {
-		double desiredHeight;
-		switch (liftType) {
-		// ground level
-		case BOTTOM:
-			desiredHeight = 0;
-			break;
-		// vault height
-		case VAULT:
-			desiredHeight = 1.75;
-			break;
-		// switch height
-		case SWITCH:
-			desiredHeight = 20;
-			break;
-		// scale height
-		case SCALE:
-			desiredHeight = 75;
-			break;
-		// stays at same height
-		default:
-			desiredHeight = getCurrentHeight();
-			break;
-		}
-		return desiredHeight;
+		return getTriggerValue();
 	}
 
 	@Override

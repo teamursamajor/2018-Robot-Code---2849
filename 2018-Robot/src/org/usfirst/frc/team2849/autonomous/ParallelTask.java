@@ -18,6 +18,7 @@ public class ParallelTask extends GroupTask {
 		}
 		for(AutoTask t:tasks) {
 			try {
+				//Acts as a Thread.sleep
 				t.join();
 			} catch (InterruptedException e) {
 				e.printStackTrace();

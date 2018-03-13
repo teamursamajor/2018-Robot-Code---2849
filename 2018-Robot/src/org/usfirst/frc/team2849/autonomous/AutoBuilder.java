@@ -17,6 +17,7 @@ import org.usfirst.frc.team2849.path.PathReader;
 import org.usfirst.frc.team2849.robot.Drive;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //TODO add comments
 /**
@@ -325,6 +326,9 @@ public class AutoBuilder {
 		String scalePos = DriverStation.getInstance().getGameSpecificMessage().substring(1,2);
 		String mode;
 		System.out.println(switchPos + scalePos);
+		
+		SmartDashboard.putString("Switch side: ", switchPos);
+		SmartDashboard.putString("Scale side: ", scalePos);
 		
 		switch (switchPos + scalePos) {
 		case "LL":

@@ -12,10 +12,6 @@ public class Intake extends Thread {
 	private ControlLayout cont;
 	private Spark left;
 	private Spark right;
-	private DigitalInput limitSwitch;
-
-	// To hold the power of Intake for debugging purposes
-	private double intakePower = 0.0;
 
 	public Intake(int channelLeft, int channelRight, ControlLayout cont) {
 		left = new Spark(channelLeft);
@@ -38,8 +34,6 @@ public class Intake extends Thread {
 				break;
 			case HOLD:
 				setIntakePower(.25);
-				// TODO update to more complex intake (in, lift up, in again, lift down)
-				// puts it on the front frame to keep the cube off the ground
 			case IN:
 				setIntakePower(0.5);
 				break;
@@ -48,6 +42,8 @@ public class Intake extends Thread {
 				break;
 			case RUN_OUT:
 				setIntakePower(-0.5);
+				break;
+			case DEPLOY:
 				break;
 			default:
 				setIntakePower(0);
@@ -64,11 +60,8 @@ public class Intake extends Thread {
 
 	public void setIntakePower(double powerLevel) {
 		// positive configuration
-		left.set(powerLevel);
+		left.set(-powerLevel);
 		right.set(powerLevel);
-
-		// Hold powerLevel value to debug
-		intakePower = powerLevel;
 	}
 
 }

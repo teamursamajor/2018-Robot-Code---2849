@@ -10,7 +10,7 @@ public class LiftTask extends AutoTask {
 	private double height;
 
 	// max time the lift can run for in ms
-	private long timeout = 2000;
+	private long timeout = 3000;
 
 	public enum LiftType {
 		BOTTOM, VAULT, SWITCH, SCALE
@@ -19,6 +19,12 @@ public class LiftTask extends AutoTask {
 	public LiftTask(ControlLayout cont, double height) {
 		super(cont);
 		this.height = height;
+	}
+	
+	public LiftTask(ControlLayout cont, double height, long timeout) {
+		super(cont);
+		this.height = height;
+		this.timeout = timeout;
 	}
 
 	@Override
@@ -34,6 +40,7 @@ public class LiftTask extends AutoTask {
 				e.printStackTrace();
 			}
 		}
+		cont.getLift().setDesiredHeight(cont.getLift().getCurrentHeight());
 
 	}
 

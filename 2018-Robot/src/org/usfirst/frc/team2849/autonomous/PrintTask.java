@@ -22,7 +22,6 @@ public class PrintTask extends AutoTask {
 	//Prints the string to System.out
 	public void run() {
 		Logger.log("Running print task", LogLevel.INFO);
-
 		System.out.println(str);
 	}
 	

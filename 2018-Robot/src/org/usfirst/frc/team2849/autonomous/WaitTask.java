@@ -6,7 +6,7 @@ import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 
 public class WaitTask extends AutoTask {
 	
-	private long waitTime = 0;
+	private long waitTime = 20;
 	public WaitTask(ControlLayout cont, long time) {
 		super(cont);
 		waitTime = time;

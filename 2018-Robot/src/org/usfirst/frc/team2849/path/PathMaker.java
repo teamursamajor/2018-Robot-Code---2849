@@ -386,7 +386,7 @@ public class PathMaker implements UrsaRobot {
 		startMiddle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				path.clear();
-				path.add(new PointonPath((27 / 2) / PointonPath.xconv, ROBOT_DEPTH_FEET / 2 / PointonPath.yconv, 0));
+				path.add(new PointonPath((9.25) / PointonPath.xconv, ROBOT_DEPTH_FEET / 2 / PointonPath.yconv, 0));
 				PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
 				frame.repaint();
 			}

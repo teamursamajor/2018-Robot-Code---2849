@@ -7,29 +7,14 @@
 
 package org.usfirst.frc.team2849.robot;
 
-import org.usfirst.frc.team2849.autonomous.AutoBuilder;
-import org.usfirst.frc.team2849.autonomous.AutoSelector;
-import org.usfirst.frc.team2849.autonomous.AutoTask;
-import org.usfirst.frc.team2849.controls.ControlLayout;
-import org.usfirst.frc.team2849.controls.XboxController;
-import org.usfirst.frc.team2849.controls.drive.ArcadeDrive;
-import org.usfirst.frc.team2849.controls.drive.AutoDrive;
-import org.usfirst.frc.team2849.controls.drive.NullDrive;
-//import org.usfirst.frc.team2849.controls.drive.TankDrive;
-import org.usfirst.frc.team2849.controls.intake.AutoIntake;
-import org.usfirst.frc.team2849.controls.intake.BumperTriggerIntake;
-import org.usfirst.frc.team2849.controls.intake.NullIntake;
-import org.usfirst.frc.team2849.controls.led.AutoLED;
-import org.usfirst.frc.team2849.controls.led.ColorsCheck;
-import org.usfirst.frc.team2849.controls.led.NullLED;
-import org.usfirst.frc.team2849.controls.led.TeleopLED;
-import org.usfirst.frc.team2849.controls.lift.AutoLift;
-import org.usfirst.frc.team2849.controls.lift.NullLift;
-import org.usfirst.frc.team2849.controls.lift.XYLift;
-import org.usfirst.frc.team2849.diagnostics.DebugSelector;
-import org.usfirst.frc.team2849.diagnostics.Logger;
+import org.usfirst.frc.team2849.autonomous.*;
+import org.usfirst.frc.team2849.controls.*;
+import org.usfirst.frc.team2849.controls.drive.*;
+import org.usfirst.frc.team2849.controls.intake.*;
+import org.usfirst.frc.team2849.controls.led.*;
+import org.usfirst.frc.team2849.controls.lift.*;
+import org.usfirst.frc.team2849.diagnostics.*;
 import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
-import org.usfirst.frc.team2849.diagnostics.PDP;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -74,9 +59,9 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		autoBuilder = new AutoBuilder(cont, drive);
 		intake = new Intake(INTAKE_LEFT, INTAKE_RIGHT, cont);
 		lift = new Lift(cont);
-		led = new LED(cont);
+//		led = new LED(cont);
 		pdp = new PDP();
-		colorsCheck = new ColorsCheck(cont);
+//		colorsCheck = new ColorsCheck(cont);
 		drive.resetNavx();
 		Vision.visionInit();
 		debugSelect = new DebugSelector();
@@ -100,7 +85,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		robotMode = "Autonomous";
 		drive.resetNavx();
 		cont.updateControlLayout(new AutoDrive(), new AutoIntake(), new AutoLift(), new AutoLED());
-//		For setting autoMode manually (for testing)
+//		For setting autoMode manually (for testing):
 //	 	String autoMode = "/home/lvuser/automodes/L_L0_path_switch.auto";
 		String autoMode = autoBuilder.pickAutoMode(autoSelect.getStartingPosition(), 
 			autoSelect.getAutoPrefs(), autoSelect.findAutoFiles());
@@ -129,7 +114,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		Logger.log("Started Teleop mode", LogLevel.INFO);
 		robotMode = "Teleop";
 		System.out.println(cont);
-		cont.updateControlLayout(new ArcadeDrive(xbox, true), new BumperTriggerIntake(xbox), new XYLift(xbox), new TeleopLED());
+		cont.updateControlLayout(new TankDrive(xbox), new BumperIntake(xbox), new TriggerLift(xbox), new TeleopLED());
 		Logger.setLevel(debugSelect.getLevel());
 	}
 
@@ -149,11 +134,6 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	public void testInit() {
 		Logger.log("Started Test mode", LogLevel.INFO);
 		robotMode = "Test";
-//		SmartDashboard.updateValues(); <-- TODO what is this for? is it still needed?
-//		For anyone who wants Tank Drive: change "new ArcadeDrive" to "new TankDrive" and uncomment the TankDrive import
-		cont.updateControlLayout(new ArcadeDrive(xbox, true), new BumperTriggerIntake(xbox), new XYLift(xbox), new TeleopLED());
-		Logger.setLevel(debugSelect.getLevel());
-		limSwitch = new DigitalInput(4);
 	}
 
 	/**
@@ -161,11 +141,6 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-//		System.out.println("Left Encoder: " + drive.getLeftEncoder());
-//		System.out.println("Right Encoder: " + drive.getRightEncoder());
-//		System.out.println("Heading: " + drive.getRawHeading());
-//		System.out.println("");
-		System.out.println(limSwitch.get());
 	}
 
 	/**

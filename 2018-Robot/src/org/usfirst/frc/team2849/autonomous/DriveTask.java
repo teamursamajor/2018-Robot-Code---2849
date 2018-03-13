@@ -13,7 +13,7 @@ public class DriveTask extends AutoTask {
 	private int distance;
 	private Drive drive;
 	private Path straightPath;
-	
+
 	public DriveTask(ControlLayout cont, int distance, Drive drive) {
 		super(cont);
 		this.distance = distance;
@@ -23,28 +23,42 @@ public class DriveTask extends AutoTask {
 
 	public void run() {
 		Logger.log("Running drive task", LogLevel.INFO);
-		
-		straightPath.add(new PointonPath(0.0, drive.getRawHeading(), 0.0, 0.0, 0.0, 0.0, 0.0));
-		straightPath.add(new PointonPath(distance, drive.getRawHeading(), 0, 0, 0, 0, 0));
-		straightPath.createVelProfile();
-		straightPath.mapVelocity();
 
-		new PathTask(cont, new Path[] {straightPath, straightPath}, drive).start();		
-		
+		// straightPath.add(new PointonPath(0.0, drive.getRawHeading(), 0.0,
+		// 0.0, 0.0, 0.0, 0.0));
+		// straightPath.add(new PointonPath(distance, drive.getRawHeading(), 0,
+		// 0, 0, 0, 0));
+		// straightPath.createVelProfile();
+		// straightPath.mapVelocity();
+		//
+		// new PathTask(cont, new Path[] {straightPath, straightPath},
+		// drive).start();
+
 		int count = 0;
 		double leftPowerConstant = 0;
 		double rightPowerConstant = 0;
+		double averageDistance = 0;
 		drive.resetEncoders();
 		double rightAdjust = 0.0628d;
 		Logger.log("Current Distance: " + distance, LogLevel.DEBUG);
-		while (Math.abs(drive.getLeftEncoder()) < Math.abs(distance)
-				|| Math.abs(drive.getRightEncoder()) < Math.abs(distance)) {
-			
-			leftPowerConstant = getPower(drive.getLeftEncoder(), distance);
-			rightPowerConstant = getPower(drive.getRightEncoder(), distance);
+		long startTime = System.currentTimeMillis();
+		Logger.log("BEFORE LOOP Left Power Constant: " + leftPowerConstant + "\tLeft Encoder: " + drive.getLeftEncoder(),
+				LogLevel.DEBUG);
+		Logger.log(
+				"BEFORE LOOP Right Power Constant: " + rightPowerConstant + "\tRight Encoder: " + drive.getRightEncoder(),
+				LogLevel.DEBUG);
+		while (((Math.abs(drive.getLeftEncoder()) < Math.abs(distance)
+				|| Math.abs(drive.getRightEncoder()) < Math.abs(distance)))
+				&& (System.currentTimeMillis() - startTime < 10000)) {
 
-			//Prints twice every second
-			count = (count + 1) % 500;
+			averageDistance = (drive.getLeftEncoder() + drive.getRightEncoder()) / 2;
+
+			leftPowerConstant = getPower(averageDistance, distance);
+			rightPowerConstant = getPower(averageDistance, distance);
+			
+
+			// Prints twice every second
+			count = (count + 1) % 50;
 			if (count == 0) {
 				Logger.log("Left Power Constant: " + leftPowerConstant + "\tLeft Encoder: " + drive.getLeftEncoder(),
 						LogLevel.DEBUG);
@@ -58,18 +72,23 @@ public class DriveTask extends AutoTask {
 			if (Math.abs(drive.getRightEncoder()) > Math.abs(distance)) {
 				rightPowerConstant = 0;
 			}
-			//TODO hot fix change
+			// TODO hot fix change
 			cont.getDrive().setSpeed(leftPowerConstant * -Math.signum(distance),
-					((rightPowerConstant - rightAdjust) * -Math.signum(distance)));
+					((rightPowerConstant) * -Math.signum(distance)));
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
+
 		}
 		Logger.log("Drive loop ended", LogLevel.DEBUG);
 		cont.getDrive().setSpeed(0, 0);
+		Logger.log("AFTER LOOP\tLeft Encoder: " + drive.getLeftEncoder(),
+				LogLevel.DEBUG);
+		Logger.log(
+				"AFTER LOOP\tRight Encoder: " + drive.getRightEncoder(),
+				LogLevel.DEBUG);
 	}
 
 	public String toString() {

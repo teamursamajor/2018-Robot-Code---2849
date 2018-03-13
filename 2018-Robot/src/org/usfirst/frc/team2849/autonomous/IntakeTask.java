@@ -49,6 +49,20 @@ public class IntakeTask extends AutoTask {
 			}
 			cont.getIntake().setIntakeType(IntakeType.STOP);
 			break;
+		case DEPLOY:
+			startTime = System.currentTimeMillis();
+			new LiftTask(cont,Integer.MAX_VALUE, 250).start();
+			while(System.currentTimeMillis() - startTime < timeout){
+				cont.getIntake().setIntakeType(IntakeType.STOP);
+				try {
+					Thread.sleep(20);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+					Logger.log("IntakeTask run method intake case DEPLOY Thread.sleep call, printStackTrace", LogLevel.ERROR);
+				}
+			}
+			cont.getIntake().setIntakeType(IntakeType.STOP);
+			break;
 		default:
 			Logger.log("Intake in " + intake.name() + " case :^)", LogLevel.DEBUG);
 			break;

@@ -12,13 +12,13 @@ public class LEDDiagnosticPanel extends Thread {
 	int positive = 10;
 
 	LEDDiagnosticPanel() {
-		solenoids[0] = new Solenoid(UrsaRobot.LED_Solenoid_port_1);
-		solenoids[1] = new Solenoid(UrsaRobot.LED_Solenoid_port_2);
-		solenoids[2] = new Solenoid(UrsaRobot.LED_Solenoid_port_3);
-		solenoids[3] = new Solenoid(UrsaRobot.LED_Solenoid_port_4);
-		solenoids[4] = new Solenoid(UrsaRobot.LED_Solenoid_port_5);
-		solenoids[5] = new Solenoid(UrsaRobot.LED_Solenoid_port_6);
-		start();
+//		solenoids[0] = new Solenoid(UrsaRobot.LED_Solenoid_port_1);
+//		solenoids[1] = new Solenoid(UrsaRobot.LED_Solenoid_port_2);
+//		solenoids[2] = new Solenoid(UrsaRobot.LED_Solenoid_port_3);
+//		solenoids[3] = new Solenoid(UrsaRobot.LED_Solenoid_port_4);
+//		solenoids[4] = new Solenoid(UrsaRobot.LED_Solenoid_port_5);
+//		solenoids[5] = new Solenoid(UrsaRobot.LED_Solenoid_port_6);
+//		start();
 	}
 
 	public void run() {
@@ -29,7 +29,7 @@ public class LEDDiagnosticPanel extends Thread {
 			Logger.log("LEDDiagnostic run method Thread.sleep call, printStackTrace", LogLevel.ERROR);
 		}
 		for (int i = 0; i < conditions.length; i++) {
-			solenoids[i].set(conditions[i]);
+//			solenoids[i].set(conditions[i]);
 		}
 		if (positive > 0) {
 			positive--;
