@@ -1,0 +1,15 @@
+#R_R*_switch.auto
+#right bumper on corner with vault
+bundle {
+   serial {
+      intake deploy
+      lift switch
+   }
+   serial {
+      drive 130
+      turn TO -90
+      drive 25
+   }
+}
+wait 0.5
+intake out

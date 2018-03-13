@@ -1,0 +1,14 @@
+#L_*L_scale.auto
+#left bumper is on corner with exchange
+
+bundle {
+   intake deploy
+   drive 320
+}
+turn TO 90
+bundle {
+   drive 25
+   lift scale
+}
+wait 0.5
+intake out

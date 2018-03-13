@@ -1,0 +1,21 @@
+#L_L*_switchcube.auto
+#left bumper on corner with exchange
+
+#deliver cube
+execute L_L0_switch.auto
+
+#pick up another cube
+bundle {
+bundle {
+   lift bottom
+   drive -10
+}
+turn to 0
+drive 50
+turn to 90
+drive 10
+turn to 180
+bundle {
+   intake in
+   drive 12
+}
