@@ -260,7 +260,7 @@ public class Path implements UrsaRobot {
 	public void reverse() {
 		reversed = !reversed;
 		for (PointonPath point : path) {
-			point.setDirection(point.getDirection() + 180 % 360);
+			point.setDirection((point.getDirection() + 180) % 360);
 		}
 	}
 	
