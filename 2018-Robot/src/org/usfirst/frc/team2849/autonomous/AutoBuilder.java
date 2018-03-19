@@ -347,10 +347,7 @@ public class AutoBuilder {
 			mode = "drive";
 			break;
 		}
-		
-		//for potential future use
-		String oppSide = DriverStation.getInstance().getGameSpecificMessage().substring(2);
-		
+			
 		String regex = "^[" + robotPosition + "0]_[" + switchPos + "0][" + scalePos + "0]_" + mode + "\\.auto$";
 		
 		for (File f: autoFiles) {
@@ -358,6 +355,6 @@ public class AutoBuilder {
 				return "/home/lvuser/automodes/" + f.getName();
 			}
 		}
-		return "/home/lvuser/automodes/0_00_path_drive.auto"; //default to path_drive in case none of the files in auto selector are applicable
+		return "/home/lvuser/automodes/0_00_path_drive.auto"; //default to path_drive in case none of the files in auto selector 
 	}
 }
