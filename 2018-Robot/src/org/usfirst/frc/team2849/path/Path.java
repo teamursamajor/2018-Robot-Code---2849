@@ -14,6 +14,7 @@ public class Path implements UrsaRobot {
 	private double dt;
 	private double maxVel;
 	private TrapVelocityProfile trap;
+	private boolean reversed = false;
 
 	public Path() {
 		path = new ArrayList<PointonPath>();
@@ -254,6 +255,17 @@ public class Path implements UrsaRobot {
 	
 	public void mapVelocity() {
 		path = trap.getMappedPoints();
+	}
+	
+	public void reverse() {
+		reversed = !reversed;
+		for (PointonPath point : path) {
+			point.setDirection(point.getDirection() + 180 % 360);
+		}
+	}
+	
+	public boolean isReversed() {
+		return reversed;
 	}
 	
 	

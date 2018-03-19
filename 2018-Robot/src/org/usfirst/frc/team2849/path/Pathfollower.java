@@ -39,6 +39,7 @@ public class Pathfollower {
 				+ kv * point.getVelocity() + ka * point.getAccel();
 		prevError = error;
 		out = constrain(out);
+		out *= path.isReversed() ? -1: 1;
 		return out;
 	}
 	

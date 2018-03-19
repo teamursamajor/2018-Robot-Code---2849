@@ -50,7 +50,7 @@ public class PathTask extends AutoTask implements UrsaRobot {
 			Logger.log("Time since last loop: " + (relTime - prevTime) / 1000.0, LogLevel.DEBUG);
 //			Logger.log("Left: ", LogLevel.DEBUG);
 			prevTime = relTime;
-			averageDist = (drive.getLeftEncoder() + drive.getRightEncoder()) / 2;
+			averageDist = Math.abs((drive.getLeftEncoder() + drive.getRightEncoder()) / 2);
 //			System.out.println("Left: " + (relTime / 1000.0));
 //			leftPower = follower.getCorrection(leftPath, drive.getLeftEncoder(), relTime / 1000.0);
 //			Logger.log("Right: ", LogLevel.DEBUG);
