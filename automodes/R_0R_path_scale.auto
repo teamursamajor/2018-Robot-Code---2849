@@ -1,0 +1,10 @@
+intake deploy
+bundle {
+	serial {
+		#needs to be tested
+		wait 1
+		lift scale
+	}
+	follow R_0R_path_scale
+}
+intake out

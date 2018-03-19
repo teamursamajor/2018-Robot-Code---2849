@@ -12,34 +12,21 @@ import edu.wpi.first.wpilibj.DriverStation;
 public class DriveTask extends AutoTask {
 	private int distance;
 	private Drive drive;
-	private Path straightPath;
 
 	public DriveTask(ControlLayout cont, int distance, Drive drive) {
 		super(cont);
 		this.distance = distance;
 		this.drive = drive;
-		this.straightPath = new Path("drivePath");
 	}
 
 	public void run() {
 		Logger.log("Running drive task", LogLevel.INFO);
-
-		// straightPath.add(new PointonPath(0.0, drive.getRawHeading(), 0.0,
-		// 0.0, 0.0, 0.0, 0.0));
-		// straightPath.add(new PointonPath(distance, drive.getRawHeading(), 0,
-		// 0, 0, 0, 0));
-		// straightPath.createVelProfile();
-		// straightPath.mapVelocity();
-		//
-		// new PathTask(cont, new Path[] {straightPath, straightPath},
-		// drive).start();
 
 		int count = 0;
 		double leftPowerConstant = 0;
 		double rightPowerConstant = 0;
 		double averageDistance = 0;
 		drive.resetEncoders();
-		double rightAdjust = 0.0628d;
 		Logger.log("Current Distance: " + distance, LogLevel.DEBUG);
 		long startTime = System.currentTimeMillis();
 		Logger.log("BEFORE LOOP Left Power Constant: " + leftPowerConstant + "\tLeft Encoder: " + drive.getLeftEncoder(),
@@ -72,7 +59,6 @@ public class DriveTask extends AutoTask {
 			if (Math.abs(drive.getRightEncoder()) > Math.abs(distance)) {
 				rightPowerConstant = 0;
 			}
-			// TODO hot fix change
 			cont.getDrive().setSpeed(leftPowerConstant * -Math.signum(distance),
 					((rightPowerConstant) * -Math.signum(distance)));
 			try {

@@ -344,7 +344,7 @@ public class AutoBuilder {
 			mode = autoPrefs[3];
 			break;
 		default:
-			mode = "drive";
+			mode = "path_drive";
 			break;
 		}
 		
@@ -358,6 +358,6 @@ public class AutoBuilder {
 				return "/home/lvuser/automodes/" + f.getName();
 			}
 		}
-		return "/home/lvuser/automodes/0_00_drive.auto";
+		return "/home/lvuser/automodes/0_00_path_drive.auto";
 	}
 }
