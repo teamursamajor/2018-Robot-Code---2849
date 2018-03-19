@@ -330,6 +330,8 @@ public class PathMaker implements UrsaRobot {
 		JButton startRightScale = new JButton("Start on right scale");
 		JButton startBottomRight = new JButton("Short right scale");
 		JButton startBottomLeft = new JButton("Short left scale");
+		JButton startInnerLSwitch = new JButton("Inner left switch");
+		JButton startInnerRSwitch = new JButton("Inner right switch");
 
 		swapbutton.setBounds(30, 165, 150, 15);
 		startLeft.setBounds(30, 185, 150, 15);
@@ -341,6 +343,8 @@ public class PathMaker implements UrsaRobot {
 		startRightScale.setBounds(30, 305, 150, 15);
 		startBottomRight.setBounds(30, 325, 150, 15);
 		startBottomLeft.setBounds(30, 345, 150, 15);
+		startInnerLSwitch.setBounds(30, 365, 150, 15);
+		startInnerRSwitch.setBounds(30,385,150,15);
 
 		presetpanel.add(swapbutton);
 		presetpanel.add(startMiddle);
@@ -352,7 +356,9 @@ public class PathMaker implements UrsaRobot {
 		presetpanel.add(startRightScale);
 		presetpanel.add(startBottomRight);
 		presetpanel.add(startBottomLeft);
-
+		presetpanel.add(startInnerLSwitch);
+		presetpanel.add(startInnerRSwitch);
+		
 		//Makes a start point on the right side and swaps it to the other side
 		swapbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -434,6 +440,20 @@ public class PathMaker implements UrsaRobot {
 				startBottomRight.doClick();
 				swapbutton.doClick();
 			}			
+		});
+		startInnerLSwitch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				path.clear();
+				path.add(new PointonPath((9.25) / PointonPath.xconv, 11 / PointonPath.yconv, 0));
+				PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+				frame.repaint();
+			}
+		});
+		startInnerRSwitch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				startInnerLSwitch.doClick();
+				swapbutton.doClick();
+			}
 		});
 		
 		JRadioButton leftorright = new JRadioButton();

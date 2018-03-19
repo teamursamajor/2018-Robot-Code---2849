@@ -1,0 +1,16 @@
+Auto Modes Priority List:
+Test bassackwards (Do the switch if its on our side, otherwise spit a cube towards the vault and drive into the switch)
+-Center:
+	Make switch fork perfect
+	Switch cube/drive around?
+	Switch x2
+-Left/Right:
+	Drive task for same side scale
+	Drive task for same side switch
+	Pathfinder for cross side scale
+	Pathfinder for same side switch
+	Switch cube
+	Scale cube
+	Switch x2
+	Switch Scale IF on the same side
+Maybe switch vault

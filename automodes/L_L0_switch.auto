@@ -10,7 +10,7 @@ bundle {
       turn TO 90
       drive 25
    }
-   intake hold
+   #intake hold
 }
 wait 0.5
 intake out

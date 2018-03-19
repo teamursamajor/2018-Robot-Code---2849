@@ -1,0 +1,8 @@
+execute M_R0_path_switchcube.auto
+drive -30
+bundle {
+	lift switch
+	turn to 0
+}
+drive 5
+intake out
