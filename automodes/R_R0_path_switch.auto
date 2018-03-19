@@ -1,4 +1,5 @@
 #R_R0_path_switch
+intake deploy
 bundle {
 	follow R_R0_path_switch
 	lift switch

@@ -1,7 +1,7 @@
-#L_L0_path_switch
+#L_R0_path_switch
 intake deploy
 bundle {
-	follow L_L0_path_switch
+	follow R_L0_path_switch
 	lift switch
 }
 intake out

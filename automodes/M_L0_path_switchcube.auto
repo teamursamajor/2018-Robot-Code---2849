@@ -1,0 +1,8 @@
+execute M_L0_path_switch.auto
+drive -5
+bundle {
+	lift bottom
+	turn to 90
+}
+drive 30
+intake in
