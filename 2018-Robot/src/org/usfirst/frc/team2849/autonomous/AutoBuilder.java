@@ -202,7 +202,14 @@ public class AutoBuilder {
 			return new DriveTask(cont, (int) dist, drive);
 		}
 	}
-
+	
+	/**
+	 * Interprets specified file to identify keywords as tokens to add to a collective ArrayList
+	 * @param filename
+	 * 		Name of file to tokenize
+	 * @return ArrayList of all tokens in ranking order
+	 * @throws IOException
+	 */
 	private ArrayList<Token> tokenize(String filename) throws IOException {
 		ArrayList<Token> ret = new ArrayList<Token>();
 		BufferedReader buff;
@@ -210,49 +217,41 @@ public class AutoBuilder {
 		String line = null;
 		while ((line = buff.readLine()) != null) {
 			if (line.contains("#")) { // If the line is a comment
-				continue; // Continues to next line
+				continue;
 			} else if (line.contains("follow")) { // If the line is a path token
-				String current = line.substring(line.indexOf("follow") + "follow".length());
-				// The path to follow (name of path file) is what comes after the token "follow"
-				ret.add(new PathToken(current)); // Adds new path token to the ArrayList of all tokens
-			} else if (line.contains("execute")) { // If the line is an execute token
-				String current = line.substring(line.indexOf("execute") + "execute".length());
-				// The automode to execute (name of auto file) is what comes after the token "execute"
-				ret.add(new ExecuteToken(current)); // Adds new execute token to the ArrayList of all tokens
-			} else if (line.contains("wait")) { // If the line is a wait token
-				String current = line.substring(line.indexOf("wait") + "wait".length());
-				// The length (in seconds) to wait is what comes after the token "wait"
-				ret.add(new WaitToken(current)); // Adds new wait token to the ArrayList of all tokens
-			} else if (line.contains("drive")) { // If the line is a drive token
-				String current = line.substring(line.indexOf("drive") + "drive".length());
-				// The length (in feet) to drive is what comes after the token "drive"
-				ret.add(new DriveToken(current)); // Adds new drive token to the ArrayList of all tokens
-			} else if (line.contains("turn")) { // If the line is a turn token
-				String current = line.substring(line.indexOf("turn") + "turn".length());
-				// The type and amount in degrees to turn is what comes after the token "turn"
-				ret.add(new TurnToken(current)); // Adds new turn token to the ArrayList of all tokens
-			} else if (line.contains("lift")) { // If the line is a lift token
-				String current = line.substring(line.indexOf("lift") + "lift".length());
-				// The preset height to lift to is what comes after the token "lift"
-				ret.add(new LiftToken(current)); // Adds new lift token to the ArrayList of all tokens
-			} else if (line.contains("intake")) { // If the line is an intake token
-				String current = line.substring(line.indexOf("intake") + "intake".length());
-				// The intake mode is what comes after the token "intake"
-				ret.add(new IntakeToken(current)); // Adds new intake token to the ArrayList of all tokens
-			} else if (line.contains("print")) { // If the line is a print token
-				String current = line.substring(line.indexOf("print") + "print".length());
-				// The data to print is everything that comes after the token "print"
-				ret.add(new PrintToken(current)); // Adds new print token to the ArrayList of all tokens
+				String current = line.substring(line.indexOf("follow") + "follow".length()); // Path to follow (name of path file) comes after "follow"
+				ret.add(new PathToken(current));
+			} else if (line.contains("execute")) {
+				String current = line.substring(line.indexOf("execute") + "execute".length()); // Automode to execute (name of auto file) comes after "execute"
+				ret.add(new ExecuteToken(current));
+			} else if (line.contains("wait")) {
+				String current = line.substring(line.indexOf("wait") + "wait".length()); // Length (in secs) to wait comes after "wait"
+				ret.add(new WaitToken(current));
+			} else if (line.contains("drive")) {
+				String current = line.substring(line.indexOf("drive") + "drive".length()); // Length (in ft) to drive comes after "drive"
+				ret.add(new DriveToken(current));
+			} else if (line.contains("turn")) {
+				String current = line.substring(line.indexOf("turn") + "turn".length()); // Type and amount in degrees to turn comes after "turn"
+				ret.add(new TurnToken(current));
+			} else if (line.contains("lift")) {
+				String current = line.substring(line.indexOf("lift") + "lift".length()); // Lift height preset comes after "lift"
+				ret.add(new LiftToken(current));
+			} else if (line.contains("intake")) {
+				String current = line.substring(line.indexOf("intake") + "intake".length()); // Intake mode comes after "intake"
+				ret.add(new IntakeToken(current));
+			} else if (line.contains("print")) {
+				String current = line.substring(line.indexOf("print") + "print".length()); // Data to print comes after "print"
+				ret.add(new PrintToken(current));
 			} else if (line.contains("bundle")) { // If the line is a bundle token
-				ret.add(new BundleToken()); // Adds new bundle token to the ArrayList of all tokens
+				ret.add(new BundleToken());
 			} else if (line.contains("serial")) { // If the line is a serial token
-				ret.add(new SerialToken()); // Adds new serial token to the ArrayList of all tokens
+				ret.add(new SerialToken());
 			} else if (line.contains("}")) { // If the line is a right brace (ends a group task)
-				ret.add(new RightBraceToken()); // Adds new right brace token to the ArrayList of all tokens
+				ret.add(new RightBraceToken());
 			}
 		}
 		buff.close();
-		return ret; // Returns ArrayList of all tokens
+		return ret; // Returns ArrayList of all tokens in file
 	}
 
 	private AutoTask parseAuto(ArrayList<Token> toks, GroupTask ret) {
