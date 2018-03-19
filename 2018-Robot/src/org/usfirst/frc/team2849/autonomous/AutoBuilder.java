@@ -358,6 +358,6 @@ public class AutoBuilder {
 				return "/home/lvuser/automodes/" + f.getName();
 			}
 		}
-		return "/home/lvuser/automodes/0_00_drive.auto";
+		return "/home/lvuser/automodes/0_00_path_drive.auto"; //default to path_drive in case none of the files in auto selector are applicable
 	}
 }
