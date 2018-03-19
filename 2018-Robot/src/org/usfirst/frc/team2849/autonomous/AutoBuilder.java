@@ -202,7 +202,14 @@ public class AutoBuilder {
 			return new DriveTask(cont, (int) dist, drive);
 		}
 	}
-
+	
+	/**
+	 * Interprets specified file to identify keywords as tokens to add to a collective ArrayList
+	 * @param filename
+	 * 		Name of file to tokenize
+	 * @return ArrayList of all tokens in ranking order
+	 * @throws IOException
+	 */
 	private ArrayList<Token> tokenize(String filename) throws IOException {
 		ArrayList<Token> ret = new ArrayList<Token>();
 		BufferedReader buff;
@@ -210,7 +217,7 @@ public class AutoBuilder {
 		String line = null;
 		while ((line = buff.readLine()) != null) {
 			if (line.contains("#")) { // If the line is a comment
-				continue; // Continues to next line
+				continue;
 			} else if (line.contains("follow")) { // If the line is a path token
 				String current = line.substring(line.indexOf("follow") + "follow".length());
 				// The path to follow (name of path file) is what comes after the token "follow"

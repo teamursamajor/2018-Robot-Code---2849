@@ -178,6 +178,10 @@ public class PointonPath extends JPanel {
 		}
 
 	}
+	
+	public void setDirection(double dir) {
+		this.direction = dir;
+	}
 
 	public double getPosition() {
 		return position;

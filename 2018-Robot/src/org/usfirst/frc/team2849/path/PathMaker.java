@@ -54,6 +54,7 @@ public class PathMaker implements UrsaRobot {
 	static boolean once2 = true;// for mouse motion ignore
 	static int prevscroll = 0;
 	static int pointpaneltranslate = 0;
+	static boolean reversed = false;
 
 	public static void output() {
 		double totalDist = 0;
@@ -72,8 +73,10 @@ public class PathMaker implements UrsaRobot {
 					path.get(i).xft, path.get(i).yft));
 		}
 		Path mapped = new Path("output", output);
+		System.out.println(reversed);
 		new PathWriter(new Path[] { mapped, mapped }, "outpath.txt");
 		mapped.mapVelocity();
+		if (reversed) mapped.reverse();
 		new PathWriter(new Path[] { mapped, mapped }, "outmapped.txt");
 		new PathWriter(mapped.separate(ROBOT_WIDTH_FEET), "outsepped.txt");
 		System.out.println("outputed");
@@ -332,6 +335,7 @@ public class PathMaker implements UrsaRobot {
 		JButton startBottomLeft = new JButton("Short left scale");
 		JButton startInnerLSwitch = new JButton("Inner left switch");
 		JButton startInnerRSwitch = new JButton("Inner right switch");
+		JButton reverse = new JButton("Reverse Path");
 
 		swapbutton.setBounds(30, 165, 150, 15);
 		startLeft.setBounds(30, 185, 150, 15);
@@ -345,6 +349,7 @@ public class PathMaker implements UrsaRobot {
 		startBottomLeft.setBounds(30, 345, 150, 15);
 		startInnerLSwitch.setBounds(30, 365, 150, 15);
 		startInnerRSwitch.setBounds(30,385,150,15);
+		reverse.setBounds(30, 405, 150, 15);
 
 		presetpanel.add(swapbutton);
 		presetpanel.add(startMiddle);
@@ -358,6 +363,7 @@ public class PathMaker implements UrsaRobot {
 		presetpanel.add(startBottomLeft);
 		presetpanel.add(startInnerLSwitch);
 		presetpanel.add(startInnerRSwitch);
+		presetpanel.add(reverse);
 		
 		//Makes a start point on the right side and swaps it to the other side
 		swapbutton.addActionListener(new ActionListener() {
@@ -453,6 +459,14 @@ public class PathMaker implements UrsaRobot {
 			public void actionPerformed(ActionEvent e) {
 				startInnerLSwitch.doClick();
 				swapbutton.doClick();
+			}
+		});
+		reverse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("reversed");
+				reversed = !reversed;
+				if (reversed) reverse.setText("Unreverse Path");
+				else reverse.setText("Reverse Path");
 			}
 		});
 		
