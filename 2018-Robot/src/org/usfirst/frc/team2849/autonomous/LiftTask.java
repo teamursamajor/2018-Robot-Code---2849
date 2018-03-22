@@ -30,7 +30,6 @@ public class LiftTask extends AutoTask {
 	@Override
 	public void run() {
 		Logger.log("Running lift task", LogLevel.INFO);
-
 		cont.getLift().setDesiredHeight(height);
 		long startTime = System.currentTimeMillis();
 		while (!cont.getLift().getReached() && System.currentTimeMillis() - startTime < timeout) {
@@ -48,12 +47,27 @@ public class LiftTask extends AutoTask {
 		return "LiftTask: " + cont.getLift().getDesiredHeight() + "\n";
 	}
 
+	public static long presetToTimeout(LiftType liftPreset) {
+		switch (liftPreset) {
+		case BOTTOM:
+			return 0;
+		case VAULT:
+			return 0;
+		case SWITCH:
+			return 2000;
+		case SCALE:
+			return 3400;
+		default:
+			return 0;
+		}
+	}
+	
 	public static double presetToHeight(LiftType liftPreset) {
 		switch (liftPreset) {
 		case BOTTOM:
 			return 0;
 		case VAULT:
-			return 1.75;
+			return 0;
 		case SWITCH:
 			return 20;
 		case SCALE:
