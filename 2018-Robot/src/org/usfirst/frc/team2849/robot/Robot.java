@@ -63,7 +63,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		pdp = new PDP();
 //		colorsCheck = new ColorsCheck(cont);
 		drive.resetNavx();
-		Vision.visionInit();
+//		Vision.visionInit();
 		debugSelect = new DebugSelector();
 		Logger.setLevel(debugSelect.getLevel());
 	}
@@ -114,7 +114,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		Logger.log("Started Teleop mode", LogLevel.INFO);
 		robotMode = "Teleop";
 		System.out.println(cont);
-		cont.updateControlLayout(new TankDrive(xbox), new BumperIntake(xbox), new TriggerLift(xbox), new TeleopLED());
+		cont.updateControlLayout(new ArcadeDrive(xbox, true), new BumperIntake(xbox), new TriggerLift(xbox), new TeleopLED());
 		Logger.setLevel(debugSelect.getLevel());
 	}
 

@@ -5,6 +5,8 @@ import org.usfirst.frc.team2849.diagnostics.Logger;
 import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 import org.usfirst.frc.team2849.robot.Drive;
 
+import edu.wpi.first.wpilibj.DriverStation;
+
 public class TurnTask extends AutoTask {
 
 	public enum Turntype {
@@ -35,7 +37,7 @@ public class TurnTask extends AutoTask {
 		//Logger.log("Start Angle: " + drive.getHeading(), LogLevel.DEBUG);
 		Logger.log("Desired Angle: " + desiredAngle, LogLevel.DEBUG);
 		System.out.println("pre-turn loop");
-		while (Math.abs(turnAmount(desiredAngle)) > 2) {
+		while (!DriverStation.getInstance().isDisabled() && Math.abs(turnAmount(desiredAngle)) > 2) {
 			angle = drive.getHeading();
 			powerConstant = getPower(turnAmount(desiredAngle));
 			count = (count + 1) % 100;

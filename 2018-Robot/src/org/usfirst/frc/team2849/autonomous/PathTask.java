@@ -24,7 +24,7 @@ public class PathTask extends AutoTask implements UrsaRobot {
 		leftPath = paths[0];
 		rightPath = paths[1];
 //		follower = new Pathfollower(1/50.0, 0, 1/200.0, 1.0/MAX_VELOCITY, 1/(2.5 * MAX_ACCELERATION), 1/100.0);
-		follower = new Pathfollower(1/15.0, 0, 0, 1.0/MAX_VELOCITY, 1/(2.5 * MAX_ACCELERATION), 1/50.0);
+		follower = new Pathfollower(1/20.0, 0, 0, 1.0/MAX_VELOCITY, 1/(3.0 * MAX_ACCELERATION), 1/50.0);
 		this.drive = drive;
 	}
 
@@ -44,7 +44,7 @@ public class PathTask extends AutoTask implements UrsaRobot {
 		double averageDist = 0;
 		started = false;
 		ended = false;
-		while (!ended && !leftPath.isFinished() && !rightPath.isFinished() && !DriverStation.getInstance().isDisabled() && (System.currentTimeMillis() - startTime) / 1000.0 < leftPath.get(leftPath.numPoints() - 1).getTime() * 5) {
+		while (!ended && !leftPath.isFinished() && !rightPath.isFinished() && !DriverStation.getInstance().isDisabled() && (System.currentTimeMillis() - startTime) / 1000.0 < leftPath.get(leftPath.numPoints() - 1).getTime() * 2) {
 			relTime = System.currentTimeMillis() - startTime;
 			Logger.log("In TaskLoop: " + relTime, LogLevel.DEBUG);
 			Logger.log("Time since last loop: " + (relTime - prevTime) / 1000.0, LogLevel.DEBUG);
@@ -78,6 +78,7 @@ public class PathTask extends AutoTask implements UrsaRobot {
 				Logger.log("PathTask run method Thread.sleep call, printStackTrace", LogLevel.ERROR);
 			}
 		}
+		System.out.println("ended: " + ended);
 //		System.out.println("end");
 //		System.out.println("Left end: " + leftPath.isFinished());
 //		System.out.println("Right end: " + rightPath.isFinished());
