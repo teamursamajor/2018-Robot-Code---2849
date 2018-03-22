@@ -1,0 +1,6 @@
+#L_0L_scalecube
+execute L_0L_path_scale.auto
+drive -30
+turn to -180
+drive 10
+intake in

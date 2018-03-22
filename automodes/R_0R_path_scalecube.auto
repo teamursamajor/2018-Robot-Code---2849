@@ -1,0 +1,6 @@
+#R_0R_path_scalecube
+execute R_0R_path_scale.auto
+drive -25
+turn to -180
+drive 15
+intake in

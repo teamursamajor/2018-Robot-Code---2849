@@ -12,5 +12,5 @@ Test bassackwards (Do the switch if its on our side, otherwise spit a cube towar
 	Switch cube
 	Scale cube
 	Switch x2
-	Switch Scale IF on the same side
+	Scale switch IF on the same side
 Maybe switch vault

@@ -1,7 +1,17 @@
 intake deploy
 bundle {
+<<<<<<< HEAD
 	follow R_0L_path_scale
 	lift scale
 }
 turn to 0
+=======
+	serial {
+		#needs to be tested
+		wait 1
+		lift scale
+	}
+	follow R_0L_path_scale
+}
+>>>>>>> bb913fd4f4c34d8b9d82d11905fc4169b6e1ecd6
 intake out
