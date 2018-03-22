@@ -1,0 +1,8 @@
+#R_0R_path_scale
+intake deploy
+bundle {
+	follow R_0R_path_scale
+	lift scale
+}
+turn to 0
+intake out
