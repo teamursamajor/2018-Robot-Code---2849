@@ -130,7 +130,7 @@ public class AutoBuilder {
 
 		public LiftTask makeTask(ControlLayout cont) {
 			Logger.log("[TASK] Lift Task", LogLevel.INFO);
-			return new LiftTask(cont, LiftTask.presetToHeight(lift));
+			return new LiftTask(cont, LiftTask.presetToHeight(lift), LiftTask.presetToTimeout(lift));
 		}
 	}
 

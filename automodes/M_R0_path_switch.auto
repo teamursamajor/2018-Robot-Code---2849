@@ -1,0 +1,6 @@
+intake deploy
+bundle {
+	follow M_R0_path_switch
+	lift switch
+}
+intake out
