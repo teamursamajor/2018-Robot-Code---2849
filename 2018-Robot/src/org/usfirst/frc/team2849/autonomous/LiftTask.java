@@ -10,7 +10,7 @@ public class LiftTask extends AutoTask {
 	private double height;
 
 	// max time the lift can run for in ms
-	private long timeout = 3000;
+	private static long timeout = 3000;
 
 	public enum LiftType {
 		BOTTOM, VAULT, SWITCH, SCALE
@@ -51,12 +51,16 @@ public class LiftTask extends AutoTask {
 	public static double presetToHeight(LiftType liftPreset) {
 		switch (liftPreset) {
 		case BOTTOM:
+			timeout = 0;
 			return 0;
 		case VAULT:
-			return 1.75;
+			timeout = 0;
+			return 0;
 		case SWITCH:
+			timeout = 2000;
 			return 20;
 		case SCALE:
+			timeout = 4000;
 			return 75;
 		default:
 			return 0;

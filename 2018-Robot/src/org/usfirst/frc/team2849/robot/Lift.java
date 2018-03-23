@@ -11,7 +11,7 @@ public class Lift extends Thread implements UrsaRobot {
 
 	private ControlLayout cont;
 	private static Spark motor = new Spark(LIFT);
-	Encoder liftEnc;
+	static Encoder liftEnc;
 
 	private double desiredHeight;
 	private double currentHeight;
@@ -53,8 +53,8 @@ public class Lift extends Thread implements UrsaRobot {
 		}
 	}
 
-	public double getLiftHeight() {
-		return 0;
+	public static double getLiftHeight() {
+		return liftEnc.getDistance();
 	}
 
 	/**

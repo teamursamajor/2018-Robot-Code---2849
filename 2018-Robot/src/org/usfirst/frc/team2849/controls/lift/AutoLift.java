@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2849.controls.lift;
 
+import org.usfirst.frc.team2849.robot.Lift;
+
 public class AutoLift implements LiftControl {
 
 	private double currentLiftHeight;
@@ -33,7 +35,8 @@ public class AutoLift implements LiftControl {
 
 	@Override
 	public boolean getReached() {
-		return hasReached;
+//		return hasReached;
+		return (!(Lift.getLiftHeight() > (desiredLiftHeight + 2)) && !(Lift.getLiftHeight() < (desiredLiftHeight - 2)));
 	}
 
 }

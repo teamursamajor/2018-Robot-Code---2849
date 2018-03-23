@@ -39,7 +39,6 @@ public class TriggerLift implements LiftControl {
 
 	@Override
 	public void setDesiredHeight(double liftHeight) {
-
 	}
 
 	@Override
