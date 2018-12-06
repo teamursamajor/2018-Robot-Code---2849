@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 import javax.net.ssl.HttpsURLConnection;
 public class GetData {
+	//TODO This entire file is riddled with terrible naming conventions and difficult to understand code. Let's redo it
+	
 	final static String basehttpsURL = "https://www.thebluealliance.com/api/v3";
 	final static String year = "2018";
 	//{teamkey}=frc{team_number}
@@ -93,6 +95,7 @@ public class GetData {
 		ArrayList<String> teamNames = getthingsfromthing(getthing("/events/"+year), "key");
 		return teamNames;
 	}	
+
 	static ArrayList<String> getthingsfromthing(String gottonthing, String thingtogetfromthinggotton) {
 		ArrayList<String> allthings = new ArrayList<String>();
 		thingtogetfromthinggotton = "\""+thingtogetfromthinggotton+"\"";
