@@ -47,7 +47,7 @@ public class PointonPath extends JPanel {
 	// pick up box
 
 	// the ability to insert points not from the end
-	PointonPath(double pos, double dir, double xft_, double yft_) {
+	public PointonPath(double pos, double dir, double xft_, double yft_) {
 		position = pos;
 		direction = dir;
 		xft = xft_;// Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10, precision);

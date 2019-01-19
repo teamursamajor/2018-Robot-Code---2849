@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.*;
 
+//Not quite sure what this does...we'll have to figure it out
 public class UIAttempt extends JFrame implements ActionListener{
 
         MenuBar mbar;
