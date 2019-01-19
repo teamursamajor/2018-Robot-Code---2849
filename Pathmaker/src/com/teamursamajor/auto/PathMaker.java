@@ -1,6 +1,14 @@
-package src.com.teamursamajor.auto;
+package com.teamursamajor.auto;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.TextField;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -13,9 +21,29 @@ import java.io.File;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
+
+//SAVE ME BEFORE
+
+//import javafx.scene.shape.Box;
+
+
+//import org.usfirst.frc.team2849.path.PathMaker;
+//import org.usfirst.frc.team2849.path.PointonPath;
+//
+//import org.usfirst.frc.team2849.path.PathMaker;
+//import org.usfirst.frc.team2849.path.PointonPath;
 
 public class PathMaker {
 	// take points accumulate dist between for path length
@@ -26,12 +54,14 @@ public class PathMaker {
 	//load a path to display
 
 	public static void main(String[] argsokcharlie) {
+		//System.out.println(System.getPr);
 		PathMaker.init();
 	}
 	static JFrame frame;
 	static String[] presets = new String[] { "auto1", "auto2", "auto3", "auto4" };
 	static BufferedImage field;//picture of field
 	static BufferedImage overfield;//picture of obstacles
+	//Dimensions of field in anchor points
 	static BufferedImage overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);//image drawn on to make path
 	
 	static JPanel pointpanel;
@@ -44,6 +74,7 @@ public class PathMaker {
 	static boolean once2 = true;// for mouse motion ignore
 	static int prevscroll = 0;
 	static int pointpaneltranslate = 0;
+	
 	
 	public static void output() {
 		double totalDist = 0;
@@ -69,6 +100,7 @@ public class PathMaker {
 		new PathWriter(mapped.separate(1.067), "outsepped.txt");
 		System.out.println("outputed");
 	}
+	//TODO- Change
 	static ArrayList<PointonPath> pathl = new ArrayList<PointonPath>();
 	static ArrayList<PointonPath> pathr = new ArrayList<PointonPath>();
 	public static void input() {
@@ -88,18 +120,26 @@ public class PathMaker {
 		frame.dispatchEvent(new MouseWheelEvent (frame,0,0,0,0,0,0,false, 3,1,0));
 	}
 	
+	
+	
+// INIT FUNCTION=====================	
 	static void init() {
 		frame = new JFrame() ;
-		frame.setLayout(null);
+		//ImageIcon icon = new ImageIcon(new File(System.getProperty("user.dir") + "/../2019field(transparent).png"));
+		File f = new File((System.getProperty("user.dir") + "/../Icon.png"));
+		System.out.println(f.toString());
+		frame.setIconImage(new ImageIcon(f.toString()).getImage());
+		frame.setLayout(null);//WAS: null
 		frame.setSize(1000, 850);
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 		frame.addMouseWheelListener(new MouseWheelListener() {
 			public void mouseWheelMoved(MouseWheelEvent e) {
-				System.out.println(e.getModifiers());
-				System.out.println(e.getClickCount());
-				System.out.println(e.getScrollType());
-				System.out.println(e.getScrollAmount());
-				System.out.println(e.getWheelRotation());
+				//for debugging
+//				System.out.println(e.getModifiers());
+//				System.out.println(e.getClickCount());
+//				System.out.println(e.getScrollType());
+//				System.out.println(e.getScrollAmount());
+//				System.out.println(e.getWheelRotation());
 				double sig = e.getWheelRotation();
 				pointpaneltranslate -= sig * 1.2 * Math.PI / 4 * PointonPath.h;
 				if (pointpaneltranslate > 0) {
@@ -115,19 +155,30 @@ public class PathMaker {
 			}
 		});
 		
-		importimages();
+		importImages();
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//PRESET PANEL===========
 		JPanel presetpanel = new JPanel();
 		frame.add(presetpanel);
-		JComboBox preset = new JComboBox(presets);
-		presetpanel.add(preset);
-		presetpanel.setSize(200, 50);
+		//PRESETS  ARRAY
+		
+		presetpanel.setSize(200, 850);//200, 50
 		presetpanel.setLocation(0, 50);
-		preset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println(preset.getSelectedItem());
-			}
-		});
+//		preset.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				System.out.println(preset.getSelectedItem());
+//			}
+//		});
 		
 		JPanel fieldPanel = new JPanel() {
 			public void paint(Graphics g) {
@@ -221,7 +272,8 @@ public class PathMaker {
 		pointpanel.setLocation(625, 50);
 		pointpanel.setSize(325, 800);
 		
-		
+		//Output Read Clear
+		//TODO -  add text book for read/output - file name
 		JPanel menupanel = new JPanel() {
 			public void paint(Graphics g) {
 				g.fillRect(0, 0, 325, 50);
@@ -235,6 +287,11 @@ public class PathMaker {
 				g.fill3DRect(70, 10, 50, 30, true);
 				g.setColor(Color.black);
 				g.drawString("Read",75,30);
+				
+				g.setColor(Color.white);
+				g.fill3DRect(130, 10, 50, 30, true);
+				g.setColor(Color.black);
+				g.drawString("Clear", 135, 30);
 			}
 		};
 		frame.add(menupanel);
@@ -248,6 +305,9 @@ public class PathMaker {
 				if (e.getX() > 70 & e.getX() < 70+50 & e.getY() > 10 & e.getY() < 40) {
 					input();
 				}
+				if (e.getX() > 130 & e.getX() < 130 + 50 & e.getY() > 10 & e.getY() < 40) {
+					clearpath();
+				}
 			}
 			public void mouseEntered(MouseEvent e) {}
 			public void mouseExited(MouseEvent e) {}
@@ -256,19 +316,321 @@ public class PathMaker {
 		});
 		
 		frame.setVisible(true);
+	
+	
+	
+	
+	
+	
+	//BUTTONS
+/*Points: (2019)
+ * A - input hatch
+ * B - high starting platforms
+ * C/D - regular starting positions
+ * E - rocket
+ * F - front facing cargo bay
+ * G - side cargo bays
+ * 
+ * 
+ * 		L			R
+ * A-----B---------B-----A
+ * ------C----D----C------
+ * -----------------------
+ * E---------F-F---------E
+ * ---------G---G---------
+ * E--------G---G--------E
+ * ---------G---G---------	
+ */
+	
+	/*
+	 * L - Left
+	 * R - Right
+	 * T - Top
+	 * M - Middle
+	 * B - Bottom
+	 */
+		
+		//TODO - change icon
+	
+	
+	
+	JButton startPlatformRT = new JButton("Right Raised Platform");
+	JButton startPlatformRB = new JButton("Right Lower Platform");
+	JButton startPlatformLT = new JButton("Left Raised Platform");
+	JButton startPlatformLB = new JButton("Left Bottom Platform");
+	JButton startMiddlePlatform = new JButton("Bottom Middle Platform");
+	JButton startHatchIntakeR = new JButton("Right Hatch Intake");//FIX TEXT CUT OFF
+	JButton startHatchIntakeL = new JButton("Left Hatch Intake");
+	JButton startRocketRT = new JButton("Top Right Rocket");
+	JButton startRocketRB = new JButton("Bottom Right Rocket");
+	JButton startRocketLT = new JButton("Top Left Rocket");
+	JButton startRocketLB = new JButton("Bottom Left Rocket");
+	JButton startCargoBayFrontR = new JButton("Front Right Cargo Bay Door");
+	JButton startCargoBayFrontL = new JButton("Front Left Cargo Bay Door");
+	JButton startCargoBayRT = new JButton("Top Right Cargo Bay Door");
+	JButton startCargoBayRM = new JButton("Middle Right Cargo Bay Door");
+	JButton startCargoBayRB = new JButton("Bottom Right Cargo Bay Door");
+	JButton startCargoBayLT = new JButton("Top Left Cargo Bay Door");
+	JButton startCargoBayLM = new JButton("Middle Left Cargo Bay Door");
+	JButton startCargoBayLB = new JButton("Bottom Left Cargo Bay Door");
+	
+	//Original code - .setBounds(30, 165+20n, 150, 15)
+	//n = number of buttons
+	startPlatformRT = toSqrButton(startPlatformRT);
+	startPlatformRB = toSqrButton(startPlatformRB);
+	startPlatformLT = toSqrButton(startPlatformLT);
+	startPlatformLB = toSqrButton(startPlatformLB);
+	startMiddlePlatform = toSqrButton(startMiddlePlatform);
+	startHatchIntakeR = toSqrButton(startHatchIntakeR);
+	startHatchIntakeL = toSqrButton(startHatchIntakeL);
+	startRocketRT = toSqrButton(startRocketRT);
+	startRocketRB = toSqrButton(startRocketRB);
+	startRocketLT = toSqrButton(startRocketLT);//105,205,75,15
+	startRocketLB = toSqrButton(startRocketLB);
+	startCargoBayFrontR = toSqrButton(startCargoBayFrontR);
+	startCargoBayFrontL = toSqrButton(startCargoBayFrontL);
+	startCargoBayRT = toSqrButton(startCargoBayRT);
+	startCargoBayRM = toSqrButton(startCargoBayRM);
+	startCargoBayRB = toSqrButton(startCargoBayRB);
+	startCargoBayLT = toSqrButton(startCargoBayLT);
+	startCargoBayLM = toSqrButton(startCargoBayLM);
+	startCargoBayLB = toSqrButton(startCargoBayLB);
+	//TODO - add text box that says ===Cargo Bay===
+	
+	
+	//Adds buttons to preset panel - TODO - turn to array/list
+	JLabel label1 = new JLabel("====Starting Areas====");
+	presetpanel.add(label1);
+	presetpanel.add(startPlatformRT);
+	presetpanel.add(startPlatformLT);
+	presetpanel.add(startPlatformRB);
+	presetpanel.add(startPlatformLB);
+	presetpanel.add(startMiddlePlatform);
+	JLabel label2 = new JLabel("==Hatch Intake Station==");
+	presetpanel.add(label2);
+	presetpanel.add(startHatchIntakeR);
+	presetpanel.add(startHatchIntakeL);
+	JLabel label3 = new JLabel("=======Rocket=======");
+	presetpanel.add(label3);
+	presetpanel.add(startRocketRT);
+	presetpanel.add(startRocketLT);
+	presetpanel.add(startRocketRB);
+	presetpanel.add(startRocketLB);
+	JLabel label4 = new JLabel("======Cargo Bay======");
+	presetpanel.add(label4);
+	presetpanel.add(startCargoBayFrontR);
+	presetpanel.add(startCargoBayFrontL);
+	presetpanel.add(startCargoBayLM);
+	presetpanel.add(startCargoBayRT);
+	presetpanel.add(startCargoBayLT);
+	presetpanel.add(startCargoBayRM);
+	presetpanel.add(startCargoBayLM);
+	presetpanel.add(startCargoBayRB);
+	presetpanel.add(startCargoBayLB);
+	
+	//frame.pack();
+	
+	//Sets start point positions
+	//TODO - LOOK UP ACTUALL POINTS
+
+	
+	//Sets anchor points
+	/*Points: (2019)
+	 * A - input hatch
+	 * B - high starting platforms
+	 * C/D - regular starting positions
+	 * E - rocket
+	 * F - front facing cargo bay
+	 * G - side cargo bays
+	 * 
+	 * 
+	 * 		L			R
+	 * A-----B---------B-----A
+	 * ------C----D----C------
+	 * -----------------------
+	 * E---------F-F---------E
+	 * ---------G---G---------
+	 * E--------G---G--------E
+	 * ---------G---G---------	
+	 */
+		
+	
+//	AnchorPoint startPlatforms = new AnchorPoint();//D
+//	AnchorPoint startHatchIntakes = new AnchorPoint();//LA
+	AnchorPoint startRockets = new AnchorPoint(0, 19.5233333333);//Left E down
+//	AnchorPoint startCargoBay = new AnchorPoint();// Left middle G
+
+	
+	
+	//Action for Starting Area Buttons
+	//High
+	
+	//Low
+	
+	
+	//Action for  Hatch Intake Buttons   
+	startHatchIntakeR.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e){
+			//debug("Right Hatch Intake Button was Pressed");
+			
+			path.clear();
+//			path.add(new PointonPath(startAtHatches.getX(),
+//									 startAtHatches.getY(),
+//									 0));
+			PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+			frame.repaint();
+		}
+	});
+	startHatchIntakeL.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e){
+			path.clear();
+//			path.add(new PointonPath(flipByYAxis(startAtHatches.getX()),
+//									 startAtHatches.getY(),
+//									 0));
+			resetFrame();
+		}
+	});
+	
+	
+	//Action for Rocket Buttons
+	startRocketRT.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e){
+			path.clear();
+				path.add(new PointonPath(startRockets.getX(),
+										 startRockets.getY(),
+										 0));
+			resetFrame();
+		}
+	});
+	
+	//Action for Cargo Bay Buttons
+	
+	
+	//DESCRIPTION
+	JComboBox preset = new JComboBox(presets);
+	//presetpanel.add(preset);//AUTO BUTTON
+	preset.addActionListener(new ActionListener(){
+		public void actionPerformed (ActionEvent e){
+			
+		}
+	});
+	frame.setVisible(true);
+	
+	//SCROLL TESTING
+	
+	
+	
+	
+	//TODO - add scrolling functionality to preset? - look at white bar on side
+	
+	} // end of init function ==============================
+	
+
+	
+	//TODO - delete
+	//A---|---- -> ----|---A
+	public static double flipByYAxis(double xCoord){
+		/*
+		 * x = frame width - x
+		 * return x
+		 */
+		
+		double res = 400 - xCoord;
+		return res;
 	}
+	
+	/*
+	 * A    |
+	 * |    |
+	 * - -> -
+	 * |    |
+	 * |    A
+	 */
+	public static void flipByXAxis(int x, int y, int inflectionPoint){
+		/*
+		 * int distFromInflectionPoint = inflectionPoint - y
+		 * int newYCord = inflectionPoint + distFromInflectionPoint
+		 * return newYCord
+		 */
+	}
+	
+	public static void moveX (int dist){
+		/*
+		 * xCoordinate + dist
+		 */
+	}
+	
+	public static void moveY (int dist){
+		/*
+		 * yCoordinate + dist
+		 */
+	}
+	
+
+//Clears path
+	public static void clearpath() {
+		for (int i = 1; i < path.size();) {
+			PathMaker.frame.repaint();
+			PathMaker.path.remove(i);
+			PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+			if (-PathMaker.pointpaneltranslate > PointonPath.h * (PathMaker.path.size() - 800 / PointonPath.h + 1)) {
+				if (PathMaker.path.size() > 800 / PointonPath.h + 1)
+					PathMaker.pointpaneltranslate = -PointonPath.h * (PathMaker.path.size() - 800 / PointonPath.h + 1);
+				else
+					PathMaker.pointpaneltranslate = 0;
+			}
+		}
+		frame.repaint();
+	}
+	
+	public static void resetFrame() {
+		PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+		frame.repaint();
+	}
+	
+	@SuppressWarnings("deprecation")
+	public static JButton toSqrButton (JButton b){
+		String str = "<html>" + b.getLabel();
+		b.setLabel(str);
+		Border blackline = BorderFactory.createLineBorder(Color.BLACK);
+		
+		b.setBorder(blackline);
+		
+		b.setPreferredSize(new Dimension(75,40));
+		
+		b.setFont(new Font("Helvetica", Font.BOLD, 9));
+		
+		return b;
+	}
+
+
+	
 	private static double negmod(double atan2, double modvalue) {
 		while (atan2 < 0) {
 			atan2 += modvalue;
 		}
 		return atan2 % modvalue;
 	}
-	private static void importimages() {
+	
+//TODO- Add a function to convert feet to pixels
+	
+//Import Images =============================
+	private static void importImages() {
+		System.out.println("Importing Images?");
 		try {
-			field = ImageIO.read(new File(System.getProperty("user.dir") + "/field2.png"));
-			overfield = ImageIO.read(new File(System.getProperty("user.dir") + "/Transparentoverfield.png"));
+			field = ImageIO.read(new File(System.getProperty("user.dir") + "/../2019field.jpeg"));
+			overfield = ImageIO.read(new File(System.getProperty("user.dir") + "/../2019field(transparent).png"));
+	
 		} catch (Exception E) {
 			E.printStackTrace();
 		}
+		System.out.println("Images Imported!");
+	}
+	
+	private static void debug (String str){
+		System.out.println("DEBUGGING: " + str);
 	}
 }
+//19.5233333333ft = yval of middle of spaceship hopefully
+
+//cd src/com/teamursamajor/auto

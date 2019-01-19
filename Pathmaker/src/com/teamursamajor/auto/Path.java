@@ -1,4 +1,4 @@
-package src.com.teamursamajor.auto;
+package com.teamursamajor.auto;
 
 import java.util.ArrayList;
 

@@ -114,7 +114,7 @@ public class Robot extends IterativeRobot implements UrsaRobot {
 		Logger.log("Started Teleop mode", LogLevel.INFO);
 		robotMode = "Teleop";
 		System.out.println(cont);
-		cont.updateControlLayout(new ArcadeDrive(xbox, true), new BumperIntake(xbox), new TriggerLift(xbox), new TeleopLED());
+		cont.updateControlLayout(new TankDrive(xbox), new BumperIntake(xbox), new TriggerLift(xbox), new TeleopLED());
 		Logger.setLevel(debugSelect.getLevel());
 	}
 

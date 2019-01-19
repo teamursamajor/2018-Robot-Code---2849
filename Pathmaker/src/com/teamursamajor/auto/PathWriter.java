@@ -1,4 +1,4 @@
-package src.com.teamursamajor.auto;
+package com.teamursamajor.auto;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;

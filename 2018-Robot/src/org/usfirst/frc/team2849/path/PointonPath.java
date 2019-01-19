@@ -94,22 +94,22 @@ public class PointonPath extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				// System.out.println(e.getY() + " " + (e.getY()) + " " + (10) + " " + (35));
 				if (e.getX() > 295 & e.getX() < 320 & e.getY() > 10 & e.getY() < 35&i!=0) {
-					PathMaker.frame.repaint();
-					PathMaker.path.remove(i);
-					PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
-					if (-PathMaker.pointpaneltranslate > PointonPath.h
-							* (PathMaker.path.size() - 800 / PointonPath.h + 1)) {
-						if (PathMaker.path.size() > 800 / PointonPath.h + 1)
-							PathMaker.pointpaneltranslate = -PointonPath.h
-									* (PathMaker.path.size() - 800 / PointonPath.h + 1);
+					PathMakerHasButtonsButMayNotBeWorking.frame.repaint();
+					PathMakerHasButtonsButMayNotBeWorking.path.remove(i);
+					PathMakerHasButtonsButMayNotBeWorking.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+					if (-PathMakerHasButtonsButMayNotBeWorking.pointpaneltranslate > PointonPath.h
+							* (PathMakerHasButtonsButMayNotBeWorking.path.size() - 800 / PointonPath.h + 1)) {
+						if (PathMakerHasButtonsButMayNotBeWorking.path.size() > 800 / PointonPath.h + 1)
+							PathMakerHasButtonsButMayNotBeWorking.pointpaneltranslate = -PointonPath.h
+									* (PathMakerHasButtonsButMayNotBeWorking.path.size() - 800 / PointonPath.h + 1);
 						else
-							PathMaker.pointpaneltranslate = 0;
+							PathMakerHasButtonsButMayNotBeWorking.pointpaneltranslate = 0;
 					}
-					PathMaker.frame.repaint();
+					PathMakerHasButtonsButMayNotBeWorking.frame.repaint();
 				}
 				if (e.getX() > 220 & e.getX() < 245 & e.getY() > 10 & e.getY() < 35) {
 					highlight = !highlight;
-					PathMaker.frame.repaint();
+					PathMakerHasButtonsButMayNotBeWorking.frame.repaint();
 				}
 				// System.out.println("horray" + i);
 			}
@@ -126,7 +126,7 @@ public class PointonPath extends JPanel {
 			public void mouseReleased(MouseEvent e) {
 			}
 		});
-		PathMaker.pointpanel.add(this);
+		PathMakerHasButtonsButMayNotBeWorking.pointpanel.add(this);
 		colorarraay = new ArrayList<Color>();
 		int depth = 15;
 		for (int i = 0; i < depth; i++) {
@@ -141,7 +141,7 @@ public class PointonPath extends JPanel {
 
 	public void paint(Graphics g, int i_) {
 		i = i_;
-		this.setLocation(0, i * h + PathMaker.pointpaneltranslate);
+		this.setLocation(0, i * h + PathMakerHasButtonsButMayNotBeWorking.pointpaneltranslate);
 		this.setSize(335, h);
 		g.setColor(Color.BLACK);
 		g.drawRect(0, i * h, 334, h);
@@ -163,17 +163,17 @@ public class PointonPath extends JPanel {
 			g.setColor(colorarraay.get(i % colorarraay.size()));
 			g.fillOval(175, 15 + i * h, 20, 20);
 		}
-		if (i != PathMaker.path.size() - 1) {
-			Graphics2D g2d = (Graphics2D) PathMaker.overlay.getGraphics();
+		if (i != PathMakerHasButtonsButMayNotBeWorking.path.size() - 1) {
+			Graphics2D g2d = (Graphics2D) PathMakerHasButtonsButMayNotBeWorking.overlay.getGraphics();
 			g2d.setColor(colorarraay.get(i % colorarraay.size()));
 			g2d.setStroke(new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-			g2d.drawLine((int) PathMaker.path.get(i).x, (int) PathMaker.path.get(i).y,
-					(int) PathMaker.path.get(i + 1).x, (int) PathMaker.path.get(i + 1).y);
+			g2d.drawLine((int) PathMakerHasButtonsButMayNotBeWorking.path.get(i).x, (int) PathMakerHasButtonsButMayNotBeWorking.path.get(i).y,
+					(int) PathMakerHasButtonsButMayNotBeWorking.path.get(i + 1).x, (int) PathMakerHasButtonsButMayNotBeWorking.path.get(i + 1).y);
 			if (highlight) {
 				g2d.setColor(Color.green);
 				g2d.setStroke(new BasicStroke(7, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-				g2d.drawLine((int) PathMaker.path.get(i).x, (int) PathMaker.path.get(i).y,
-						(int) PathMaker.path.get(i + 1).x, (int) PathMaker.path.get(i + 1).y);
+				g2d.drawLine((int) PathMakerHasButtonsButMayNotBeWorking.path.get(i).x, (int) PathMakerHasButtonsButMayNotBeWorking.path.get(i).y,
+						(int) PathMakerHasButtonsButMayNotBeWorking.path.get(i + 1).x, (int) PathMakerHasButtonsButMayNotBeWorking.path.get(i + 1).y);
 			}
 		}
 

@@ -1,4 +1,4 @@
-package src.com.teamursamajor.auto;
+package com.teamursamajor.auto;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -135,6 +135,7 @@ public class PointonPath extends JPanel {
 
 	boolean highlight = false;
 
+	//2019 TODO - Change color based on velocity=======================
 	public void paint(Graphics g, int i_) {
 		i = i_;
 		this.setLocation(0, i * h + PathMaker.pointpaneltranslate);

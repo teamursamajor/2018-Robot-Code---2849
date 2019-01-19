@@ -26,7 +26,7 @@ import org.usfirst.frc.team2849.diagnostics.Logger;
 import org.usfirst.frc.team2849.diagnostics.Logger.LogLevel;
 import org.usfirst.frc.team2849.robot.UrsaRobot;
 
-public class PathMaker implements UrsaRobot {
+public class PathMakerHasButtonsButMayNotBeWorking implements UrsaRobot {
 	// take points accumulate dist between for path length
 	// angle from arctan
 	// to get left and right, add left and right perpendicular to heading
@@ -35,7 +35,7 @@ public class PathMaker implements UrsaRobot {
 	//load a path to display
 
 	public static void main(String[] argsokcharlie) {
-		PathMaker.init();
+		PathMakerHasButtonsButMayNotBeWorking.init();
 	}
 
 	static JFrame frame;
@@ -54,8 +54,9 @@ public class PathMaker implements UrsaRobot {
 	static boolean once2 = true;// for mouse motion ignore
 	static int prevscroll = 0;
 	static int pointpaneltranslate = 0;
-	static boolean reversed = false;
-
+	static boolean reversed = false; 
+	
+	
 	public static void output() {
 		double totalDist = 0;
 		ArrayList<PointonPath> output = new ArrayList<PointonPath>();
@@ -91,7 +92,7 @@ public class PathMaker implements UrsaRobot {
 					copy.size()));
 		}
 		path = copy;
-		PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+		PathMakerHasButtonsButMayNotBeWorking.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
 		pointpaneltranslate = 0;
 		frame.repaint();
 		frame.dispatchEvent(new MouseWheelEvent(frame, 0, 0, 0, 0, 0, 0, false, 3, 1, 0));
@@ -127,8 +128,8 @@ public class PathMaker implements UrsaRobot {
 				frame.repaint();
 			}
 		});
-
-		importimages();
+//ORIGINAL IMPORT IMAGES
+		importImages();
 
 		JPanel fieldPanel = new JPanel() {
 			public void paint(Graphics g) {
@@ -311,8 +312,8 @@ public class PathMaker implements UrsaRobot {
 					//					path.set(0,new PointonPath((leftornot?dist:27-dist)/PointonPath.xconv,ROBOT_DEPTH_FEET/2/PointonPath.yconv,0));
 					path.set(0, new PointonPath((27 - 2.5) / PointonPath.xconv,
 							ROBOT_DEPTH_FEET / 2 / PointonPath.yconv, 0));
-					PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
-					PathMaker.frame.repaint();
+					PathMakerHasButtonsButMayNotBeWorking.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+					PathMakerHasButtonsButMayNotBeWorking.frame.repaint();
 				} catch (Exception E) {
 				}
 			}
@@ -373,7 +374,7 @@ public class PathMaker implements UrsaRobot {
 				for (int i = 0; i < path.size(); i++) {
 					path.set(i, new PointonPath(400 - path.get(i).x, path.get(i).y, i));
 				}
-				PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+				PathMakerHasButtonsButMayNotBeWorking.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
 				frame.repaint();
 			}
 		});
@@ -383,7 +384,7 @@ public class PathMaker implements UrsaRobot {
 			public void actionPerformed(ActionEvent e) {
 				path.clear();
 				path.add(new PointonPath((27 - 2.5) / PointonPath.xconv, ROBOT_DEPTH_FEET / 2 / PointonPath.yconv, 0));
-				PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+				PathMakerHasButtonsButMayNotBeWorking.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
 				frame.repaint();
 			}
 		});
@@ -399,7 +400,7 @@ public class PathMaker implements UrsaRobot {
 			public void actionPerformed(ActionEvent e) {
 				path.clear();
 				path.add(new PointonPath((9.25) / PointonPath.xconv, ROBOT_DEPTH_FEET / 2 / PointonPath.yconv, 0));
-				PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+				PathMakerHasButtonsButMayNotBeWorking.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
 				frame.repaint();
 			}
 		});
@@ -407,7 +408,7 @@ public class PathMaker implements UrsaRobot {
 			public void actionPerformed(ActionEvent e) {
 				path.clear();
 				path.add(new PointonPath((6.3) / PointonPath.xconv, 14 / PointonPath.yconv, 0));
-				PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+				PathMakerHasButtonsButMayNotBeWorking.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
 				frame.repaint();
 			}
 		});
@@ -421,7 +422,7 @@ public class PathMaker implements UrsaRobot {
 			public void actionPerformed(ActionEvent e) {
 				path.clear();
 				path.add(new PointonPath((5.5) / PointonPath.xconv, 27 / PointonPath.yconv, 0));
-				PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+				PathMakerHasButtonsButMayNotBeWorking.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
 				frame.repaint();
 			}
 		});
@@ -435,7 +436,7 @@ public class PathMaker implements UrsaRobot {
 			public void actionPerformed(ActionEvent e) {
 				path.clear();
 				path.add(new PointonPath((7.3) / PointonPath.xconv, 24 / PointonPath.yconv, 0));
-				PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+				PathMakerHasButtonsButMayNotBeWorking.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
 				frame.repaint();
 			}
 		});
@@ -451,7 +452,7 @@ public class PathMaker implements UrsaRobot {
 			public void actionPerformed(ActionEvent e) {
 				path.clear();
 				path.add(new PointonPath((9.25) / PointonPath.xconv, 11 / PointonPath.yconv, 0));
-				PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+				PathMakerHasButtonsButMayNotBeWorking.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
 				frame.repaint();
 			}
 		});
@@ -483,20 +484,20 @@ public class PathMaker implements UrsaRobot {
 		path.add(new PointonPath((27 - 2.5) / PointonPath.xconv, ROBOT_DEPTH_FEET / 2 / PointonPath.yconv, 0));
 
 		frame.setVisible(true);
-	}
+	} //END OF INIT
 
 	static boolean leftornot = true;
 
 	public static void clearpath() {
 		for (int i = 1; i < path.size();) {
-			PathMaker.frame.repaint();
-			PathMaker.path.remove(i);
-			PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
-			if (-PathMaker.pointpaneltranslate > PointonPath.h * (PathMaker.path.size() - 800 / PointonPath.h + 1)) {
-				if (PathMaker.path.size() > 800 / PointonPath.h + 1)
-					PathMaker.pointpaneltranslate = -PointonPath.h * (PathMaker.path.size() - 800 / PointonPath.h + 1);
+			PathMakerHasButtonsButMayNotBeWorking.frame.repaint();
+			PathMakerHasButtonsButMayNotBeWorking.path.remove(i);
+			PathMakerHasButtonsButMayNotBeWorking.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+			if (-PathMakerHasButtonsButMayNotBeWorking.pointpaneltranslate > PointonPath.h * (PathMakerHasButtonsButMayNotBeWorking.path.size() - 800 / PointonPath.h + 1)) {
+				if (PathMakerHasButtonsButMayNotBeWorking.path.size() > 800 / PointonPath.h + 1)
+					PathMakerHasButtonsButMayNotBeWorking.pointpaneltranslate = -PointonPath.h * (PathMakerHasButtonsButMayNotBeWorking.path.size() - 800 / PointonPath.h + 1);
 				else
-					PathMaker.pointpaneltranslate = 0;
+					PathMakerHasButtonsButMayNotBeWorking.pointpaneltranslate = 0;
 			}
 		}
 		frame.repaint();
@@ -508,11 +509,13 @@ public class PathMaker implements UrsaRobot {
 		}
 		return atan2 % modvalue;
 	}
-
-	private static void importimages() {
+	
+	
+//FIELD=========================================================
+	private static void importImages() {
 		try {
-			field = ImageIO.read(new File(System.getProperty("user.dir") + "/field2.png"));
-			overfield = ImageIO.read(new File(System.getProperty("user.dir") + "/Transparentoverfield.png"));
+			field = ImageIO.read(new File(System.getProperty("user.dir") + "/2019field.jpeg"));
+			overfield = ImageIO.read(new File(System.getProperty("user.dir") + "/2019field(transparent).png"));
 		} catch (Exception E) {
 			E.printStackTrace();
 			Logger.log("PathMaker importImages method printStackTrace", LogLevel.ERROR);
