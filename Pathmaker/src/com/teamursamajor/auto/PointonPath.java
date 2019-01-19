@@ -15,12 +15,12 @@ import javax.swing.JPanel;
 public class PointonPath extends JPanel {
 	protected double x;
 	protected double y;
-	protected double xft;// convert pixels to feet, look up conversion , field is 54/27ft.
-	protected double yft;
+	protected double xFeet;// convert pixels to feet, look up conversion , field is 54/27ft.
+	protected double yFeet;
 	double xconv = 27d/* ft */ / 400/* pixels */;
 	double yconv = 54d/* ft */ / 800/* pixels */;
 	int precision = 2;
-	int i;
+	int i;//TODO - change
 	String message = "";
 	static int h = 50;
 	private double position;
@@ -37,8 +37,8 @@ public class PointonPath extends JPanel {
 	public String toString() {
 		return String.format(" %-9f  ", time) + String.format(" %-9f  ", position)
 				+ String.format(" %-13f  ", direction) + String.format(" %-10f  ", velocity)
-				+ String.format(" %-12f  ", acceleration) + String.format(" %-9f  ", Math.round(xft * 100) / 100.0)
-				+ String.format(" %-9f ", Math.round(yft * 100) / 100.0);
+				+ String.format(" %-12f  ", acceleration) + String.format(" %-9f  ", Math.round(xFeet * 100) / 100.0)
+				+ String.format(" %-9f ", Math.round(yFeet * 100) / 100.0);
 
 	}
 	// bottons to impliment{
@@ -47,45 +47,107 @@ public class PointonPath extends JPanel {
 	// pick up box
 
 	// the ability to insert points not from the end
-	public PointonPath(double pos, double dir, double xft_, double yft_) {
+	public PointonPath(double pos, double dir, double xFeet, double yFeet) {
 		position = pos;
 		direction = dir;
-		xft = xft_;// Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10, precision);
-		yft = yft_;// Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10, precision);
-		x = xft / (Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10, precision));
-		y = yft / (Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10, precision));
+		this.xFeet = xFeet;// Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10, precision);
+		this.yFeet = yFeet;// Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10, precision);
+		x = xFeet / (Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10, precision));
+		y = yFeet / (Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10, precision));
 		acceleration = 0;
 		velocity = 0;
 		time = 0;
 		// x = x_;
 		// y = y_;
-		// xft = Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10,
+		// xFeet = Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10,
 		// precision);
-		// yft = Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10,
+		// yFeet = Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10,
 		// precision);
 	}
 
-	PointonPath(double pos, double dir, double xft_, double yft_, double time, double vel, double accel) {
+	PointonPath(double pos, double dir, double xFeet_, double yFeet_, double time, double vel, double accel) {
 		position = pos;
 		direction = dir;
-		xft = xft_; // Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10, precision);
-		yft = yft_; // Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10, precision);
-		x = xft / xconv;
-		y = yft / yconv;
+		xFeet = xFeet_; // Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10, precision);
+		yFeet = yFeet_; // Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10, precision);
+		x = xFeet / xconv;//*->/
+		y = yFeet / yconv;//*->/
 		acceleration = accel;
 		velocity = vel;
 		this.time = time;
 	}
 
-	PointonPath(double x_, double y_, int i_) {
+	PointonPath(int xPixels, int yPixels){
 		acceleration = 0;
 		velocity = 0;
 		time = 0;
-		x = x_;
-		y = y_;
-		i = i_;
-		xft = Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10, precision);
-		yft = Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10, precision);
+		this.x = xPixels;
+		this.y = yPixels;
+		this.i = 0;
+
+		this.addMouseListener(new MouseListener() {
+			public void mouseClicked(MouseEvent e) {
+				// System.out.println(e.getY() + " " + (e.getY()) + " " + (10) + " " + (35));
+				if (e.getX() > 295 & e.getX() < 320 & e.getY() > 10 & e.getY() < 35) {
+					PathMaker.frame.repaint();
+					PathMaker.path.remove(i);
+					PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+					if (-PathMaker.pointpaneltranslate > PointonPath.h
+							* (PathMaker.path.size() - 800 / PointonPath.h + 1)) {
+						if (PathMaker.path.size() > 800 / PointonPath.h + 1)
+							PathMaker.pointpaneltranslate = -PointonPath.h
+									* (PathMaker.path.size() - 800 / PointonPath.h + 1);
+						else
+							PathMaker.pointpaneltranslate = 0;
+					}
+					PathMaker.frame.repaint();
+				}
+				if (e.getX() > 220 & e.getX() < 245 & e.getY() > 10 & e.getY() < 35) {
+					highlight = !highlight;
+					PathMaker.frame.repaint();
+				}
+				// System.out.println("horray" + i);
+			}
+
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			public void mouseExited(MouseEvent e) {
+			}
+
+			public void mousePressed(MouseEvent e) {
+			}
+
+			public void mouseReleased(MouseEvent e) {
+			}
+		});
+		PathMaker.pointpanel.add(this);
+		colorarraay = new ArrayList<Color>();
+		int depth = 15;
+		for (int i = 0; i < depth; i++) {
+			colorarraay.add(new Color(255 - 255 / depth * i, 0, 255 / depth * i));
+		}
+		for (int i = depth - 1; i >= 0; i--) {
+			colorarraay.add(new Color(255 - 255 / depth * i, 0, 255 / depth * i));
+		}
+	}
+
+	PointonPath(double xFeet, double yFeet, int colorIndex) {
+		acceleration = 0;
+		velocity = 0;
+		time = 0;
+		this.xFeet = xFeet;//PIXELS
+		this.yFeet = yFeet;//PIXELS
+		this.i = colorIndex;//COLOR?
+
+		//AnchorPoint corner = new AnchorPoint(0, 0);
+
+		this.x = xFeet/xconv;
+		this.y = yFeet/yconv;
+		
+
+		// xFeet = Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10, precision);
+		// yFeet = Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10, precision);
 		this.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
 				// System.out.println(e.getY() + " " + (e.getY()) + " " + (10) + " " + (35));
@@ -143,7 +205,7 @@ public class PointonPath extends JPanel {
 		g.setColor(Color.BLACK);
 		g.drawRect(0, i * h, 334, h);
 		g.setFont(new Font("Times New Roman", 200, 32));
-		g.drawString(xft + "," + yft, 0 + 10, i * h + 30);
+		g.drawString(xFeet + "," + yFeet, 0 + 10, i * h + 30);
 
 		g.setColor(Color.green);
 		g.fill3DRect(220, 10 + i * h, 25, 25, true);// button to highlight

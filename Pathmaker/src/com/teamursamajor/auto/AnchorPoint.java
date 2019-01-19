@@ -2,26 +2,35 @@ package com.teamursamajor.auto;
 
 public class AnchorPoint {
 	private double xCoord, yCoord;
+	private double xFeet, yFeet;
 	private double defaultInflectionPoint;// for flipping over x axis
 	private int halfImageHeight = 400; //Half of the image's height
-	
+	private double xConversion, yConversion;
+
 	//Width of the image frame/2:
-	int width = 800/2;
-	
+	//int width = 800/2;
+	//
 	public AnchorPoint (double xCoord, double yCoord, double inflectionPoint){
-		this.xCoord=xCoord;
-		this.yCoord=yCoord;
-		this.defaultInflectionPoint = inflectionPoint;
+		setXConversion(400,74);//74? 54
+		setYConversion(800,27);//27? 40
+
+		// System.out.println("X Conversion: " + xConversion);
+		// System.out.println("Y Conversion: " + yConversion);
+
+		double [] coords = feetToPixels(xCoord, yCoord); 
+		
+		this.xFeet = xCoord;
+		this.yFeet = yCoord;
+
+		this.xCoord = coords[0];
+		this.yCoord = coords[1];
+		defaultInflectionPoint = inflectionPoint;
 	}
 	
 	public AnchorPoint (double xCoord, double yCoord){
-		this.xCoord=xCoord;
-		this.yCoord=yCoord;
-		defaultInflectionPoint = xCoord;
+		this(xCoord, yCoord, xCoord);
 	}
 
-	//TODO - no static
-	//TODO - test
 	//A---|---- -> ----|---A
 	public double flipByYAxis(){
 		return flipByYAxis(xCoord);
@@ -75,24 +84,16 @@ public class AnchorPoint {
 		 */
 	}
 
-	//TODO - feet to pixel method
-	//Field - 27*54 feet
-	//Driver Station - 30*10 feet x 2
 	/*
 	 *Start measuring from the end of the driver station 
 	 */
 	public double[] feetToPixels(double xFeet, double yFeet){
-		//Driver Station Measurements
-		double xConv = getXConversion();
-		double yConv = getYConversion();
-
-		//xFeet += 30*xConv;
-		yFeet += 10*yConv; //10 = height of the driver station (in feet);
+		yFeet += 10*yConversion; //10 = height of the driver station (in feet);
 		
-		xFeet *= xConv;
-		yFeet *= yConv;
+		xFeet *= xConversion;
+		yFeet *= yConversion;
 
-		double [] res = {xConv, yConv};
+		double [] res = {xFeet, yFeet};
 		return res;
 	}	
 
@@ -103,38 +104,38 @@ public class AnchorPoint {
  * divides it by the size of the field (in feet)
  */
 
-	public double getXConversion(){
-		return getXConversion(400, 30);
-	}
-
 	//default - (400, 30*) *27?
-	public double getXConversion(int pixelWidth, int fieldWidth){
-		return pixelWidth/fieldWidth;
+	//Pixels per foot
+	public void setXConversion(double pixelWidth, double fieldWidth){
+		this.xConversion = pixelWidth/fieldWidth;
 	}
 
+	//default - (800, 64*) *74?
+	//Pixels per foot
+	public void setYConversion(double pixelHeight, double fieldHeight){
+		this.yConversion = pixelHeight/fieldHeight;
+	}
+
+	public double getX(){
+		return xCoord;
+	}
+	public double getY(){
+		return yCoord;
+	}
+
+	public double getXFeet(){
+		return xFeet;
+	}
+
+	public double getYFeet(){
+		return yFeet;
+	}
+	
+	public double getXConversion(){
+		return xConversion;
+	}
 
 	public double getYConversion(){
-		return getYConversion(64, 800);
-	}
-	
-	//default - (800, 64*) *74?
-	public double getYConversion(int pixelHeight, int fieldHeight){
-		return pixelHeight/fieldHeight;
-	}
-	/*
-	 * Rocket:
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 */
-	
-	public double getX (){
-		return xCoord*getXConversion();
-	}
-	public double getY (){
-		return yCoord*getYConversion();
+		return yConversion;
 	}
 }

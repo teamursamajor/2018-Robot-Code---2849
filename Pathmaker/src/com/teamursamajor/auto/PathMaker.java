@@ -55,7 +55,9 @@ public class PathMaker {
 
 	public static void main(String[] argsokcharlie) {
 		//System.out.println(System.getPr);
+		System.out.println("Initializing");
 		PathMaker.init();
+		System.out.println("Initialized");
 	}
 	static JFrame frame;
 	static String[] presets = new String[] { "auto1", "auto2", "auto3", "auto4" };
@@ -69,7 +71,7 @@ public class PathMaker {
 
 	static int slow = 0;
 	
-	static int[] prev = new int[] { 0, 0 };// for mouse motion ignore
+	static int [] prev = { 0, 0 };// for mouse motion ignore
 	static boolean once = true;// for mouse motion ignore
 	static boolean once2 = true;// for mouse motion ignore
 	static int prevscroll = 0;
@@ -81,17 +83,17 @@ public class PathMaker {
 		ArrayList<PointonPath> output = new ArrayList<PointonPath>();
 		output.add(
 				new PointonPath(totalDist,
-						negmod(Math.atan2(path.get(1).yft - path.get(0).yft,
-								path.get(1).xft - path.get(0).xft), Math.PI * 2) * (180 / Math.PI),
-						path.get(0).xft, path.get(0).yft));
+						negmod(Math.atan2(path.get(1).yFeet - path.get(0).yFeet,
+								path.get(1).xFeet - path.get(0).xFeet), Math.PI * 2) * (180 / Math.PI),
+						path.get(0).xFeet, path.get(0).yFeet));
 		for (int i = 1; i < path.size(); i++) {
-			totalDist += Math.sqrt(Math.pow(path.get(i).xft - path.get(i - 1).xft, 2)
-					+ Math.pow(path.get(i).yft - path.get(i - 1).yft, 2));
+			totalDist += Math.sqrt(Math.pow(path.get(i).xFeet - path.get(i - 1).xFeet, 2)
+					+ Math.pow(path.get(i).yFeet - path.get(i - 1).yFeet, 2));
 			output.add(
 					new PointonPath(totalDist,
-							negmod(Math.atan2(path.get(i).yft - path.get(i - 1).yft,
-									path.get(i).xft - path.get(i - 1).xft), Math.PI * 2) * (180 / Math.PI),
-							path.get(i).xft, path.get(i).yft));
+							negmod(Math.atan2(path.get(i).yFeet - path.get(i - 1).yFeet,
+									path.get(i).xFeet - path.get(i - 1).xFeet), Math.PI * 2) * (180 / Math.PI),
+							path.get(i).xFeet, path.get(i).yFeet));
 		}
 		Path mapped = new Path("output", output);
 		new PathWriter(new Path[] {mapped, mapped}, "outpath.txt");
@@ -132,14 +134,11 @@ public class PathMaker {
 		frame.setLayout(null);//WAS: null
 		frame.setSize(1000, 850);
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+
+		AnchorPoint xyConversions = new AnchorPoint(0,0);
+
 		frame.addMouseWheelListener(new MouseWheelListener() {
 			public void mouseWheelMoved(MouseWheelEvent e) {
-				//for debugging
-//				System.out.println(e.getModifiers());
-//				System.out.println(e.getClickCount());
-//				System.out.println(e.getScrollType());
-//				System.out.println(e.getScrollAmount());
-//				System.out.println(e.getWheelRotation());
 				double sig = e.getWheelRotation();
 				pointpaneltranslate -= sig * 1.2 * Math.PI / 4 * PointonPath.h;
 				if (pointpaneltranslate > 0) {
@@ -155,16 +154,8 @@ public class PathMaker {
 			}
 		});
 		
+		System.out.println("importImages Being Called in init Function");
 		importImages();
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		//PRESET PANEL===========
@@ -193,11 +184,21 @@ public class PathMaker {
 		fieldPanel.addMouseMotionListener(new MouseMotionListener() {
 			public void mouseDragged(MouseEvent e) {
 				if (once) {
+					//=========================================================
+					// double xCoord = (double)e.getX();
+					// double yCoord = (double)e.getY();
+					// xCoord /= xyConversions.getXConversion();
+					// yCoord /= xyConversions.getYConversion();
 					prev = new int[] { e.getX(), e.getY() };
 					once = false;
 				}
 				if (slow % 2 == 0) {
-					path.add(new PointonPath(e.getX(), e.getY(), path.size()));
+					//double xCoord = (double)e.getX();
+					//double yCoord = (double)e.getY();
+					//xCoord /= xyConversions.getXConversion();
+					//yCoord /= xyConversions.getYConversion();
+					//path.add(new PointonPath(xCoord, yCoord, path.size()));
+					path.add(new PointonPath(e.getX(), e.getY()));
 					frame.repaint();
 				}
 				slow++;
@@ -273,7 +274,7 @@ public class PathMaker {
 		pointpanel.setSize(325, 800);
 		
 		//Output Read Clear
-		//TODO -  add text book for read/output - file name
+		//TODO -  add text box for read/output - file name
 		JPanel menupanel = new JPanel() {
 			public void paint(Graphics g) {
 				g.fillRect(0, 0, 325, 50);
@@ -349,10 +350,6 @@ public class PathMaker {
 	 * M - Middle
 	 * B - Bottom
 	 */
-		
-		//TODO - change icon
-	
-	
 	
 	JButton startPlatformRT = new JButton("Right Raised Platform");
 	JButton startPlatformRB = new JButton("Right Lower Platform");
@@ -458,6 +455,7 @@ public class PathMaker {
 //	AnchorPoint startPlatforms = new AnchorPoint();//D
 //	AnchorPoint startHatchIntakes = new AnchorPoint();//LA
 	AnchorPoint startRockets = new AnchorPoint(0, 19.5233333333);//Left E down
+	System.out.println("startRockets set");
 //	AnchorPoint startCargoBay = new AnchorPoint();// Left middle G
 
 	
@@ -496,9 +494,10 @@ public class PathMaker {
 	startRocketRT.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent e){
 			path.clear();
-				path.add(new PointonPath(startRockets.getX(),
-										 startRockets.getY(),
+				path.add(new PointonPath(10,
+										 20,
 										 0));
+				//path.add(new PointonPath(50, 50, 0));
 			resetFrame();
 		}
 	});
@@ -617,6 +616,7 @@ public class PathMaker {
 //Import Images =============================
 	private static void importImages() {
 		System.out.println("Importing Images?");
+
 		try {
 			field = ImageIO.read(new File(System.getProperty("user.dir") + "/../2019field.jpeg"));
 			overfield = ImageIO.read(new File(System.getProperty("user.dir") + "/../2019field(transparent).png"));
@@ -634,3 +634,4 @@ public class PathMaker {
 //19.5233333333ft = yval of middle of spaceship hopefully
 
 //cd src/com/teamursamajor/auto
+//Always close window before re running
