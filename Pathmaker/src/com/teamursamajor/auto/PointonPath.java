@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-public class PointonPath extends JPanel {
+public class PointonPath extends JPanel implements FieldMeasurements {
 	protected double x;
 	protected double y;
 	protected double xFeet;// convert pixels to feet, look up conversion , field is 54/27ft.
@@ -22,7 +22,7 @@ public class PointonPath extends JPanel {
 	int precision = 2;
 	int i;//TODO - change point#
 	String message = "";
-	static int h = 50;//height of text box
+	static int h = 45;//height of text box
 	private double position;
 	private double direction;
 	private ArrayList<Color> colorarraay;
@@ -31,6 +31,7 @@ public class PointonPath extends JPanel {
 	private double time;
 
 
+	//TODO - Move
 	public double getDirection() {
 		return direction;
 	}
@@ -51,26 +52,30 @@ public class PointonPath extends JPanel {
 	public PointonPath(double pos, double dir, double xFeet, double yFeet) {
 		position = pos;
 		direction = dir;
-		this.xFeet = xFeet;// Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10, precision);
-		this.yFeet = yFeet;// Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10, precision);
+		//this.xFeet = xFeet;// Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10, precision);
+		//this.yFeet = yFeet;// Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10, precision);
 		x = xFeet / (Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10, precision));
 		y = yFeet / (Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10, precision));
 		acceleration = 0;
 		velocity = 0;
 		time = 0;
-		// x = x_;
-		// y = y_;
-		// xFeet = Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10,
-		// precision);
-		// yFeet = Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10,
-		// precision);
+
+		//COMMENTED OUT?
+		x = xFeet;
+		y = yFeet;
+		xFeet = Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10,
+		precision);
+		yFeet = Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10,
+		precision);
 	}
 
 	PointonPath(double pos, double dir, double xFeet_, double yFeet_, double time, double vel, double accel) {
 		position = pos;
 		direction = dir;
-		xFeet = xFeet_; // Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10, precision);
-		yFeet = yFeet_; // Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10, precision);
+		//xFeet = xFeet_; 
+		x = Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10, precision);
+		//yFeet = yFeet_;
+		y = Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10, precision);
 		x = xFeet / xconv;//*->/
 		y = yFeet / yconv;//*->/
 		acceleration = accel;
