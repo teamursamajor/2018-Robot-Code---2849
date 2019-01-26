@@ -20,15 +20,16 @@ public class PointonPath extends JPanel {
 	double xconv = 27d/* ft */ / 400/* pixels */;
 	double yconv = 54d/* ft */ / 800/* pixels */;
 	int precision = 2;
-	int i;//TODO - change
+	int i;//TODO - change point#
 	String message = "";
-	static int h = 500;//was 50
+	static int h = 50;//height of text box
 	private double position;
 	private double direction;
 	private ArrayList<Color> colorarraay;
 	private double acceleration;
 	private double velocity;
 	private double time;
+
 
 	public double getDirection() {
 		return direction;
@@ -205,6 +206,7 @@ public class PointonPath extends JPanel {
 		g.setColor(Color.BLACK);
 		g.drawRect(0, i * h, 334, h);
 		g.setFont(new Font("Times New Roman", 200, 32));
+		System.out.println("XFeet: " + xFeet + "YFeet: " + yFeet + "/n" + x + "    " + y);
 		g.drawString(xFeet + "," + yFeet, 0 + 10, i * h + 30);
 
 		g.setColor(Color.green);
