@@ -7,14 +7,17 @@ import java.util.List;
 
 public class PathReader {
 	
-	private Path leftPath;
-	private Path rightPath;
+//TODO - GET RID OF GOSH DARN CHEEZE
+
+	private RobotPath leftPath;
+	private RobotPath rightPath;
 	
-	public PathReader(String filename, boolean cheezy) {
-		leftPath = new Path();
-		rightPath = new Path();
-		if (cheezy) {
-			parseCheeze(filename);
+	//TODO - change CHEEZY - WHAT THE F* IS IT
+	public PathReader(String filename, boolean iHateCheese) {
+		leftPath = new RobotPath();
+		rightPath = new RobotPath();
+		if (iHateCheese) {
+			parseCheezeAndEndMySuffering(filename);
 		} else  {
 			parse(filename);
 		}
@@ -58,7 +61,8 @@ public class PathReader {
 		}
 	}
 	
-	private void parseCheeze(String filename) {
+	//TODO I NO LONGER LIKE CHARLIE AS MUCH BUT HE STILL HAS NICE HAIR
+	private void parseCheezeAndEndMySuffering(String filename) {
 		int numPoints = 0;
 		try {
 			List<String> lines = Files.readAllLines(Paths.get(System.getProperty("user.dir") + "\\" + filename), Charset.defaultCharset());
@@ -90,27 +94,26 @@ public class PathReader {
 			e.printStackTrace();
 		}
 	}
-	
 	private PointonPath parsePoint(String line) {
 		String[] splitPoint = line.trim().split("\\s+");
 		return new PointonPath(Double.parseDouble(splitPoint[1].trim()), Double.parseDouble(splitPoint[2].trim()), Double.parseDouble(splitPoint[5].trim()), Double.parseDouble(splitPoint[6].trim()), Double.parseDouble(splitPoint[0].trim()), Double.parseDouble(splitPoint[3].trim()), Double.parseDouble(splitPoint[4].trim()));
 	}
-	
+	//TODO END MY LIFE NOW
 	private PointonPath parsePointCheeze(String line) {
 		String[] splitPoint = line.trim().split("\\s+");
 		return new PointonPath(Double.parseDouble(splitPoint[0]), Double.parseDouble(splitPoint[4]), -1, -1);
 	}
 	
-	public Path getLeftPath() {
+	public RobotPath getLeftPath() {
 		return leftPath;
 	}
 	
-	public Path getRightPath() {
+	public RobotPath getRightPath() {
 		return rightPath;
 	}
 	
-	public Path[] getPaths() {
-		return new Path[] {leftPath, rightPath};
+	public RobotPath[] getPaths() {
+		return new RobotPath[] {leftPath, rightPath};
 	}
 
 }

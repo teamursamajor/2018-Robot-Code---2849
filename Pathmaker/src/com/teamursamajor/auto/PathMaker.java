@@ -95,10 +95,10 @@ public class PathMaker {
 									path.get(i).xFeet - path.get(i - 1).xFeet), Math.PI * 2) * (180 / Math.PI),
 							path.get(i).xFeet, path.get(i).yFeet));
 		}
-		Path mapped = new Path("output", output);
-		new PathWriter(new Path[] {mapped, mapped}, "outpath.txt");
+		RobotPath mapped = new RobotPath("output", output);
+		new PathWriter(new RobotPath[] {mapped, mapped}, "outpath.txt");
 		mapped.mapVelocity();
-		new PathWriter(new Path[] {mapped, mapped}, "outmapped.txt");
+		new PathWriter(new RobotPath[] {mapped, mapped}, "outmapped.txt");
 		new PathWriter(mapped.separate(1.067), "outsepped.txt");
 		System.out.println("outputed");
 	}
@@ -216,6 +216,8 @@ public class PathMaker {
 				frame.repaint();
 			}
 		});
+
+		//SCROLL PANEL - TO DO - DESCRIBE - CHECK POINTONPATH 
 		
 		JPanel Scrollpanel = new JPanel() {
 			public void paint(Graphics g) {
@@ -259,10 +261,12 @@ public class PathMaker {
 			public void mouseMoved(MouseEvent e) {}
 		});
 		
+		//POINTPANEL - TODO - CHECK
 		pointpanel = new JPanel() {
 			public void paint(Graphics g) {
 				g.translate(0, pointpaneltranslate);
 				g.setColor(Color.white);
+				//TODO - CHANGE H - I THINK IT IS TEXT HEIGHT?
 				g.fillRect(0, 0, 325, PointonPath.h * path.size());
 				for (int i = 0; i < path.size(); i++) {
 					path.get(i).paint(g, i);

@@ -22,7 +22,7 @@ public class PointonPath extends JPanel {
 	int precision = 2;
 	int i;//TODO - change
 	String message = "";
-	static int h = 50;
+	static int h = 500;//was 50
 	private double position;
 	private double direction;
 	private ArrayList<Color> colorarraay;
