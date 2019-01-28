@@ -4,7 +4,7 @@ public class FieldObject implements FieldMeasurements{
     //private double test = fieldWidth;
     private double xFeet, yFeet;
     
-    public FieldObject(int xFeet, int yFeet){
+    public FieldObject(double xFeet, double yFeet){
         this.xFeet = xFeet;
         this.yFeet = yFeet;
         
@@ -17,8 +17,18 @@ public class FieldObject implements FieldMeasurements{
         }
     }
 
+    public void setLocation (double xFeet, double yFeet){
+        this.xFeet = xFeet;
+        this.yFeet = yFeet;
+    }
+
+
     public FieldObject flipYAxis (){
         FieldObject result = this;
         return result;
+    }
+
+    public String toString(){
+        return "xFeet: " + xFeet + ", yFeet: " + yFeet;
     }
 }
