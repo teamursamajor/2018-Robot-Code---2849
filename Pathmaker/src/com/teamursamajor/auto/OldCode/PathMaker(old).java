@@ -137,6 +137,7 @@ public class PathMaker {
 
 		AnchorPoint xyConversions = new AnchorPoint(0,0);
 
+		//MOUSE LISTENER A
 		frame.addMouseWheelListener(new MouseWheelListener() {
 			public void mouseWheelMoved(MouseWheelEvent e) {
 				double sig = e.getWheelRotation();
@@ -178,9 +179,11 @@ public class PathMaker {
 				g.drawImage(overfield, 0, 0, 400, 800, null);
 			}
 		};
-		frame.add(fieldPanel);
+		frame.add(fieldPanel);//AFTER METHOD
 		fieldPanel.setSize(400, 850);
-		fieldPanel.setLocation(200, 0);
+		//fieldPanel.setSize()
+		fieldPanel.setLocation(200, 0);//AFTER METHOD
+		//FIRST FIELD MOUSE EVENT
 		fieldPanel.addMouseMotionListener(new MouseMotionListener() {
 			public void mouseDragged(MouseEvent e) {
 				if (once) {
@@ -206,6 +209,7 @@ public class PathMaker {
 			}
 			public void mouseMoved(MouseEvent e) {}
 		});
+		//SECOND FIELD MOUSE EVENT
 		fieldPanel.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {}
 			public void mouseEntered(MouseEvent e) {}

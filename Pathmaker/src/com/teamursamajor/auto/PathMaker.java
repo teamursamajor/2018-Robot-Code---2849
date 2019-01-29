@@ -40,15 +40,26 @@ import javax.swing.border.TitledBorder;
 
 public class PathMaker implements PlayingField {
 
+    //Frame where everything is described
     static JFrame screenFrame;
 
     //This Images are set in the main method
     static BufferedImage field, overField; 
     static ArrayList<PointOnPathV2> drawnPath = new ArrayList<PointOnPathV2>();
     
+    /*
+     * Button Panel:
+     * JPanel that contains all of the buttons
+     * that we use to set a starting point for
+     * our paths.
+     */
+     static JPanel buttonPanel = new JPanel();
+        
+     /*
+      * Mouse Listener for field/scrool panel 
+      */
 
-
-   
+     
     public static void main (String[] args){
 
         //Sets field images
@@ -63,6 +74,8 @@ public class PathMaker implements PlayingField {
         //Sets reference points for buttons
         setReferencePoints();
         System.out.println(PlayingField.hatchIntake.toString());
+
+        
     }
 
 
@@ -70,16 +83,66 @@ public class PathMaker implements PlayingField {
     //Output - N/A ?
     //Input - N/A  ?
     /* Init - Definitely need - the following are the broken down portions of it.
-     *
-     * 
+     * - set Frame YES
+     * mouseWheelListener - Maybe?
      * 
      *  
      */
 
+     //Rule for new panel - always add to screen panel first
+     static void init(){
+         screenFrame = new JFrame();
+         
+         File ursaMajorBearIcon = new File ((System.getProperty("user.dir") + "/../Icon.png"));
+         screenFrame.setIconImage(new ImageIcon(ursaMajorBearIcon.toString()).getImage());
+         
+         screenFrame.setLayout(null);
+         screenFrame.setSize(1000, 850);
+         screenFrame.setDefaultCloseOperation(screenFrame.EXIT_ON_CLOSE); 
 
+         //MOUSE LISTENER A
+         
+        
+         //PRESET PANEL
+         /*
+          * Defines the button panel 
+          */
+         screenFrame.add(buttonPanel);
+         buttonPanel.setSize(200,850);
+         buttonPanel.setLocation(0,50);
 
+          /*
+         * makePanelForField: 
+         * makes a panel that displays the field image
+         * as well as the over field image.
+         * 
+         * this panel also enables us to click on it and
+         * draw paths onto it
+         * 
+         * Sets it size and mouse listeners
+         */
+         JPanel fieldPanel = new JPanel(){
+            public void paint (Graphics g) {
+                g.drawImage(field,0,0,400,800,null);//Field
+                //g.drawImage()             //Path? (overlay)
+                g.drawImage(overField,0,0,400,800,null);             //Field Overlay
+            }
+        };
+         screenFrame.add(fieldPanel);
+         fieldPanel.setSize(400,850);
+         fieldPanel.setLocation(200,0);
 
+        }
 
+       
+
+        public JPanel makePanelForField (){
+            //TODO - FIX
+                        
+
+            JPanel field = null;
+            return field;
+        }
 
 
 
