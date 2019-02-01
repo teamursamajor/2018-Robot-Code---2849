@@ -1,4 +1,4 @@
-package com.teamursamajor.auto;
+package com.teamursamajor.auto.OldCode;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-public class PointonPath extends JPanel implements FieldMeasurements {
+public class PointonPath extends JPanel  {
 	protected double x;
 	protected double y;
 	protected double xFeet;// convert pixels to feet, look up conversion , field is 54/27ft.
@@ -91,26 +91,28 @@ public class PointonPath extends JPanel implements FieldMeasurements {
 
 		//this.addMouseListener(event -> mouseClicked(event));
 		//public void mouseClicked(MouseEvent event);+
+
+		//BUTTONS
 		this.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
 				// System.out.println(e.getY() + " " + (e.getY()) + " " + (10) + " " + (35));
 				if (e.getX() > 295 & e.getX() < 320 & e.getY() > 10 & e.getY() < 35) {
-					PathMaker.frame.repaint();
-					PathMaker.path.remove(i);
-					PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
-					if (-PathMaker.pointpaneltranslate > PointonPath.h
-							* (PathMaker.path.size() - 800 / PointonPath.h + 1)) {
-						if (PathMaker.path.size() > 800 / PointonPath.h + 1)
-							PathMaker.pointpaneltranslate = -PointonPath.h
-									* (PathMaker.path.size() - 800 / PointonPath.h + 1);
+					OldPathMaker.frame.repaint();
+					OldPathMaker.path.remove(i);
+					OldPathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+					if (-OldPathMaker.pointpaneltranslate > PointonPath.h
+							* (OldPathMaker.path.size() - 800 / PointonPath.h + 1)) {
+						if (OldPathMaker.path.size() > 800 / PointonPath.h + 1)
+							OldPathMaker.pointpaneltranslate = -PointonPath.h
+									* (OldPathMaker.path.size() - 800 / PointonPath.h + 1);
 						else
-							PathMaker.pointpaneltranslate = 0;
+							OldPathMaker.pointpaneltranslate = 0;
 					}
-					PathMaker.frame.repaint();
+					OldPathMaker.frame.repaint();
 				}
 				if (e.getX() > 220 & e.getX() < 245 & e.getY() > 10 & e.getY() < 35) {
 					highlight = !highlight;
-					PathMaker.frame.repaint();
+					OldPathMaker.frame.repaint();
 				}
 				// System.out.println("horray" + i);
 			}
@@ -127,7 +129,7 @@ public class PointonPath extends JPanel implements FieldMeasurements {
 			public void mouseReleased(MouseEvent e) {
 			}
 		});
-		PathMaker.pointpanel.add(this);
+		OldPathMaker.pointpanel.add(this);
 		colorarraay = new ArrayList<Color>();
 		int depth = 15;
 		for (int i = 0; i < depth; i++) {
@@ -155,25 +157,26 @@ public class PointonPath extends JPanel implements FieldMeasurements {
 		// xFeet = Math.floor(x * xconv * Math.pow(10, precision)) / Math.pow(10, precision);
 		// yFeet = Math.floor(y * yconv * Math.pow(10, precision)) / Math.pow(10, precision);
 		this.addMouseListener(new MouseListener() {
+			//Scrolling?
 			public void mouseClicked(MouseEvent e) {
 				// System.out.println(e.getY() + " " + (e.getY()) + " " + (10) + " " + (35));
 				if (e.getX() > 295 & e.getX() < 320 & e.getY() > 10 & e.getY() < 35) {
-					PathMaker.frame.repaint();
-					PathMaker.path.remove(i);
-					PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
-					if (-PathMaker.pointpaneltranslate > PointonPath.h
-							* (PathMaker.path.size() - 800 / PointonPath.h + 1)) {
-						if (PathMaker.path.size() > 800 / PointonPath.h + 1)
-							PathMaker.pointpaneltranslate = -PointonPath.h
-									* (PathMaker.path.size() - 800 / PointonPath.h + 1);
+					OldPathMaker.frame.repaint();
+					OldPathMaker.path.remove(i);
+					OldPathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+					if (-OldPathMaker.pointpaneltranslate > PointonPath.h
+							* (OldPathMaker.path.size() - 800 / PointonPath.h + 1)) {
+						if (OldPathMaker.path.size() > 800 / PointonPath.h + 1)
+							OldPathMaker.pointpaneltranslate = -PointonPath.h
+									* (OldPathMaker.path.size() - 800 / PointonPath.h + 1);
 						else
-							PathMaker.pointpaneltranslate = 0;
+							OldPathMaker.pointpaneltranslate = 0;
 					}
-					PathMaker.frame.repaint();
+					OldPathMaker.frame.repaint();
 				}
 				if (e.getX() > 220 & e.getX() < 245 & e.getY() > 10 & e.getY() < 35) {
 					highlight = !highlight;
-					PathMaker.frame.repaint();
+					OldPathMaker.frame.repaint();
 				}
 				// System.out.println("horray" + i);
 			}
@@ -190,7 +193,7 @@ public class PointonPath extends JPanel implements FieldMeasurements {
 			public void mouseReleased(MouseEvent e) {
 			}
 		});
-		PathMaker.pointpanel.add(this);
+		OldPathMaker.pointpanel.add(this);
 		colorarraay = new ArrayList<Color>();
 		int depth = 15;
 		for (int i = 0; i < depth; i++) {
@@ -205,8 +208,9 @@ public class PointonPath extends JPanel implements FieldMeasurements {
 
 	//2019 TODO - Change color based on velocity=======================
 	public void paint(Graphics g, int i_) {
+		//scrolls panel?
 		i = i_;
-		this.setLocation(0, i * h + PathMaker.pointpaneltranslate);
+		this.setLocation(0, i * h + OldPathMaker.pointpaneltranslate);
 		this.setSize(335, h);
 		g.setColor(Color.BLACK);
 		g.drawRect(0, i * h, 334, h);
@@ -229,15 +233,18 @@ public class PointonPath extends JPanel implements FieldMeasurements {
 			g.setColor(colorarraay.get(i % colorarraay.size()));
 			g.fillOval(175, 15 + i * h, 20, 20);
 		}
-		if (i != PathMaker.path.size() - 1) {
-			Graphics2D g2d = (Graphics2D) PathMaker.overlay.getGraphics();
+
+//@DRAWS_LINE?
+
+		if (i != OldPathMaker.path.size() - 1) {
+			Graphics2D g2d = (Graphics2D) OldPathMaker.overlay.getGraphics();
 			g2d.setColor(colorarraay.get(i % colorarraay.size()));
 			g2d.setStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-			g2d.drawLine((int) PathMaker.path.get(i).x, (int) PathMaker.path.get(i).y,(int) PathMaker.path.get(i + 1).x, (int) PathMaker.path.get(i + 1).y);
+			g2d.drawLine((int) OldPathMaker.path.get(i).x, (int) OldPathMaker.path.get(i).y,(int) OldPathMaker.path.get(i + 1).x, (int) OldPathMaker.path.get(i + 1).y);
 			if (highlight) {
 				g2d.setColor(Color.green);
 				g2d.setStroke(new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-				g2d.drawLine((int) PathMaker.path.get(i).x, (int) PathMaker.path.get(i).y,(int) PathMaker.path.get(i + 1).x, (int) PathMaker.path.get(i + 1).y);
+				g2d.drawLine((int) OldPathMaker.path.get(i).x, (int) OldPathMaker.path.get(i).y,(int) OldPathMaker.path.get(i + 1).x, (int) OldPathMaker.path.get(i + 1).y);
 			}
 		}
 

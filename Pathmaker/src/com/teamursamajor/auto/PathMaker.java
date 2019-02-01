@@ -44,8 +44,8 @@ public class PathMaker implements PlayingField {
     static JFrame screenFrame;
 
     //This Images are set in the main method
-    static BufferedImage field, overField; 
-    static ArrayList<PointOnPathV2> drawnPath = new ArrayList<PointOnPathV2>();
+    static BufferedImage fieldImage, overFieldImage; 
+    static ArrayList<PointOnPath> drawnPath = new ArrayList<PointOnPath>();
     
     /*
      * Button Panel:
@@ -63,9 +63,10 @@ public class PathMaker implements PlayingField {
     public static void main (String[] args){
 
         //Sets field images
+        init();
         try {
-			field = ImageIO.read(new File(System.getProperty("user.dir") + "/../2019field.jpeg"));
-			overField = ImageIO.read(new File(System.getProperty("user.dir") + "/../2019field(transparent).png"));
+			fieldImage = ImageIO.read(new File(System.getProperty("user.dir") + "/../2019field.jpeg"));
+			overFieldImage = ImageIO.read(new File(System.getProperty("user.dir") + "/../2019field(transparent).png"));
 	
 		} catch (Exception E) {
 			E.printStackTrace();
@@ -75,7 +76,7 @@ public class PathMaker implements PlayingField {
         setReferencePoints();
         System.out.println(PlayingField.hatchIntake.toString());
 
-        
+        screenFrame.setVisible(true);
     }
 
 
@@ -99,15 +100,30 @@ public class PathMaker implements PlayingField {
          screenFrame.setLayout(null);
          screenFrame.setSize(1000, 850);
          screenFrame.setDefaultCloseOperation(screenFrame.EXIT_ON_CLOSE); 
+        
 
+        // GuiPanels gui = new GuiPanels();
+         //PointPanel pointPanel = new PointPanel();
+         PointOnPath test1 = new PointOnPath(13,52,2);
+         PointOnPath test2 = new PointOnPath(12,42,4);
+         MenuPanel menu = new MenuPanel();
+        // menu.setEditable(true);
+         //menu.addActionListener()
+         screenFrame.add(menu);
+
+
+
+
+         //AFTER ADDING PANELS
+        // screenFrame.setVisible(true);
          //MOUSE LISTENER A
          
-        
+    
          //PRESET PANEL
          /*
           * Defines the button panel 
           */
-         screenFrame.add(buttonPanel);
+         //JPanel buttonPanel = GuiPanels.buttonPanel;         screenFrame.add(buttonPanel);
          buttonPanel.setSize(200,850);
          buttonPanel.setLocation(0,50);
 
@@ -121,16 +137,9 @@ public class PathMaker implements PlayingField {
          * 
          * Sets it size and mouse listeners
          */
-         JPanel fieldPanel = new JPanel(){
-            public void paint (Graphics g) {
-                g.drawImage(field,0,0,400,800,null);//Field
-                //g.drawImage()             //Path? (overlay)
-                g.drawImage(overField,0,0,400,800,null);             //Field Overlay
-            }
-        };
-         screenFrame.add(fieldPanel);
-         fieldPanel.setSize(400,850);
-         fieldPanel.setLocation(200,0);
+        //  screenFrame.add(fieldPanel);
+        //  fieldPanel.setSize(400,850);
+        //  fieldPanel.setLocation(200,0);
 
         }
 
@@ -150,7 +159,7 @@ public class PathMaker implements PlayingField {
 
     //======= METHODS NOT RELATED TO JPANELS OR INIT ======
 
-    /* setReferencePoints Methd =========================
+    /* setReferencePoints Method =========================
      *
      * This method sets the objects in the 
      * Playing Field interface. 

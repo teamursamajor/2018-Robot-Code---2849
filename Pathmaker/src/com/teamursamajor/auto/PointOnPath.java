@@ -2,12 +2,13 @@ package com.teamursamajor.auto;
 
 import javax.swing.JPanel;
 
-public class PointOnPathV2 extends JPanel implements FieldMeasurements {
+public class PointOnPath extends JPanel implements FieldMeasurements {
     private int xPixel, yPixel;
     private double xFeet, yFeet;
-  // private int textBoxHeight = 25;
+    private double time;
+    private double direction;
     private int pointNumber; // Nth Point in the current path ?
-    
+    //Ro
     
     
     /* Field Measurements have:
@@ -23,7 +24,7 @@ public class PointOnPathV2 extends JPanel implements FieldMeasurements {
      * Get rid of the buttons - redundant and don't work
      */
 
-    public PointOnPathV2 (double xFeet, double yFeet, int pointNumber){
+    public PointOnPath (double xFeet, double yFeet, int pointNumber){
         /*
          *TODO - figure out which constructor to use 
          */
@@ -36,8 +37,8 @@ public class PointOnPathV2 extends JPanel implements FieldMeasurements {
         
     }
 
-    public void addPointToPanel (JPanel pointPanel){
-         JPanel result = pointPanel;
+    public void paintPoint(){
+        //paints the line
     }
 
 
@@ -77,5 +78,7 @@ public class PointOnPathV2 extends JPanel implements FieldMeasurements {
     //No Color Change
 
     //TODO - make a path prediction class and in here call it to set the values in the robot stats class
-
+   
 }
+
+

@@ -1,4 +1,4 @@
-package com.teamursamajor.auto;
+package com.teamursamajor.auto.OldCode;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -39,13 +39,13 @@ import javax.swing.border.TitledBorder;
 //import javafx.scene.shape.Box;
 
 
-//import org.usfirst.frc.team2849.path.PathMaker;
+//import org.usfirst.frc.team2849.path.OldPathMaker;
 //import org.usfirst.frc.team2849.path.PointonPath;
 //
-//import org.usfirst.frc.team2849.path.PathMaker;
+//import org.usfirst.frc.team2849.path.OldPathMaker;
 //import org.usfirst.frc.team2849.path.PointonPath;
 
-public class PathMaker {
+public class OldPathMaker {
 	// take points accumulate dist between for path length
 	// angle from arctan
 	// to get left and right, add left and right perpendicular to heading
@@ -56,7 +56,7 @@ public class PathMaker {
 	public static void main(String[] argsokcharlie) {
 		//System.out.println(System.getPr);
 		System.out.println("Initializing");
-		PathMaker.init();
+		OldPathMaker.init();
 		System.out.println("Initialized");
 	}
 	static JFrame frame;
@@ -116,7 +116,7 @@ public class PathMaker {
 			copy.add(new PointonPath((pathl.get(i).x+pathr.get(i).x)/2,(pathl.get(i).y+pathr.get(i).y)/2,copy.size()));
 		}
 		path=copy;
-		PathMaker.overlay=new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+		OldPathMaker.overlay=new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
 		pointpaneltranslate = 0;
 		frame.repaint();
 		frame.dispatchEvent(new MouseWheelEvent (frame,0,0,0,0,0,0,false, 3,1,0));
@@ -315,7 +315,7 @@ public class PathMaker {
 					input();
 				}
 				if (e.getX() > 130 & e.getX() < 130 + 50 & e.getY() > 10 & e.getY() < 40) {
-					clearpath();
+					//clearpath();
 				}
 			}
 			public void mouseEntered(MouseEvent e) {}
@@ -483,7 +483,7 @@ public class PathMaker {
 //			path.add(new PointonPath(startAtHatches.getX(),
 //									 startAtHatches.getY(),
 //									 0));
-			PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+			OldPathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
 			frame.repaint();
 		}
 	});
@@ -577,21 +577,21 @@ public class PathMaker {
 //Clears path
 	public static void clearpath() {
 		for (int i = 1; i < path.size();) {
-			PathMaker.frame.repaint();
-			PathMaker.path.remove(i);
-			PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
-			if (-PathMaker.pointpaneltranslate > PointonPath.h * (PathMaker.path.size() - 800 / PointonPath.h + 1)) {
-				if (PathMaker.path.size() > 800 / PointonPath.h + 1)
-					PathMaker.pointpaneltranslate = -PointonPath.h * (PathMaker.path.size() - 800 / PointonPath.h + 1);
+			OldPathMaker.frame.repaint();
+			OldPathMaker.path.remove(i);
+			OldPathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+			if (-OldPathMaker.pointpaneltranslate > PointonPath.h * (OldPathMaker.path.size() - 800 / PointonPath.h + 1)) {
+				if (OldPathMaker.path.size() > 800 / PointonPath.h + 1)
+					OldPathMaker.pointpaneltranslate = -PointonPath.h * (OldPathMaker.path.size() - 800 / PointonPath.h + 1);
 				else
-					PathMaker.pointpaneltranslate = 0;
+					OldPathMaker.pointpaneltranslate = 0;
 			}
 		}
 		frame.repaint();
 	}
 	
 	public static void resetFrame() {
-		PathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
+		OldPathMaker.overlay = new BufferedImage(400, 800, BufferedImage.TYPE_4BYTE_ABGR);
 		frame.repaint();
 	}
 	
