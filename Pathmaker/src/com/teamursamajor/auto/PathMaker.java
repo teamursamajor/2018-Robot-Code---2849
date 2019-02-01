@@ -44,7 +44,7 @@ public class PathMaker implements PlayingField {
     static JFrame screenFrame;
 
     //This Images are set in the main method
-    static BufferedImage field, overField; 
+    static BufferedImage fieldImage, overFieldImage; 
     static ArrayList<PointOnPathV2> drawnPath = new ArrayList<PointOnPathV2>();
     
     /*
@@ -64,8 +64,8 @@ public class PathMaker implements PlayingField {
 
         //Sets field images
         try {
-			field = ImageIO.read(new File(System.getProperty("user.dir") + "/../2019field.jpeg"));
-			overField = ImageIO.read(new File(System.getProperty("user.dir") + "/../2019field(transparent).png"));
+			fieldImage = ImageIO.read(new File(System.getProperty("user.dir") + "/../2019field.jpeg"));
+			overFieldImage = ImageIO.read(new File(System.getProperty("user.dir") + "/../2019field(transparent).png"));
 	
 		} catch (Exception E) {
 			E.printStackTrace();
@@ -107,7 +107,7 @@ public class PathMaker implements PlayingField {
          /*
           * Defines the button panel 
           */
-         screenFrame.add(buttonPanel);
+         //JPanel buttonPanel = GuiPanels.buttonPanel;         screenFrame.add(buttonPanel);
          buttonPanel.setSize(200,850);
          buttonPanel.setLocation(0,50);
 
