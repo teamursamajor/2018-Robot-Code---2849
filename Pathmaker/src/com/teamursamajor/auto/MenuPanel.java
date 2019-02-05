@@ -81,7 +81,9 @@ public class MenuPanel extends JPanel {
     }
 
     public void displayPathFile(){
-
+        /**
+         * Move to path maker
+         */
     }
 
     public void updateTempTextFile(){
@@ -96,4 +98,6 @@ public class MenuPanel extends JPanel {
          * then clears it
          */
     }
+    //TODO - add flip by x/y buttons
+    //TODO - add bezier curve button
 }

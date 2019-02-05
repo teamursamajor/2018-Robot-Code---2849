@@ -69,6 +69,7 @@ public class PathMaker implements PlayingField {
 			overFieldImage = ImageIO.read(new File(System.getProperty("user.dir") + "/../2019field(transparent).png"));
 	
 		} catch (Exception E) {
+            System.out.println("ERROR READING IMAGES");
 			E.printStackTrace();
         }
         
@@ -102,18 +103,20 @@ public class PathMaker implements PlayingField {
          screenFrame.setDefaultCloseOperation(screenFrame.EXIT_ON_CLOSE); 
         
 
-        // GuiPanels gui = new GuiPanels();
-         //PointPanel pointPanel = new PointPanel();
+        
          PointOnPath test1 = new PointOnPath(13,52,2);
          PointOnPath test2 = new PointOnPath(12,42,4);
          MenuPanel menu = new MenuPanel();
-        // menu.setEditable(true);
-         //menu.addActionListener()
          screenFrame.add(menu);
-
-
-
-
+         FieldPanel field = new FieldPanel(fieldImage, overFieldImage, 400, 800);
+         //field.drawPoints(test1, test2);
+         //field.setVisible(true)
+         screenFrame.add(field);
+         field.setSize(400,850);
+         field.setLocation(200,0);
+         field.setVisible(true);
+         //JPanel fieldTest = field;
+        // screenFrame.add(fieldTest);
          //AFTER ADDING PANELS
         // screenFrame.setVisible(true);
          //MOUSE LISTENER A

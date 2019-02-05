@@ -73,7 +73,13 @@ public class PointOnPath extends JPanel implements FieldMeasurements {
 
         return "";
     }
-
+    
+    public int getXPixelCoord (){
+        return this.xPixel;
+    }
+    public int getYPixelCoord (){
+        return this.yPixel;
+    }
 
     //No Color Change
 

@@ -69,8 +69,8 @@ public class PointPanel extends JPanel {
         Graphics g = this.getGraphics();
 
         String pointInfo = "X:"+point.getX()+", Y:"+point.getY();
-        String breakLine = "-------------------------------------";//TODO - paint line on panel instead
-        JLabel pointEntry = new JLabel(pointInfo+"\n"+breakLine);
+       // String breakLine = "-------------------------------------";//TODO - paint line on panel instead
+        JLabel pointEntry = new JLabel(pointInfo);
  
          numberOfPoints++;
          //int heightOfthis = numberOfPoints*pointEntryHeight;

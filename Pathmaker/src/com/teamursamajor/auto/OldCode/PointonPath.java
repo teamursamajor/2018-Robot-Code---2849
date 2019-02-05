@@ -237,8 +237,8 @@ public class PointonPath extends JPanel  {
 //@DRAWS_LINE?
 
 		if (i != OldPathMaker.path.size() - 1) {
-			Graphics2D g2d = (Graphics2D) OldPathMaker.overlay.getGraphics();
-			g2d.setColor(colorarraay.get(i % colorarraay.size()));
+			Graphics2D g2d = (Graphics2D) OldPathMaker.overlay.getGraphics();//overlay is the path
+			g2d.setColor(colorarraay.get(i % colorarraay.size()));//sets the color of the path
 			g2d.setStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 			g2d.drawLine((int) OldPathMaker.path.get(i).x, (int) OldPathMaker.path.get(i).y,(int) OldPathMaker.path.get(i + 1).x, (int) OldPathMaker.path.get(i + 1).y);
 			if (highlight) {
