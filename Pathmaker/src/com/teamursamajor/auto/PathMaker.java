@@ -50,7 +50,7 @@ public class PathMaker implements PlayingField {
     static Graphics2D pathGraphics; 
     static ArrayList<PointOnPath> drawnPath = new ArrayList<PointOnPath>();
     static PathPoints pathPoints;
-    static JPanel fieldPanel;
+    static JPanel fieldPanel = new JPanel();
     /*
      * Button Panel:
      * JPanel that contains all of the buttons
@@ -76,14 +76,24 @@ public class PathMaker implements PlayingField {
             System.out.println("ERROR READING IMAGES");
 			E.printStackTrace();
         }
-        fieldPanel = updateField();
-        fieldPanel.setSize(400,800);
+       
+        
         pathImage = new BufferedImage(400,800, BufferedImage.TYPE_4BYTE_ABGR);
-        pathGraphics = (Graphics2D) pathImage.getGraphics();
+         pathGraphics = (Graphics2D) pathImage.getGraphics();
         pathGraphics.setStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-        init(); 
-        //Sets reference points for buttons
-        setReferencePoints();
+        init();
+        
+        // fieldPanel = updateField();
+        // //fieldPanel.setSize(400,800);
+        // System.out.println(fieldPanel.toString());
+        // addFieldActions();
+
+        // screenFrame.add(fieldPanel);
+        // fieldPanel.setSize(400,800);
+        // fieldPanel.setVisible(true);
+
+         //Sets reference points for buttons
+         setReferencePoints();
         System.out.println(PlayingField.hatchIntake.toString());
 
         screenFrame.setVisible(true);
@@ -99,9 +109,10 @@ public class PathMaker implements PlayingField {
      * 
      *  
      */
-
+//INIT=========================
      //Rule for new panel - always add to screen panel first
      static void init(){
+         
          
          screenFrame = new JFrame();
          
@@ -119,16 +130,23 @@ public class PathMaker implements PlayingField {
          MenuPanel menu = new MenuPanel();
         // screenFrame.add(menu);
          drawnPath.add(test1);
-         JPanel fieldPanel;
-         
+
+         fieldPanel = new JPanel(){
+            public void paint (Graphics g){
+                g.drawImage(fieldImage, 0, 0, 400, 800, null);
+                g.drawImage(pathImage, 0, 0, 400, 800, null);
+                g.drawImage(overFieldImage, 0, 0, 400, 800, null);
+            }
+         };
+          addFieldActions();
        //  screenFrame.add(field);
          drawPoints(test1, test2);
-         fieldPanel = updateField();
-         fieldPanel = addFieldActions(fieldPanel);
+         
+        // fieldPanel = addFieldActions(fieldPanel);
 
 
          screenFrame.add(fieldPanel);
-
+         fieldPanel.setSize(400,850);
         
          //field.setVisible(true);         
          //JPanel fieldTest = field;
@@ -162,48 +180,40 @@ public class PathMaker implements PlayingField {
 
         }
         
-        public static JPanel addFieldActions(JPanel field){
-            field.addMouseMotionListener(new MouseMotionListener(){
+        public static void addFieldActions(){
+            fieldPanel.addMouseMotionListener(new MouseMotionListener(){
                 public void mouseDragged(MouseEvent e){
                     //System.out.println(e.getX());
                     PointOnPath p = new PointOnPath(e.getX(), e.getY(), 76);
-                    drawnPath.add(p);
                    
                    // System.out.println(drawnPath.toString());                    
 
                     PointOnPath prevPoint = drawnPath.get(drawnPath.size()-1);
                     drawPoints(prevPoint, p);
-                    
+                    fieldPanel.repaint();
+                    drawnPath.add(p);
+                   
                     //drawnPath.add(p);
                 }
             public void mouseMoved(MouseEvent e){};
             });
             
-            return field;
+            
         }
 
-        public static JPanel updateField() {
-            JPanel field = new JPanel (){
-              public void paint (Graphics g){
-                g.drawImage(fieldImage, 0, 0, 400, 800, null);
-                g.drawImage(pathImage, 0, 0, 400, 800, null);
-                g.drawImage(overFieldImage, 0, 0, 400, 800, null);
-              }
-              // g.drawImage(drawnPath, 0, 0, width, height, null);//CHECK NULL
-             // g.drawImage(overField, 0, 0, width, height, null);
-            };
-          //  fieldPanel.setSize(400,850);
-            return field;
-        }
+        
 
         public static void drawPoints (PointOnPath point1, PointOnPath point2){
             int [] point1Coordinates = {point1.getXPixelCoord(), point1.getYPixelCoord()};
             int [] point2Coordinates = {point2.getXPixelCoord(), point2.getYPixelCoord()};
     
             pathGraphics.setColor(Color.GREEN);
+            pathGraphics.setStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             pathGraphics.drawLine(point1Coordinates[0], point1Coordinates[1],
                                   point2Coordinates[0], point2Coordinates[1]);
             //this.updateField();
+            fieldPanel.repaint();
+            
         }    
 
 
