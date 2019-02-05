@@ -76,6 +76,8 @@ public class PathMaker implements PlayingField {
             System.out.println("ERROR READING IMAGES");
 			E.printStackTrace();
         }
+        fieldPanel = updateField();
+        fieldPanel.setSize(400,800);
         pathImage = new BufferedImage(400,800, BufferedImage.TYPE_4BYTE_ABGR);
         pathGraphics = (Graphics2D) pathImage.getGraphics();
         pathGraphics.setStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
@@ -117,7 +119,7 @@ public class PathMaker implements PlayingField {
          MenuPanel menu = new MenuPanel();
         // screenFrame.add(menu);
          drawnPath.add(test1);
-         JPanel fieldPanel = updateField();
+         JPanel fieldPanel;
          
        //  screenFrame.add(field);
          drawPoints(test1, test2);
@@ -190,7 +192,7 @@ public class PathMaker implements PlayingField {
               // g.drawImage(drawnPath, 0, 0, width, height, null);//CHECK NULL
              // g.drawImage(overField, 0, 0, width, height, null);
             };
-            fieldPanel.setSize(400,850);
+          //  fieldPanel.setSize(400,850);
             return field;
         }
 
