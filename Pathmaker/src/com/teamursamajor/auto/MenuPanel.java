@@ -80,6 +80,8 @@ public class MenuPanel extends JPanel {
          */
     }
 
+   // public void readFile (String patg)
+
     public void displayPathFile(){
         /**
          * Move to path maker

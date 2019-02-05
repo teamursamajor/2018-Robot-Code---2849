@@ -37,6 +37,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import java.awt.Graphics2D;
+import java.awt.BasicStroke;
 
 public class PathMaker implements PlayingField {
 
@@ -44,9 +46,11 @@ public class PathMaker implements PlayingField {
     static JFrame screenFrame;
 
     //This Images are set in the main method
-    static BufferedImage fieldImage, overFieldImage; 
+    static BufferedImage fieldImage, overFieldImage, pathImage;
+    static Graphics2D pathGraphics; 
     static ArrayList<PointOnPath> drawnPath = new ArrayList<PointOnPath>();
-    
+    static PathPoints pathPoints;
+    static JPanel fieldPanel;
     /*
      * Button Panel:
      * JPanel that contains all of the buttons
@@ -63,7 +67,7 @@ public class PathMaker implements PlayingField {
     public static void main (String[] args){
 
         //Sets field images
-        init();
+       pathPoints = new PathPoints();
         try {
 			fieldImage = ImageIO.read(new File(System.getProperty("user.dir") + "/../2019field.jpeg"));
 			overFieldImage = ImageIO.read(new File(System.getProperty("user.dir") + "/../2019field(transparent).png"));
@@ -72,7 +76,10 @@ public class PathMaker implements PlayingField {
             System.out.println("ERROR READING IMAGES");
 			E.printStackTrace();
         }
-        
+        pathImage = new BufferedImage(400,800, BufferedImage.TYPE_4BYTE_ABGR);
+        pathGraphics = (Graphics2D) pathImage.getGraphics();
+        pathGraphics.setStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        init(); 
         //Sets reference points for buttons
         setReferencePoints();
         System.out.println(PlayingField.hatchIntake.toString());
@@ -93,6 +100,7 @@ public class PathMaker implements PlayingField {
 
      //Rule for new panel - always add to screen panel first
      static void init(){
+         
          screenFrame = new JFrame();
          
          File ursaMajorBearIcon = new File ((System.getProperty("user.dir") + "/../Icon.png"));
@@ -105,16 +113,22 @@ public class PathMaker implements PlayingField {
 
         
          PointOnPath test1 = new PointOnPath(13,52,2);
-         PointOnPath test2 = new PointOnPath(12,42,4);
+         PointOnPath test2 = new PointOnPath(120,92,4);
          MenuPanel menu = new MenuPanel();
-         screenFrame.add(menu);
-         FieldPanel field = new FieldPanel(fieldImage, overFieldImage, 400, 800);
-         //field.drawPoints(test1, test2);
-         //field.setVisible(true)
-         screenFrame.add(field);
-         field.setSize(400,850);
-         field.setLocation(200,0);
-         field.setVisible(true);
+        // screenFrame.add(menu);
+         drawnPath.add(test1);
+         JPanel fieldPanel = updateField();
+         
+       //  screenFrame.add(field);
+         drawPoints(test1, test2);
+         fieldPanel = updateField();
+         fieldPanel = addFieldActions(fieldPanel);
+
+
+         screenFrame.add(fieldPanel);
+
+        
+         //field.setVisible(true);         
          //JPanel fieldTest = field;
         // screenFrame.add(fieldTest);
          //AFTER ADDING PANELS
@@ -145,16 +159,50 @@ public class PathMaker implements PlayingField {
         //  fieldPanel.setLocation(200,0);
 
         }
+        
+        public static JPanel addFieldActions(JPanel field){
+            field.addMouseMotionListener(new MouseMotionListener(){
+                public void mouseDragged(MouseEvent e){
+                    //System.out.println(e.getX());
+                    PointOnPath p = new PointOnPath(e.getX(), e.getY(), 76);
+                    drawnPath.add(p);
+                   
+                   // System.out.println(drawnPath.toString());                    
 
-       
-
-        public JPanel makePanelForField (){
-            //TODO - FIX
-                        
-
-            JPanel field = null;
+                    PointOnPath prevPoint = drawnPath.get(drawnPath.size()-1);
+                    drawPoints(prevPoint, p);
+                    
+                    //drawnPath.add(p);
+                }
+            public void mouseMoved(MouseEvent e){};
+            });
+            
             return field;
         }
+
+        public static JPanel updateField() {
+            JPanel field = new JPanel (){
+              public void paint (Graphics g){
+                g.drawImage(fieldImage, 0, 0, 400, 800, null);
+                g.drawImage(pathImage, 0, 0, 400, 800, null);
+                g.drawImage(overFieldImage, 0, 0, 400, 800, null);
+              }
+              // g.drawImage(drawnPath, 0, 0, width, height, null);//CHECK NULL
+             // g.drawImage(overField, 0, 0, width, height, null);
+            };
+            fieldPanel.setSize(400,850);
+            return field;
+        }
+
+        public static void drawPoints (PointOnPath point1, PointOnPath point2){
+            int [] point1Coordinates = {point1.getXPixelCoord(), point1.getYPixelCoord()};
+            int [] point2Coordinates = {point2.getXPixelCoord(), point2.getYPixelCoord()};
+    
+            pathGraphics.setColor(Color.GREEN);
+            pathGraphics.drawLine(point1Coordinates[0], point1Coordinates[1],
+                                  point2Coordinates[0], point2Coordinates[1]);
+            //this.updateField();
+        }    
 
 
 

@@ -8,7 +8,7 @@ public class PointOnPath extends JPanel implements FieldMeasurements {
     private double time;
     private double direction;
     private int pointNumber; // Nth Point in the current path ?
-    //Ro
+    //private ArrayList <PointOnPat
     
     
     /* Field Measurements have:
@@ -24,21 +24,25 @@ public class PointOnPath extends JPanel implements FieldMeasurements {
      * Get rid of the buttons - redundant and don't work
      */
 
-    public PointOnPath (double xFeet, double yFeet, int pointNumber){
+    public PointOnPath (int xPixel, int yPixel, int pointNumber){
         /*
          *TODO - figure out which constructor to use 
          */
 
-         this.xFeet = xFeet;
-         this.yFeet = yFeet;
+         this.xPixel = xPixel;
+         this.yPixel = yPixel;
         
          this.pointNumber = pointNumber;
          
         
     }
 
-    public void paintPoint(){
-        //paints the line
+    public void addPoint (PointOnPath p){
+
+    }
+    
+    public void clearPoints (){
+        
     }
 
 
@@ -63,15 +67,15 @@ public class PointOnPath extends JPanel implements FieldMeasurements {
 
          //TODO - have another toString but for the file; this toString is for debugging and for readibility
 
-         String str = "Point " + pointNumber +": \n"
-            +"- xCoordinates: \n"
-            +"-- " + xFeet + " ft, " + xPixel + "pixels \n"
-            +"- yCoordinates: \n"
-            +"-- " + yFeet + " ft, " + yPixel + "pixels \n"
-            +"- Color: N/A";
+         //String str = "Point " + pointNumber +": \n"
+            // +"- xCoordinates: \n"
+            // +"-- " + xFeet + " ft, " + xPixel + "pixels \n"
+            // +"- yCoordinates: \n"
+            // +"-- " + yFeet + " ft, " + yPixel + "pixels \n"
+            // +"- Color: N/A";
 
-
-        return "";
+        String str = "X:" + xPixel +", Y:" +yPixel;
+        return str;
     }
     
     public int getXPixelCoord (){
