@@ -82,28 +82,15 @@ public class PathMaker implements PlayingField {
         try {
 			fieldImage = ImageIO.read(new File(System.getProperty("user.dir") + "/../2019field.jpeg"));
 			overFieldImage = ImageIO.read(new File(System.getProperty("user.dir") + "/../2019field(transparent).png"));
-	
+            pathFile = new File(System.getProperty("user.dir") + "/../PathWriter.txt");
 		} catch (Exception E) {
             System.out.println("ERROR READING IMAGES");
 			E.printStackTrace();
         }
        
         
-        pathImage = new BufferedImage(400,800, BufferedImage.TYPE_4BYTE_ABGR);
-        pathGraphics = (Graphics2D) pathImage.getGraphics();
-        pathGraphics.setStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-        init();
         
-        // fieldPanel = updateField();
-        // //fieldPanel.setSize(400,800);
-        // System.out.println(fieldPanel.toString());
-        // addFieldActions();
-
-        // screenFrame.add(fieldPanel);
-        // fieldPanel.setSize(400,800);
-        // fieldPanel.setVisible(true);
-
-         //Sets reference points for buttons
+        init();
          setReferencePoints();
         System.out.println(PlayingField.hatchIntake.toString());
 
@@ -112,14 +99,7 @@ public class PathMaker implements PlayingField {
 
 
 
-    //Output - N/A ?
-    //Input - N/A  ?
-    /* Init - Definitely need - the following are the broken down portions of it.
-     * - set Frame YES
-     * mouseWheelListener - Maybe?
-     * 
-     *  
-     */
+ 
 //INIT=========================
      //Rule for new panel - always add to screen panel first
      static void init(){
@@ -134,39 +114,19 @@ public class PathMaker implements PlayingField {
          screenFrame.setSize(1000, 850);
          screenFrame.setDefaultCloseOperation(screenFrame.EXIT_ON_CLOSE); 
         
-
-        
-         PointOnPath test1 = new PointOnPath(13,52,2);
-         PointOnPath test2 = new PointOnPath(120,92,4);
          MenuPanel menu = new MenuPanel();
          screenFrame.add(menu);
-         drawnPath.add(test1);
-
-         fieldPanel = new JPanel(){
-            public void paint (Graphics g){
-                g.drawImage(fieldImage, 0, 0, 400, 800, null);
-                g.drawImage(pathImage, 0, 0, 400, 800, null);
-                g.drawImage(overFieldImage, 0, 0, 400, 800, null);
-            }
-         };
-          addFieldActions();
-       //  screenFrame.add(field);
-         drawPoints(test1, test2);
-         
-        // fieldPanel = addFieldActions(fieldPanel);
 
 
-         screenFrame.add(fieldPanel);
-         fieldPanel.setSize(400,850);
-        
-         //field.setVisible(true);         
-         //JPanel fieldTest = field;
-        // screenFrame.add(fieldTest);
-         //AFTER ADDING PANELS
-        // screenFrame.setVisible(true);
-         //MOUSE LISTENER A
-         
-    
+        FieldPanel fieldTEST = new FieldPanel(fieldImage, overFieldImage);
+        fieldTEST.setPathFile(pathFile);
+
+        screenFrame.add(fieldTEST);
+        fieldTEST.setSize(400,850);
+        fieldTEST.setVisible(true);
+        fieldTEST.setLocation(200,0);
+
+        menu.setLocation(625, 50); //size - 325, 800
          //PRESET PANEL
          /*
           * Defines the button panel 
@@ -175,74 +135,10 @@ public class PathMaker implements PlayingField {
          buttonPanel.setSize(200,850);
          buttonPanel.setLocation(0,50);
 
-          /*
-         * makePanelForField: 
-         * makes a panel that displays the field image
-         * as well as the over field image.
-         * 
-         * this panel also enables us to click on it and
-         * draw paths onto it
-         * 
-         * Sets it size and mouse listeners
-         */
-        //  screenFrame.add(fieldPanel);
-        //  fieldPanel.setSize(400,850);
-          fieldPanel.setLocation(200,0);
+         //fieldPanel.setLocation(200,0);
 
-        }
-
-        public static void writePath (PointOnPath p) throws IOException {
-            FileWriter writer = new FileWriter(pathFile);
-            writer.write(p.toString());
-            writer.flush();
-            writer.close();
         }
         
-        public static void addFieldActions(){
-            fieldPanel.addMouseMotionListener(new MouseMotionListener(){
-                public void mouseDragged(MouseEvent e){
-                    //System.out.println(e.getX());
-                    PointOnPath p = new PointOnPath(e.getX(), e.getY(), 76);
-                   try {
-                       writePath(p);
-                   }
-                   catch (Exception e2){
-                        System.out.println("ERROR WRITING TO FILE");
-                   }
-                   // System.out.println(drawnPath.toString());                    
-
-                    PointOnPath prevPoint = drawnPath.get(drawnPath.size()-1);
-                    drawPoints(prevPoint, p);
-                    fieldPanel.repaint();
-                    drawnPath.add(p);
-                   
-                    //drawnPath.add(p);
-                }
-            public void mouseMoved(MouseEvent e){};
-            });
-            
-            
-        }
-
-        
-
-        public static void drawPoints (PointOnPath point1, PointOnPath point2){
-            int [] point1Coordinates = {point1.getXPixelCoord(), point1.getYPixelCoord()};
-            int [] point2Coordinates = {point2.getXPixelCoord(), point2.getYPixelCoord()};
-    
-            pathGraphics.setColor(Color.GREEN);
-            pathGraphics.setStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-            pathGraphics.drawLine(point1Coordinates[0], point1Coordinates[1],
-                                  point2Coordinates[0], point2Coordinates[1]);
-            //this.updateField();
-            fieldPanel.repaint();
-            
-        }    
-
-
-
-
-
     //======= METHODS NOT RELATED TO JPANELS OR INIT ======
 
     /* setReferencePoints Method =========================
