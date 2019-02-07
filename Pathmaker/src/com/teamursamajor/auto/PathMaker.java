@@ -40,6 +40,14 @@ import javax.swing.border.TitledBorder;
 import java.awt.Graphics2D;
 import java.awt.BasicStroke;
 
+/**
+ * Todo:
+ * In menu panel add flip by x buttons that only appear when
+ * certains start points are selected
+ * 
+ * 
+ */
+
 public class PathMaker implements PlayingField {
 
     //Frame where everything is described
@@ -79,7 +87,7 @@ public class PathMaker implements PlayingField {
        
         
         pathImage = new BufferedImage(400,800, BufferedImage.TYPE_4BYTE_ABGR);
-         pathGraphics = (Graphics2D) pathImage.getGraphics();
+        pathGraphics = (Graphics2D) pathImage.getGraphics();
         pathGraphics.setStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         init();
         
@@ -128,7 +136,7 @@ public class PathMaker implements PlayingField {
          PointOnPath test1 = new PointOnPath(13,52,2);
          PointOnPath test2 = new PointOnPath(120,92,4);
          MenuPanel menu = new MenuPanel();
-        // screenFrame.add(menu);
+         screenFrame.add(menu);
          drawnPath.add(test1);
 
          fieldPanel = new JPanel(){
@@ -176,7 +184,7 @@ public class PathMaker implements PlayingField {
          */
         //  screenFrame.add(fieldPanel);
         //  fieldPanel.setSize(400,850);
-        //  fieldPanel.setLocation(200,0);
+          fieldPanel.setLocation(200,0);
 
         }
         
