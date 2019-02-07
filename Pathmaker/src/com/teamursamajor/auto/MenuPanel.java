@@ -142,6 +142,7 @@ public class MenuPanel extends JPanel {
                 /**
                  * Copies the text from path writer 2 file in combo box
                  */
+                
             }
         });
 

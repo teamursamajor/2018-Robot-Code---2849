@@ -40,6 +40,8 @@ import javax.swing.border.TitledBorder;
 import java.awt.Graphics2D;
 import java.awt.BasicStroke;
 
+import java.io.*;
+
 /**
  * Todo:
  * In menu panel add flip by x buttons that only appear when
@@ -59,6 +61,7 @@ public class PathMaker implements PlayingField {
     static ArrayList<PointOnPath> drawnPath = new ArrayList<PointOnPath>();
     static PathPoints pathPoints;
     static JPanel fieldPanel = new JPanel();
+    static File pathFile = new File ("C:/Users/teamursamajor/git/2018-Robot-Code---2849/Pathmaker/PathFiles/PathWriter.txt");//TODO - change
     /*
      * Button Panel:
      * JPanel that contains all of the buttons
@@ -120,7 +123,7 @@ public class PathMaker implements PlayingField {
 //INIT=========================
      //Rule for new panel - always add to screen panel first
      static void init(){
-         
+         //clear path file
          
          screenFrame = new JFrame();
          
@@ -187,13 +190,25 @@ public class PathMaker implements PlayingField {
           fieldPanel.setLocation(200,0);
 
         }
+
+        public static void writePath (PointOnPath p) throws IOException {
+            FileWriter writer = new FileWriter(pathFile);
+            writer.write(p.toString());
+            writer.flush();
+            writer.close();
+        }
         
         public static void addFieldActions(){
             fieldPanel.addMouseMotionListener(new MouseMotionListener(){
                 public void mouseDragged(MouseEvent e){
                     //System.out.println(e.getX());
                     PointOnPath p = new PointOnPath(e.getX(), e.getY(), 76);
-                   
+                   try {
+                       writePath(p);
+                   }
+                   catch (Exception e2){
+                        System.out.println("ERROR WRITING TO FILE");
+                   }
                    // System.out.println(drawnPath.toString());                    
 
                     PointOnPath prevPoint = drawnPath.get(drawnPath.size()-1);
