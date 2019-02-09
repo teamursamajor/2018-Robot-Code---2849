@@ -91,7 +91,8 @@ public class PathMaker implements PlayingField {
         
         
         init();
-         setReferencePoints();
+        
+        setReferencePoints();
         System.out.println(PlayingField.hatchIntake.toString());
 
         screenFrame.setVisible(true);
@@ -118,14 +119,14 @@ public class PathMaker implements PlayingField {
          screenFrame.add(menu);
 
 
-        FieldPanel fieldTEST = new FieldPanel(fieldImage, overFieldImage);
-        fieldTEST.setPathFile(pathFile);
-
+        FieldPanel fieldTEST = new FieldPanel(fieldImage, overFieldImage, pathFile);
+        //fieldTEST.setPathFile(pathFile);
+        menu.setField(fieldTEST);
         screenFrame.add(fieldTEST);
         fieldTEST.setSize(400,850);
         fieldTEST.setVisible(true);
         fieldTEST.setLocation(200,0);
-
+        //GuiElements.setFieldPanel(new FieldPanel(fieldImage, overFieldImage));
         menu.setLocation(625, 50); //size - 325, 800
          //PRESET PANEL
          /*

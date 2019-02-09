@@ -40,6 +40,10 @@ import javax.swing.border.TitledBorder;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import javax.swing.JTextField;
+
+
 //TODO - fix some logic when not being rushed
 public class MenuPanel extends JPanel {
 
@@ -55,6 +59,8 @@ public class MenuPanel extends JPanel {
     private ArrayList<String> pathNames;
     private File [] pathFiles;
     private Map <String, File> pathMap = new LinkedHashMap<String, File>();
+    private FieldPanel fieldPanel;
+
 
      public MenuPanel (){
         this(335);
@@ -85,8 +91,12 @@ public class MenuPanel extends JPanel {
         setDropDown();
 
         this.add(selectPathFile);
+        
+        //JSlider getMouseLocationSlider ();
     
-    
+    }
+    public void setField (FieldPanel fieldPanel){
+        this.fieldPanel = fieldPanel;
     }
 
     private void setDropDown (){
@@ -111,33 +121,38 @@ public class MenuPanel extends JPanel {
         JButton flipByYAxisButton = setButtonLayout(new JButton("Flip By Y-Axis"));
 
         JButton savePathButton = setButtonLayout(new JButton("Save Path"));
+        savePathButton.setToolTipText("Saves the GREEN path to the path file in the drop down menu");
 
         JButton showPathButton = setButtonLayout(new JButton("Show Selected Path"));
+        showPathButton.setToolTipText("Show Selected Path");
         //TODO- have delete path file button + read as text file button
-        JButton [] buttons = {clearPathButton, flipByYAxisButton, savePathButton, showPathButton};
         
-        //TODO -  do this last (+ buttons arr)
-        for (JButton b : buttons){
-            this.add(b);
-        }
         
-        buttons[0].addActionListener (new ActionListener(){
+        clearPathButton.addActionListener (new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 /**
                  * Clears crnt path + path writer . txt
                  */
+                try {
+                    fieldPanel.clearPath(fieldPanel.getStartPoint());
+                } catch (Exception error){
+                        
+                }
             }
         });
 
-        buttons[1].addActionListener (new ActionListener(){
+        flipByYAxisButton.addActionListener (new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 /**
                  * flips crnt path by the Y axis
                  */
+                int[] a = {50, 12};
+                int[] b = {13, 95};
+                fieldPanel.testMe(a,b);
             }
         });
 
-        buttons[2].addActionListener (new ActionListener(){
+        savePathButton.addActionListener (new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 /**
                  * Copies the text from path writer 2 file in combo box
@@ -146,15 +161,23 @@ public class MenuPanel extends JPanel {
             }
         });
 
-        buttons[3].addActionListener (new ActionListener(){
+
+        showPathButton.addActionListener (new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 /**
                  * shows the path in the crnt path file
                  */
+                fieldPanel.drawBezierCurve();
             }
         });
 
         //TODO - add delete path file button
+        JButton [] buttons = {clearPathButton, flipByYAxisButton, savePathButton, showPathButton};
+        
+        //TODO -  do this last (+ buttons arr)
+        for (JButton b : buttons){
+            this.add(b);
+        }
 
     }
 
@@ -237,4 +260,8 @@ public class MenuPanel extends JPanel {
     }
     //TODO - add flip by x/y buttons
     //TODO - add bezier curve button
+    //TODO Make the above^ into a check box
+
+
+
 }
