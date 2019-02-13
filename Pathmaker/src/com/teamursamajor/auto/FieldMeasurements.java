@@ -4,8 +4,8 @@ interface FieldMeasurements {
      *The width and height of the field in feet 
      */
 
-     final double width = 28;
-     final double height = 54;
+     final double WIDTH = 28;
+     final double HEIGHT = 54;
     
      
     /* TODO:
@@ -15,6 +15,9 @@ interface FieldMeasurements {
      * 
      * 
      */
+    //pixel to inches
+     final double X_CONVERSION = 1;//TODO - Set
+     final double Y_CONVERSION = 1;//TODO - Set
     
      /*Off sets
       * 

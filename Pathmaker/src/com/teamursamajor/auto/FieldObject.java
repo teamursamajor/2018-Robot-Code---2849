@@ -9,10 +9,10 @@ public class FieldObject implements FieldMeasurements{
         this.yFeet = yFeet;
         
         //For debugging
-        if (this.xFeet > FieldMeasurements.width){
+        if (this.xFeet > FieldMeasurements.WIDTH){
             System.out.println("X COORDINATE OF GAME PIECE IS TOO BIG (" + this.xFeet + ")ft");
         }
-        if (this.yFeet > FieldMeasurements.height){
+        if (this.yFeet > FieldMeasurements.HEIGHT){
             System.out.println("Y COORDINATE OF GAME PIECE IS TOO BIG (" + this.yFeet +")ft");
         }
     }

@@ -88,7 +88,10 @@ public class PathMaker implements PlayingField {
 			E.printStackTrace();
         }
        
-        
+        RobotStats a = new RobotStats(1,1);
+        RobotStats b = new RobotStats(45,45);
+        PathParser c = new PathParser();
+        c.calculateAngle(a,b);
         
         init();
         
