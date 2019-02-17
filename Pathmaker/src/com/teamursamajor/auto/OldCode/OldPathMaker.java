@@ -366,13 +366,13 @@ public class OldPathMaker {
 	JButton startMiddlePlatform = new JButton("Bottom Middle Platform");
 	JButton startHatchIntakeR = new JButton("Right Hatch Intake");//FIX TEXT CUT OFF
 	JButton startHatchIntakeL = new JButton("Left Hatch Intake");
-	JButton startRocketRT = new JButton("Top Right Rocket");
+	JButton startRocketRT = new JButton("Top Right Rocket");//==================
 	JButton startRocketRB = new JButton("Bottom Right Rocket");
 	JButton startRocketLT = new JButton("Top Left Rocket");
 	JButton startRocketLB = new JButton("Bottom Left Rocket");
-	JButton startCargoBayFrontR = new JButton("Front Right Cargo Bay Door");
+	JButton startCargoBayFrontR = new JButton("Front Right Cargo Bay Door");//==========
 	JButton startCargoBayFrontL = new JButton("Front Left Cargo Bay Door");
-	JButton startCargoBayRT = new JButton("Top Right Cargo Bay Door");
+	JButton startCargoBayRT = new JButton("Top Right Cargo Bay Door");//================
 	JButton startCargoBayRM = new JButton("Middle Right Cargo Bay Door");
 	JButton startCargoBayRB = new JButton("Bottom Right Cargo Bay Door");
 	JButton startCargoBayLT = new JButton("Top Left Cargo Bay Door");

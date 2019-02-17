@@ -1,24 +1,26 @@
 package com.teamursamajor.auto;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 public class Curve {
 	
+	private ArrayList<RobotStats> path = new ArrayList <RobotStats>();
 	
-	// public void quadBezier (double[] p0, double[] p1, double[] p2, double t){
-	// 	double[] pFinal;
-		
-	// 	double xRes = Math.pow(1 - t, 2) * p0[0] +
-	// 				  (1-t) * 2 * t * p1[0] +
-	// 				  1 * t * p2[0];
-		
-	// 	double yRes = Math.pow(1 - t, 2) * p0[1] +
-	// 			  (1-t) * 2 * t * p1[1] +
-	// 			  1 * t * p2[1];
-		
-	// 	//return pFinal;
+	public void clearCurve (){
+		ArrayList<RobotStats> res = new ArrayList <RobotStats>();
+		path = res;
+	}
+
+	public ArrayList <RobotStats> getPath (){
+		return path;
+	}
+
+	// public void clearDrawnCurve (Graphics g){
+	// 	g.repaint();
 	// }
-	
+
+
 	public double[] cubicBezier (double[] p0, double[] p1, double[] p2, double[] p3, double t){
 		double xRes = Math.pow(1-t, 3)*p0[0]+
 					  Math.pow(1-t, 2)*3*t*p1[0]+
@@ -60,15 +62,8 @@ public class Curve {
 				crntPoint[0] = (int) res[0];
 				crntPoint[1] = (int) res[1];
 				
-				// if (ending && ( (points.length%4) <= p ) ){
-				// 	break;
-				// }
-			
-				
-				
-				//started = true;
-				
-				
+				RobotStats info = new RobotStats(crntPoint[0], crntPoint[1]);
+				path.add(info);
             }
             if (points.length - p <= 0){
                 break;
@@ -76,4 +71,12 @@ public class Curve {
 		}
 	}
 	
+	public String toString(){
+		String str = "";
+		for (RobotStats r : path){
+			str += r.toString() + "/n";
+		}
+
+		return str;
+	}
 }

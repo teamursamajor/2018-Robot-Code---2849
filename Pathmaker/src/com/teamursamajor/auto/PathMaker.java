@@ -47,6 +47,7 @@ import java.io.*;
  * In menu panel add flip by x buttons that only appear when
  * certains start points are selected
  * 
+ * add things like write to file in field class
  * 
  */
 
@@ -135,14 +136,130 @@ public class PathMaker implements PlayingField {
          /*
           * Defines the button panel 
           */
+          
          //JPanel buttonPanel = GuiPanels.buttonPanel;         screenFrame.add(buttonPanel);
          buttonPanel.setSize(200,850);
          buttonPanel.setLocation(0,50);
 
+        String[] textOptionsA = {"Top", "Bottom"};
+        String[] textOptionsB = {"Top", "Middle", "Bottom"};//cargo bay,
+        String[] textOptionsC = {"Left", "Right"};
+        String[] textOptionsD = {"Left", "Middle", "Right"};
+        String[] textOptionsE = {"Raised","Lowered"};
+        String[] outlierText = {""};
+
+        String[][] startPlatformText = {textOptionsC, textOptionsE};
+        String[] miscPlatformText = {"Bottom Middle Platform"};
+        JButton [] startPlatformButtons = setButtons ("Platform", startPlatformText, miscPlatformText);
+        
+        JButton [] hatchIntakeButtons = setButtons ("Hatch Intake", textOptionsC, outlierText);
+
+        String[][] startRocketText = {textOptionsA, textOptionsC};
+        JButton [] rocketButtons = setButtons("Rocket", startRocketText, outlierText);
+        //b, c
+        String[][] startCargoBayText = {textOptionsB, textOptionsC};
+        String[] miscCargoBayText = {"Front Left Cargo Bay Door", "Front Left Cargo Bay Door"};
+        JButton [] cargoBayButtons = setButtons("Cargo Bay Door", startCargoBayText, miscCargoBayText);
+
+
+        for (JButton b : cargoBayButtons){
+            buttonPanel.add(b);
+        }
+        screenFrame.add(buttonPanel);
+        buttonPanel.setVisible(true);
+
          //fieldPanel.setLocation(200,0);
 
         }
+    
+    public static JButton[] setButtons (String gamePiece, String[] changingText, String[] outlierText){
+        String[][] str = {changingText};
+        return setButtons (gamePiece, str, outlierText);
+    }
+    public static JButton[] setButtons (String gamePiece, String[][] changingText, String[] outlierText){
+        //ArrayList<JButton> buttons = new ArrayList<JButton> ();
+        ArrayList<String> buttonString = new ArrayList<String> ();
+        int miscTextLength = outlierText.length;
+
+        if (outlierText[0].equals("")){
+            miscTextLength = 0;
+        }
         
+        int [] indexes = new int[changingText.length];
+        for (int i = 0; i < indexes.length; i++){
+            indexes[i] = 0;
+            //System.out.println(i);
+        }
+
+         while (true){
+            for (int i = indexes.length-1; i > -1; i--){
+                indexes[i] += 1;
+                if (indexes[i] > changingText[i].length-1){
+                    indexes[i] = 0;
+                } else {
+                    break;
+                }
+            }
+
+            String buttonText = "";
+            for (int i = 0; i < changingText.length; i++){
+                //System.out.println(changingText[i][indexes[i]]);
+                buttonText = buttonText.concat(changingText[i][indexes[i]] + " ");
+               // System.out.println(buttonText +"IN FOR LOOP FOR BTEXT");
+            }
+
+            buttonString.add(buttonText);
+
+            int sum = 0;
+            for (int i : indexes){
+                sum += i;
+            }
+
+            if (sum == 0) break;
+        }
+
+
+        JButton [] res = new JButton [buttonString.size() + miscTextLength];
+
+        for (int i = 0; i < res.length; i++){
+            JButton b;
+            if (i > miscTextLength-1){
+                b = new JButton(buttonString.get(i - miscTextLength) + gamePiece);
+            } else {
+                b = new JButton(outlierText[i]);
+            }
+            if (!(b.getLabel().equals(gamePiece))){
+                b = formatButton(b);
+                res [i] = b;
+            } 
+            
+            System.out.println(b.getLabel());
+        }
+
+        return res;
+        
+        // JButton[] res = new JButton[buttons.size()];
+        // for (int i = 0; i < res.length; i++){
+        //     res[i] = (JButton) buttons.get(i);
+        // }
+        
+        // return res;
+    }
+
+    @SuppressWarnings("deprecation")
+	public static JButton formatButton (JButton b){
+		String str = "<html>" + b.getLabel();
+		b.setLabel(str);
+		Border blackline = BorderFactory.createLineBorder(Color.BLACK);
+		
+		b.setBorder(blackline);
+		
+		b.setPreferredSize(new Dimension(80,25));
+		
+		b.setFont(new Font("Helvetica", Font.BOLD, 9));
+		
+		return b;
+	}        
     //======= METHODS NOT RELATED TO JPANELS OR INIT ======
 
     /* setReferencePoints Method =========================

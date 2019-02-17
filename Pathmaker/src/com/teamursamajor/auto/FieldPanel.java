@@ -71,7 +71,7 @@ public class FieldPanel extends JPanel {
     private int[] pointB = new int[2];
     private int[] startPoint = new int[2];
     private int slowDownWriter = 0;
-    private int slowFactor = 25;//3
+    private int slowFactor = 3;//3 - 25
     private ArrayList <Integer[]> drawnPath;
 
     public FieldPanel(BufferedImage fieldImage, BufferedImage overFieldImage, File pathFile){
@@ -102,11 +102,11 @@ public class FieldPanel extends JPanel {
         drawnPath.add(arr);
         //drawnPath.add(pointA);
 
-        try {
-            clearPath(startPoint);
-        } catch (Exception e){
+        // try {
+        //     clearPath(startPoint);
+        // } catch (Exception e){
                 
-        }
+        // }
     }
 
     public void paint (Graphics g){
@@ -125,14 +125,14 @@ public class FieldPanel extends JPanel {
                 pointB = coords;
                 
                 if (slowDownWriter % slowFactor == 0){
-                    try {
-                   //writes info of robot at point b
-                    writeToPathWriterFile(pointB);
-                    }
-                    catch (Exception e){
-                        System.out.println("ERROR WRITING TO FILE");
-                    }
-               // System.out.println(drawnPath.toString());                    
+            //         try {
+            //        //writes info of robot at point b
+            //         writeToPathWriterFile(pointB);
+            //         }
+            //         catch (Exception e){
+            //             System.out.println("ERROR WRITING TO FILE");
+            //         }
+            //    // System.out.println(drawnPath.toString());                    
 
                     drawPoints();
                 }
@@ -152,13 +152,13 @@ public class FieldPanel extends JPanel {
 			public void mouseReleased(MouseEvent e) {
 				int [] coords = {e.getX(), e.getY()};
                 pointB = coords;
-                try {
-                    //writes info of robot at point b
-                     writeToPathWriterFile(pointB);
-                     }
-                     catch (Exception err){
-                         System.out.println("ERROR WRITING TO FILE");
-                     }
+                // try {
+                //     //writes info of robot at point b
+                //      writeToPathWriterFile(pointB);
+                //      }
+                //      catch (Exception err){
+                //          System.out.println("ERROR WRITING TO FILE");
+                //      }
                 // System.out.println(drawnPath.toString());                    
  
                      drawPoints();
@@ -172,12 +172,12 @@ public class FieldPanel extends JPanel {
         updatePoints();
     }
 
-    private void writeToPathWriterFile (int[] coords)throws IOException{
-        FileWriter fileWriter = new FileWriter(pathFile, true);
-        BufferedWriter writer = new BufferedWriter(fileWriter);
-        writer.write(coords[0] + ", Y: " + coords[1] + "\n");
-        writer.flush();
-        writer.close();
+    public void clearField (){
+        pathGraphics.setBackground(new Color(0,0,0,0));
+        pathGraphics.clearRect(0,0, 400, 800);
+        curveGraphics.setBackground(new Color(0,0,0,0));
+        curveGraphics.clearRect(0,0, 400, 800);
+        this.repaint();
     }
 
 
@@ -194,24 +194,8 @@ public class FieldPanel extends JPanel {
         pointA = xyCoords;
     }
 
-    public void clearPath(int [] i) throws IOException{
-        SimpleDateFormat format = new SimpleDateFormat ("===yy/MM/dd - hh:mm:ss===\n");
-        String str = format.format(new Date());
-        FileWriter writer = new FileWriter(pathFile);
-        //BufferedImage tempPathImage = new BufferedImage(400,800, BufferedImage.TYPE_4BYTE_ABGR);
-        //pathImage.t;
-        writer.write(str);
-        writer.flush();
-        writer.close();
-
-        pointA = i;
-
-        pathGraphics.setBackground(new Color(0,0,0,0));
-        pathGraphics.clearRect(0,0, 400, 800);
-        this.repaint();
-    }
-
-    public void drawBezierCurve(){
+   
+    public Curve drawBezierCurve(){
         Curve c = new Curve();
         int[][] p = new int [drawnPath.size()][2];
         for (int i = 0; i < drawnPath.size(); i++){
@@ -222,6 +206,8 @@ public class FieldPanel extends JPanel {
 
         c.recCurve(p, curveGraphics);
         this.repaint();
+        
+        return c;
     }
 
     public void testMe (int[]a, int[]b){
@@ -229,9 +215,9 @@ public class FieldPanel extends JPanel {
         this.repaint();
     }
 
-    public void setStartPoint (int [] startPoint){
-        this.startPoint = startPoint;
-    }
+    // public void setStartPoint (int [] startPoint){
+    //     this.startPoint = startPoint;
+    // }
 
     public int [] getStartPoint (){
         return startPoint;
@@ -240,4 +226,13 @@ public class FieldPanel extends JPanel {
     public ArrayList<Integer[]> getDrawnPath(){
         return drawnPath;
     }
+    public void setStartPoint(int [] coord){
+        pointA = coord;
+        drawnPath = new ArrayList<Integer[]>();
+        Integer [] i = {
+            pointA[0], pointA[1]
+        };
+        drawnPath.add(i);
+    }
+
 }

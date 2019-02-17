@@ -8,10 +8,12 @@ import java.util.ArrayList;
 public class RobotStats implements FieldMeasurements{
 
     //May not need time?
-    private double predictedVelocity, predictedAngle, time;
+    private double predictedVelocity, predictedAngle;
     private double[] predictedLocation;//feet
     private int[] pixelLocation;
     private double distanceToTravel;
+    //FOR LAST YEAR
+    private double velocity, direction, time, acceleration;
 
     public RobotStats (int pixX, int pixY){
         int [] coords = {pixX, pixY};
@@ -34,7 +36,8 @@ public class RobotStats implements FieldMeasurements{
     }
 
     public void setAngle (double angle){
-        this.angle = angle;
+       predictedAngle = angle;
+       
     }
 
     public int[] getPixelLocation(){
@@ -47,7 +50,37 @@ public class RobotStats implements FieldMeasurements{
 
     
 
-
+    public String toString (){
+        return (distanceToTravel +", "+ predictedAngle + "{" + pixelLocation[0] + ", " + pixelLocation[1] + "}");
+    }
     
 
+
+
+
+    public void setStats(RobotStats next){
+        
+    }
+
+
+
+
+
+
+
+    public double getDirection(){
+        return this.direction;
+    }
+
+    public double getXFeet(){
+        return predictedLocation[0];
+    }
+
+    public double getYFeet(){
+        return predictedLocation[1];
+    }
+
+    public double getTime(){
+        return time;
+    }
 }
