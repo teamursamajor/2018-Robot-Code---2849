@@ -72,7 +72,10 @@ public class PathParser implements FieldMeasurements{
         double[] pointBLoc = pointB.getFieldLocation();
         double dist = Math.abs( (pointALoc[0] - pointBLoc[0]) - (pointALoc[1] - pointBLoc[1]));
         return dist;
-    }
     
+    
+    }
+
+
 
 }

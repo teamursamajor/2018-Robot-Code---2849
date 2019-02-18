@@ -235,4 +235,29 @@ public class FieldPanel extends JPanel {
         drawnPath.add(i);
     }
 
+    public void setUpdateVal(int i){
+        slowFactor = i;
+    }
+
+    public void drawFromFile (ArrayList<Integer[]> points){
+        drawnPath = new ArrayList<Integer[]>();
+        clearField();
+        for (Integer[] point : points){
+            drawnPath.add(point);
+        }
+
+        for (int i = 0; i < drawnPath.size() - 1; i++){
+            Integer[] point1 = drawnPath.get(i);
+            Integer[] point2 = drawnPath.get(i+1);
+            curveGraphics.drawLine(point1[0], point1[1], point2[0], point2[1]);
+        }
+      //  drawBezierCurve();
+        this.repaint();
+        Integer[] tempPointA = drawnPath.get(0);
+        int[] temp = {tempPointA[0], tempPointA[1]};
+        pointA = temp;
+        drawnPath = new ArrayList<Integer[]>();
+        drawnPath.add(tempPointA);
+    }
+
 }

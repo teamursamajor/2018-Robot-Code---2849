@@ -118,18 +118,22 @@ public class PathMaker implements PlayingField {
          screenFrame.setLayout(null);
          screenFrame.setSize(1000, 850);
          screenFrame.setDefaultCloseOperation(screenFrame.EXIT_ON_CLOSE); 
+         screenFrame.setTitle("2019 Path Maker");
         
-         MenuPanel menu = new MenuPanel();
-         screenFrame.add(menu);
+         
 
 
         FieldPanel fieldTEST = new FieldPanel(fieldImage, overFieldImage, pathFile);
-        //fieldTEST.setPathFile(pathFile);
-        menu.setField(fieldTEST);
         screenFrame.add(fieldTEST);
         fieldTEST.setSize(400,850);
         fieldTEST.setVisible(true);
         fieldTEST.setLocation(200,0);
+
+        MenuPanel menu = new MenuPanel(fieldTEST);
+         screenFrame.add(menu);
+        //fieldTEST.setPathFile(pathFile);
+        //menu.setField(fieldTEST);
+
         //GuiElements.setFieldPanel(new FieldPanel(fieldImage, overFieldImage));
         menu.setLocation(625, 50); //size - 325, 800
          //PRESET PANEL
@@ -161,7 +165,7 @@ public class PathMaker implements PlayingField {
         String[] miscCargoBayText = {"Front Left Cargo Bay Door", "Front Left Cargo Bay Door"};
         JButton [] cargoBayButtons = setButtons("Cargo Bay Door", startCargoBayText, miscCargoBayText);
 
-
+        
         for (JButton b : cargoBayButtons){
             buttonPanel.add(b);
         }
@@ -259,7 +263,13 @@ public class PathMaker implements PlayingField {
 		b.setFont(new Font("Helvetica", Font.BOLD, 9));
 		
 		return b;
-	}        
+    }        
+    
+    
+    public static void calculateStartPoint(double xInches, double yInches){
+        
+    }
+    
     //======= METHODS NOT RELATED TO JPANELS OR INIT ======
 
     /* setReferencePoints Method =========================
@@ -270,7 +280,7 @@ public class PathMaker implements PlayingField {
      * These will provide us points to flip, move and
      * rotate as we please.
      * 
-     * The location of these points are in feet.
+     * The location of these points are in feet. -> inches, get form interface
      */
     public static void setReferencePoints(){
         PlayingField.startHabitat.setLocation(5,5);

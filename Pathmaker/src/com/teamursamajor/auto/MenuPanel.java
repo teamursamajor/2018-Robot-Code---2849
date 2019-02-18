@@ -67,6 +67,14 @@ import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 
 import java.io.*; 
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.JFormattedTextField;
+import java.text.Format;
+import java.text.NumberFormat;
+import javax.swing.text.NumberFormatter;
+
 
 //TODO - fix some logic when not being rushed
 public class MenuPanel extends JPanel {
@@ -86,29 +94,18 @@ public class MenuPanel extends JPanel {
     private FieldPanel fieldPanel;
     private File selectedFile;
     private Map <String, Curve> curveMap = new HashMap <String, Curve>();//DONT NEED
-    private 
-    String pathLocations = "C:/Users/teamursamajor/git/2018-Robot-Code---2849/Pathmaker/PathFiles";
+    private String pathLocations = "C:/Users/teamursamajor/git/2018-Robot-Code---2849/Pathmaker/PathFiles";
+    private int TICKS_PER_POINT = 3;
 
-     public MenuPanel (){
-        this(335);
+     public MenuPanel (FieldPanel f){
+        this(335, f);
      }
 
-     public MenuPanel(int width){
+     public MenuPanel(int width, FieldPanel fieldPanel){
         this.setSize(width, 500);
 
-        // String [] pathNames = {"Path 1", "Path 2"};
-
-
-        // JComboBox<String> PathOptions = new JComboBox <>(pathNames);
-        // PathOptions.setEditable(true);
-        
-        // readAvailablePaths("FILE");
-        
-        
-        
-        // this.add(PathOptions);
         this.addButtons();
-        
+        this.fieldPanel = fieldPanel;
 
         readAvailablePaths(pathLocations);
     
@@ -116,48 +113,40 @@ public class MenuPanel extends JPanel {
 
         //System.out.println(pathMap.keySet());
         
-        settempDropDown();
+        setTempDropDown();
+
+        JPanel sliderPanel = setSliderPanel(width);
+
+        JPanel startPointPanel = setStartPointPanel(width);
 
         this.add(selectPathFileDropDownMenu);
+        this.add(sliderPanel);
+        this.add(startPointPanel);
+        displayPathFile((String) selectPathFileDropDownMenu.getSelectedItem());
 
-        // JLabel syntax = new JLabel(
-        //     "===For File Names===\n
-        //     Order = StartPoint-EndPoint\n
-        //     L/R/M - Left/Right/Middle\n
-        //     Top/Bottom - Start Deck Level\n
-        //     CargoBay# -Cargo Bay Side + cargo bay number (consult diagram)\n
-        //     Rocket# - Rocket + rocket number (consult diagram)\n
-        //     CIntake - Cargo Intake\n
-        //     HIntake - Hatch Intake\n");
-
-        // JLabel diagramA = new JLabel(
-        // "   Hatch Bay Diagram\n
-        //     Left        Right\n
-        //        LA []|[] RA\n
-        //     LB []   |   [] RB\n
-        //     LC []   |   [] RC\n
-        //     LD []   |   [] RD\n");
-
-       String digramB = (
-            "   Rocket Diagram\n"+
-            "--[] TRocket\n----[] MRocket\n--[] BRocket");
-      //  this.add(syntax);
-      //  this.add(diagramA);
-       // this.add(diagramB);
-        //show path
-        //JSlider getMouseLocationSlider ();
-    
+        try {
+            BufferedImage diagramA = ImageIO.read(new File(System.getProperty("user.dir") + "Rocket Diagram"));
+            BufferedImage diagramB = ImageIO.read(new File(System.getProperty("user.dir") + "CargoBayDiagram"));        // JLabel syntax = new JLabel
+            JPanel diagramPanel = new JPanel(){
+                public void paintGraphics(Graphics g){
+                    g.drawImage(diagramA, 20,20,20,20,null);
+                    g.drawImage(diagramB, 20,20,20,20,null);
+                }
+            };
+            diagramPanel.setSize(width, 100);
+            this.add(diagramPanel);
+            diagramPanel.repaint();
+        }
+        catch (Exception e){
+            System.out.println("Could not draw Diagrams");
+        }
     }
-
-    // private void getCurrentFile (){
-    //     currentFile = new File ("C:/Users/teamursamajor/git/2018-Robot-Code---2849/Pathmaker/PathFiles/" + selectPathFileDropDownMenu.getLabel + ".txt");
-    // }
 
     public void setField (FieldPanel fieldPanel){
         this.fieldPanel = fieldPanel;
     }
 
-    private void settempDropDown (){
+    private void setTempDropDown (){
         String [] names = new String [pathNames.size()];
         for (int i = 0; i < pathNames.size(); i++){
             names[i] = pathNames.get(i);
@@ -167,10 +156,7 @@ public class MenuPanel extends JPanel {
         setPathMap();
 
         JComboBox <String> tempDropDown = new JComboBox<>(names);
-        // tempDropDown.addActionListener(){
-            //set selectied file
-        // }
-        
+
         tempDropDown.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 try {
@@ -185,20 +171,12 @@ public class MenuPanel extends JPanel {
         
         this.selectPathFileDropDownMenu = tempDropDown;
         selectPathFileDropDownMenu.setEditable(true);
-        //selectPathFileDropDownMenu.setSize(320,50);
-           
-
-
-
     }
 
     public void readAvailablePaths(String pathFolderDirection){
         /**
          * for each txt file in folder
          * add option to menu bar
-         * 
-         * this will be called everytime you create a path
-         * 
          */
         
 
@@ -214,16 +192,12 @@ public class MenuPanel extends JPanel {
             }
         }
         
-        System.out.println(pathNames.toString());
-
         pathFiles = pathFolder.listFiles();
-
-
         this.setPathMap();
-        //System.out.println(pathNames.toString());
-    }
+        }
 
-    private void setPathMap (){
+    
+        private void setPathMap (){
         pathMap.clear();
         for (String nameOfPath : pathNames){
             for (File f : pathFiles){
@@ -238,21 +212,100 @@ public class MenuPanel extends JPanel {
     public void displayPathFile(String fileName){
         try {
             Scanner sc = new Scanner (pathMap.get(fileName));
+            ArrayList<Integer[]> points = new ArrayList<Integer[]>();
             while (sc.hasNextLine()){
                 String str = sc.nextLine();
-                //System.out.println("PATH:");
-                System.out.println(str);
+               // System.out.println(str);
+                if (str.contains("{")){
+                    Integer[] pointsToAdd = new Integer[2];
+                    str = str.substring(str.indexOf("{"));
+                    String pointA = str.substring(1, str.indexOf(","));
+                    String pointB = str.substring(str.indexOf(",") +2, str.length()-1);
+                    pointsToAdd[0] = Integer.parseInt(pointA);
+                    pointsToAdd[1] = Integer.parseInt(pointB);
+                    points.add(pointsToAdd);
+                }
             }
+            fieldPanel.drawFromFile(points);
         }
+        
         catch (IOException e){
             System.out.println("CANT READ PATH");
         }
     }
 
+    public JPanel setSliderPanel(int width){
+        JSlider slider = new JSlider (JSlider.HORIZONTAL, 3, 25, TICKS_PER_POINT);
+        slider.setMajorTickSpacing(3);
+        slider.setMinorTickSpacing(1);
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
 
-    private void writePathFile (String fileName, Curve c){
-        //for ()
-        System.out.println(c.getPath().toString());
+        JLabel value = new JLabel (" Current Value: " + slider.getValue() + " ");
+        value.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        slider.addChangeListener(new ChangeListener(){
+            public void stateChanged(ChangeEvent e){
+                value.setText(" Current Value: " + slider.getValue() + " ");
+                fieldPanel.setUpdateVal(slider.getValue());
+            }
+        });
+        
+        JPanel sliderPanel = new JPanel();
+        sliderPanel.setSize(width, 50);
+        sliderPanel.add(value);
+        sliderPanel.add(slider);       
+        sliderPanel.setBorder(BorderFactory.createLoweredBevelBorder());
+        return sliderPanel;
+    }
+
+    public JPanel setStartPointPanel(int width){
+        NumberFormat format = NumberFormat.getInstance();
+        NumberFormatter intOnly = new NumberFormatter(format);
+        intOnly.setValueClass(Integer.class);
+       //TODO - set min/max, fix backspace key
+        intOnly.setAllowsInvalid(false);
+
+        JLabel startPointName = new JLabel();
+        JLabel unitA = new JLabel (" inches");
+        JLabel unitB = new JLabel (" inches");
+        JLabel xName = new JLabel("X-coord:");
+        JFormattedTextField xPixText = new JFormattedTextField(intOnly);
+        xPixText.setPreferredSize(new Dimension(75,20));
+        JLabel yName = new JLabel("Y-coord:");
+        JFormattedTextField yPixText = new JFormattedTextField(intOnly);
+        yPixText.setPreferredSize(new Dimension(75,20));
+
+
+        JButton setPoint = new JButton("Set");
+        setPoint.addActionListener (new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                //fieldPanel.setStartPoint, redraw
+                
+            }
+        });
+
+        JPanel startPointTextPanel = new JPanel();
+        startPointTextPanel.setLayout(new GridLayout(2,3));
+        startPointTextPanel.setSize((width/3)*2,100);
+        startPointTextPanel.add (xName);
+        startPointTextPanel.add (xPixText);
+        startPointTextPanel.add (unitA);
+        startPointTextPanel.add (yName);
+        startPointTextPanel.add (yPixText);//WAS Y
+        startPointTextPanel.add (unitB);
+        
+        JPanel startPointSetPanel = new JPanel();
+        startPointSetPanel.setSize(width/3,100);
+        setPoint.setPreferredSize(new Dimension(55,50));
+        startPointSetPanel.add(setPoint);
+
+        JPanel startPointPanel = new JPanel();
+        startPointPanel.setSize(width,100);
+        startPointPanel.add(startPointTextPanel);
+        startPointPanel.add(startPointSetPanel);
+        startPointPanel.setBorder(BorderFactory.createLoweredBevelBorder());
+
+        return startPointPanel;
     }
 
     private void addButtons (){
@@ -333,7 +386,9 @@ public class MenuPanel extends JPanel {
                         pathMap.put(newFileName, newFile);
 
                         writeToFile(newFileName, c);
-                        settempDropDown();
+                        setTempDropDown();
+                        displayPathFile((String) selectPathFileDropDownMenu.getSelectedItem());
+                       // fieldPanel.repaint();
                     }
                     catch (IOException error){
                         System.out.println("CANT MAKE NEW FILE");
@@ -382,11 +437,8 @@ public class MenuPanel extends JPanel {
         
         return button;
     }
-    //Todo change to set
     
-    //TODO - add flip by x/y buttons
-    //TODO - add bezier curve button
-    //TODO Make the above^ into a check box
+ 
 
     private void writeToFile (String fileName, Curve c) throws IOException{
         clearFile(fileName);
