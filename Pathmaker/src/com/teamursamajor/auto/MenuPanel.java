@@ -96,6 +96,7 @@ public class MenuPanel extends JPanel {
     private Map <String, Curve> curveMap = new HashMap <String, Curve>();//DONT NEED
     private String pathLocations = "C:/Users/teamursamajor/git/2018-Robot-Code---2849/Pathmaker/PathFiles";
     private int TICKS_PER_POINT = 3;
+    //Boolean drawingNewPath = false;
 
      public MenuPanel (FieldPanel f){
         this(335, f);
@@ -116,7 +117,7 @@ public class MenuPanel extends JPanel {
         setTempDropDown();
 
         JPanel sliderPanel = setSliderPanel(width);
-
+        
         JPanel startPointPanel = setStartPointPanel(width);
 
         this.add(selectPathFileDropDownMenu);
@@ -212,6 +213,7 @@ public class MenuPanel extends JPanel {
     public void displayPathFile(String fileName){
         try {
             Scanner sc = new Scanner (pathMap.get(fileName));
+          //  System.out.println(fileName + " FILE NAME AFTER READ");
             ArrayList<Integer[]> points = new ArrayList<Integer[]>();
             while (sc.hasNextLine()){
                 String str = sc.nextLine();
@@ -240,6 +242,7 @@ public class MenuPanel extends JPanel {
         slider.setMinorTickSpacing(1);
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
+       // slider.setValue(3);
 
         JLabel value = new JLabel (" Current Value: " + slider.getValue() + " ");
         value.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -362,6 +365,7 @@ public class MenuPanel extends JPanel {
             }
         });
 
+        //TODO - DO TEST TO SEE IF IT IS A VALID PATH FIRST
         savePathButton.addActionListener (new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 /**
@@ -411,6 +415,10 @@ public class MenuPanel extends JPanel {
                  * shows the path in the crnt path file
                  */
                 Curve newCurveForFile = fieldPanel.drawBezierCurve();
+                if (!fieldPanel.isNewPath()){
+                    displayPathFile((String)selectPathFileDropDownMenu.getSelectedItem());
+                }
+                
                 //curveMap.add(selectedFile, newCurveForFile);
             }
         });

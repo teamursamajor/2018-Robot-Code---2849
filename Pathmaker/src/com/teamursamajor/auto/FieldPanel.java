@@ -73,6 +73,7 @@ public class FieldPanel extends JPanel {
     private int slowDownWriter = 0;
     private int slowFactor = 3;//3 - 25
     private ArrayList <Integer[]> drawnPath;
+    private Boolean drawingANewPath = false;
 
     public FieldPanel(BufferedImage fieldImage, BufferedImage overFieldImage, File pathFile){
         this.fieldImage = fieldImage;
@@ -120,7 +121,9 @@ public class FieldPanel extends JPanel {
     private void addFieldAction(){
         this.addMouseMotionListener(new MouseMotionListener(){
             public void mouseDragged(MouseEvent event){
-            
+                if (!drawingANewPath){
+                    drawingANewPath = true;
+                }
                 int [] coords = {event.getX(), event.getY()};
                 pointB = coords;
                 
@@ -241,6 +244,7 @@ public class FieldPanel extends JPanel {
 
     public void drawFromFile (ArrayList<Integer[]> points){
         drawnPath = new ArrayList<Integer[]>();
+        System.out.println(drawnPath.size());
         clearField();
         for (Integer[] point : points){
             drawnPath.add(point);
@@ -258,6 +262,13 @@ public class FieldPanel extends JPanel {
         pointA = temp;
         drawnPath = new ArrayList<Integer[]>();
         drawnPath.add(tempPointA);
+    }
+
+    public void setDrawingPointBool (Boolean b){
+        drawingANewPath = b;
+    }
+    public boolean isNewPath (){
+        return drawingANewPath;
     }
 
 }
